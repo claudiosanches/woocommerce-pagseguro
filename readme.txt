@@ -1,6 +1,5 @@
 === WooCommerce PagSeguro Gateway ===
 Contributors: claudiosanches, Gabriel Reguly
-Donate link: http://example.com/donate/
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
 Requires at least:3.0 
 Tested up to: 3.4.2
