@@ -23,8 +23,7 @@ Please notice that WooCommerce must be installed and active.
 
 1. Upload plugin files to your plugins folder, or install using WordPress' built-in Add New Plugin installer
 1. Activate the plugin
-1. Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in all fields
-1. 
+1. Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in your PagSeguro Email
 
 == Screenshots ==
 
