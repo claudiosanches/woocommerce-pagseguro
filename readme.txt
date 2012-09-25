@@ -23,8 +23,8 @@ Please notice that WooCommerce must be installed and active.
 
 1. Upload plugin files to your plugins folder, or install using WordPress' built-in Add New Plugin installer
 1. Activate the plugin
-1. Navigate to and fill all fields
-
+1. Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in all fields
+1. 
 
 == Screenshots ==
 
@@ -38,8 +38,6 @@ Please notice that WooCommerce must be installed and active.
 
 == Changelog ==
 
-= 1.0.1 =
-* Added a test to check if Contact Form 7 plugin is active.
 = 1.0 =
 * Initial plugin release.
 
