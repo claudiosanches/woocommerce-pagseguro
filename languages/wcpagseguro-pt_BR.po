@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro Gateway v1.0\n"
+"Project-Id-Version: WooCommerce PagSeguro v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2012-09-26 01:41:47+0000\n"
+"PO-Revision-Date: 2012-09-26 03:13:25+0000\n"
 "Last-Translator: Gabriel Reguly <gabriel@ppgr.com.br>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgid "Shipping via"
 msgstr "Entrega via"
 
 #: wc-pagseguro.php:338
-#@ woocommerce
+#@ wcpagseguro
 msgid "Thank you for your order. We are now redirecting you to PagSeguro to make payment."
 msgstr "Obrigado por fazer seu pedido. Agora estamos redirecionando você para o PagSeguro para efetuar o pagamento."
 
@@ -143,12 +143,6 @@ msgstr "Aguardando pagamento via PagSeguro."
 msgid "<strong>Address</strong> format is invalid. Example of correct format: \"Av. Paulista, 460\""
 msgstr "<strong>Endereço</strong> com formato inválido. Examplo de endereço correto: \"Av. Paulista, 460\""
 
-#. translators: plugin header field 'Name'
-#: wc-pagseguro.php:0
-#@ wcpagseguro
-msgid "WooCommerce PagSeguro Gateway"
-msgstr ""
-
 #. translators: plugin header field 'PluginURI'
 #. translators: plugin header field 'AuthorURI'
 #: wc-pagseguro.php:0
@@ -162,15 +156,21 @@ msgstr ""
 msgid "Gateway de pagamento PagSeguro para WooCommerce."
 msgstr ""
 
-#. translators: plugin header field 'Author'
-#: wc-pagseguro.php:0
-#@ wcpagseguro
-msgid "claudiosanches"
-msgstr ""
-
 #. translators: plugin header field 'Version'
 #: wc-pagseguro.php:0
 #@ wcpagseguro
 msgid "1.0"
+msgstr ""
+
+#. translators: plugin header field 'Name'
+#: wc-pagseguro.php:0
+#@ wcpagseguro
+msgid "WooCommerce PagSeguro"
+msgstr ""
+
+#. translators: plugin header field 'Author'
+#: wc-pagseguro.php:0
+#@ wcpagseguro
+msgid "claudiosanches, Gabriel Reguly"
 msgstr ""
 
