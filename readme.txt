@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: trunk
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,9 @@ You should have received a copy of the GNU General Public License along with Aut
 = What is the plugin license? =
 * This plugin is released under a GPL license.
 
+= What is needed to use this plugin? =
+* Only one account on [PagSeguro](http://pagseguro.uol.com.br/ "PagSeguro").
+
 == Changelog ==
 
 = 1.0 =
@@ -50,3 +53,4 @@ You should have received a copy of the GNU General Public License along with Aut
 == Screenshots ==
 
 1. screenshot-1.png
+2. screenshot-2.png
