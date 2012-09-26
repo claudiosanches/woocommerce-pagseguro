@@ -335,7 +335,7 @@ function wcpagseguro_gateway_load() {
 
             $woocommerce->add_inline_js( '
                 jQuery("body").block({
-                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'woocommerce' ).'",
+                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ).'",
                         overlayCSS:
                         {
                             background: "#fff",
