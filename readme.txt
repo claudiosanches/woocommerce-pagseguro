@@ -1,7 +1,7 @@
 === WooCommerce PagSeguro Gateway ===
 Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
-Requires at least:3.0 
+Requires at least: 3.0
 Tested up to: 3.4.2
 Stable tag: trunk
 License: GPLv2 or later
@@ -20,15 +20,15 @@ Please notice that WooCommerce must be installed and active.
 
 == Installation ==
 
-1. Upload plugin files to your plugins folder, or install using WordPress' built-in Add New Plugin installer
-1. Activate the plugin
-1. Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in your PagSeguro Email
+* Upload plugin files to your plugins folder, or install using WordPress' built-in Add New Plugin installer
+* Activate the plugin
+* Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in your PagSeguro Email
 
 == Screenshots ==
 
-1. screenshot-1.png 
+1. screenshot-1.png
 
-== Frequently Asked Questions == 
+== Frequently Asked Questions ==
 
 = What is the plugin license? =
 
@@ -41,5 +41,5 @@ Please notice that WooCommerce must be installed and active.
 
 == Upgrade Notice ==
 
-= 1.0 = 
+= 1.0 =
 * Enjoy it.
