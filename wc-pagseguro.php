@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: WooCommerce PagSeguro
- * Plugin URI: http://www.claudiosmweb.com/
+ * Plugin URI: http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.0
+ * Version: 1.0.1
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -90,7 +90,7 @@ function wcpagseguro_gateway_load() {
             add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
             add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
 
-            if ( !$this->is_valid_for_use() ) $this->enabled = false;
+			$this->enabled = ( 'yes' == $this->settings['enabled'] ) && $this->is_valid_for_use() && !empty( $this->email );
         }
 
 
@@ -102,7 +102,6 @@ function wcpagseguro_gateway_load() {
          */
         function is_valid_for_use() {
             if ( !in_array( get_woocommerce_currency() , array( 'BRL' ) ) ) return false;
-
             return true;
         }
 
@@ -119,18 +118,19 @@ function wcpagseguro_gateway_load() {
             <p><?php _e( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'wcpagseguro' ); ?></p>
             <table class="form-table">
             <?php
-                if ( $this->is_valid_for_use() ) :
-
-                    // Generate the HTML For the settings form.
-                    $this->generate_settings_html();
-
-                else :
-
+                if ( ! $this->is_valid_for_use() ) {
                     ?>
                         <div class="inline error"><p><strong><?php _e( 'Gateway Disabled', 'wcpagseguro' ); ?></strong>: <?php _e( 'PagSeguro does not support your store currency.', 'wcpagseguro' ); ?></p></div>
                     <?php
-
-                endif;
+                } else {
+					if ( empty( $this->email ) ) {
+?>
+						<div class="inline error"><p><strong><?php _e( 'Gateway Disabled', 'wcpagseguro' ); ?></strong>: <?php _e( 'You should inform your email address in PagSeguro.', 'wcpagseguro' ); ?></p></div>
+<?php
+					}
+					// Generate the HTML For the settings form.
+					$this->generate_settings_html();
+				}
             ?>
             </table><!--/.form-table-->
             <?php

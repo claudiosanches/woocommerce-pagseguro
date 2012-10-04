@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro v1.0\n"
+"Project-Id-Version: WooCommerce PagSeguro v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2012-09-26 03:13:25+0000\n"
+"PO-Revision-Date: 2012-10-02 02:13:38+0000\n"
 "Last-Translator: Gabriel Reguly <gabriel@ppgr.com.br>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,22 +30,23 @@ msgstr "WooCommerce PagSeguro Gateway necessita do <a href=\"http://wordpress.or
 msgid "PagSeguro"
 msgstr "PagSeguro"
 
-#: wc-pagseguro.php:118
+#: wc-pagseguro.php:117
 #@ wcpagseguro
 msgid "PagSeguro standard"
 msgstr "PagSeguro padrão"
 
-#: wc-pagseguro.php:119
+#: wc-pagseguro.php:118
 #@ wcpagseguro
 msgid "PagSeguro standard works by sending the user to PagSeguro to enter their payment information."
 msgstr "PagSeguro padrão funciona enviando o usuário para o site do PagSeguro, onde ele irá fazer o pagamento."
 
-#: wc-pagseguro.php:130
+#: wc-pagseguro.php:123
+#: wc-pagseguro.php:128
 #@ wcpagseguro
 msgid "Gateway Disabled"
 msgstr "Gateway desabilitado"
 
-#: wc-pagseguro.php:130
+#: wc-pagseguro.php:123
 #@ wcpagseguro
 msgid "PagSeguro does not support your store currency."
 msgstr "PagSeguro não suporta a moeda atual utilizada na sua loja."
@@ -148,29 +149,34 @@ msgstr "<strong>Endereço</strong> com formato inválido. Examplo de endereço c
 #: wc-pagseguro.php:0
 #@ wcpagseguro
 msgid "http://www.claudiosmweb.com/"
-msgstr ""
+msgstr "http://www.claudiosmweb.com/"
 
 #. translators: plugin header field 'Description'
 #: wc-pagseguro.php:0
 #@ wcpagseguro
 msgid "Gateway de pagamento PagSeguro para WooCommerce."
-msgstr ""
-
-#. translators: plugin header field 'Version'
-#: wc-pagseguro.php:0
-#@ wcpagseguro
-msgid "1.0"
-msgstr ""
+msgstr "Gateway de pagamento PagSeguro para WooCommerce."
 
 #. translators: plugin header field 'Name'
 #: wc-pagseguro.php:0
 #@ wcpagseguro
 msgid "WooCommerce PagSeguro"
-msgstr ""
+msgstr "WooCommerce PagSeguro"
 
 #. translators: plugin header field 'Author'
 #: wc-pagseguro.php:0
 #@ wcpagseguro
 msgid "claudiosanches, Gabriel Reguly"
-msgstr ""
+msgstr "claudiosanches, Gabriel Reguly"
+
+#. translators: plugin header field 'Version'
+#: wc-pagseguro.php:0
+#@ wcpagseguro
+msgid "1.0.1"
+msgstr "1.0.1"
+
+#: wc-pagseguro.php:128
+#@ wcpagseguro
+msgid "You should inform your email address in PagSeguro."
+msgstr "Você deve informar o seu endereço de e-mail no PagSeguro."
 

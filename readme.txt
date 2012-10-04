@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,10 @@ Adds PagSeguro gateway to the WooCommerce plugin
 This plugin adds PagSeguro gateway to WooCommerce.
 
 Please notice that WooCommerce must be installed and active.
+
+### pt-BR
+
+Suporte em português: [claudiosmweb.com](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/)
 
 == Installation ==
 
@@ -38,15 +42,21 @@ You should have received a copy of the GNU General Public License along with Aut
 * This plugin is released under a GPL license.
 
 = What is needed to use this plugin? =
+* WooCommerce installed and active
 * Only one account on [PagSeguro](http://pagseguro.uol.com.br/ "PagSeguro").
+
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix to avoid enabling the gateway if the PagSeguro email account is empty
+* Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
 = 1.0 =
 * Initial plugin release.
 
 == Upgrade Notice ==
-
+= 1.0.1 =
+* Recommended/Recomendado
 = 1.0 =
 * Enjoy it.
 
