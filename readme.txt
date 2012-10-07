@@ -21,7 +21,7 @@ Please notice that WooCommerce must be installed and active.
 
 Adicione o PagSeguro como método de pagamento em sua loja WooCommerce.
 
-Acesse a aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/) para detalhes da instalação do plugin e as configurações necessárias no PagSeguro.
+Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/).
 
 == Installation ==
 
@@ -34,24 +34,26 @@ Acesse a aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pags
 
 = Instalação do plugin: =
 
-* Envie arquivos do plugin para a pasta wp-content/plugins, ou instale usando o instalador de plugins do WordPress.
+* Envie os arquivos do plugin para a pasta wp-content/plugins, ou instale usando o instalador de plugins do WordPress.
 * Ative o plugin.
 
 = Requerimentos: =
 
-Para que seja possível utilizar este plugin você necessita ter uma conta no PagSeguro e ter instalado o WooCommerce.
+É necessário possuir uma conta no [PagSeguro](http://pagseguro.uol.com.br/) e ter instalado o [WooCommerce](http://wordpress.org/extend/plugins/woocommerce/).
 
 = Configurações no PagSeguro: =
 
 É necessário configurar a página de redirecionamento no PagSeguro.  
 Você pode fazer isso em “Integrações” > “[Página de redirecionamento](https://pagseguro.uol.com.br/integracao/pagina-de-redirecionamento.jhtml)”:
 
-Ative a opção de “Página fixa de redirecionamento” e defina ela como por exemplo: `http://seusite.com/finalizar-compra/pedido-recebido/`
+Ative a opção de “Página fixa de redirecionamento” e configure ela como por exemplo:
 
-No momento o plugin funciona apenas com a integração simples. Desta forma é necessário deixar os pagamentos via API desativado.  
+    http://seusite.com/finalizar-compra/pedido-recebido/
+
+No momento o plugin funciona apenas com a integração simples. Desta forma é necessário desativar os pagamentos via API.  
 Você pode fazer isso em “Integrações” > “[Pagamentos via API](https://pagseguro.uol.com.br/integracao/pagamentos-via-api.jhtml)”.
 
-Com estas configurações a sua conta no PagSeguro estará pronta para receber pagamentos.
+Com estas configurações a sua conta no PagSeguro estará pronta para receber os pagamentos de sua loja.
 
 = Configurações do Plugin: =
 
@@ -107,7 +109,7 @@ Este plugin esta licenciado como GPL.
 
 No momento o PagSeguro recebe pagamentos apenas do Brasil.
 
-Configuramos o plugin para receber pagamentos apenas de usuários que escolhem o Brasil nas informações de pagamento durante o checkout.
+Configuramos o plugin para receber pagamentos apenas de usuários que selecionarem o Brasil nas informações de pagamento durante o checkout.
 
 = Quais são os meios de pagamento que o plugin aceita? =
 
