@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,14 +43,14 @@ Confira o nosso guia de instalação e configuração do PagSeguro na aba [Insta
 
 = Configurações no PagSeguro: =
 
-É necessário configurar a página de redirecionamento no PagSeguro.  
+É necessário configurar a página de redirecionamento no PagSeguro.
 Você pode fazer isso em “Integrações” > “[Página de redirecionamento](https://pagseguro.uol.com.br/integracao/pagina-de-redirecionamento.jhtml)”:
 
 Ative a opção de “Página fixa de redirecionamento” e configure ela como por exemplo:
 
     http://seusite.com/finalizar-compra/pedido-recebido/
 
-No momento o plugin funciona apenas com a integração simples. Desta forma é necessário desativar os pagamentos via API.  
+No momento o plugin funciona apenas com a integração simples. Desta forma é necessário desativar os pagamentos via API.
 Você pode fazer isso em “Integrações” > “[Pagamentos via API](https://pagseguro.uol.com.br/integracao/pagamentos-via-api.jhtml)”.
 
 Com estas configurações a sua conta no PagSeguro estará pronta para receber os pagamentos de sua loja.
@@ -113,7 +113,7 @@ Configuramos o plugin para receber pagamentos apenas de usuários que selecionar
 
 = Quais são os meios de pagamento que o plugin aceita? =
 
-São aceitos todos os meios de pagamentos que o PagSeguro disponibiliza.  
+São aceitos todos os meios de pagamentos que o PagSeguro disponibiliza.
 Entretanto você precisa ativa-los na sua conta no PagSeguro.
 
 Confira os meios de pagamento em [PagSeguro - Meios de Pagamento e Parcelamento](https://pagseguro.uol.com.br/para_voce/meios_de_pagamento_e_parcelamento.jhtml#rmcl).
@@ -128,16 +128,16 @@ Consulte os limites em [PagSeguro - Tabela de Limites](https://pagseguro.uol.com
 
 = O plugin faz integração usando a API 2.0 do PagSeguro? =
 
-No momento a integração é feita apenas de forma básica.  
-Isso significa que você poderá receber seus pagamentos pelo PagSeguro utilizando seu e-mail sem nenhum problema.  
-Entretanto é necessário dar baixa manualmente nas compras.  
+No momento a integração é feita apenas de forma básica.
+Isso significa que você poderá receber seus pagamentos pelo PagSeguro utilizando seu e-mail sem nenhum problema.
+Entretanto é necessário dar baixa manualmente nas compras.
 
-Pretendemos no futuro utilizar a API 2.0 e realizar as transações com o Token.  
+Pretendemos no futuro utilizar a API 2.0 e realizar as transações com o Token.
 Sendo assim, será possível usufruir do retorno automático do PagSeguro.
 
 = Instalei o plugin, mas a opção de pagamento pelo PagSeguro some durante o checkout. O que fiz de errado? =
 
-Você esqueceu de selecionar o Brasil durante o cadastro no checkout.  
+Você esqueceu de selecionar o Brasil durante o cadastro no checkout.
 A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
@@ -146,11 +146,17 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 1.0.2 =
+* EN: Adds function to automatically cull stock when the customer goes to the PagSeguro.
+* PT-BR: Adicionada função para abater estoque automáticamente quando o cliente vai para o PagSeguro.
+
 = 1.0.1 =
-* Fix to avoid enabling the gateway if the PagSeguro email account is empty
-* Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
+* EN: Fix to avoid enabling the gateway if the PagSeguro email account is empty
+* PT-BR: Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
+
 = 1.0 =
-* Initial plugin release.
+* EN: Initial plugin release.
+* PT-BR: Versão incial do plugin.
 
 == Upgrade Notice ==
 = 1.0.1 =
