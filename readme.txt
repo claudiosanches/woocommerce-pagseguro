@@ -147,7 +147,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 == Changelog ==
 
 = 1.0.2 =
-* EN: Adds function to automatically cull stock when the customer goes to the PagSeguro.
+* EN: Added function to automatically cull stock when the customer goes to the PagSeguro.
 * PT-BR: Adicionada função para abater estoque automáticamente quando o cliente vai para o PagSeguro.
 
 = 1.0.1 =
@@ -159,8 +159,13 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 * PT-BR: Versão incial do plugin.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+* Added function that adds the stock
+
 = 1.0.1 =
 * Recommended/Recomendado
+
 = 1.0 =
 * Enjoy it.
 
