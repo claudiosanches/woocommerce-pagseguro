@@ -55,7 +55,11 @@ function wcpagseguro_gateway_load() {
     }
 
 
-
+    /**
+     * WC PagSeguro Gateway Class
+     *
+     * Built the PagSeguro method.
+     */
     class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         /**
@@ -118,16 +122,19 @@ function wcpagseguro_gateway_load() {
             <p><?php _e( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'wcpagseguro' ); ?></p>
             <table class="form-table">
             <?php
-                if ( ! $this->is_valid_for_use() ) {
-                    ?>
-                        <div class="inline error"><p><strong><?php _e( 'Gateway Disabled', 'wcpagseguro' ); ?></strong>: <?php _e( 'PagSeguro does not support your store currency.', 'wcpagseguro' ); ?></p></div>
-                    <?php
+                if ( !$this->is_valid_for_use() ) {
+
+                    // Valid currency.
+                    echo '<div class="inline error"><p><strong>' . __( 'Gateway Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
+
                 } else {
 					if ( empty( $this->email ) ) {
-?>
-						<div class="inline error"><p><strong><?php _e( 'Gateway Disabled', 'wcpagseguro' ); ?></strong>: <?php _e( 'You should inform your email address in PagSeguro.', 'wcpagseguro' ); ?></p></div>
-<?php
+
+                        // Valid e-mail.
+                        echo '<div class="inline error"><p><strong>'. __( 'Gateway Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'You should inform your email address in PagSeguro.', 'wcpagseguro' ) . '</p></div>';
+
 					}
+
 					// Generate the HTML For the settings form.
 					$this->generate_settings_html();
 				}
