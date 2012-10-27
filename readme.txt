@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.0.2
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,22 +44,32 @@ Confira o nosso guia de instalação e configuração do PagSeguro na aba [Insta
 = Configurações no PagSeguro: =
 
 É necessário configurar a página de redirecionamento no PagSeguro.
-Você pode fazer isso em “Integrações” > “[Página de redirecionamento](https://pagseguro.uol.com.br/integracao/pagina-de-redirecionamento.jhtml)”:
+Você pode fazer isso em "Integrações" > "[Página de redirecionamento](https://pagseguro.uol.com.br/integracao/pagina-de-redirecionamento.jhtml)":
 
-Ative a opção de “Página fixa de redirecionamento” e configure ela como por exemplo:
+Ative a opção de "Página fixa de redirecionamento" e configure ela como por exemplo:
+
+    http://seusite.com/finalizar-compra/pedido-recebido/
+
+Habilite também o retorno automático de dados;
+Deve ser ativado em "Ingregra" > "[ Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
+
+Marque ativado e adicione a url como por exemplo:
 
     http://seusite.com/finalizar-compra/pedido-recebido/
 
 No momento o plugin funciona apenas com a integração simples. Desta forma é necessário desativar os pagamentos via API.
-Você pode fazer isso em “Integrações” > “[Pagamentos via API](https://pagseguro.uol.com.br/integracao/pagamentos-via-api.jhtml)”.
+Você pode fazer isso em "Integrações" > "[Pagamentos via API](https://pagseguro.uol.com.br/integracao/pagamentos-via-api.jhtml)".
 
 Com estas configurações a sua conta no PagSeguro estará pronta para receber os pagamentos de sua loja.
 
 = Configurações do Plugin: =
 
-Com o plugin instalado acesse o admin do WordPress e entre em “WooCommerce” > “Configurações” > “Portais de pagamento”  > “PagSeguro”.
+Com o plugin instalado acesse o admin do WordPress e entre em "WooCommerce" > "Configurações" > "Portais de pagamento"  > "PagSeguro".
 
-Habilite o PagSeguro e adicione o seu e-mail.
+Habilite o PagSeguro, adicione o seu e-mail e o token do PagSeguro.
+
+Utilizamos o token para valitar o retorno automático de dados.
+Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)".
 
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
@@ -99,6 +109,9 @@ Este plugin esta licenciado como GPL.
 
 * Ter instalado o plugin WooCommerce.
 * Possuir uma conta no PagSeguro.
+* Gerar um token de segurança no PagSeguro.
+* Habilitar o Retorno automático de dados no PagSeguro.
+* Desativar os pagamentos via API.
 
 = Como funciona o PagSeguro? =
 
@@ -126,16 +139,15 @@ Para estas informações consulte a página do [PagSeguro - Taxas e Tarifas](htt
 
 Consulte os limites em [PagSeguro - Tabela de Limites](https://pagseguro.uol.com.br/account/limits.jhtml).
 
-= O plugin faz integração usando a API 2.0 do PagSeguro? =
+= O plugin faz integração com PagSeguro? =
 
-No momento a integração é feita apenas de forma básica.
-Isso significa que você poderá receber seus pagamentos pelo PagSeguro utilizando seu e-mail sem nenhum problema.
-Entretanto é necessário dar baixa manualmente nas compras.
+No momento estamos enviando os pagamentos utilizando a API via HTML e o retorno automático de dados com a versão 1.0 da API.
 
-Pretendemos no futuro utilizar a API 2.0 e realizar as transações com o Token.
-Sendo assim, será possível usufruir do retorno automático do PagSeguro.
+Isso significa que o plugin funciona normalmente, seus clientes irão conseguir realizar compras e o PagSeguro pode notificar a sua loja sobre os status de pagamento.
 
-= Instalei o plugin, mas a opção de pagamento pelo PagSeguro some durante o checkout. O que fiz de errado? =
+Pretendemos no futuro adicionar como opção pagamento e retorno utilizando a API 2.0.
+
+= Instalei o plugin, mas a opção de pagamento do PagSeguro some durante o checkout. O que fiz de errado? =
 
 Você esqueceu de selecionar o Brasil durante o cadastro no checkout.
 A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
@@ -146,19 +158,25 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 1.1 =
+* Adicionado retorno automático de dados.
+* Melhorado o sistema de notificações.
+* Adicionada classe para validar o retorno automático de dados.
+* Adicionado campo de token nas configurações do plugin (necessário para o retorno automático).
+
 = 1.0.2 =
-* EN: Added function to automatically cull stock when the customer goes to the PagSeguro.
-* PT-BR: Adicionada função para abater estoque automáticamente quando o cliente vai para o PagSeguro.
+* Adicionada função para abater estoque automáticamente quando o cliente vai para o PagSeguro.
 
 = 1.0.1 =
-* EN: Fix to avoid enabling the gateway if the PagSeguro email account is empty
-* PT-BR: Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
+* Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
 
 = 1.0 =
-* EN: Initial plugin release.
-* PT-BR: Versão incial do plugin.
+* Versão incial do plugin.
 
 == Upgrade Notice ==
+
+= 1.1 =
+* Added automatic return data
 
 = 1.0.2 =
 * Added function that adds the stock
