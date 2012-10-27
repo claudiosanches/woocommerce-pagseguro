@@ -383,7 +383,7 @@ function wcpagseguro_gateway_load() {
 
             return '<form action="' . esc_url( $this->pagseguro_url ) . '" method="post" id="pagseguro_payment_form" target="_top">
                     ' . implode( '', $pagseguro_args_array ) . '
-                    <input type="submit" class="button-alt" id="submit_pagseguro_payment_form" value="' . __( 'Pay via PagSeguro', 'wcpagseguro' ).'" /> <a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'wcpagseguro' ) . '</a>
+                    <input type="submit" class="button alt" id="submit_pagseguro_payment_form" value="' . __( 'Pay via PagSeguro', 'wcpagseguro' ).'" /> <a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'wcpagseguro' ) . '</a>
                 </form>';
 
         }
