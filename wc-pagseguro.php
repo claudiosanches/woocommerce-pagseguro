@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.1
+ * Version: 1.1.1
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -512,26 +512,26 @@ function wcpagseguro_gateway_load() {
                             }
 
                             // Payment completed.
-                            $order->add_order_note( __( 'Payment completed', 'wcpagseguro' ) );
+                            $order->add_order_note( __( 'Payment completed.', 'wcpagseguro' ) );
                             $order->payment_complete();
 
                             break;
-                            case 'aguardando-pagto':
-                                $order->update_status( 'pending', __( 'Awaiting payment.', 'wcpagseguro' ) );
+                        case 'aguardando-pagto':
+                            $order->add_order_note( __( 'Awaiting payment.', 'wcpagseguro' ) );
 
-                                break;
-                            case 'aprovado':
-                                $order->update_status( 'on-hold', __( 'Payment approved, awaiting compensation.', 'wcpagseguro' ) );
+                            break;
+                        case 'aprovado':
+                            $order->update_status( 'on-hold', __( 'Payment approved, awaiting compensation.', 'wcpagseguro' ) );
 
-                                break;
-                            case 'em-analise':
-                                $order->update_status( 'on-hold', __( 'Payment approved, under review by PagSeguro.', 'wcpagseguro' ) );
+                            break;
+                        case 'em-analise':
+                            $order->update_status( 'on-hold', __( 'Payment approved, under review by PagSeguro.', 'wcpagseguro' ) );
 
-                                break;
-                            case 'cancelado':
-                                $order->update_status( 'cancelled', __( 'Payment canceled by PagSeguro.', 'wcpagseguro' ) );
+                            break;
+                        case 'cancelado':
+                            $order->update_status( 'cancelled', __( 'Payment canceled by PagSeguro.', 'wcpagseguro' ) );
 
-                                break;
+                            break;
 
                         default:
                             // No action xD.
