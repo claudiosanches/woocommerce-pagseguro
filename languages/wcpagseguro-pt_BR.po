@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro v1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2012-10-27 08:01:28+0000\n"
+"PO-Revision-Date: 2012-10-28 02:01:44+0000\n"
 "Last-Translator: Gabriel Reguly <gabriel@ppgr.com.br>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgid "This controls the description which the user sees during checkout."
 msgstr "Isso controla a descrição que o usuário vê durante o checkout."
 
 #: wc-pagseguro.php:188
-#: wc-pagseguro.php:388
+#: wc-pagseguro.php:386
 #@ wcpagseguro
 msgid "Pay via PagSeguro"
 msgstr "Pagar com PagSeguro"
@@ -113,22 +113,22 @@ msgstr "Pedido %s"
 msgid "Shipping via"
 msgstr "Entrega via"
 
-#: wc-pagseguro.php:366
+#: wc-pagseguro.php:364
 #@ wcpagseguro
 msgid "Thank you for your order. We are now redirecting you to PagSeguro to make payment."
 msgstr "Obrigado por fazer seu pedido. Agora estamos redirecionando você para o PagSeguro para efetuar o pagamento."
 
-#: wc-pagseguro.php:388
+#: wc-pagseguro.php:386
 #@ wcpagseguro
 msgid "Cancel order &amp; restore cart"
 msgstr "Cancelar pedido e restaurar carrinho"
 
-#: wc-pagseguro.php:418
+#: wc-pagseguro.php:416
 #@ wcpagseguro
 msgid "Thank you for your order, please click the button below to pay with PagSeguro."
 msgstr "Obrigado por seu pedido, por favor clique no botão abaixo para pagar com PagSeguro."
 
-#: wc-pagseguro.php:608
+#: wc-pagseguro.php:606
 #@ wcpagseguro
 msgid "<strong>Address</strong> format is invalid. Example of correct format: \"Av. Paulista, 460\""
 msgstr "<strong>Endereço</strong> com formato inválido. Examplo de endereço correto: \"Av. Paulista, 460\""
@@ -184,63 +184,58 @@ msgstr "WooCommerce PagSeguro Gateway precisa de <a href=\"http://php.net/manual
 msgid "PagSeguro Token"
 msgstr "Token do PagSeguro"
 
-#: wc-pagseguro.php:453
+#: wc-pagseguro.php:451
 #@ wcpagseguro
 msgid "PagSeguro Request Failure"
 msgstr "PagSeguro falha do pedido"
 
-#: wc-pagseguro.php:490
+#: wc-pagseguro.php:488
 #@ wcpagseguro
 msgid "PagSeguro Transaction ID"
 msgstr "PagSeguro: ID da transação"
 
-#: wc-pagseguro.php:497
+#: wc-pagseguro.php:495
 #@ wcpagseguro
 msgid "Payer email"
 msgstr "E-mail do comprador"
 
-#: wc-pagseguro.php:504
+#: wc-pagseguro.php:502
 #@ wcpagseguro
 msgid "Payer name"
 msgstr "Nome do comprador"
 
-#: wc-pagseguro.php:511
+#: wc-pagseguro.php:509
 #@ wcpagseguro
 msgid "Payment type"
 msgstr "Tipo de pagamento"
 
-#: wc-pagseguro.php:517
-#@ wcpagseguro
-msgid "Payment completed"
-msgstr "Pagamento completo."
-
-#: wc-pagseguro.php:522
+#: wc-pagseguro.php:520
 #@ wcpagseguro
 msgid "Awaiting payment."
 msgstr "Aguardando pagamento."
 
-#: wc-pagseguro.php:526
+#: wc-pagseguro.php:524
 #@ wcpagseguro
 msgid "Payment approved, awaiting compensation."
 msgstr "Pagamento aprovado, aguardando compensação."
 
-#: wc-pagseguro.php:530
+#: wc-pagseguro.php:528
 #@ wcpagseguro
 msgid "Payment approved, under review by PagSeguro."
 msgstr "Pagamento aprovado, em análise pelo PagSeguro."
 
-#: wc-pagseguro.php:534
+#: wc-pagseguro.php:532
 #@ wcpagseguro
 msgid "Payment canceled by PagSeguro."
 msgstr "Pagamento cancelado pelo PagSeguro."
 
-#: wc-pagseguro.php:553
+#: wc-pagseguro.php:551
 #, php-format
 #@ wcpagseguro
 msgid "<strong>Gateway Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s"
 msgstr "<strong>Método de pagamento desativado</strong> Você deve informar o seu endereço de e-mail no PagSeguro. %sClique aqui para configurar!%s"
 
-#: wc-pagseguro.php:566
+#: wc-pagseguro.php:564
 #, php-format
 #@ wcpagseguro
 msgid "<strong>Gateway Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s"
@@ -251,4 +246,9 @@ msgstr "<strong>Método de pagamento desativado</strong> Você deve informar o s
 #@ wcpagseguro
 msgid "Please enter your PagSeguro token; is necessary to process the payment and notifications. Is possible generate a new token %shere%s"
 msgstr "Digite seu token do PagSeguro; é necessário para processar o pagamento e as notificações de status da compra. É possível gerar um novo token %saqui%s"
+
+#: wc-pagseguro.php:515
+#@ wcpagseguro
+msgid "Payment completed."
+msgstr "Pagamento concluído."
 
