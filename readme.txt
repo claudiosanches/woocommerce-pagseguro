@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,10 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
 
 == Changelog ==
+
+= 1.2 =
+* Removida a classe do retorno automático que usava cURL em favor da função wp_remote_post().
+* Otimizado o retorno automático de dados.
 
 = 1.1.1 =
 * Tradução revisada.
