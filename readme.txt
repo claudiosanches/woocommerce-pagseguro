@@ -1,9 +1,9 @@
 === WooCommerce PagSeguro ===
 Contributors: claudiosanches, Gabriel Reguly
-Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway
+Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Confira o nosso guia de instalação e configuração do PagSeguro na aba [Insta
 = Plugin Install: =
 * Upload plugin files to your plugins folder, or install using WordPress' built-in Add New Plugin installer
 * Activate the plugin
-* Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in your PagSeguro Email
+* Navigate to WooCommerce -> Settings -> Payment Gateways, choose PagSeguro and fill in your PagSeguro Email and Token
 
 ### Instalação e configuração em Português:
 
@@ -157,6 +157,10 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
 
 == Changelog ==
+
+= 1.1.1 =
+* Tradução revisada.
+* Melhorada a integração de retorno automático para o status de "Aguardando pagamento".
 
 = 1.1 =
 * Adicionado retorno automático de dados.
