@@ -14,7 +14,7 @@
 /**
  * WooCommerce fallback notice.
  */
-function wcpagseguro_woocommerce_fallback_notice(){
+function wcpagseguro_woocommerce_fallback_notice() {
     $message = '<div class="error">';
         $message .= '<p>' . __( 'WooCommerce PagSeguro Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!' , 'wcpagseguro' ) . '</p>';
     $message .= '</div>';
