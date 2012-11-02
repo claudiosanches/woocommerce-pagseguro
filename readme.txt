@@ -23,7 +23,7 @@ Adicione o PagSeguro como método de pagamento em sua loja WooCommerce.
 
 [PagSeguro](https://pagseguro.uol.com.br/) é um metodo de pagamento brasileiro desenvolvido pela UOL.
 
-O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum isentivo do PagSeguro ou UOL. Nenhum dos desenvolvedores deste plugin possuem vinculos com estas duas empresas.
+O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum isentivo do PagSeguro ou da UOL. Nenhum dos desenvolvedores deste plugin possuem vinculos com estas duas empresas.
 
 Este plugin foi feito baseado na [documentação oficial do PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html).
 
