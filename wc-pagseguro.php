@@ -345,27 +345,27 @@ function wcpagseguro_gateway_load() {
                 $pagseguro_args_array[] = '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />';
             }
 
-            // $woocommerce->add_inline_js( '
-            //     jQuery("body").block({
-            //             message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ).'",
-            //             overlayCSS:
-            //             {
-            //                 background: "#fff",
-            //                 opacity:    0.6
-            //             },
-            //             css: {
-            //                 padding:         20,
-            //                 textAlign:       "center",
-            //                 color:           "#555",
-            //                 border:          "3px solid #aaa",
-            //                 backgroundColor: "#fff",
-            //                 cursor:          "wait",
-            //                 lineHeight:      "32px",
-            //                 zIndex:          "9999"
-            //             }
-            //         });
-            //     jQuery("#submit_pagseguro_payment_form").click();
-            // ' );
+            $woocommerce->add_inline_js( '
+                jQuery("body").block({
+                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ).'",
+                        overlayCSS:
+                        {
+                            background: "#fff",
+                            opacity:    0.6
+                        },
+                        css: {
+                            padding:         20,
+                            textAlign:       "center",
+                            color:           "#555",
+                            border:          "3px solid #aaa",
+                            backgroundColor: "#fff",
+                            cursor:          "wait",
+                            lineHeight:      "32px",
+                            zIndex:          "9999"
+                        }
+                    });
+                jQuery("#submit_pagseguro_payment_form").click();
+            ' );
 
             return '<form action="' . esc_url( $this->pagseguro_url ) . '" method="post" id="pagseguro_payment_form" target="_top">
                     ' . implode( '', $pagseguro_args_array ) . '
