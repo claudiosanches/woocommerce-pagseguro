@@ -158,6 +158,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 1.2.1 =
+* Corrigido o problema de produto com a descrição/nome muito grande no PagSeguro.
+
 = 1.2 =
 * Removida a classe do retorno automático que usava cURL em favor da função wp_remote_post().
 * Otimizado o retorno automático de dados.
@@ -182,6 +185,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 * Versão incial do plugin.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+* Fixed PagSeguro description max length
 
 = 1.1 =
 * Added automatic return data

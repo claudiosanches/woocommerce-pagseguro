@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.2
+ * Version: 1.2.1
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -271,7 +271,7 @@ function wcpagseguro_gateway_load() {
                 }
 
                 $pagseguro_args['itemId1']          = 1;
-                $pagseguro_args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . " - " . implode(', ', $item_names), 0, 110 );
+                $pagseguro_args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . " - " . implode( ', ', $item_names ), 0, 100 );
                 $pagseguro_args['itemQuantity1']    = 1;
                 $pagseguro_args['itemAmount1']      = number_format( $order->get_total() - $order->get_shipping() - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' );
 
@@ -302,7 +302,7 @@ function wcpagseguro_gateway_load() {
                             }
 
                             $pagseguro_args['itemId' . $item_loop] = $item_loop;
-                            $pagseguro_args['itemDescription' . $item_loop] = $item_name;
+                            $pagseguro_args['itemDescription' . $item_loop] = substr( $item_name, 0, 100 );
                             $pagseguro_args['itemQuantity' . $item_loop] = $item['qty'];
                             $pagseguro_args['itemAmount' . $item_loop] = $order->get_item_total( $item, false );
 
@@ -314,7 +314,7 @@ function wcpagseguro_gateway_load() {
                 if ( $order->get_shipping() > 0 ) {
                     $item_loop++;
                     $pagseguro_args['itemId' . $item_loop] = $item_loop;
-                    $pagseguro_args['itemDescription' . $item_loop] = __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title );
+                    $pagseguro_args['itemDescription' . $item_loop] = substr( __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title ), 0, 100 );
                     $pagseguro_args['itemQuantity' . $item_loop] = '1';
                     $pagseguro_args['itemAmount' . $item_loop] = number_format( $order->get_shipping(), 2, '.', '' );
                 }
@@ -345,27 +345,27 @@ function wcpagseguro_gateway_load() {
                 $pagseguro_args_array[] = '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />';
             }
 
-            $woocommerce->add_inline_js( '
-                jQuery("body").block({
-                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ).'",
-                        overlayCSS:
-                        {
-                            background: "#fff",
-                            opacity:    0.6
-                        },
-                        css: {
-                            padding:         20,
-                            textAlign:       "center",
-                            color:           "#555",
-                            border:          "3px solid #aaa",
-                            backgroundColor: "#fff",
-                            cursor:          "wait",
-                            lineHeight:      "32px",
-                            zIndex:          "9999"
-                        }
-                    });
-                jQuery("#submit_pagseguro_payment_form").click();
-            ' );
+            // $woocommerce->add_inline_js( '
+            //     jQuery("body").block({
+            //             message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ).'",
+            //             overlayCSS:
+            //             {
+            //                 background: "#fff",
+            //                 opacity:    0.6
+            //             },
+            //             css: {
+            //                 padding:         20,
+            //                 textAlign:       "center",
+            //                 color:           "#555",
+            //                 border:          "3px solid #aaa",
+            //                 backgroundColor: "#fff",
+            //                 cursor:          "wait",
+            //                 lineHeight:      "32px",
+            //                 zIndex:          "9999"
+            //             }
+            //         });
+            //     jQuery("#submit_pagseguro_payment_form").click();
+            // ' );
 
             return '<form action="' . esc_url( $this->pagseguro_url ) . '" method="post" id="pagseguro_payment_form" target="_top">
                     ' . implode( '', $pagseguro_args_array ) . '
