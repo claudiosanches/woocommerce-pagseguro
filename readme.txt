@@ -21,7 +21,23 @@ Please notice that WooCommerce must be installed and active.
 
 Adicione o PagSeguro como método de pagamento em sua loja WooCommerce.
 
+[PagSeguro](https://pagseguro.uol.com.br/) é um metodo de pagamento brasileiro desenvolvido pela UOL.
+
+O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum isentivo do PagSeguro ou UOL. Nenhum dos desenvolvedores deste plugin possuem vinculos com estas duas empresas.
+
+Este plugin foi feito baseado na [documentação oficial do PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html).
+
+= Instalação: =
+
 Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/).
+
+= Dúvidas? =
+
+Você pode esclarecer suas dúvidas usando:
+
+* A nossa sessão de [FAQ](http://wordpress.org/extend/plugins/woocommerce-pagseguro/faq/).
+* Criando um tópico no [forúm de ajuda do WordPress](http://wordpress.org/support/plugin/woocommerce-pagseguro) (apenas em inglês).
+* Ou entre em contato com os desenvolvedores do plugin em nossa [página](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
 
 == Installation ==
 
@@ -72,14 +88,6 @@ Utilizamos o token para valitar o retorno automático de dados.
 Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)".
 
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
-
-= Dúvidas? =
-
-Você pode esclarecer suas dúvidas usando:
-
-* A nossa sessão de [FAQ](http://wordpress.org/extend/plugins/woocommerce-pagseguro/faq/).
-* Criando um tópico no [forúm de ajuda do WordPress](http://wordpress.org/support/plugin/woocommerce-pagseguro) (apenas em inglês).
-* Ou entre em contato com os desenvolvedores do plugin em nossa [página](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
 
 == License ==
 
@@ -133,19 +141,15 @@ Confira os meios de pagamento em [PagSeguro - Meios de Pagamento e Parcelamento]
 
 = Quais são as taxas de transações que o PagSeguro cobra? =
 
-Para estas informações consulte a página do [PagSeguro - Taxas e Tarifas](https://pagseguro.uol.com.br/taxas_e_tarifas.jhtml).
+Para estas informações consulte: [PagSeguro - Taxas e Tarifas](https://pagseguro.uol.com.br/taxas_e_tarifas.jhtml).
 
 = Quais são os limites de recebimento do PagSeguro? =
 
-Consulte os limites em [PagSeguro - Tabela de Limites](https://pagseguro.uol.com.br/account/limits.jhtml).
+Consulte: [PagSeguro - Tabela de Limites](https://pagseguro.uol.com.br/account/limits.jhtml).
 
-= O plugin faz integração com PagSeguro? =
+= Como que plugin faz integração com PagSeguro? =
 
-No momento estamos enviando os pagamentos utilizando a API via HTML e o retorno automático de dados com a versão 1.0 da API.
-
-Isso significa que o plugin funciona normalmente, seus clientes irão conseguir realizar compras e o PagSeguro pode notificar a sua loja sobre os status de pagamento.
-
-Pretendemos no futuro adicionar como opção pagamento e retorno utilizando a API 2.0.
+Fazemos a integração baseada na documentação oficial do PagSeguro que pode ser encontrada em "[Guia de integração - PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html)"
 
 = Instalei o plugin, mas a opção de pagamento do PagSeguro some durante o checkout. O que fiz de errado? =
 
