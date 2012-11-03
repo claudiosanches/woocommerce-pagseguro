@@ -67,14 +67,13 @@ function wcpagseguro_gateway_load() {
          * @return void
          */
         public function __construct() {
-            global $woocommerce;
 
-            $this->id            = 'pagseguro';
-            $this->icon          = plugins_url( 'images/pagseguro.png', __FILE__ );
-            $this->has_fields    = false;
-            $this->pagseguro_url = 'https://pagseguro.uol.com.br/v2/checkout/payment.html';
-            $this->pagseguro_ipn = 'https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml';
-            $this->method_title  = __( 'PagSeguro', 'wcpagseguro' );
+            $this->id             = 'pagseguro';
+            $this->icon           = plugins_url( 'images/pagseguro.png', __FILE__ );
+            $this->has_fields     = false;
+            $this->payment_url    = 'https://pagseguro.uol.com.br/v2/checkout/payment.html';
+            $this->ipn_url        = 'https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml';
+            $this->method_title   = __( 'PagSeguro', 'wcpagseguro' );
 
             // Load the form fields.
             $this->init_form_fields();
@@ -83,14 +82,14 @@ function wcpagseguro_gateway_load() {
             $this->init_settings();
 
             // Define user set variables.
-            $this->title            = $this->settings['title'];
-            $this->description      = $this->settings['description'];
-            $this->email            = $this->settings['email'];
-            $this->token            = $this->settings['token'];
-            $this->invoice_prefix   = !empty( $this->settings['invoice_prefix'] ) ? $this->settings['invoice_prefix'] : 'WC-';
+            $this->title          = $this->settings['title'];
+            $this->description    = $this->settings['description'];
+            $this->email          = $this->settings['email'];
+            $this->token          = $this->settings['token'];
+            $this->invoice_prefix = !empty( $this->settings['invoice_prefix'] ) ? $this->settings['invoice_prefix'] : 'WC-';
 
             // Actions.
-            add_action( 'init', array( &$this, 'check_pagseguro_ipn_response' ) );
+            add_action( 'init', array( &$this, 'check_ipn_response' ) );
             add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
             add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
             add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
@@ -195,15 +194,12 @@ function wcpagseguro_gateway_load() {
         }
 
         /**
-         * Get PagSeguro Args.
+         * Generate the args to form.
          *
-         * @param mixed $order
+         * @param  array $order Order data.
          * @return array
          */
-        public function get_pagseguro_args( $order ) {
-            global $woocommerce;
-
-            $order_id = $order->id;
+        public function get_form_args( $order ) {
 
             // Fixed phone number.
             $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
@@ -218,13 +214,12 @@ function wcpagseguro_gateway_load() {
             // Fixed Address.
             $order->billing_address_1 = explode( ',', $order->billing_address_1 );
 
-            // Fixed PagSeguro Country.
+            // Fixed Country.
             if ( $order->billing_country == 'BR' ) {
                 $order->billing_country = 'BRA';
             }
 
-            // PagSeguro Args.
-            $pagseguro_args = array_merge(
+            $args = array_merge(
                 array(
                     'receiverEmail'             => $this->email,
                     'currency'                  => get_woocommerce_currency(),
@@ -247,7 +242,7 @@ function wcpagseguro_gateway_load() {
                     'extraAmount'               => $order->get_total_tax(),
 
                     // Payment Info.
-                    'reference'                 => $this->invoice_prefix . $order_id,
+                    'reference'                 => $this->invoice_prefix . $order->id,
                 ),
                 $phone_args
             );
@@ -256,7 +251,7 @@ function wcpagseguro_gateway_load() {
             if ( get_option('woocommerce_prices_include_tax') == 'yes' || $order->get_order_discount() > 0 ) {
 
                 // Discount.
-                $pagseguro_args['extraAmount'] = $order->get_order_discount();
+                $args['extraAmount'] = $order->get_order_discount();
 
                 // Don't pass items - pagseguro borks tax due to prices including tax.
                 // PagSeguro has no option for tax inclusive pricing sadly. Pass 1 item for the order items overall.
@@ -270,16 +265,16 @@ function wcpagseguro_gateway_load() {
                     }
                 }
 
-                $pagseguro_args['itemId1']          = 1;
-                $pagseguro_args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . " - " . implode( ', ', $item_names ), 0, 100 );
-                $pagseguro_args['itemQuantity1']    = 1;
-                $pagseguro_args['itemAmount1']      = number_format( $order->get_total() - $order->get_shipping() - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' );
+                $args['itemId1']          = 1;
+                $args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . " - " . implode( ', ', $item_names ), 0, 100 );
+                $args['itemQuantity1']    = 1;
+                $args['itemAmount1']      = number_format( $order->get_total() - $order->get_shipping() - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' );
 
                 if ( ( $order->get_shipping() + $order->get_shipping_tax() ) > 0 ) {
-                    $pagseguro_args['itemId2'] = 2;
-                    $pagseguro_args['itemDescription2'] = __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title );
-                    $pagseguro_args['itemQuantity2']  = '1';
-                    $pagseguro_args['itemAmount2']    = number_format( $order->get_shipping() + $order->get_shipping_tax() , 2, '.', '' );
+                    $args['itemId2']          = 2;
+                    $args['itemDescription2'] = __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title );
+                    $args['itemQuantity2']    = '1';
+                    $args['itemAmount2']      = number_format( $order->get_shipping() + $order->get_shipping_tax() , 2, '.', '' );
                 }
 
             } else {
@@ -301,10 +296,10 @@ function wcpagseguro_gateway_load() {
                                 $item_name .= ' (' . $meta . ')';
                             }
 
-                            $pagseguro_args['itemId' . $item_loop] = $item_loop;
-                            $pagseguro_args['itemDescription' . $item_loop] = substr( $item_name, 0, 100 );
-                            $pagseguro_args['itemQuantity' . $item_loop] = $item['qty'];
-                            $pagseguro_args['itemAmount' . $item_loop] = $order->get_item_total( $item, false );
+                            $args['itemId' . $item_loop]          = $item_loop;
+                            $args['itemDescription' . $item_loop] = substr( $item_name, 0, 100 );
+                            $args['itemQuantity' . $item_loop]    = $item['qty'];
+                            $args['itemAmount' . $item_loop]      = $order->get_item_total( $item, false );
 
                         }
                     }
@@ -313,41 +308,41 @@ function wcpagseguro_gateway_load() {
                 // Shipping Cost item.
                 if ( $order->get_shipping() > 0 ) {
                     $item_loop++;
-                    $pagseguro_args['itemId' . $item_loop] = $item_loop;
-                    $pagseguro_args['itemDescription' . $item_loop] = substr( __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title ), 0, 100 );
-                    $pagseguro_args['itemQuantity' . $item_loop] = '1';
-                    $pagseguro_args['itemAmount' . $item_loop] = number_format( $order->get_shipping(), 2, '.', '' );
+                    $args['itemId' . $item_loop]          = $item_loop;
+                    $args['itemDescription' . $item_loop] = substr( __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title ), 0, 100 );
+                    $args['itemQuantity' . $item_loop]    = '1';
+                    $args['itemAmount' . $item_loop]      = number_format( $order->get_shipping(), 2, '.', '' );
                 }
 
             }
 
-            $pagseguro_args = apply_filters( 'woocommerce_pagseguro_args', $pagseguro_args );
+            $args = apply_filters( 'woocommerce_pagseguro_args', $args );
 
-            return $pagseguro_args;
+            return $args;
         }
 
         /**
-         * Generate the PagSeguro button link.
+         * Generate the form.
          *
          * @param mixed $order_id
          * @return string
          */
-        public function generate_pagseguro_form( $order_id ) {
+        public function generate_form( $order_id ) {
             global $woocommerce;
 
             $order = new WC_Order( $order_id );
 
-            $pagseguro_args = $this->get_pagseguro_args( $order );
+            $args = $this->get_form_args( $order );
 
-            $pagseguro_args_array = array();
+            $args_array = array();
 
-            foreach ( $pagseguro_args as $key => $value ) {
-                $pagseguro_args_array[] = '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />';
+            foreach ( $args as $key => $value ) {
+                $args_array[] = '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />';
             }
 
             $woocommerce->add_inline_js( '
                 jQuery("body").block({
-                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />'.__( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ).'",
+                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />' . __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) . '",
                         overlayCSS:
                         {
                             background: "#fff",
@@ -364,12 +359,12 @@ function wcpagseguro_gateway_load() {
                             zIndex:          "9999"
                         }
                     });
-                jQuery("#submit_pagseguro_payment_form").click();
+                jQuery("#submit-payment-form").click();
             ' );
 
-            return '<form action="' . esc_url( $this->pagseguro_url ) . '" method="post" id="pagseguro_payment_form" target="_top">
-                    ' . implode( '', $pagseguro_args_array ) . '
-                    <input type="submit" class="button alt" id="submit_pagseguro_payment_form" value="' . __( 'Pay via PagSeguro', 'wcpagseguro' ).'" /> <a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'wcpagseguro' ) . '</a>
+            return '<form action="' . esc_url( $this->payment_url ) . '" method="post" id="payment-form" target="_top">
+                    ' . implode( '', $args_array ) . '
+                    <input type="submit" class="button alt" id="submit-payment-form" value="' . __( 'Pay via PagSeguro', 'wcpagseguro' ) . '" /> <a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'wcpagseguro' ) . '</a>
                 </form>';
 
         }
@@ -399,22 +394,20 @@ function wcpagseguro_gateway_load() {
         public function receipt_page( $order ) {
             global $woocommerce;
 
-            echo '<p>' . __( 'Thank you for your order, please click the button below to pay with PagSeguro.', 'wcpagseguro' ).'</p>';
+            echo '<p>' . __( 'Thank you for your order, please click the button below to pay with PagSeguro.', 'wcpagseguro' ) . '</p>';
 
-            echo $this->generate_pagseguro_form( $order );
+            echo $this->generate_form( $order );
 
             // Remove cart.
             $woocommerce->cart->empty_cart();
         }
 
         /**
-         * Check PagSeguro ipn validity.
+         * Check ipn validity.
          *
          * @return bool
          */
-        function check_ipn_request_is_valid() {
-            global $woocommerce;
-
+        public function check_ipn_request_is_valid() {
             $postdata = 'Comando=validar&Token=' . $this->token;
 
             // Get recieved values from post data.
@@ -424,7 +417,7 @@ function wcpagseguro_gateway_load() {
                 $postdata .= '&' . $key . '=' . $value;
             }
 
-            // Send back post vars to PagSeguro.
+            // Send back post vars.
             $params = array(
                 'body'          => $postdata,
                 'sslverify'     => false,
@@ -432,7 +425,7 @@ function wcpagseguro_gateway_load() {
             );
 
             // Post back to get a response.
-            $response = wp_remote_post( $this->pagseguro_ipn, $params );
+            $response = wp_remote_post( $this->ipn_url, $params );
 
             // Check to see if the request was valid.
             if ( !is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 && ( strcmp( $response['body'], 'VERIFICADO' ) == 0 ) ) {
@@ -444,11 +437,11 @@ function wcpagseguro_gateway_load() {
         }
 
         /**
-         * Check PagSeguro API Response.
+         * Check API Response.
          *
          * @return void
          */
-        public function check_pagseguro_ipn_response() {
+        public function check_ipn_response() {
 
             if ( isset( $_POST['Referencia'] ) ) {
 
@@ -470,9 +463,7 @@ function wcpagseguro_gateway_load() {
 
                     }
                 }
-
             }
-
         }
 
         /**
@@ -482,7 +473,6 @@ function wcpagseguro_gateway_load() {
          * @return void
          */
         public function successful_request( $posted ) {
-            global $woocommerce;
 
             if ( !empty( $posted['Referencia'] ) ) {
                 $order_key = $posted['Referencia'];
@@ -560,7 +550,7 @@ function wcpagseguro_gateway_load() {
         }
 
         /**
-         * Adds error message when not configured the PagSeguro email.
+         * Adds error message when not configured the email.
          *
          * @return string Error Mensage.
          */
@@ -573,7 +563,7 @@ function wcpagseguro_gateway_load() {
         }
 
         /**
-         * Adds error message when not configured the PagSeguro token.
+         * Adds error message when not configured the token.
          *
          * @return string Error Mensage.
          */
@@ -597,7 +587,7 @@ function wcpagseguro_hidden_when_is_outside_brasil( $available_gateways ) {
 
     if ( isset( $_REQUEST['country'] ) && $_REQUEST['country'] != 'BR' ) {
 
-        // remove standard shipping option.
+        // Remove standard shipping option.
         unset( $available_gateways['pagseguro'] );
     }
 
