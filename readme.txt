@@ -21,9 +21,9 @@ Please notice that WooCommerce must be installed and active.
 
 Adicione o PagSeguro como método de pagamento em sua loja WooCommerce.
 
-[PagSeguro](https://pagseguro.uol.com.br/) é um metodo de pagamento brasileiro desenvolvido pela UOL.
+[PagSeguro](https://pagseguro.uol.com.br/) é um método de pagamento brasileiro desenvolvido pela UOL.
 
-O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum isentivo do PagSeguro ou da UOL. Nenhum dos desenvolvedores deste plugin possuem vinculos com estas duas empresas.
+O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum isentivo do PagSeguro ou da UOL. Nenhum dos desenvolvedores deste plugin possuem vínculos com estas duas empresas.
 
 Este plugin foi feito baseado na [documentação oficial do PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html).
 
@@ -84,7 +84,7 @@ Com o plugin instalado acesse o admin do WordPress e entre em "WooCommerce" > "C
 
 Habilite o PagSeguro, adicione o seu e-mail e o token do PagSeguro.
 
-Utilizamos o token para valitar o retorno automático de dados.
+Utilizamos o token para validar o retorno automático de dados.
 Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)".
 
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
