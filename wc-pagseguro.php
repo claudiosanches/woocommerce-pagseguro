@@ -251,7 +251,11 @@ function wcpagseguro_gateway_load() {
             if ( get_option('woocommerce_prices_include_tax') == 'yes' || $order->get_order_discount() > 0 ) {
 
                 // Discount.
-                $args['extraAmount'] = '-' . $order->get_order_discount();
+                if ( $order->get_order_discount() > 0 ) {
+                    $args['extraAmount'] = '-' . $order->get_order_discount();
+                } else {
+                    $args['extraAmount'] = '';
+                }
 
                 // Don't pass items - pagseguro borks tax due to prices including tax.
                 // PagSeguro has no option for tax inclusive pricing sadly. Pass 1 item for the order items overall.

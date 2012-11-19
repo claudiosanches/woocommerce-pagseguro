@@ -164,7 +164,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 = 1.2.2 - 19/11/2012 =
 
-* Corrigido problema com cupom (descontos no carrinho).
+* Corrigido problema com cupons de desconto (descontos no carrinho).
 
 = 1.2.1 =
 
