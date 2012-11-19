@@ -201,6 +201,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
+= 1.2.2 =
+
+* Fixed issue with discount coupons.
+
 = 1.2.1 =
 
 * Fixed PagSeguro description max length
