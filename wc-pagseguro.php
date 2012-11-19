@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.2.1
+ * Version: 1.2.2
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -251,7 +251,7 @@ function wcpagseguro_gateway_load() {
             if ( get_option('woocommerce_prices_include_tax') == 'yes' || $order->get_order_discount() > 0 ) {
 
                 // Discount.
-                $args['extraAmount'] = $order->get_order_discount();
+                $args['extraAmount'] = '-' . $order->get_order_discount();
 
                 // Don't pass items - pagseguro borks tax due to prices including tax.
                 // PagSeguro has no option for tax inclusive pricing sadly. Pass 1 item for the order items overall.

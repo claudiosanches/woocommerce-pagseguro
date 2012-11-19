@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,47 +162,63 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 1.2.2 - 19/11/2012 =
+
+* Corrigido problema com cupom (descontos no carrinho).
+
 = 1.2.1 =
+
 * Corrigido o problema de produto com a descrição/nome muito grande no PagSeguro.
 
 = 1.2 =
+
 * Removida a classe do retorno automático que usava cURL em favor da função wp_remote_post().
 * Otimizado o retorno automático de dados.
 
 = 1.1.1 =
+
 * Tradução revisada.
 * Melhorada a integração de retorno automático para o status de "Aguardando pagamento".
 
 = 1.1 =
+
 * Adicionado retorno automático de dados.
 * Melhorado o sistema de notificações.
 * Adicionada classe para validar o retorno automático de dados.
 * Adicionado campo de token nas configurações do plugin (necessário para o retorno automático).
 
 = 1.0.2 =
+
 * Adicionada função para abater estoque automáticamente quando o cliente vai para o PagSeguro.
 
 = 1.0.1 =
+
 * Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
 
 = 1.0 =
+
 * Versão incial do plugin.
 
 == Upgrade Notice ==
 
 = 1.2.1 =
+
 * Fixed PagSeguro description max length
 
 = 1.1 =
+
 * Added automatic return data
 
 = 1.0.2 =
+
 * Added function that adds the stock
 
 = 1.0.1 =
+
 * Recommended/Recomendado
 
 = 1.0 =
+
 * Enjoy it.
 
 == Screenshots ==
