@@ -494,7 +494,9 @@ function wcpagseguro_gateway_load() {
             // Check to see if the request was valid.
             if ( !is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 && ( strcmp( $response['body'], 'VERIFICADO' ) == 0 ) ) {
 
-                $this->log->add( 'pagseguro', 'Received valid IPN response from PagSeguro' );
+                if ( $this->debug == 'yes' ) {
+                    $this->log->add( 'pagseguro', 'Received valid IPN response from PagSeguro' );
+                }
 
                 return true;
             } else {
