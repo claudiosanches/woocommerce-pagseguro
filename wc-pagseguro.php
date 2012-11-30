@@ -559,7 +559,7 @@ function wcpagseguro_gateway_load() {
                     $order_status = sanitize_title( $posted['StatusTransacao'] );
 
                     if ( $this->debug == 'yes' ) {
-                        $this->log->add( 'PagSeguro', 'Payment status from order #' . $order->id . ': ' . $posted['StatusTransacao'] );
+                        $this->log->add( 'pagseguro', 'Payment status from order #' . $order->id . ': ' . $posted['StatusTransacao'] );
                     }
 
                     switch ( $order_status ) {
