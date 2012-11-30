@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.2.2
+ * Version: 1.3
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -67,6 +67,7 @@ function wcpagseguro_gateway_load() {
          * @return void
          */
         public function __construct() {
+            global $woocommerce;
 
             $this->id             = 'pagseguro';
             $this->icon           = plugins_url( 'images/pagseguro.png', __FILE__ );
@@ -87,12 +88,19 @@ function wcpagseguro_gateway_load() {
             $this->email          = $this->settings['email'];
             $this->token          = $this->settings['token'];
             $this->invoice_prefix = !empty( $this->settings['invoice_prefix'] ) ? $this->settings['invoice_prefix'] : 'WC-';
+            $this->valid_address  = $this->settings['valid_address'];
+            $this->debug          = $this->settings['debug'];
 
             // Actions.
             add_action( 'init', array( &$this, 'check_ipn_response' ) );
             add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
             add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
             add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
+            add_filter( 'woocommerce_available_payment_gateways', array( &$this, 'hides_when_is_outside_brazil' ) );
+
+            if ( $this->valid_address == 'yes' ) {
+                add_action( 'woocommerce_checkout_process', array( &$this, 'valid_address' ) );
+            }
 
             // Valid for use.
             $this->enabled = ( 'yes' == $this->settings['enabled'] ) && !empty( $this->email ) && !empty( $this->token ) && $this->is_valid_for_use();
@@ -102,6 +110,11 @@ function wcpagseguro_gateway_load() {
 
             // Checks if token is not empty.
             $this->token == '' ? add_action( 'admin_notices', array( &$this, 'token_missing_message' ) ) : '';
+
+            // Active logs.
+            if ( $this->debug == 'yes' ) {
+                $this->log = $woocommerce->logger();
+            }
         }
 
         /**
@@ -188,6 +201,30 @@ function wcpagseguro_gateway_load() {
                     'type' => 'text',
                     'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'wcpagseguro' ),
                     'default' => 'WC-'
+                ),
+                'form_data' => array(
+                    'title' => __( 'Form Data', 'wcpagseguro' ),
+                    'type' => 'title',
+                    'description' => '',
+                ),
+                'valid_address' => array(
+                    'title' => __( 'Validate Address', 'wcpagseguro' ),
+                    'type' => 'checkbox',
+                    'label' => __( 'Enable validation', 'wcpagseguro' ),
+                    'default' => 'yes',
+                    'description' => __( 'Validates the customer\'s address in the format "street example, number".', 'wcpagseguro' ),
+                ),
+                'testing' => array(
+                    'title' => __( 'Gateway Testing', 'wcpagseguro' ),
+                    'type' => 'title',
+                    'description' => '',
+                ),
+                'debug' => array(
+                    'title' => __( 'Debug Log', 'wcpagseguro' ),
+                    'type' => 'checkbox',
+                    'label' => __( 'Enable logging', 'wcpagseguro' ),
+                    'default' => 'no',
+                    'description' => __( 'Log PagSeguro events, such as API requests, inside <code>woocommerce/logs/pagseguro.txt</code>', 'wcpagseguro' ),
                 )
             );
 
@@ -212,7 +249,18 @@ function wcpagseguro_gateway_load() {
             $order->billing_postcode = str_replace( array( '-', ' ' ), '', $order->billing_postcode );
 
             // Fixed Address.
-            $order->billing_address_1 = explode( ',', $order->billing_address_1 );
+            if ( $this->valid_address == 'yes' ) {
+                $order->billing_address_1 = explode( ',', $order->billing_address_1 );
+                $address = array(
+                    'shippingAddressStreet'     => $order->billing_address_1[0],
+                    'shippingAddressNumber'     => (int) $order->billing_address_1[1],
+                );
+            } else {
+                $address = array(
+                    'shippingAddressStreet'     => $order->billing_address_1,
+                );
+            }
+
 
             // Fixed Country.
             if ( $order->billing_country == 'BR' ) {
@@ -231,8 +279,6 @@ function wcpagseguro_gateway_load() {
 
                     // Address info.
                     'shippingAddressPostalCode' => $order->billing_postcode,
-                    'shippingAddressStreet'     => $order->billing_address_1[0],
-                    'shippingAddressNumber'     => (int) $order->billing_address_1[1],
                     'shippingAddressComplement' => $order->billing_address_2,
                     'shippingAddressCity'       => $order->billing_city,
                     'shippingAddressState'      => $order->billing_state,
@@ -244,7 +290,8 @@ function wcpagseguro_gateway_load() {
                     // Payment Info.
                     'reference'                 => $this->invoice_prefix . $order->id,
                 ),
-                $phone_args
+                $phone_args,
+                $address
             );
 
             // If prices include tax or have order discounts, send the whole order as a single item.
@@ -338,6 +385,10 @@ function wcpagseguro_gateway_load() {
 
             $args = $this->get_form_args( $order );
 
+            if ( $this->debug == 'yes' ) {
+                $this->log->add( 'pagseguro', 'Payment arguments for order #' . $order_id . ': ' . print_r( $args, true ) );
+            }
+
             $args_array = array();
 
             foreach ( $args as $key => $value ) {
@@ -412,6 +463,11 @@ function wcpagseguro_gateway_load() {
          * @return bool
          */
         public function check_ipn_request_is_valid() {
+
+            if ( $this->debug == 'yes') {
+                $this->log->add( 'pagseguro', 'Checking IPN request...' );
+            }
+
             $postdata = 'Comando=validar&Token=' . $this->token;
 
             // Get recieved values from post data.
@@ -431,10 +487,20 @@ function wcpagseguro_gateway_load() {
             // Post back to get a response.
             $response = wp_remote_post( $this->ipn_url, $params );
 
+            if ( $this->debug == 'yes' ) {
+                $this->log->add( 'pagseguro', 'IPN Response: ' . print_r( $response, true ) );
+            }
+
             // Check to see if the request was valid.
             if ( !is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 && ( strcmp( $response['body'], 'VERIFICADO' ) == 0 ) ) {
 
+                $this->log->add( 'pagseguro', 'Received valid IPN response from PagSeguro' );
+
                 return true;
+            } else {
+                if ( $this->debug == 'yes' ) {
+                    $this->log->add( 'pagseguro', 'Received invalid IPN response from PagSeguro.' );
+                }
             }
 
             return false;
@@ -489,6 +555,10 @@ function wcpagseguro_gateway_load() {
                 if ( $order->id === $order_id ) {
 
                     $order_status = sanitize_title( $posted['StatusTransacao'] );
+
+                    if ( $this->debug == 'yes' ) {
+                        $this->log->add( 'PagSeguro', 'Payment status from order #' . $order->id . ': ' . $posted['StatusTransacao'] );
+                    }
 
                     switch ( $order_status ) {
                         case 'completo':
@@ -579,44 +649,46 @@ function wcpagseguro_gateway_load() {
             echo $message;
         }
 
-    } // class WC_PagSeguro_Gateway.
-} // function wcpagseguro_gateway_load.
+        /**
+         * Hides the PagSeguro with payment method with the customer lives outside Brazil
+         *
+         * @param  array $available_gateways Default Available Gateways.
+         *
+         * @return array                    New Available Gateways.
+         */
+        function hides_when_is_outside_brazil( $available_gateways ) {
 
-/**
- * Hidden when the purchase is outside the Brazil.
- */
-add_filter( 'woocommerce_available_payment_gateways', 'wcpagseguro_hidden_when_is_outside_brasil' );
+            if ( isset( $_REQUEST['country'] ) && $_REQUEST['country'] != 'BR' ) {
 
-function wcpagseguro_hidden_when_is_outside_brasil( $available_gateways ) {
+                // Remove standard shipping option.
+                unset( $available_gateways['pagseguro'] );
+            }
 
-    if ( isset( $_REQUEST['country'] ) && $_REQUEST['country'] != 'BR' ) {
-
-        // Remove standard shipping option.
-        unset( $available_gateways['pagseguro'] );
-    }
-
-    return $available_gateways;
-}
-
-/**
- * Process billing fields in checkout.
- */
-add_action( 'woocommerce_checkout_process', 'wcpagseguro_checkout_valid_fields' );
-
-function wcpagseguro_checkout_valid_fields() {
-    global $woocommerce;
-
-    // Valid address format.
-    if ( $_POST['billing_address_1'] ) {
-
-        $address = $_POST['billing_address_1'];
-        $address = str_replace( ' ', '', $address );
-        $pattern = '/([^\,\d]*),([0-9]*)/';
-        $results = preg_match_all($pattern, $address, $out);
-
-        if ( empty( $out[2] ) || !is_numeric( $out[2][0] ) ) {
-            $woocommerce->add_error( __( '<strong>Address</strong> format is invalid. Example of correct format: "Av. Paulista, 460"', 'wcpagseguro' ) );
+            return $available_gateways;
         }
 
-    }
-}
+        /**
+         * Valid address for street and number.
+         *
+         * @return void
+         */
+        function valid_address() {
+            global $woocommerce;
+
+            // Valid address format.
+            if ( $_POST['billing_address_1'] ) {
+
+                $address = $_POST['billing_address_1'];
+                $address = str_replace( ' ', '', $address );
+                $pattern = '/([^\,\d]*),([0-9]*)/';
+                $results = preg_match_all($pattern, $address, $out);
+
+                if ( empty( $out[2] ) || !is_numeric( $out[2][0] ) ) {
+                    $woocommerce->add_error( __( '<strong>Address</strong> format is invalid. Example of correct format: "Av. Paulista, 460"', 'wcpagseguro' ) );
+                }
+
+            }
+        }
+
+    } // class WC_PagSeguro_Gateway.
+} // function wcpagseguro_gateway_load.

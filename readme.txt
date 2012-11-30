@@ -3,7 +3,7 @@ Contributors: claudiosanches, Gabriel Reguly
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.2.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,9 +101,11 @@ You should have received a copy of the GNU General Public License along with Aut
 == Frequently Asked Questions ==
 
 = What is the plugin license? =
+
 * This plugin is released under a GPL license.
 
 = What is needed to use this plugin? =
+
 * WooCommerce installed and active
 * Only one account on [PagSeguro](http://pagseguro.uol.com.br/ "PagSeguro").
 
@@ -162,6 +164,11 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 1.3 - 30/11/2012 =
+
+* Adicionada opção para logs de erro.
+* Adiciona opção para validar ou não endereço (quando ativo força cliente a informar os dados corretamente e ir direto para a página de pagamento do PagSeguro).
+
 = 1.2.2 - 19/11/2012 =
 
 * Corrigido problema com cupons de desconto (descontos no carrinho).
@@ -200,6 +207,11 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 * Versão incial do plugin.
 
 == Upgrade Notice ==
+
+= 1.3 =
+
+* Added error logs.
+* Added option to address validation
 
 = 1.2.2 =
 

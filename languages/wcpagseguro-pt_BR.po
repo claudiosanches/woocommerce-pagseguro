@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro v1.2\n"
+"Project-Id-Version: WooCommerce PagSeguro v1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2012-10-28 14:11:17+0000\n"
+"PO-Revision-Date: 2012-11-30 16:46:54+0000\n"
 "Last-Translator: Gabriel Reguly <gabriel@ppgr.com.br>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,115 +20,115 @@ msgstr ""
 "X-Textdomain-Support: yes"
 
 #: wc-pagseguro.php:77
-#: wc-pagseguro.php:167
+#: wc-pagseguro.php:179
 #@ wcpagseguro
 msgid "PagSeguro"
 msgstr "PagSeguro"
 
-#: wc-pagseguro.php:130
+#: wc-pagseguro.php:142
 #@ wcpagseguro
 msgid "PagSeguro standard"
 msgstr "PagSeguro padrão"
 
-#: wc-pagseguro.php:131
+#: wc-pagseguro.php:143
 #@ wcpagseguro
 msgid "PagSeguro standard works by sending the user to PagSeguro to enter their payment information."
 msgstr "PagSeguro padrão funciona enviando o usuário para o site do PagSeguro, onde ele irá fazer o pagamento."
 
-#: wc-pagseguro.php:137
+#: wc-pagseguro.php:149
 #@ wcpagseguro
 msgid "Gateway Disabled"
 msgstr "Gateway desabilitado"
 
-#: wc-pagseguro.php:137
+#: wc-pagseguro.php:149
 #@ wcpagseguro
 msgid "PagSeguro does not support your store currency."
 msgstr "PagSeguro não suporta a moeda atual utilizada na sua loja."
 
-#: wc-pagseguro.php:158
+#: wc-pagseguro.php:170
 #@ wcpagseguro
 msgid "Enable/Disable"
 msgstr "Habilita/Desabilita"
 
-#: wc-pagseguro.php:160
+#: wc-pagseguro.php:172
 #@ wcpagseguro
 msgid "Enable PagSeguro standard"
 msgstr "Habilitar PagSeguro padrão"
 
-#: wc-pagseguro.php:164
+#: wc-pagseguro.php:176
 #@ wcpagseguro
 msgid "Title"
 msgstr "Título"
 
-#: wc-pagseguro.php:166
+#: wc-pagseguro.php:178
 #@ wcpagseguro
 msgid "This controls the title which the user sees during checkout."
 msgstr "Isto controla o título que o usuário vê durante o checkout."
 
-#: wc-pagseguro.php:170
+#: wc-pagseguro.php:182
 #@ wcpagseguro
 msgid "Description"
 msgstr "Descrição"
 
-#: wc-pagseguro.php:172
+#: wc-pagseguro.php:184
 #@ wcpagseguro
 msgid "This controls the description which the user sees during checkout."
 msgstr "Isso controla a descrição que o usuário vê durante o checkout."
 
-#: wc-pagseguro.php:173
-#: wc-pagseguro.php:372
+#: wc-pagseguro.php:185
+#: wc-pagseguro.php:422
 #@ wcpagseguro
 msgid "Pay via PagSeguro"
 msgstr "Pagar com PagSeguro"
 
-#: wc-pagseguro.php:176
+#: wc-pagseguro.php:188
 #@ wcpagseguro
 msgid "PagSeguro Email"
 msgstr "Email cadastrado no PagSeguro "
 
-#: wc-pagseguro.php:178
+#: wc-pagseguro.php:190
 #@ wcpagseguro
 msgid "Please enter your PagSeguro email address; this is needed in order to take payment."
 msgstr "Por favor digite o seu endereço de email do PagSeguro, que é necessário para receber o pagamento."
 
-#: wc-pagseguro.php:188
+#: wc-pagseguro.php:200
 #@ wcpagseguro
 msgid "Invoice Prefix"
 msgstr "Prefixo de pedido"
 
-#: wc-pagseguro.php:190
+#: wc-pagseguro.php:202
 #@ wcpagseguro
 msgid "Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number."
 msgstr "Por favor informe um prefixo para utilizar com os números de pedidos. Caso você utilize sua conta do PagSeguro em mais de uma loja, procure utilizar um prefixo único para cada loja."
 
-#: wc-pagseguro.php:274
+#: wc-pagseguro.php:320
 #, php-format
 #@ wcpagseguro
 msgid "Order %s"
 msgstr "Pedido %s"
 
-#: wc-pagseguro.php:280
-#: wc-pagseguro.php:317
+#: wc-pagseguro.php:326
+#: wc-pagseguro.php:363
 #@ wcpagseguro
 msgid "Shipping via"
 msgstr "Entrega via"
 
-#: wc-pagseguro.php:350
+#: wc-pagseguro.php:400
 #@ wcpagseguro
 msgid "Thank you for your order. We are now redirecting you to PagSeguro to make payment."
 msgstr "Obrigado por fazer seu pedido. Agora estamos redirecionando você para o PagSeguro para efetuar o pagamento."
 
-#: wc-pagseguro.php:372
+#: wc-pagseguro.php:422
 #@ wcpagseguro
 msgid "Cancel order &amp; restore cart"
 msgstr "Cancelar pedido e restaurar carrinho"
 
-#: wc-pagseguro.php:402
+#: wc-pagseguro.php:452
 #@ wcpagseguro
 msgid "Thank you for your order, please click the button below to pay with PagSeguro."
 msgstr "Obrigado por seu pedido, por favor clique no botão abaixo para pagar com PagSeguro."
 
-#: wc-pagseguro.php:624
+#: wc-pagseguro.php:687
 #@ wcpagseguro
 msgid "<strong>Address</strong> format is invalid. Example of correct format: \"Av. Paulista, 460\""
 msgstr "<strong>Endereço</strong> com formato inválido. Examplo de endereço correto: \"Av. Paulista, 460\""
@@ -168,75 +168,75 @@ msgstr "http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/"
 msgid "WooCommerce PagSeguro Gateway depends on the last version of <a href=\"http://wordpress.org/extend/plugins/woocommerce/\">WooCommerce</a> to work!"
 msgstr "WooCommerce PagSeguro Gateway precisa da última versão do <a href=\"http://wordpress.org/extend/plugins/woocommerce/\">WooCommerce</a> para funcionar!"
 
-#: wc-pagseguro.php:182
+#: wc-pagseguro.php:194
 #@ wcpagseguro
 msgid "PagSeguro Token"
 msgstr "Token do PagSeguro"
 
-#: wc-pagseguro.php:469
+#: wc-pagseguro.php:532
 #@ wcpagseguro
 msgid "PagSeguro Request Failure"
 msgstr "PagSeguro falha do pedido"
 
-#: wc-pagseguro.php:506
+#: wc-pagseguro.php:570
 #@ wcpagseguro
 msgid "PagSeguro Transaction ID"
 msgstr "PagSeguro: ID da transação"
 
-#: wc-pagseguro.php:513
+#: wc-pagseguro.php:577
 #@ wcpagseguro
 msgid "Payer email"
 msgstr "E-mail do comprador"
 
-#: wc-pagseguro.php:520
+#: wc-pagseguro.php:584
 #@ wcpagseguro
 msgid "Payer name"
 msgstr "Nome do comprador"
 
-#: wc-pagseguro.php:527
+#: wc-pagseguro.php:591
 #@ wcpagseguro
 msgid "Payment type"
 msgstr "Tipo de pagamento"
 
-#: wc-pagseguro.php:538
+#: wc-pagseguro.php:602
 #@ wcpagseguro
 msgid "Awaiting payment."
 msgstr "Aguardando pagamento."
 
-#: wc-pagseguro.php:542
+#: wc-pagseguro.php:606
 #@ wcpagseguro
 msgid "Payment approved, awaiting compensation."
 msgstr "Pagamento aprovado, aguardando compensação."
 
-#: wc-pagseguro.php:546
+#: wc-pagseguro.php:610
 #@ wcpagseguro
 msgid "Payment approved, under review by PagSeguro."
 msgstr "Pagamento aprovado, em análise pelo PagSeguro."
 
-#: wc-pagseguro.php:550
+#: wc-pagseguro.php:614
 #@ wcpagseguro
 msgid "Payment canceled by PagSeguro."
 msgstr "Pagamento cancelado pelo PagSeguro."
 
-#: wc-pagseguro.php:569
+#: wc-pagseguro.php:633
 #, php-format
 #@ wcpagseguro
 msgid "<strong>Gateway Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s"
 msgstr "<strong>Método de pagamento desativado</strong> Você deve informar o seu endereço de e-mail no PagSeguro. %sClique aqui para configurar!%s"
 
-#: wc-pagseguro.php:582
+#: wc-pagseguro.php:646
 #, php-format
 #@ wcpagseguro
 msgid "<strong>Gateway Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s"
 msgstr "<strong>Método de pagamento desativado</strong> Você deve informar o seu token do PagSeguro. %sClique aqui para configurar!%s"
 
-#: wc-pagseguro.php:184
+#: wc-pagseguro.php:196
 #, php-format
 #@ wcpagseguro
 msgid "Please enter your PagSeguro token; is necessary to process the payment and notifications. Is possible generate a new token %shere%s"
 msgstr "Digite seu token do PagSeguro; é necessário para processar o pagamento e as notificações de status da compra. É possível gerar um novo token %saqui%s"
 
-#: wc-pagseguro.php:533
+#: wc-pagseguro.php:597
 #@ wcpagseguro
 msgid "Payment completed."
 msgstr "Pagamento concluído."
@@ -244,6 +244,46 @@ msgstr "Pagamento concluído."
 #. translators: plugin header field 'Version'
 #: wc-pagseguro.php:0
 #@ wcpagseguro
-msgid "1.2"
-msgstr "1.2"
+msgid "1.3"
+msgstr "1.3"
+
+#: wc-pagseguro.php:206
+#@ wcpagseguro
+msgid "Form Data"
+msgstr "Dados do formulário"
+
+#: wc-pagseguro.php:211
+#@ wcpagseguro
+msgid "Validate Address"
+msgstr "Validar o Endereço"
+
+#: wc-pagseguro.php:213
+#@ wcpagseguro
+msgid "Enable validation"
+msgstr "Ativar validação"
+
+#: wc-pagseguro.php:215
+#@ wcpagseguro
+msgid "Validates the customer's address in the format \"street example, number\"."
+msgstr "Valida o endereço do cliente no formato \"Rua exemplo, número\"."
+
+#: wc-pagseguro.php:218
+#@ wcpagseguro
+msgid "Gateway Testing"
+msgstr "Teste de Gateway"
+
+#: wc-pagseguro.php:223
+#@ wcpagseguro
+msgid "Debug Log"
+msgstr "Log de depuração"
+
+#: wc-pagseguro.php:225
+#@ wcpagseguro
+msgid "Enable logging"
+msgstr "Habilitar log"
+
+#: wc-pagseguro.php:227
+#@ wcpagseguro
+msgid "Log PagSeguro events, such as API requests, inside <code>woocommerce/logs/pagseguro.txt</code>"
+msgstr "Registrar log de eventos do PagSeguro, como solicitações de API, dentro do arquivo <code>woocommerce/logs/pagseguro.txt</code>"
 
