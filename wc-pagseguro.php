@@ -96,7 +96,6 @@ function wcpagseguro_gateway_load() {
             add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
             add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
             add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
-            add_filter( 'woocommerce_available_payment_gateways', array( &$this, 'hides_when_is_outside_brazil' ) );
 
             if ( $this->valid_address == 'yes' ) {
                 add_action( 'woocommerce_checkout_process', array( &$this, 'valid_address' ) );
@@ -110,6 +109,9 @@ function wcpagseguro_gateway_load() {
 
             // Checks if token is not empty.
             $this->token == '' ? add_action( 'admin_notices', array( &$this, 'token_missing_message' ) ) : '';
+
+            // Filters.
+            add_filter( 'woocommerce_available_payment_gateways', array( &$this, 'hides_when_is_outside_brazil' ) );
 
             // Active logs.
             if ( $this->debug == 'yes' ) {
@@ -595,9 +597,7 @@ function wcpagseguro_gateway_load() {
                                 );
                             }
 
-                            // Payment completed.
                             $order->add_order_note( __( 'Payment completed.', 'wcpagseguro' ) );
-                            $order->payment_complete();
 
                             break;
                         case 'aguardando-pagto':
@@ -605,7 +605,10 @@ function wcpagseguro_gateway_load() {
 
                             break;
                         case 'aprovado':
-                            $order->update_status( 'on-hold', __( 'Payment approved, awaiting compensation.', 'wcpagseguro' ) );
+                            $order->add_order_note( __( 'Payment approved, awaiting compensation.', 'wcpagseguro' ) );
+
+                            // Changing the order for processing and reduces the stock.
+                            $order->payment_complete();
 
                             break;
                         case 'em-analise':
