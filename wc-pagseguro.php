@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.3
+ * Version: 1.3.1
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -346,11 +346,11 @@ function wcpagseguro_gateway_load() {
 
                             $item_meta = new WC_Order_Item_Meta( $item['item_meta'] );
                             if ( $meta = $item_meta->display( true, true ) ) {
-                                $item_name .= ' (' . $meta . ')';
+                                $item_name .= ' - ' . $meta;
                             }
 
                             $args['itemId' . $item_loop]          = $item_loop;
-                            $args['itemDescription' . $item_loop] = substr( $item_name, 0, 100 );
+                            $args['itemDescription' . $item_loop] = substr( sanitize_text_field( $item_name ), 0, 95 );
                             $args['itemQuantity' . $item_loop]    = $item['qty'];
                             $args['itemAmount' . $item_loop]      = $order->get_item_total( $item, false );
 
