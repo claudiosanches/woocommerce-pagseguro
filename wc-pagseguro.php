@@ -319,7 +319,7 @@ function wcpagseguro_gateway_load() {
                 }
 
                 $args['itemId1']          = 1;
-                $args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . " - " . implode( ', ', $item_names ), 0, 100 );
+                $args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 );
                 $args['itemQuantity1']    = 1;
                 $args['itemAmount1']      = number_format( $order->get_total() - $order->get_shipping() - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' );
 
