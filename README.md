@@ -4,7 +4,7 @@
 **Tags:** ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro  
 **Requires at least:** 3.0  
 **Tested up to:** 3.5  
-**Stable tag:** 1.3.1  
+**Stable tag:** 1.3.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -134,11 +134,11 @@ Confira os meios de pagamento em [PagSeguro - Meios de Pagamento e Parcelamento]
 
 ### Quais são as taxas de transações que o PagSeguro cobra? ###
 
-**Para estas informações consulte:** [PagSeguro - Taxas e Tarifas](https://pagseguro.uol.com.br/taxas_e_tarifas.jhtml).  
+Para estas informações consulte: [PagSeguro - Taxas e Tarifas](https://pagseguro.uol.com.br/taxas_e_tarifas.jhtml).
 
 ### Quais são os limites de recebimento do PagSeguro? ###
 
-**Consulte:** [PagSeguro - Tabela de Limites](https://pagseguro.uol.com.br/account/limits.jhtml).  
+Consulte: [PagSeguro - Tabela de Limites](https://pagseguro.uol.com.br/account/limits.jhtml).
 
 ### Como que plugin faz integração com PagSeguro? ###
 
@@ -155,14 +155,18 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Screenshots ##
 
-###1. Settings page.###
-![Settings page.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-1.png)
+### 1. Settings page. ###
+![1. Settings page.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-1.png)
 
-###2. Checkout page.###
-![Checkout page.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-2.png)
+### 2. Checkout page. ###
+![2. Checkout page.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-2.png)
 
 
 ## Changelog ##
+
+### 1.3.2 - 08/02/2013 ###
+
+* Plugin corrigido para a versão 2.0 do WooCommerce.
 
 ### 1.3.1 - 08/12/2012 ###
 
@@ -250,8 +254,6 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 ## License ##
 
 This file is part of WooCommerce PagSeguro.
-**WooCommerce PagSeguro is free software:** you can redistribute it and/or modify it under the terms of the GNU General Public License as published  
-by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-WooCommerce PagSeguro is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+WooCommerce PagSeguro is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+WooCommerce PagSeguro is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with Author Bio Box. If not, see <http://www.gnu.org/licenses/>.

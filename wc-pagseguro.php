@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.3.1
+ * Version: 1.3.2
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -29,7 +29,7 @@ add_action( 'plugins_loaded', 'wcpagseguro_gateway_load', 0 );
 
 function wcpagseguro_gateway_load() {
 
-    if ( !class_exists( 'WC_Payment_Gateway' ) || !class_exists( 'WC_Order_Item_Meta' ) ) {
+    if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
         add_action( 'admin_notices', 'wcpagseguro_woocommerce_fallback_notice' );
 
         return;
@@ -686,7 +686,7 @@ function wcpagseguro_gateway_load() {
                 $address = $_POST['billing_address_1'];
                 $address = str_replace( ' ', '', $address );
                 $pattern = '/([^\,\d]*),([0-9]*)/';
-                $results = preg_match_all($pattern, $address, $out);
+                $results = preg_match_all( $pattern, $address, $out );
 
                 if ( empty( $out[2] ) || !is_numeric( $out[2][0] ) ) {
                     $woocommerce->add_error( __( '<strong>Address</strong> format is invalid. Example of correct format: "Av. Paulista, 460"', 'wcpagseguro' ) );
