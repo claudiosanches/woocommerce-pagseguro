@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://www.claudiosmweb.com/
- * Version: 1.3.2
+ * Version: 1.3.3
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
@@ -95,7 +95,11 @@ function wcpagseguro_gateway_load() {
             add_action( 'init', array( &$this, 'check_ipn_response' ) );
             add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
             add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
-            add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
+            if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '<' ) ) {
+                add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
+            } else {
+                add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) );
+            }
 
             if ( $this->valid_address == 'yes' ) {
                 add_action( 'woocommerce_checkout_process', array( &$this, 'valid_address' ) );
