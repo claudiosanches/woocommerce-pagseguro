@@ -437,13 +437,15 @@ function wcpagseguro_gateway_load() {
          *
          * @return bool
          */
-        public function check_ipn_request_is_valid( $received_values ) {
+        public function check_ipn_request_is_valid() {
 
             if ( 'yes' == $this->debug ) {
                 $this->log->add( 'pagseguro', 'Checking IPN request...' );
             }
 
             $postdata = 'Comando=validar&Token=' . $this->token;
+
+            $received_values = (array) stripslashes_deep( $_POST );
 
             foreach ( $received_values as $key => $value ) {
                 $postdata .= '&' . $key . '=' . $value;
@@ -487,23 +489,18 @@ function wcpagseguro_gateway_load() {
          */
         public function check_ipn_response() {
 
-            if ( ! empty( $this->token ) ) {
+            @ob_clean();
 
-                @ob_clean();
+            if ( ! empty( $_POST ) && ! empty( $this->token ) && $this->check_ipn_request_is_valid() ) {
 
-                $posted = (array) stripslashes_deep( $_POST );
+                header( 'HTTP/1.1 200 OK' );
 
-                if ( $this->check_ipn_request_is_valid( $posted ) ) {
+                do_action( 'valid_pagseguro_ipn_request', $_POST );
 
-                    header( 'HTTP/1.1 200 OK' );
+            } else {
 
-                    do_action( 'valid_pagseguro_ipn_request', $posted );
+                wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
 
-                } else {
-
-                    wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
-
-                }
             }
         }
 
@@ -514,7 +511,9 @@ function wcpagseguro_gateway_load() {
          *
          * @return void
          */
-        public function successful_request( $posted ) {
+        public function successful_request( $received_values ) {
+
+            $posted = (array) stripslashes_deep( $received_values );
 
             if ( ! empty( $posted['Referencia'] ) ) {
                 $order_key = $posted['Referencia'];
