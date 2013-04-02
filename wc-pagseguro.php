@@ -4,7 +4,7 @@
  * Plugin URI: http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
- * Author URI: http://www.claudiosmweb.com/
+ * Author URI: http://claudiosmweb.com/
  * Version: 1.3.4
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
@@ -15,11 +15,11 @@
  * WooCommerce fallback notice.
  */
 function wcpagseguro_woocommerce_fallback_notice() {
-    $message = '<div class="error">';
-        $message .= '<p>' . __( 'WooCommerce PagSeguro Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!' , 'wcpagseguro' ) . '</p>';
-    $message .= '</div>';
+    $html = '<div class="error">';
+        $html .= '<p>' . __( 'WooCommerce PagSeguro Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!', 'wcpagseguro' ) . '</p>';
+    $html .= '</div>';
 
-    echo $message;
+    echo $html;
 }
 
 /**
@@ -43,14 +43,15 @@ function wcpagseguro_gateway_load() {
     /**
      * Add the gateway to WooCommerce.
      *
-     * @access public
      * @param array $methods
+     *
      * @return array
      */
     add_filter( 'woocommerce_payment_gateways', 'wcpagseguro_add_gateway' );
 
     function wcpagseguro_add_gateway( $methods ) {
         $methods[] = 'WC_PagSeguro_Gateway';
+
         return $methods;
     }
 
@@ -104,10 +105,14 @@ function wcpagseguro_gateway_load() {
             $this->enabled = ( 'yes' == $this->settings['enabled'] ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->is_valid_for_use();
 
             // Checks if email is not empty.
-            $this->email == '' ? add_action( 'admin_notices', array( &$this, 'mail_missing_message' ) ) : '';
+            if ( empty( $this->email ) ) {
+                add_action( 'admin_notices', array( &$this, 'mail_missing_message' ) );
+            }
 
             // Checks if token is not empty.
-            $this->token == '' ? add_action( 'admin_notices', array( &$this, 'token_missing_message' ) ) : '';
+            if ( empty( $this->token ) ) {
+                add_action( 'admin_notices', array( &$this, 'token_missing_message' ) );
+            }
 
             // Filters.
             add_filter( 'woocommerce_available_payment_gateways', array( &$this, 'hides_when_is_outside_brazil' ) );
@@ -124,7 +129,7 @@ function wcpagseguro_gateway_load() {
          * @return bool
          */
         public function is_valid_for_use() {
-            if ( ! in_array( get_woocommerce_currency() , array( 'BRL' ) ) ) {
+            if ( ! in_array( get_woocommerce_currency(), array( 'BRL' ) ) ) {
                 return false;
             }
 
@@ -133,9 +138,6 @@ function wcpagseguro_gateway_load() {
 
         /**
          * Admin Panel Options.
-         * - Options for bits like 'title' and availability on a country-by-country basis.
-         *
-         * @since 1.0.0
          */
         public function admin_options() {
 
@@ -155,7 +157,7 @@ function wcpagseguro_gateway_load() {
                     $this->generate_settings_html();
                 }
             ?>
-            </table><!--/.form-table-->
+            </table><!-- /.form-table -->
             <?php
         }
 
@@ -228,50 +230,46 @@ function wcpagseguro_gateway_load() {
          * Generate the args to form.
          *
          * @param  array $order Order data.
+         *
          * @return array
          */
         public function get_form_args( $order ) {
 
-            // Fixed phone number.
+            // Fix phone number.
             $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
-            $phone_args = array(
-                'senderAreaCode' => substr( $order->billing_phone, 0, 2 ),
-                'senderPhone' => substr( $order->billing_phone, 2 ),
-            );
 
-            // Fixed postal code.
+            // Fix postal code.
             $order->billing_postcode = str_replace( array( '-', ' ' ), '', $order->billing_postcode );
 
-            // Fixed Country.
+            // Fix Country.
             if ( 'BR' == $order->billing_country ) {
                 $order->billing_country = 'BRA';
             }
 
-            $args = array_merge(
-                array(
-                    'receiverEmail'             => $this->email,
-                    'currency'                  => get_woocommerce_currency(),
-                    'encoding'                  => 'UTF-8',
+            $args = array(
+                'receiverEmail'             => $this->email,
+                'currency'                  => get_woocommerce_currency(),
+                'encoding'                  => 'UTF-8',
 
-                    // Sender info.
-                    'senderName'                => $order->billing_first_name . ' ' . $order->billing_last_name,
-                    'senderEmail'               => $order->billing_email,
+                // Sender info.
+                'senderName'                => $order->billing_first_name . ' ' . $order->billing_last_name,
+                'senderEmail'               => $order->billing_email,
+                'senderAreaCode'            => substr( $order->billing_phone, 0, 2 ),
+                'senderPhone'               => substr( $order->billing_phone, 2 ),
 
-                    // Address info.
-                    'shippingAddressPostalCode' => $order->billing_postcode,
-                    'shippingAddressStreet'     => $order->billing_address_1,
-                    'shippingAddressComplement' => $order->billing_address_2,
-                    'shippingAddressCity'       => $order->billing_city,
-                    'shippingAddressState'      => $order->billing_state,
-                    'shippingAddressCountry'    => $order->billing_country,
+                // Address info.
+                'shippingAddressPostalCode' => $order->billing_postcode,
+                'shippingAddressStreet'     => $order->billing_address_1,
+                'shippingAddressComplement' => $order->billing_address_2,
+                'shippingAddressCity'       => $order->billing_city,
+                'shippingAddressState'      => $order->billing_state,
+                'shippingAddressCountry'    => $order->billing_country,
 
-                    // Extras.
-                    'extraAmount'               => $order->get_total_tax(),
+                // Extras.
+                'extraAmount'               => $order->get_total_tax(),
 
-                    // Payment Info.
-                    'reference'                 => $this->invoice_prefix . $order->id,
-                ),
-                $phone_args
+                // Payment Info.
+                'reference'                 => $this->invoice_prefix . $order->id
             );
 
             // If prices include tax or have order discounts, send the whole order as a single item.
@@ -297,7 +295,7 @@ function wcpagseguro_gateway_load() {
                 }
 
                 $args['itemId1']          = 1;
-                $args['itemDescription1'] = substr( sprintf( __( 'Order %s' , 'wcpagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 );
+                $args['itemDescription1'] = substr( sprintf( __( 'Order %s', 'wcpagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 );
                 $args['itemQuantity1']    = 1;
                 $args['itemAmount1']      = number_format( $order->get_total() - $order->get_shipping() - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' );
 
@@ -305,7 +303,7 @@ function wcpagseguro_gateway_load() {
                     $args['itemId2']          = 2;
                     $args['itemDescription2'] = __( 'Shipping via', 'wcpagseguro' ) . ' ' . ucwords( $order->shipping_method_title );
                     $args['itemQuantity2']    = '1';
-                    $args['itemAmount2']      = number_format( $order->get_shipping() + $order->get_shipping_tax() , 2, '.', '' );
+                    $args['itemAmount2']      = number_format( $order->get_shipping() + $order->get_shipping_tax(), 2, '.', '' );
                 }
 
             } else {
@@ -356,6 +354,7 @@ function wcpagseguro_gateway_load() {
          * Generate the form.
          *
          * @param mixed $order_id
+         *
          * @return string
          */
         public function generate_form( $order_id ) {
@@ -408,6 +407,7 @@ function wcpagseguro_gateway_load() {
          * Process the payment and return the result.
          *
          * @param int $order_id
+         *
          * @return array
          */
         public function process_payment( $order_id ) {
@@ -464,7 +464,7 @@ function wcpagseguro_gateway_load() {
             // Post back to get a response.
             $response = wp_remote_post( $this->ipn_url, $params );
 
-            if ( $this->debug == 'yes' ) {
+            if ( 'yes' == $this->debug ) {
                 $this->log->add( 'pagseguro', 'IPN Response: ' . print_r( $response, true ) );
             }
 
@@ -477,7 +477,7 @@ function wcpagseguro_gateway_load() {
 
                 return true;
             } else {
-                if ( $this->debug == 'yes' ) {
+                if ( 'yes' == $this->debug ) {
                     $this->log->add( 'pagseguro', 'Received invalid IPN response from PagSeguro.' );
                 }
             }
@@ -516,6 +516,7 @@ function wcpagseguro_gateway_load() {
          * Successful Payment!
          *
          * @param array $posted
+         *
          * @return void
          */
         public function successful_request( $posted ) {
@@ -532,7 +533,7 @@ function wcpagseguro_gateway_load() {
 
                     $order_status = sanitize_title( $posted['StatusTransacao'] );
 
-                    if ( $this->debug == 'yes' ) {
+                    if ( 'yes' == $this->debug ) {
                         $this->log->add( 'pagseguro', 'Payment status from order #' . $order->id . ': ' . $posted['StatusTransacao'] );
                     }
 
@@ -607,7 +608,7 @@ function wcpagseguro_gateway_load() {
          */
         public function mail_missing_message() {
             $message = '<div class="error">';
-                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s' , 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
+                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
             $message .= '</div>';
 
             echo $message;
@@ -620,7 +621,7 @@ function wcpagseguro_gateway_load() {
          */
         public function token_missing_message() {
             $message = '<div class="error">';
-                $message .= '<p>' .sprintf( __( '<strong>Gateway Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s' , 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
+                $message .= '<p>' .sprintf( __( '<strong>Gateway Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
             $message .= '</div>';
 
             echo $message;
@@ -633,7 +634,7 @@ function wcpagseguro_gateway_load() {
          *
          * @return array                    New Available Gateways.
          */
-        function hides_when_is_outside_brazil( $available_gateways ) {
+        public function hides_when_is_outside_brazil( $available_gateways ) {
 
             if ( isset( $_REQUEST['country'] ) && 'BR' != $_REQUEST['country'] ) {
 
