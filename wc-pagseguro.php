@@ -205,11 +205,6 @@ function wcpagseguro_gateway_load() {
                     'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'wcpagseguro' ),
                     'default' => 'WC-'
                 ),
-                'form_data' => array(
-                    'title' => __( 'Form Data', 'wcpagseguro' ),
-                    'type' => 'title',
-                    'description' => '',
-                ),
                 'testing' => array(
                     'title' => __( 'Gateway Testing', 'wcpagseguro' ),
                     'type' => 'title',
