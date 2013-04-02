@@ -92,7 +92,7 @@ function wcpagseguro_gateway_load() {
             $this->debug          = $this->settings['debug'];
 
             // Actions.
-            add_action( 'init', array( &$this, 'check_ipn_response' ) );
+            add_action( 'woocommerce_api_wc_pagseguro_gateway', array( &$this, 'check_ipn_response' ) );
             add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
             add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
             if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '>=' ) ) {
@@ -468,16 +468,13 @@ function wcpagseguro_gateway_load() {
          *
          * @return bool
          */
-        public function check_ipn_request_is_valid() {
+        public function check_ipn_request_is_valid( $received_values ) {
 
             if ( 'yes' == $this->debug ) {
                 $this->log->add( 'pagseguro', 'Checking IPN request...' );
             }
 
             $postdata = 'Comando=validar&Token=' . $this->token;
-
-            // Get recieved values from post data.
-            $received_values = (array) stripslashes_deep( $_POST );
 
             foreach ( $received_values as $key => $value ) {
                 $postdata .= '&' . $key . '=' . $value;
@@ -521,25 +518,22 @@ function wcpagseguro_gateway_load() {
          */
         public function check_ipn_response() {
 
-            if ( isset( $_POST['Referencia'] ) ) {
+            if ( ! empty( $this->token ) ) {
 
-                if ( ! empty( $this->token ) ) {
+                @ob_clean();
 
-                    @ob_clean();
+                $posted = (array) stripslashes_deep( $_POST );
 
-                    $posted = stripslashes_deep( $_POST );
+                if ( $this->check_ipn_request_is_valid( $posted ) ) {
 
-                    if ( $this->check_ipn_request_is_valid() ) {
+                    header( 'HTTP/1.1 200 OK' );
 
-                        header( 'HTTP/1.1 200 OK' );
+                    do_action( 'valid_pagseguro_ipn_request', $posted );
 
-                        do_action( 'valid_pagseguro_ipn_request', $posted );
+                } else {
 
-                    } else {
+                    wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
 
-                        wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
-
-                    }
                 }
             }
         }
@@ -701,3 +695,20 @@ function wcpagseguro_gateway_load() {
 
     } // class WC_PagSeguro_Gateway.
 } // function wcpagseguro_gateway_load.
+
+/**
+ * Adds support to legacy IPN.
+ *
+ * @return void
+ */
+function wcpagseguro_legacy_ipn() {
+    if ( isset( $_POST['Referencia'] ) ) {
+        global $woocommerce;
+
+        $woocommerce->payment_gateways();
+
+        do_action( 'woocommerce_api_wc_pagseguro_gateway' );
+    }
+}
+
+add_action( 'init', 'wcpagseguro_legacy_ipn' );
