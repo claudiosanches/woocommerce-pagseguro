@@ -88,7 +88,6 @@ function wcpagseguro_gateway_load() {
             $this->email          = $this->settings['email'];
             $this->token          = $this->settings['token'];
             $this->invoice_prefix = ! empty( $this->settings['invoice_prefix'] ) ? $this->settings['invoice_prefix'] : 'WC-';
-            $this->valid_address  = $this->settings['valid_address'];
             $this->debug          = $this->settings['debug'];
 
             // Actions.
@@ -99,10 +98,6 @@ function wcpagseguro_gateway_load() {
                 add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) );
             } else {
                 add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
-            }
-
-            if ( 'yes' == $this->valid_address ) {
-                add_action( 'woocommerce_checkout_process', array( &$this, 'valid_address' ) );
             }
 
             // Valid for use.
@@ -213,13 +208,6 @@ function wcpagseguro_gateway_load() {
                     'type' => 'title',
                     'description' => '',
                 ),
-                'valid_address' => array(
-                    'title' => __( 'Validate Address', 'wcpagseguro' ),
-                    'type' => 'checkbox',
-                    'label' => __( 'Enable validation', 'wcpagseguro' ),
-                    'default' => 'yes',
-                    'description' => __( 'Validates the customer\'s address in the format "street example, number".', 'wcpagseguro' ),
-                ),
                 'testing' => array(
                     'title' => __( 'Gateway Testing', 'wcpagseguro' ),
                     'type' => 'title',
@@ -254,20 +242,6 @@ function wcpagseguro_gateway_load() {
             // Fixed postal code.
             $order->billing_postcode = str_replace( array( '-', ' ' ), '', $order->billing_postcode );
 
-            // Fixed Address.
-            if ( 'yes' == $this->valid_address ) {
-                $order->billing_address_1 = explode( ',', $order->billing_address_1 );
-                $address = array(
-                    'shippingAddressStreet'     => $order->billing_address_1[0],
-                    'shippingAddressNumber'     => (int) $order->billing_address_1[1],
-                );
-            } else {
-                $address = array(
-                    'shippingAddressStreet'     => $order->billing_address_1,
-                );
-            }
-
-
             // Fixed Country.
             if ( 'BR' == $order->billing_country ) {
                 $order->billing_country = 'BRA';
@@ -285,6 +259,7 @@ function wcpagseguro_gateway_load() {
 
                     // Address info.
                     'shippingAddressPostalCode' => $order->billing_postcode,
+                    'shippingAddressStreet'     => $order->billing_address_1,
                     'shippingAddressComplement' => $order->billing_address_2,
                     'shippingAddressCity'       => $order->billing_city,
                     'shippingAddressState'      => $order->billing_state,
@@ -296,8 +271,7 @@ function wcpagseguro_gateway_load() {
                     // Payment Info.
                     'reference'                 => $this->invoice_prefix . $order->id,
                 ),
-                $phone_args,
-                $address
+                $phone_args
             );
 
             // If prices include tax or have order discounts, send the whole order as a single item.
@@ -668,29 +642,6 @@ function wcpagseguro_gateway_load() {
             }
 
             return $available_gateways;
-        }
-
-        /**
-         * Valid address for street and number.
-         *
-         * @return void
-         */
-        function valid_address() {
-            global $woocommerce;
-
-            // Valid address format.
-            if ( $_POST['billing_address_1'] ) {
-
-                $address = $_POST['billing_address_1'];
-                $address = str_replace( ' ', '', $address );
-                $pattern = '/([^\,\d]*),([0-9]*)/';
-                $results = preg_match_all( $pattern, $address, $out );
-
-                if ( empty( $out[2] ) || ! is_numeric( $out[2][0] ) ) {
-                    $woocommerce->add_error( __( '<strong>Address</strong> format is invalid. Example of correct format: "Av. Paulista, 460"', 'wcpagseguro' ) );
-                }
-
-            }
         }
 
     } // class WC_PagSeguro_Gateway.
