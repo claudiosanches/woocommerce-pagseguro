@@ -602,11 +602,11 @@ function wcpagseguro_gateway_load() {
          * @return string Error Mensage.
          */
         public function mail_missing_message() {
-            $message = '<div class="error">';
-                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
-            $message .= '</div>';
+            $html = '<div class="error">';
+                $html .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
+            $html .= '</div>';
 
-            echo $message;
+            echo $html;
         }
 
         /**
@@ -615,11 +615,11 @@ function wcpagseguro_gateway_load() {
          * @return string Error Mensage.
          */
         public function token_missing_message() {
-            $message = '<div class="error">';
-                $message .= '<p>' .sprintf( __( '<strong>Gateway Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
-            $message .= '</div>';
+            $html = '<div class="error">';
+                $html .= '<p>' .sprintf( __( '<strong>Gateway Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url() . 'admin.php?page=woocommerce_settings&amp;tab=payment_gateways">', '</a>' ) . '</p>';
+            $html .= '</div>';
 
-            echo $message;
+            echo $html;
         }
 
         /**
