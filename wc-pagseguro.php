@@ -443,13 +443,9 @@ function wcpagseguro_gateway_load() {
                 $this->log->add( 'pagseguro', 'Checking IPN request...' );
             }
 
-            $postdata = 'Comando=validar&Token=' . $this->token;
-
             $received_values = (array) stripslashes_deep( $_POST );
-
-            foreach ( $received_values as $key => $value ) {
-                $postdata .= '&' . $key . '=' . $value;
-            }
+            $postdata = http_build_query( $received_values, '', '&' );
+            $postdata .= '&Comando=validar&Token=' . $this->token;
 
             // Send back post vars.
             $params = array(
