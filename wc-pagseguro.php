@@ -141,24 +141,21 @@ function wcpagseguro_gateway_load() {
          */
         public function admin_options() {
 
-            ?>
-            <h3><?php _e( 'PagSeguro standard', 'wcpagseguro' ); ?></h3>
-            <p><?php _e( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'wcpagseguro' ); ?></p>
-            <table class="form-table">
-            <?php
-                if ( ! $this->is_valid_for_use() ) {
+            echo '<h3>' . __( 'PagSeguro standard', 'wcpagseguro' ) . '</h3>';
+            echo '<p>' . __( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'wcpagseguro' ) . '</p>';
 
-                    // Valid currency.
-                    echo '<div class="inline error"><p><strong>' . __( 'Gateway Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
+            if ( ! $this->is_valid_for_use() ) {
 
-                } else {
+                // Valid currency.
+                echo '<div class="inline error"><p><strong>' . __( 'Gateway Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
 
-                    // Generate the HTML For the settings form.
-                    $this->generate_settings_html();
-                }
-            ?>
-            </table><!-- /.form-table -->
-            <?php
+            } else {
+
+                // Generate the HTML For the settings form.
+                echo '<table class="form-table">';
+                $this->generate_settings_html();
+                echo '</table>';
+            }
         }
 
         /**
