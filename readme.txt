@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.3.4
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,14 +64,14 @@ Você pode fazer isso em "Integrações" > "[Página de redirecionamento](https:
 
 Ative a opção de "Página fixa de redirecionamento" e configure ela como por exemplo:
 
-    http://seusite.com/finalizar-compra/pedido-recebido/
+    http://seusite.com/?wc-api=WC_PagSeguro_Gateway
 
 Habilite também o retorno automático de dados;
 Deve ser ativado em "Ingregra" > "[ Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
 
 Marque ativado e adicione a url como por exemplo:
 
-    http://seusite.com/finalizar-compra/pedido-recebido/
+    http://seusite.com/?wc-api=WC_PagSeguro_Gateway
 
 No momento o plugin funciona apenas com a integração simples. Desta forma é necessário desativar os pagamentos via API.
 Você pode fazer isso em "Integrações" > "[Pagamentos via API](https://pagseguro.uol.com.br/integracao/pagamentos-via-api.jhtml)".
@@ -142,12 +142,16 @@ Consulte: [PagSeguro - Tabela de Limites](https://pagseguro.uol.com.br/account/l
 
 = Como que plugin faz integração com PagSeguro? =
 
-Fazemos a integração baseada na documentação oficial do PagSeguro que pode ser encontrada em "[Guia de integração - PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html)"
+Fazemos a integração baseada na documentação oficial do PagSeguro que pode ser encontrada em "[Guia de integração - PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html)".
 
 = Instalei o plugin, mas a opção de pagamento do PagSeguro some durante o checkout. O que fiz de errado? =
 
 Você esqueceu de selecionar o Brasil durante o cadastro no checkout.
 A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
+
+= É possível enviar os dados de "Número" e "Bairro" para o PagSeguro? =
+
+Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
@@ -159,6 +163,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 2. Checkout page.
 
 == Changelog ==
+
+= 1.4 - 02/04/2013 =
+
+* Correção do retorno automático de dados na versão 2.0.0 ou superior do WooCommerce.
 
 = 1.3.4 - 06/03/2013 =
 
@@ -221,39 +229,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 1.3.1 =
+= 1.4 =
 
-* Fixed order status.
-* Fixed product description length.
-
-= 1.3 =
-
-* Added error logs.
-* Added option to address validation.
-
-= 1.2.2 =
-
-* Fixed issue with discount coupons.
-
-= 1.2.1 =
-
-* Fixed PagSeguro description max length.
-
-= 1.1 =
-
-* Added automatic return data.
-
-= 1.0.2 =
-
-* Added function that adds the stock.
-
-= 1.0.1 =
-
-* Recommended.
-
-= 1.0 =
-
-* Enjoy it.
+* Correção do retorno de dados do PagSeguro.
 
 == License ==
 
