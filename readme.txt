@@ -64,7 +64,7 @@ Você pode fazer isso em "Integrações" > "[Página de redirecionamento](https:
 
 Ative a opção de "Página fixa de redirecionamento" e configure ela como por exemplo:
 
-    http://seusite.com/?wc-api=WC_PagSeguro_Gateway
+    http://seusite.com/finalizar-compra/pedido-recebido/
 
 Habilite também o retorno automático de dados;
 Deve ser ativado em "Ingregra" > "[ Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
