@@ -87,6 +87,14 @@ Habilite o PagSeguro, adicione o seu e-mail e o token do PagSeguro.
 Utilizamos o token para validar o retorno automático de dados.
 Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)".
 
+= Configurações no WooCommerce =
+
+No WooCommerce 2.0 ou superior existe uma opção para cancelar a compra e liberar o estoque depois de alguns minutos.
+
+Esta opção não funciona muito bem com o PagSeguro, pois pagamentos por boleto bancário pode demorar até 48 horas para serem validados.
+
+Para corrigir isso é necessário ir em "WooCommerce" > "Configurações" > "Inventário" e limpar (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
+
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
 == Frequently Asked Questions ==
@@ -152,6 +160,10 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 = É possível enviar os dados de "Número" e "Bairro" para o PagSeguro? =
 
 Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
+
+= A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
+
+Para resolver este problema vá até "WooCommerce" > "Configurações" > "Inventário" e limpe (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
