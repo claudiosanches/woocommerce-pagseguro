@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro v1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2013-06-24 13:14:41+0000\n"
+"PO-Revision-Date: 2013-06-24 13:20:26+0000\n"
 "Last-Translator: Gabriel Reguly <gabriel@ppgr.com.br>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -147,12 +147,6 @@ msgstr "WooCommerce PagSeguro"
 msgid "claudiosanches, Gabriel Reguly"
 msgstr "claudiosanches, Gabriel Reguly"
 
-#. translators: plugin header field 'PluginURI'
-#: wc-pagseguro.php:0
-#@ wcpagseguro
-msgid "http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/"
-msgstr "http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/"
-
 #: wc-pagseguro.php:19
 #@ wcpagseguro
 msgid "WooCommerce PagSeguro Gateway depends on the last version of <a href=\"http://wordpress.org/extend/plugins/woocommerce/\">WooCommerce</a> to work!"
@@ -257,9 +251,20 @@ msgstr "Registrar log de eventos do PagSeguro, como solicitações de API, dentr
 msgid "http://claudiosmweb.com/"
 msgstr "http://claudiosmweb.com/"
 
+#. translators: plugin header field 'PluginURI'
+#: wc-pagseguro.php:0
+#@ wcpagseguro
+msgid "http://github.com/claudiosmweb/woocommerce-pagseguro"
+msgstr "http://github.com/claudiosmweb/woocommerce-pagseguro"
+
 #. translators: plugin header field 'Version'
 #: wc-pagseguro.php:0
 #@ wcpagseguro
-msgid "1.4.1"
-msgstr "1.4.1"
+msgid "1.5.0"
+msgstr "1.5.0"
+
+#: wc-pagseguro.php:111
+#@ wcpagseguro
+msgid "Settings"
+msgstr "Configurações"
 
