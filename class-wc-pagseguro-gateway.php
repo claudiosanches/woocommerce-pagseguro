@@ -303,27 +303,53 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             $args_array[] = '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />';
         }
 
-        $woocommerce->add_inline_js( '
-            jQuery("body").block({
-                    message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />' . __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) . '",
-                    overlayCSS:
-                    {
-                        background: "#fff",
-                        opacity:    0.6
-                    },
-                    css: {
-                        padding:         20,
-                        textAlign:       "center",
-                        color:           "#555",
-                        border:          "3px solid #aaa",
-                        backgroundColor: "#fff",
-                        cursor:          "wait",
-                        lineHeight:      "32px",
-                        zIndex:          "9999"
-                    }
-                });
-            jQuery("#submit-payment-form").click();
-        ' );
+
+        if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+            $woocommerce->get_helper( 'inline-javascript' )->add_inline_js( '
+                $.blockUI({
+                        message: "' . esc_js( __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) ) . '",
+                        baseZ: 99999,
+                        overlayCSS:
+                        {
+                            background: "#fff",
+                            opacity: 0.6
+                        },
+                        css: {
+                            padding:        "20px",
+                            zIndex:         "9999999",
+                            textAlign:      "center",
+                            color:          "#555",
+                            border:         "3px solid #aaa",
+                            backgroundColor:"#fff",
+                            cursor:         "wait",
+                            lineHeight:     "24px",
+                        }
+                    });
+                // jQuery("#submit-payment-form").click();
+            ' );
+        } else {
+            $woocommerce->add_inline_js( '
+                jQuery("body").block({
+                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />' . __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) . '",
+                        overlayCSS:
+                        {
+                            background: "#fff",
+                            opacity:    0.6
+                        },
+                        css: {
+                            padding:         20,
+                            textAlign:       "center",
+                            color:           "#555",
+                            border:          "3px solid #aaa",
+                            backgroundColor: "#fff",
+                            cursor:          "wait",
+                            lineHeight:      "32px",
+                            zIndex:          "9999"
+                        }
+                    });
+                // jQuery("#submit-payment-form").click();
+            ' );
+        }
 
         return '<form action="' . esc_url( $this->payment_url ) . '" method="post" id="payment-form" target="_top">
                 ' . implode( '', $args_array ) . '
@@ -340,14 +366,19 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return array
      */
     public function process_payment( $order_id ) {
-
         $order = new WC_Order( $order_id );
 
-        return array(
-            'result'    => 'success',
-            'redirect'  => add_query_arg( 'order', $order->id, add_query_arg( 'key', $order->order_key, get_permalink( woocommerce_get_page_id( 'pay' ) ) ) )
-        );
-
+        if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+            return array(
+                'result'   => 'success',
+                'redirect' => $order->get_checkout_payment_url( true )
+            );
+        } else {
+            return array(
+                'result'   => 'success',
+                'redirect' => add_query_arg( 'order', $order->id, add_query_arg( 'key', $order->order_key, get_permalink( woocommerce_get_page_id( 'pay' ) ) ) )
+            );
+        }
     }
 
     /**
