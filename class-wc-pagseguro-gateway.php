@@ -66,9 +66,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return bool
      */
     public function is_valid_for_use() {
-        if ( ! in_array( get_woocommerce_currency(), array( 'BRL' ) ) ) {
+        if ( ! in_array( get_woocommerce_currency(), array( 'BRL' ) ) )
             return false;
-        }
 
         return true;
     }
@@ -77,17 +76,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * Admin Panel Options.
      */
     public function admin_options() {
-
         echo '<h3>' . __( 'PagSeguro standard', 'wcpagseguro' ) . '</h3>';
         echo '<p>' . __( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'wcpagseguro' ) . '</p>';
 
+        // Checks if is valid for use.
         if ( ! $this->is_valid_for_use() ) {
-
-            // Valid currency.
             echo '<div class="inline error"><p><strong>' . __( 'Gateway Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
 
         } else {
-
             // Generate the HTML For the settings form.
             echo '<table class="form-table">';
             $this->generate_settings_html();
@@ -152,7 +148,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 'description' => __( 'Log PagSeguro events, such as API requests, inside <code>woocommerce/logs/pagseguro.txt</code>', 'wcpagseguro' ),
             )
         );
-
     }
 
     /**
@@ -169,11 +164,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         // Fix postal code.
         $order->billing_postcode = str_replace( array( '-', ' ' ), '', $order->billing_postcode );
-
-        // Fix Country.
-        if ( 'BR' == $order->billing_country ) {
-            $order->billing_country = 'BRA';
-        }
 
         $args = array(
             'receiverEmail'             => $this->email,
@@ -192,7 +182,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             'shippingAddressComplement' => $order->billing_address_2,
             'shippingAddressCity'       => $order->billing_city,
             'shippingAddressState'      => $order->billing_state,
-            'shippingAddressCountry'    => $order->billing_country,
+            'shippingAddressCountry'    => 'BRA',
 
             // Extras.
             'extraAmount'               => $order->get_total_tax(),
@@ -205,11 +195,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         if ( 'yes' == get_option( 'woocommerce_prices_include_tax' ) || $order->get_order_discount() > 0 ) {
 
             // Discount.
-            if ( $order->get_order_discount() > 0 ) {
+            if ( $order->get_order_discount() > 0 )
                 $args['extraAmount'] = '-' . $order->get_order_discount();
-            } else {
+            else
                 $args['extraAmount'] = '';
-            }
 
             // Don't pass items - pagseguro borks tax due to prices including tax.
             // PagSeguro has no option for tax inclusive pricing sadly. Pass 1 item for the order items overall.
@@ -217,9 +206,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
             if ( sizeof( $order->get_items() ) > 0 ) {
                 foreach ( $order->get_items() as $item ) {
-                    if ( $item['qty'] ) {
+                    if ( $item['qty'] )
                         $item_names[] = $item['name'] . ' x ' . $item['qty'];
-                    }
                 }
             }
 
@@ -242,23 +230,18 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             if ( sizeof( $order->get_items() ) > 0 ) {
                 foreach ( $order->get_items() as $item ) {
                     if ( $item['qty'] ) {
-
                         $item_loop++;
-
-                        $product = $order->get_product_from_item( $item );
-
-                        $item_name  = $item['name'];
-
+                        $product   = $order->get_product_from_item( $item );
+                        $item_name = $item['name'];
                         $item_meta = new WC_Order_Item_Meta( $item['item_meta'] );
-                        if ( $meta = $item_meta->display( true, true ) ) {
+
+                        if ( $meta = $item_meta->display( true, true ) )
                             $item_name .= ' - ' . $meta;
-                        }
 
                         $args['itemId' . $item_loop]          = $item_loop;
                         $args['itemDescription' . $item_loop] = substr( sanitize_text_field( $item_name ), 0, 95 );
                         $args['itemQuantity' . $item_loop]    = $item['qty'];
                         $args['itemAmount' . $item_loop]      = $order->get_item_total( $item, false );
-
                     }
                 }
             }
@@ -271,7 +254,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 $args['itemQuantity' . $item_loop]    = '1';
                 $args['itemAmount' . $item_loop]      = number_format( $order->get_shipping(), 2, '.', '' );
             }
-
         }
 
         $args = apply_filters( 'woocommerce_pagseguro_args', $args );
@@ -290,19 +272,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         global $woocommerce;
 
         $order = new WC_Order( $order_id );
+        $args  = $this->get_form_args( $order );
 
-        $args = $this->get_form_args( $order );
-
-        if ( 'yes' == $this->debug ) {
+        if ( 'yes' == $this->debug )
             $this->log->add( 'pagseguro', 'Payment arguments for order #' . $order_id . ': ' . print_r( $args, true ) );
-        }
 
         $args_array = array();
 
-        foreach ( $args as $key => $value ) {
+        foreach ( $args as $key => $value )
             $args_array[] = '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '" />';
-        }
-
 
         if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
             $woocommerce->get_helper( 'inline-javascript' )->add_inline_js( '
@@ -325,7 +303,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                             lineHeight:     "24px",
                         }
                     });
-                // jQuery("#submit-payment-form").click();
+                jQuery("#submit-payment-form").click();
             ' );
         } else {
             $woocommerce->add_inline_js( '
@@ -347,7 +325,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                             zIndex:          "9999"
                         }
                     });
-                // jQuery("#submit-payment-form").click();
+                jQuery("#submit-payment-form").click();
             ' );
         }
 
@@ -404,9 +382,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      */
     public function check_ipn_request_is_valid() {
 
-        if ( 'yes' == $this->debug ) {
+        if ( 'yes' == $this->debug )
             $this->log->add( 'pagseguro', 'Checking IPN request...' );
-        }
 
         $received_values = (array) stripslashes_deep( $_POST );
         $postdata = http_build_query( $received_values, '', '&' );
@@ -422,22 +399,19 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         // Post back to get a response.
         $response = wp_remote_post( $this->ipn_url, $params );
 
-        if ( 'yes' == $this->debug ) {
+        if ( 'yes' == $this->debug )
             $this->log->add( 'pagseguro', 'IPN Response: ' . print_r( $response, true ) );
-        }
 
         // Check to see if the request was valid.
         if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 && ( strcmp( $response['body'], 'VERIFICADO' ) == 0 ) ) {
 
-            if ( 'yes' == $this->debug ) {
+            if ( 'yes' == $this->debug )
                 $this->log->add( 'pagseguro', 'Received valid IPN response from PagSeguro' );
-            }
 
             return true;
         } else {
-            if ( 'yes' == $this->debug ) {
+            if ( 'yes' == $this->debug )
                 $this->log->add( 'pagseguro', 'Received invalid IPN response from PagSeguro.' );
-            }
         }
 
         return false;
@@ -488,9 +462,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
                 $order_status = sanitize_title( $posted['StatusTransacao'] );
 
-                if ( 'yes' == $this->debug ) {
+                if ( 'yes' == $this->debug )
                     $this->log->add( 'pagseguro', 'Payment status from order #' . $order->id . ': ' . $posted['StatusTransacao'] );
-                }
 
                 switch ( $order_status ) {
                     case 'completo':
