@@ -3,8 +3,8 @@ Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
 Requires at least: 3.0
-Tested up to: 3.5.1
-Stable tag: 1.4
+Tested up to: 3.6
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,10 @@ Adds PagSeguro gateway to the WooCommerce plugin
 This plugin adds PagSeguro gateway to WooCommerce.
 
 Please notice that WooCommerce must be installed and active.
+
+= Contribute =
+
+You can contribute to the source code in our [GitHub](https://github.com/claudiosmweb/woocommerce-pagseguro) page.
 
 ### Descrição em Português: ###
 
@@ -39,6 +43,10 @@ Você pode esclarecer suas dúvidas usando:
 * A nossa sessão de [FAQ](http://wordpress.org/extend/plugins/woocommerce-pagseguro/faq/).
 * Criando um tópico no [fórum de ajuda do WordPress](http://wordpress.org/support/plugin/woocommerce-pagseguro) (apenas em inglês).
 * Ou entre em contato com os desenvolvedores do plugin em nossa [página](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
+
+= Coloborar =
+
+Você pode contribuir com código-fonte em nossa página no [GitHub](https://github.com/claudiosmweb/woocommerce-pagseguro).
 
 == Installation ==
 
@@ -175,6 +183,13 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 2. Checkout page.
 
 == Changelog ==
+
+= 1.5.0 - 24/06/2013 =
+
+* Adicionado link de `Configurações` na página de plugins.
+* Melhorias no código.
+* Adicionado suporte para WooCommerce 2.1.
+* Adicionado o ID da compra no filtro `woocommerce_pagseguro_args`.
 
 = 1.4 - 02/04/2013 =
 
