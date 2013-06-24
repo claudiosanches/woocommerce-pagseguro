@@ -256,7 +256,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             }
         }
 
-        $args = apply_filters( 'woocommerce_pagseguro_args', $args );
+        $args = apply_filters( 'woocommerce_pagseguro_args', $args, $order->id );
 
         return $args;
     }
