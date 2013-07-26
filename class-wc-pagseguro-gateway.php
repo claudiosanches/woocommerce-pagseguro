@@ -148,7 +148,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 'type' => 'checkbox',
                 'label' => __( 'Enable logging', 'wcpagseguro' ),
                 'default' => 'no',
-                'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'wcpagseguro' ), '<code>woocommerce/logs/' . sanitize_file_name( wp_hash( 'pagseguro' ) ) . '.txt</code>' )
+                'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'wcpagseguro' ), '<code>woocommerce/logs/pagseguro-' . sanitize_file_name( wp_hash( 'pagseguro' ) ) . '.txt</code>' )
             )
         );
     }
