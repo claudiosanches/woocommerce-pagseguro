@@ -81,7 +81,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         // Checks if is valid for use.
         if ( ! $this->is_valid_for_use() ) {
-            echo '<div class="inline error"><p><strong>' . __( 'Gateway Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
+            echo '<div class="inline error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
 
         } else {
             // Generate the HTML For the settings form.
@@ -162,9 +162,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         // Fix phone number.
         $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
 
-        // Fix postal code.
-        $order->billing_postcode = str_replace( array( '-', ' ' ), '', $order->billing_postcode );
-
         $args = array(
             'receiverEmail'             => $this->email,
             'currency'                  => get_woocommerce_currency(),
@@ -177,7 +174,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             'senderPhone'               => substr( $order->billing_phone, 2 ),
 
             // Address info.
-            'shippingAddressPostalCode' => $order->billing_postcode,
+            'shippingAddressPostalCode' => str_replace( array( '-', ' ' ), '', $order->billing_postcode ),
             'shippingAddressStreet'     => $order->billing_address_1,
             'shippingAddressComplement' => $order->billing_address_2,
             'shippingAddressCity'       => $order->billing_city,
@@ -256,7 +253,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             }
         }
 
-        $args = apply_filters( 'woocommerce_pagseguro_args', $args, $order->id );
+        $args = apply_filters( 'woocommerce_pagseguro_args', $args, $order );
 
         return $args;
     }
