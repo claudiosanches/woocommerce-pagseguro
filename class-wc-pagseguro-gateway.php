@@ -467,7 +467,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
                 switch ( $order_status ) {
                     case 'completo':
+                        $order->add_order_note( __( 'PagSeguro: Payment completed and credited to your account.', 'wcpagseguro' ) );
 
+                        break;
+                    case 'aguardando-pagto':
+                        $order->add_order_note( __( 'PagSeguro: Awaiting payment.', 'wcpagseguro' ) );
+
+                        break;
+                    case 'aprovado':
                         // Order details.
                         if ( ! empty( $posted['TransacaoID'] ) ) {
                             update_post_meta(
@@ -498,26 +505,18 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                             );
                         }
 
-                        $order->add_order_note( __( 'Payment completed.', 'wcpagseguro' ) );
-
-                        break;
-                    case 'aguardando-pagto':
-                        $order->add_order_note( __( 'Awaiting payment.', 'wcpagseguro' ) );
-
-                        break;
-                    case 'aprovado':
-                        $order->add_order_note( __( 'Payment approved, awaiting compensation.', 'wcpagseguro' ) );
+                        $order->add_order_note( __( 'PagSeguro: Payment approved.', 'wcpagseguro' ) );
 
                         // Changing the order for processing and reduces the stock.
                         $order->payment_complete();
 
                         break;
                     case 'em-analise':
-                        $order->update_status( 'on-hold', __( 'Payment approved, under review by PagSeguro.', 'wcpagseguro' ) );
+                        $order->update_status( 'on-hold', __( 'PagSeguro: Payment under review.', 'wcpagseguro' ) );
 
                         break;
                     case 'cancelado':
-                        $order->update_status( 'cancelled', __( 'Payment canceled by PagSeguro.', 'wcpagseguro' ) );
+                        $order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'wcpagseguro' ) );
 
                         break;
 
@@ -535,7 +534,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return string Error Mensage.
      */
     public function mail_missing_message() {
-        echo '<div class="error"><p>' . sprintf( __( '<strong>PagSeguro Disabled</strong> You should inform your email address in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">', '</a>' ) . '</p></div>';
+        echo '<div class="error"><p>' . sprintf( __( '<strong>PagSeguro Disabled</strong> You should inform your email address. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">', '</a>' ) . '</p></div>';
     }
 
     /**
@@ -544,7 +543,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return string Error Mensage.
      */
     public function token_missing_message() {
-        echo '<div class="error"><p>' . sprintf( __( '<strong>PagSeguro Disabled</strong> You should inform your token in PagSeguro. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">', '</a>' ) . '</p></div>';
+        echo '<div class="error"><p>' . sprintf( __( '<strong>PagSeguro Disabled</strong> You should inform your token. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . get_admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">', '</a>' ) . '</p></div>';
     }
 
 }
