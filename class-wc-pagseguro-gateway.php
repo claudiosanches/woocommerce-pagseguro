@@ -109,6 +109,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 'title' => __( 'Title', 'wcpagseguro' ),
                 'type' => 'text',
                 'description' => __( 'This controls the title which the user sees during checkout.', 'wcpagseguro' ),
+                'desc_tip' => true,
                 'default' => __( 'PagSeguro', 'wcpagseguro' )
             ),
             'description' => array(
@@ -120,32 +121,34 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             'email' => array(
                 'title' => __( 'PagSeguro Email', 'wcpagseguro' ),
                 'type' => 'text',
-                'description' => __( 'Please enter your PagSeguro email address; this is needed in order to take payment.', 'wcpagseguro' ),
+                'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'wcpagseguro' ),
+                'desc_tip' => true,
                 'default' => ''
             ),
             'token' => array(
                 'title' => __( 'PagSeguro Token', 'wcpagseguro' ),
                 'type' => 'text',
-                'description' => sprintf( __( 'Please enter your PagSeguro token; is necessary to process the payment and notifications. Is possible generate a new token %shere%s', 'wcpagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">', '</a>' ),
+                'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s', 'wcpagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'wcpagseguro' ) . '</a>' ),
                 'default' => ''
             ),
             'invoice_prefix' => array(
                 'title' => __( 'Invoice Prefix', 'wcpagseguro' ),
                 'type' => 'text',
                 'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'wcpagseguro' ),
+                'desc_tip' => true,
                 'default' => 'WC-'
             ),
             'testing' => array(
                 'title' => __( 'Gateway Testing', 'wcpagseguro' ),
                 'type' => 'title',
-                'description' => '',
+                'description' => ''
             ),
             'debug' => array(
                 'title' => __( 'Debug Log', 'wcpagseguro' ),
                 'type' => 'checkbox',
                 'label' => __( 'Enable logging', 'wcpagseguro' ),
                 'default' => 'no',
-                'description' => __( 'Log PagSeguro events, such as API requests, inside <code>woocommerce/logs/pagseguro.txt</code>', 'wcpagseguro' ),
+                'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'wcpagseguro' ), '<code>woocommerce/logs/' . sanitize_file_name( wp_hash( 'pagseguro' ) ) . '.txt</code>' )
             )
         );
     }
