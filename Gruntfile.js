@@ -65,7 +65,6 @@ module.exports = function(grunt) {
     // load tasks
     grunt.loadNpmTasks("grunt-rsync");
     grunt.loadNpmTasks("grunt-shell");
-    grunt.loadNpmTasks("grunt-wx-zipdir");
 
     // deploy task
     grunt.registerTask("deploy", [
