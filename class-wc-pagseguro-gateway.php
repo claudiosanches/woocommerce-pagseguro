@@ -128,7 +128,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             'token' => array(
                 'title' => __( 'PagSeguro Token', 'wcpagseguro' ),
                 'type' => 'text',
-                'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s', 'wcpagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'wcpagseguro' ) . '</a>' ),
+                'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'wcpagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'wcpagseguro' ) . '</a>' ),
                 'default' => ''
             ),
             'invoice_prefix' => array(
