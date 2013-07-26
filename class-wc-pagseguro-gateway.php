@@ -275,7 +275,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         $args  = $this->get_form_args( $order );
 
         if ( 'yes' == $this->debug )
-            $this->log->add( 'pagseguro', 'Payment arguments for order #' . $order_id . ': ' . print_r( $args, true ) );
+            $this->log->add( 'pagseguro', 'Payment arguments for order ' . $order->get_order_number() . ': ' . print_r( $args, true ) );
 
         $args_array = array();
 
@@ -457,7 +457,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 $order_status = sanitize_title( $posted['StatusTransacao'] );
 
                 if ( 'yes' == $this->debug )
-                    $this->log->add( 'pagseguro', 'Payment status from order #' . $order->id . ': ' . $posted['StatusTransacao'] );
+                    $this->log->add( 'pagseguro', 'Payment status from order ' . $order->get_order_number() . ': ' . $posted['StatusTransacao'] );
 
                 switch ( $order_status ) {
                     case 'completo':
