@@ -267,9 +267,12 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Upgrade Notice ##
 
-### 1.4 ###
+### 1.6.0 ###
 
-* Correção do retorno de dados do PagSeguro.
+* Adicionado o filtro `woocommerce_pagseguro_icon` para troca do ícone do método de pagamento.
+* Melhoria no filtro `woocommerce_pagseguro_args`, agora ele aceita o objeto `WC_Order` no lugar do ID.
+* Melhoria nas opções do plugin.
+* Melhoria nas mensagens de status do pedido.
 
 ## License ##
 
