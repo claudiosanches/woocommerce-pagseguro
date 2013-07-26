@@ -1,10 +1,10 @@
 === WooCommerce PagSeguro ===
 Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
-Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, checkout, payment, payment gateway, pagseguro
+Tags: woocommerce, pagseguro, payment
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -183,6 +183,13 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 2. Checkout page.
 
 == Changelog ==
+
+= 1.6.0 - 26/07/2013 =
+
+* Adicionado o filtro `woocommerce_pagseguro_icon` para troca do ícone do método de pagamento.
+* Melhoria no filtro `woocommerce_pagseguro_args`, agora ele aceita o objeto `WC_Order` no lugar do ID.
+* Melhoria nas opções do plugin.
+* Melhoria nas mensagens de status do pedido.
 
 = 1.5.0 - 24/06/2013 =
 
