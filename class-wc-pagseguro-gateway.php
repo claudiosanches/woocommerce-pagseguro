@@ -284,7 +284,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
             $woocommerce->get_helper( 'inline-javascript' )->add_inline_js( '
-                $.blockUI({
+                jQuery.blockUI({
                         message: "' . esc_js( __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) ) . '",
                         baseZ: 99999,
                         overlayCSS:
