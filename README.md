@@ -75,7 +75,7 @@ Ative a opção de "Página fixa de redirecionamento" e configure ela como por e
     http://seusite.com/finalizar-compra/pedido-recebido/
 
 Habilite também o retorno automático de dados;
-Deve ser ativado em "Ingregra" > "[ Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
+Deve ser ativado em "Integrações" > "[ Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
 
 Marque ativado e adicione a url como por exemplo:
 
