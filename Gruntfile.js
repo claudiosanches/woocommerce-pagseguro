@@ -66,8 +66,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-rsync");
     grunt.loadNpmTasks("grunt-shell");
 
-    // deploy task
-    grunt.registerTask("deploy", [
+    // default task
+    grunt.registerTask("default", [
         "rsync:tag",
         "rsync:trunk",
         "shell:svn_add",
