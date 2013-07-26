@@ -83,8 +83,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         // Checks if is valid for use.
         if ( ! $this->is_valid_for_use() ) {
-            echo '<div class="inline error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'PagSeguro does not support your store currency.', 'wcpagseguro' ) . '</p></div>';
-
+            echo '<div class="inline error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'Works only with Brazilian Real.', 'wcpagseguro' ) . '</p></div>';
         } else {
             // Generate the HTML For the settings form.
             echo '<table class="form-table">';
@@ -526,7 +525,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return string Error Mensage.
      */
     public function mail_missing_message() {
-        echo '<div class="error"><p>' . sprintf( __( '<strong>PagSeguro Disabled</strong> You should inform your email address. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">', '</a>' ) . '</p></div>';
+        echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your email address. %s', 'wcpagseguro' ), '<a href="' . admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">' . __( 'Click here to configure!', 'wcpagseguro' ) . '</a>' ) . '</p></div>';
     }
 
     /**
@@ -535,7 +534,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return string Error Mensage.
      */
     public function token_missing_message() {
-        echo '<div class="error"><p>' . sprintf( __( '<strong>PagSeguro Disabled</strong> You should inform your token. %sClick here to configure!%s', 'wcpagseguro' ), '<a href="' . admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">', '</a>' ) . '</p></div>';
+        echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your token. %s', 'wcpagseguro' ), '<a href="' . admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ) . '">' . __( 'Click here to configure!', 'wcpagseguro' ) . '</a>' ) . '</p></div>';
     }
 
 }
