@@ -17,9 +17,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         $this->id             = 'pagseguro';
         $this->icon           = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', __FILE__ ) );
         $this->has_fields     = false;
+        $this->method_title   = __( 'PagSeguro', 'wcpagseguro' );
+
+        // API URLs.
         $this->payment_url    = 'https://pagseguro.uol.com.br/v2/checkout/payment.html';
         $this->ipn_url        = 'https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml';
-        $this->method_title   = __( 'PagSeguro', 'wcpagseguro' );
 
         // Load the form fields.
         $this->init_form_fields();
@@ -97,7 +99,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return void
      */
     public function init_form_fields() {
-
         $this->form_fields = array(
             'enabled' => array(
                 'title' => __( 'Enable/Disable', 'wcpagseguro' ),
@@ -153,9 +154,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
     /**
      * Generate the args to form.
      *
-     * @param  array $order Order data.
+     * @param  object $order Order data.
      *
-     * @return array
+     * @return array         Form arguments.
      */
     public function get_form_args( $order ) {
 
@@ -261,9 +262,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
     /**
      * Generate the form.
      *
-     * @param mixed $order_id
+     * @param int     $order_id Order ID.
      *
-     * @return string
+     * @return string           Payment form.
      */
     public function generate_form( $order_id ) {
         global $woocommerce;
@@ -336,9 +337,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
     /**
      * Process the payment and return the result.
      *
-     * @param int $order_id
+     * @param int    $order_id Order ID.
      *
-     * @return array
+     * @return array           Redirect.
      */
     public function process_payment( $order_id ) {
         $order = new WC_Order( $order_id );
@@ -373,7 +374,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
     }
 
     /**
-     * Check ipn validity.
+     * Check IPN.
      *
      * @return bool
      */
@@ -420,26 +421,20 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return void
      */
     public function check_ipn_response() {
-
         @ob_clean();
 
         if ( ! empty( $_POST ) && ! empty( $this->token ) && $this->check_ipn_request_is_valid() ) {
-
             header( 'HTTP/1.1 200 OK' );
-
             do_action( 'valid_pagseguro_ipn_request', $_POST );
-
         } else {
-
             wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
-
         }
     }
 
     /**
      * Successful Payment!
      *
-     * @param array $posted
+     * @param array $posted PagSeguro post data.
      *
      * @return void
      */
