@@ -15,7 +15,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         global $woocommerce;
 
         $this->id             = 'pagseguro';
-        $this->icon           = plugins_url( 'images/pagseguro.png', __FILE__ );
+        $this->icon           = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', __FILE__ ) );
         $this->has_fields     = false;
         $this->payment_url    = 'https://pagseguro.uol.com.br/v2/checkout/payment.html';
         $this->ipn_url        = 'https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml';
