@@ -293,14 +293,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                             opacity: 0.6
                         },
                         css: {
-                            padding:        "20px",
-                            zIndex:         "9999999",
-                            textAlign:      "center",
-                            color:          "#555",
-                            border:         "3px solid #aaa",
-                            backgroundColor:"#fff",
-                            cursor:         "wait",
-                            lineHeight:     "24px",
+                            padding:         "20px",
+                            zIndex:          "9999999",
+                            textAlign:       "center",
+                            color:           "#555",
+                            border:          "3px solid #aaa",
+                            backgroundColor: "#fff",
+                            cursor:          "wait",
+                            lineHeight:      "24px",
                         }
                     });
                 jQuery("#submit-payment-form").click();
@@ -308,21 +308,21 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         } else {
             $woocommerce->add_inline_js( '
                 jQuery("body").block({
-                        message: "<img src=\"' . esc_url( $woocommerce->plugin_url() . '/assets/images/ajax-loader.gif' ) . '\" alt=\"Redirecting&hellip;\" style=\"float:left; margin-right: 10px;\" />' . __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) . '",
+                        message: "' . __( 'Thank you for your order. We are now redirecting you to PagSeguro to make payment.', 'wcpagseguro' ) . '",
                         overlayCSS:
                         {
                             background: "#fff",
-                            opacity:    0.6
+                            opacity: 0.6
                         },
                         css: {
-                            padding:         20,
-                            textAlign:       "center",
-                            color:           "#555",
-                            border:          "3px solid #aaa",
+                            padding: "20px",
+                            zIndex: "9999999",
+                            textAlign: "center",
+                            color: "#555",
+                            border: "3px solid #aaa",
                             backgroundColor: "#fff",
-                            cursor:          "wait",
-                            lineHeight:      "32px",
-                            zIndex:          "9999"
+                            cursor: "wait",
+                            lineHeight: "24px",
                         }
                     });
                 jQuery("#submit-payment-form").click();
