@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,6 +184,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 1.6.1 - 14/08/2013 =
+
+* Melhoria no JavaScript inline no formulário de checkout.
+
 = 1.6.0 - 26/07/2013 =
 
 * Adicionado o filtro `woocommerce_pagseguro_icon` para troca do ícone do método de pagamento.
@@ -263,12 +267,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 1.6.0 =
+= 1.6.1 =
 
-* Adicionado o filtro `woocommerce_pagseguro_icon` para troca do ícone do método de pagamento.
-* Melhoria no filtro `woocommerce_pagseguro_args`, agora ele aceita o objeto `WC_Order` no lugar do ID.
-* Melhoria nas opções do plugin.
-* Melhoria nas mensagens de status do pedido.
+* Melhoria no JavaScript inline no formulário de checkout.
 
 == License ==
 
