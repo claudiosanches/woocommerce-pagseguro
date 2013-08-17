@@ -328,7 +328,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         $params = array(
             'body'          => $xml,
             'sslverify'     => false,
-            'timeout'       => 30,
+            'timeout'       => 60,
             'headers'    => array(
                 'Content-Type' => 'application/xml;charset=UTF-8',
             )
