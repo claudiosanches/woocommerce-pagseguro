@@ -54,7 +54,7 @@ function wcpagseguro_gateway_load() {
     add_filter( 'woocommerce_payment_gateways', 'wcpagseguro_add_gateway' );
 
     // Include the WC_PagSeguro_Gateway class.
-    require_once WOO_PAGSEGURO_PATH . 'class-wc-pagseguro-gateway.php';
+    require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-gateway.php';
 }
 
 add_action( 'plugins_loaded', 'wcpagseguro_gateway_load', 0 );
