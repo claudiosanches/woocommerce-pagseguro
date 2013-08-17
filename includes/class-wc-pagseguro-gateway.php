@@ -15,7 +15,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         global $woocommerce;
 
         $this->id             = 'pagseguro';
-        $this->icon           = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', __FILE__ ) );
+        $this->icon           = apply_filters( 'woocommerce_pagseguro_icon', WOO_PAGSEGURO_PATH . 'images/pagseguro.png' );
         $this->has_fields     = false;
         $this->method_title   = __( 'PagSeguro', 'wcpagseguro' );
 
