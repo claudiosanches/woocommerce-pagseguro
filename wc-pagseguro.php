@@ -65,7 +65,7 @@ add_action( 'plugins_loaded', 'wcpagseguro_gateway_load', 0 );
  * @return void
  */
 function wcpagseguro_legacy_ipn() {
-    if ( isset( $_POST['Referencia'] ) && ! isset( $_GET['wc-api'] ) ) {
+    if ( isset( $_POST['notificationCode'] ) && ! isset( $_GET['wc-api'] ) ) {
         global $woocommerce;
 
         $woocommerce->payment_gateways();
