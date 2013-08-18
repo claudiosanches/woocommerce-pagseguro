@@ -5,11 +5,14 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://claudiosmweb.com/
- * Version: 1.6.1
+ * Version: 2.0.0
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/
  */
+
+define( 'WOO_PAGSEGURO_PATH', plugin_dir_path( __FILE__ ) );
+define( 'WOO_PAGSEGURO_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * WooCommerce fallback notice.
@@ -51,7 +54,7 @@ function wcpagseguro_gateway_load() {
     add_filter( 'woocommerce_payment_gateways', 'wcpagseguro_add_gateway' );
 
     // Include the WC_PagSeguro_Gateway class.
-    require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-gateway.php';
+    require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-gateway.php';
 }
 
 add_action( 'plugins_loaded', 'wcpagseguro_gateway_load', 0 );
@@ -62,7 +65,7 @@ add_action( 'plugins_loaded', 'wcpagseguro_gateway_load', 0 );
  * @return void
  */
 function wcpagseguro_legacy_ipn() {
-    if ( isset( $_POST['Referencia'] ) && ! isset( $_GET['wc-api'] ) ) {
+    if ( isset( $_POST['notificationCode'] ) && ! isset( $_GET['wc-api'] ) ) {
         global $woocommerce;
 
         $woocommerce->payment_gateways();
