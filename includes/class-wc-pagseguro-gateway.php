@@ -374,11 +374,16 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
      * @return array           Redirect.
      */
     public function process_payment( $order_id ) {
+        global $woocommerce;
+
         $order = new WC_Order( $order_id );
 
         $token = $this->generate_payment_token( $order );
 
         if ( $token ) {
+            // Remove cart.
+            $woocommerce->cart->empty_cart();
+
             return array(
                 'result'   => 'success',
                 'redirect' => $this->payment_url . $token
