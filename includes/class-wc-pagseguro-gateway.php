@@ -3,6 +3,8 @@
  * WC PagSeguro Gateway Class.
  *
  * Built the PagSeguro method.
+ *
+ * @since  2.0.0
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
@@ -514,6 +516,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             // Checks whether the invoice number matches the order.
             // If true processes the payment.
             if ( $order->id === $order_id ) {
+                // Include the WC_PagSeguro_Helpers class.
+                require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-helpers.php';
+                $helper = new WC_PagSeguro_Helpers;
 
                 if ( 'yes' == $this->debug )
                     $this->log->add( 'pagseguro', 'Payment status from order ' . $order->get_order_number() . ': ' . $posted['StatusTransacao'] );
@@ -554,14 +559,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payment type', 'wcpagseguro' ),
-                                $posted->paymentMethod->type
+                                $helper->payment_type( $posted->paymentMethod->type )
                             );
                         }
                         if ( ! empty( $posted->paymentMethod->code ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payment method', 'wcpagseguro' ),
-                                $posted->paymentMethod->code
+                                $helper->payment_method( $posted->paymentMethod->code )
                             );
                         }
                         if ( ! empty( $posted->installmentCount ) ) {
