@@ -598,8 +598,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                         $order->update_status( 'on-hold', __( 'PagSeguro: Payment came into dispute.', 'wcpagseguro' ) );
                         $this->send_email(
                             sprintf( __( 'Payment for order %s came into dispute', 'wcpagseguro' ), $order->get_order_number() ),
-                            __( 'Payment in dispute' ),
-                            sprintf( __( 'Order %s has been marked as on-hold, because the payment came into dispute in PagSeguro', 'wcpagseguro' ), $order->get_order_number() )
+                            __( 'Payment in dispute', 'wcpagseguro' ),
+                            sprintf( __( 'Order %s has been marked as on-hold, because the payment came into dispute in PagSeguro.', 'wcpagseguro' ), $order->get_order_number() )
                         );
 
                         break;
@@ -607,8 +607,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                         $order->update_status( 'refunded', __( 'PagSeguro: Payment refunded.', 'wcpagseguro' ) );
                         $this->send_email(
                             sprintf( __( 'Payment for order %s refunded', 'wcpagseguro' ), $order->get_order_number() ),
-                            __( 'Payment refunded' ),
-                            sprintf( __( 'Order %s has been marked as refunded by PagSeguro', 'wcpagseguro' ), $order->get_order_number() )
+                            __( 'Payment refunded', 'wcpagseguro' ),
+                            sprintf( __( 'Order %s has been marked as refunded by PagSeguro.', 'wcpagseguro' ), $order->get_order_number() )
                         );
 
                         break;
