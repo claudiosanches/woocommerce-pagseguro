@@ -67,7 +67,7 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 = Configurações no PagSeguro: =
 
-#### Configuração Segura (recomendado) ####
+##### Configuração Segura (recomendado) #####
 
 No PagSeguro basta aceitar receber pagamentos apenas pela **API**.
 
@@ -75,7 +75,7 @@ Você deve ativar esta opção em "Integrações" > "[Pagamentos via API](https:
 
 Apenas com isso já é possível receber os pagamentos e fazer o retorno automático de dados.
 
-#### Configurações menos segura (não recomendado) ####
+##### Configurações menos segura (não recomendado) #####
 
 Para esta opção você deve deixar a opção de **Pagamentos via API** desativada e configurar a página de redirecionamento.
 
