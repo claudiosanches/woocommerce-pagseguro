@@ -493,7 +493,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         if ( $ipn ) {
             header( 'HTTP/1.1 200 OK' );
-            // do_action( 'valid_pagseguro_ipn_request', $ipn );
+            do_action( 'valid_pagseguro_ipn_request', $ipn );
         } else {
             wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
         }
