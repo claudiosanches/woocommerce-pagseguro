@@ -521,7 +521,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 $helper = new WC_PagSeguro_Helpers;
 
                 if ( 'yes' == $this->debug )
-                    $this->log->add( 'pagseguro', 'Payment status from order ' . $order->get_order_number() . ': ' . $posted['StatusTransacao'] );
+                    $this->log->add( 'pagseguro', 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . $posted->status );
 
                 switch ( $posted->status ) {
                     case 1:
