@@ -279,9 +279,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Upgrade Notice ##
 
-### 1.6.1 ###
+### 2.0.0 ###
 
-* Melhoria no JavaScript inline no formulário de checkout.
+* Foi atualizada a API do PagSeguro.
+* Agora é possível receber pagamentos apenas via API, leia o guia de instalação do plugin para obter mais informações.
 
 ## License ##
 
