@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 3.0  
 **Tested up to:** 3.6  
-**Stable tag:** 2.0.0  
+**Stable tag:** 2.0.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -67,7 +67,7 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 ### Configurações no PagSeguro: ###
 
-##### Configuração Segura (recomendado) #####
+**Configuração Segura (recomendado):**
 
 No PagSeguro basta aceitar receber pagamentos apenas pela **API**.
 
@@ -75,7 +75,7 @@ Você deve ativar esta opção em "Integrações" > "[Pagamentos via API](https:
 
 Apenas com isso já é possível receber os pagamentos e fazer o retorno automático de dados.
 
-##### Configurações menos segura (não recomendado) #####
+**Configuração menos segura (não recomendado):**
 
 Para esta opção você deve deixar a opção de **Pagamentos via API** desativada e configurar a página de redirecionamento.
 
@@ -189,6 +189,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Changelog ##
 
+### 2.0.1 - 19/08/2013 ###
+
+* Removida a obrigatoriedade de enviar os campos de endereço.
+
 ### 2.0.0 - 17/08/2013 ###
 
 * Adicionadas as novas APIs de pagamentos e notificações do PagSeguro.
@@ -279,10 +283,11 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Upgrade Notice ##
 
-### 2.0.0 ###
+### 2.0.1 ###
 
 * Foi atualizada a API do PagSeguro.
 * Agora é possível receber pagamentos apenas via API, leia o guia de instalação do plugin para obter mais informações.
+* Removida a obrigatoriedade de enviar os campos de endereço.
 
 ## License ##
 
