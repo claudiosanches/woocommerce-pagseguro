@@ -200,9 +200,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         // Include the WC_PagSeguro_SimpleXML class.
         require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-simplexml.php';
 
-        // Fix phone number.
-        $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
-
         // Creates the payment xml.
         $xml = new WC_PagSeguro_SimpleXML( '<?xml version="1.0" encoding="utf-8" standalone="yes" ?><checkout></checkout>' );
 
@@ -224,25 +221,33 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         // $document = $documents->addChild( 'document' );
         // $document->addChild( 'type', 'CPF' );
         // $document->addChild( 'value', '' );
-        $phone = $sender->addChild( 'phone' );
-        $phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
-        $phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
+
+        if ( isset( $order->billing_phone ) && ! empty( $order->billing_phone ) ) {
+            // Fix phone number.
+            $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
+
+            $phone = $sender->addChild( 'phone' );
+            $phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
+            $phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
+        }
 
         // Shipping info.
-        $shipping = $xml->addChild( 'shipping' );
-        $shipping->addChild( 'type', 3 );
+        if ( isset( $order->billing_postcode ) && ! empty( $order->billing_postcode ) ) {
+            $shipping = $xml->addChild( 'shipping' );
+            $shipping->addChild( 'type', 3 );
 
-        // Address infor
-        $address = $shipping->addChild( 'address' );
-        $address->addChild( 'street' )->addCData( $order->billing_address_1 );
-        // $address->addChild( 'number', '' );
-        if ( ! empty( $order->billing_address_2 ) )
-            $address->addChild( 'complement' )->addCData( $order->billing_address_2 );
-        // $address->addChild( 'district' )->addCData( '' );
-        $address->addChild( 'postalCode', str_replace( array( '-', ' ' ), '', $order->billing_postcode ) );
-        $address->addChild( 'city' )->addCData( $order->billing_city );
-        $address->addChild( 'state', $order->billing_state );
-        $address->addChild( 'country', 'BRA' );
+            // Address infor
+            $address = $shipping->addChild( 'address' );
+            $address->addChild( 'street' )->addCData( $order->billing_address_1 );
+            // $address->addChild( 'number', '' );
+            if ( ! empty( $order->billing_address_2 ) )
+                $address->addChild( 'complement' )->addCData( $order->billing_address_2 );
+            // $address->addChild( 'district' )->addCData( '' );
+            $address->addChild( 'postalCode', str_replace( array( '-', ' ' ), '', $order->billing_postcode ) );
+            $address->addChild( 'city' )->addCData( $order->billing_city );
+            $address->addChild( 'state', $order->billing_state );
+            $address->addChild( 'country', 'BRA' );
+        }
 
         // Items.
         $items = $xml->addChild( 'items' );
