@@ -226,9 +226,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             // Fix phone number.
             $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
 
-            $phone = $sender->addChild( 'phone' );
-            $phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
-            $phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
+            if ( in_array( strlen( substr( $order->billing_phone, 2 ) ), array( 8, 9 ) ) ) {
+                $phone = $sender->addChild( 'phone' );
+                $phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
+                $phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
+            }
         }
 
         // Shipping info.
