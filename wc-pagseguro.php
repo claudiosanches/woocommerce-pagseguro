@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://claudiosmweb.com/
- * Version: 2.0.2
+ * Version: 2.0.3
  * License: GPLv2 or later
  * Text Domain: wcpagseguro
  * Domain Path: /languages/

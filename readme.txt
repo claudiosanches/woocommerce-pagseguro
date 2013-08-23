@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 2.0.3 - 22/08/2013 =
+
+* Correção da alteração de status pelo pela notificação de pagamento do PagSeguro.
+
 = 2.0.2 - 22/08/2013 =
 
 * Corrigido o erro causado com números de telefone sem DDD.
@@ -283,11 +287,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 2.0.1 =
+= 2.0.3 =
 
-* Foi atualizada a API do PagSeguro.
-* Agora é possível receber pagamentos apenas via API, leia o guia de instalação do plugin para obter mais informações.
-* Removida a obrigatoriedade de enviar os campos de endereço.
+* Corrigido o retorno de pagamento do PagSeguro. Agora esta funcionando perfeitamente.
 
 == License ==
 

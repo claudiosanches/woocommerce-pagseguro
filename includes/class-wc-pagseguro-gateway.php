@@ -530,7 +530,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 if ( 'yes' == $this->debug )
                     $this->log->add( 'pagseguro', 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . $posted->status );
 
-                switch ( $posted->status ) {
+                switch ( (int) $posted->status ) {
                     case 1:
                         $order->add_order_note( __( 'PagSeguro: Awaiting payment.', 'wcpagseguro' ) );
 
@@ -541,53 +541,53 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                         break;
                     case 3:
                         // Order details.
-                        if ( ! empty( $posted->code ) ) {
+                        if ( isset( $posted->code ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'PagSeguro Transaction ID', 'wcpagseguro' ),
-                                $posted->code
+                                (string) $posted->code
                             );
                         }
-                        if ( ! empty( $posted->sender->email ) ) {
+                        if ( isset( $posted->sender->email ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payer email', 'wcpagseguro' ),
-                                $posted->sender->email
+                                (string) $posted->sender->email
                             );
                         }
-                        if ( ! empty( $posted->sender->name ) ) {
+                        if ( isset( $posted->sender->name ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payer name', 'wcpagseguro' ),
-                                $posted->sender->name
+                                (string) $posted->sender->name
                             );
                         }
-                        if ( ! empty( $posted->paymentMethod->type ) ) {
+                        if ( isset( $posted->paymentMethod->type ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payment type', 'wcpagseguro' ),
-                                $helper->payment_type( $posted->paymentMethod->type )
+                                $helper->payment_type( (int) $posted->paymentMethod->type )
                             );
                         }
-                        if ( ! empty( $posted->paymentMethod->code ) ) {
+                        if ( isset( $posted->paymentMethod->code ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payment method', 'wcpagseguro' ),
-                                $helper->payment_method( $posted->paymentMethod->code )
+                                $helper->payment_method( (int) $posted->paymentMethod->code )
                             );
                         }
-                        if ( ! empty( $posted->installmentCount ) ) {
+                        if ( isset( $posted->installmentCount ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Installments', 'wcpagseguro' ),
-                                $posted->installmentCount
+                                (string) $posted->installmentCount
                             );
                         }
-                        if ( ! empty( $posted->paymentLink ) ) {
+                        if ( isset( $posted->paymentLink ) ) {
                             update_post_meta(
                                 $order_id,
                                 __( 'Payment url', 'wcpagseguro' ),
-                                $posted->paymentLink
+                                (string) $posted->paymentLink
                             );
                         }
 
