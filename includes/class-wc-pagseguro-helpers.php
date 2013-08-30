@@ -4,7 +4,7 @@
  *
  * PagSeguro payment helpers.
  *
- * @since  2.0.0
+ * @since 2.1.0
  */
 class WC_PagSeguro_Helpers {
 
@@ -41,7 +41,13 @@ class WC_PagSeguro_Helpers {
         return $type;
     }
 
-
+    /**
+     * Payment method name.
+     *
+     * @param  int    $value Method number.
+     *
+     * @return string        Method name.
+     */
     public function payment_method( $value ) {
         $credit_card = __( 'Credit Card', 'wcpagseguro' );
         $billet = __( 'Billet', 'wcpagseguro' );
@@ -145,5 +151,32 @@ class WC_PagSeguro_Helpers {
         }
 
         return $method;
+    }
+
+    /**
+     * Error messages.
+     *
+     * @param  int    $code Error code.
+     *
+     * @return string       Error message.
+     */
+    public function error_message( $code ) {
+        switch ( $code ) {
+            case 11014:
+                $message = __( 'Please enter a valid phone number with DDD.', 'wcpagseguro' );
+                break;
+            case 11017:
+                $message = __( 'Please enter a valid zip code number.', 'wcpagseguro' );
+                break;
+            case 11164:
+                $message = __( 'Please enter a valid CPF number.', 'wcpagseguro' );
+                break;
+
+            default:
+                $message = __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'wcpagseguro' );
+                break;
+        }
+
+        return $message;
     }
 }
