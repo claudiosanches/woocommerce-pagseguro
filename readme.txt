@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,14 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 
 Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
+= Ao tentar finalizar a compra aparece a mensagem "PagSeguro: Um erro ocorreu ao processar o seu pagamento, por favor, tente novamente ou entre em contato para obter ajuda." o que fazer? =
+
+Esta mensagem geralmente aparece por causa que não foi configurado um Token válido.  
+Gere um novo Token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)" e adicione ele nas configurações do plugin.
+
+Caso o erro persista mesmo com o novo Token, você deve ativar a opção **Log de depuração** nas configurações do plugin e tentar novamente fechar uma compra para que desta forma seja gerado o log.  
+Me envie o link por [e-mail](http://claudiosmweb.com/contato/), desta forma posso te ajudar a resolver o problema.
+
 = A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
 
 Para resolver este problema vá até "WooCommerce" > "Configurações" > "Inventário" e limpe (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
@@ -184,6 +192,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 2. Checkout page.
 
 == Changelog ==
+
+= 2.1.0 - 29/08/2013 =
+
+* Adicionada função para tratar as mensagens de erro do PagSeguro para CPF, CEP e número de telefone.
 
 = 2.0.3 - 22/08/2013 =
 
@@ -287,9 +299,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 2.0.3 =
+= 2.1.0 =
 
-* Corrigido o retorno de pagamento do PagSeguro. Agora esta funcionando perfeitamente.
+* Adicionada função para tratar as mensagens de erro do PagSeguro para CPF, CEP e número de telefone.
 
 == License ==
 
