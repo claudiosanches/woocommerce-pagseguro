@@ -4,7 +4,7 @@
  *
  * Built the PagSeguro method.
  *
- * @since  2.0.0
+ * @since 2.1.0
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
@@ -226,11 +226,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             // Fix phone number.
             $order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
 
-            if ( in_array( strlen( substr( $order->billing_phone, 2 ) ), array( 8, 9 ) ) ) {
-                $phone = $sender->addChild( 'phone' );
-                $phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
-                $phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
-            }
+            $phone = $sender->addChild( 'phone' );
+            $phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
+            $phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
         }
 
         // Shipping info.
@@ -341,6 +339,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
     public function generate_payment_token( $order ) {
         global $woocommerce;
 
+        // Include the WC_PagSeguro_Helpers class.
+        require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-helpers.php';
+        $helper = new WC_PagSeguro_Helpers;
+
         // Sets the url.
         $url = esc_url_raw( sprintf(
             "%s?email=%s&token=%s",
@@ -386,10 +388,18 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
                 return (string) $body->code;
             }
-        }
 
-        if ( 'yes' == $this->debug )
-            $this->log->add( 'pagseguro', 'Failed to generate the PagSeguro Payment Token: ' . print_r( $response, true ) );
+            if ( isset( $body->error ) ) {
+                if ( 'yes' == $this->debug )
+                    $this->log->add( 'pagseguro', 'Failed to generate the PagSeguro Payment Token: ' . print_r( $response, true ) );
+
+                foreach ( $body->error as $key => $value )
+                    $this->add_error( '<strong>PagSeguro</strong>: ' . $helper->error_message( $value->code ) );
+
+                return false;
+            }
+
+        }
 
         // Added error message.
         $this->add_error( '<strong>PagSeguro</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'wcpagseguro' ) );
