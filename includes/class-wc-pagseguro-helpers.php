@@ -4,7 +4,7 @@
  *
  * PagSeguro payment helpers.
  *
- * @since 2.1.0
+ * @since 2.1.1
  */
 class WC_PagSeguro_Helpers {
 
@@ -162,8 +162,9 @@ class WC_PagSeguro_Helpers {
      */
     public function error_message( $code ) {
         switch ( $code ) {
+            case 11013:
             case 11014:
-                $message = __( 'Please enter a valid phone number with DDD.', 'wcpagseguro' );
+                $message = __( 'Please enter a valid phone number with DDD. Example: (11) 5555-5555.', 'wcpagseguro' );
                 break;
             case 11017:
                 $message = __( 'Please enter a valid zip code number.', 'wcpagseguro' );
