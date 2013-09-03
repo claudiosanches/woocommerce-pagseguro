@@ -4,7 +4,7 @@
  *
  * Built the PagSeguro method.
  *
- * @since 2.1.0
+ * @since 2.1.1
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 

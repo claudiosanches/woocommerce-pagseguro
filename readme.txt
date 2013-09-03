@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -193,6 +193,11 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 2.1.1 - 03/09/2013 =
+
+* Adicionada mensagem sobre DDD errado nas mensagens de erro do PagSeguro.
+* Correção da verificação do IPN.
+
 = 2.1.0 - 29/08/2013 =
 
 * Adicionada função para tratar as mensagens de erro do PagSeguro para CPF, CEP e número de telefone.
@@ -299,9 +304,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 2.1.0 =
+= 2.1.1 =
 
-* Adicionada função para tratar as mensagens de erro do PagSeguro para CPF, CEP e número de telefone.
+* Adicionada mensagem sobre DDD errado nas mensagens de erro do PagSeguro.
+* Correção da verificação do IPN.
 
 == License ==
 
