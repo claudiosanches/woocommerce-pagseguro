@@ -359,10 +359,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
         // Sets the post params.
         $params = array(
-            'body'          => $xml,
-            'sslverify'     => false,
-            'timeout'       => 60,
-            'headers'    => array(
+            'body'      => $xml,
+            'sslverify' => false,
+            'timeout'   => 60,
+            'headers'   => array(
                 'Content-Type' => 'application/xml;charset=UTF-8',
             )
         );
@@ -467,8 +467,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
             $this->token
         ) );
 
+        // Sets the get params.
+        $params = array(
+            'sslverify' => false,
+            'timeout'   => 60
+        );
+
         // Gets the PagSeguro response.
-        $response = wp_remote_get( $url, array( 'timeout' => 60 ) );
+        $response = wp_remote_get( $url, $params );
 
         // Check to see if the request was valid.
         if ( is_wp_error( $response ) ) {
