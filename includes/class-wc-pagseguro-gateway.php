@@ -43,7 +43,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
         // Actions.
         add_action( 'woocommerce_api_wc_pagseguro_gateway', array( &$this, 'check_ipn_response' ) );
         add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
-        add_action( 'woocommerce_receipt_pagseguro', array( &$this, 'receipt_page' ) );
         if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '>=' ) )
             add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) );
         else
