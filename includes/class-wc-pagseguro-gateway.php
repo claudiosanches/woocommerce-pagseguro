@@ -286,7 +286,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
                 foreach ( $order->get_items() as $order_item ) {
                     if ( $order_item['qty'] ) {
                         $item_loop++;
-                        $product   = $order->get_product_from_item( $order_item );
                         $item_name = $order_item['name'];
                         $item_meta = new WC_Order_Item_Meta( $order_item['item_meta'] );
 
