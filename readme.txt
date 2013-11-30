@@ -83,7 +83,7 @@ Desta forma você deve ir até "Integrações" > "[Página de redirecionamento](
 
 Ative a opção de "Página fixa de redirecionamento" e configure ela como por exemplo:
 
-    http://seusite.com/finalizar-compra/pedido-recebido/
+	http://seusite.com/finalizar-compra/pedido-recebido/
 
 Habilite também o retorno automático de dados;
 Deve ser ativado em "Integrações" > "[Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
