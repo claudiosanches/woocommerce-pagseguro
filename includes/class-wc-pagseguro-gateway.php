@@ -195,6 +195,18 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Fix money format.
+	 * Adds support to WooCommerce 2.1 or later.
+	 *
+	 * @param  int/float $value Value to fix.
+	 *
+	 * @return float            Fixed value.
+	 */
+	protected function fix_money_format( $value ) {
+		return number_format( $value, 2, '.', '' );
+	}
+
+	/**
 	 * Generate the payment xml.
 	 *
 	 * @param object  $order Order data.
@@ -259,9 +271,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$items = $xml->addChild( 'items' );
 
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
-			$shipping_total = $order->get_total_shipping();
+			$shipping_total = $this->fix_money_format( $order->get_total_shipping() );
 		} else {
-			$shipping_total = $order->get_shipping();
+			$shipping_total = $this->fix_money_format( $order->get_shipping() );
 		}
 
 		// If prices include tax or have order discounts, send the whole order as a single item.
@@ -269,7 +281,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			// Discount.
 			if ( $order->get_order_discount() > 0 ) {
-				$xml->addChild( 'extraAmount', '-' . $order->get_order_discount() );
+				$xml->addChild( 'extraAmount', '-' . $this->fix_money_format( $order->get_order_discount() ) );
 			}
 
 			// Don't pass items - PagSeguro borks tax due to prices including tax.
@@ -287,11 +299,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			$item = $items->addChild( 'item' );
 			$item->addChild( 'id', 1 );
 			$item->addChild( 'description' )->addCData( substr( sprintf( __( 'Order %s', 'wcpagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ) );
-			$item->addChild( 'amount', number_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' ) );
+			$item->addChild( 'amount', $this->fix_money_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount() ) );
 			$item->addChild( 'quantity', 1 );
 
 			if ( ( $shipping_total + $order->get_shipping_tax() ) > 0 ) {
-				$shipping->addChild( 'cost', number_format( $shipping_total + $order->get_shipping_tax(), 2, '.', '' ) );
+				$shipping->addChild( 'cost', $this->fix_money_format( $shipping_total + $order->get_shipping_tax(), 2, '.', '' ) );
 			}
 
 		} else {
@@ -312,7 +324,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						$item = $items->addChild( 'item' );
 						$item->addChild( 'id', $item_loop );
 						$item->addChild( 'description' )->addCData( substr( sanitize_text_field( $item_name ), 0, 95 ) );
-						$item->addChild( 'amount', $order->get_item_total( $order_item, false ) );
+						$item->addChild( 'amount', $this->fix_money_format( $order->get_item_total( $order_item, false ) ) );
 						$item->addChild( 'quantity', $order_item['qty'] );
 					}
 				}
@@ -320,11 +332,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			// Shipping Cost item.
 			if ( $shipping_total > 0 ) {
-				$shipping->addChild( 'cost', number_format( $shipping_total, 2, '.', '' ) );
+				$shipping->addChild( 'cost', $this->fix_money_format( $shipping_total, 2, '.', '' ) );
 			}
 
 			// Extras Amount.
-			$xml->addChild( 'extraAmount', $order->get_total_tax() );
+			$xml->addChild( 'extraAmount', $this->fix_money_format( $order->get_total_tax() ) );
 		}
 
 		// Checks if is localhost. PagSeguro not accept localhost urls!
