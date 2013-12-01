@@ -77,25 +77,3 @@ function wcpagseguro_hides_when_is_outside_brazil( $available_gateways ) {
 }
 
 add_filter( 'woocommerce_available_payment_gateways', 'wcpagseguro_hides_when_is_outside_brazil' );
-
-/**
- * Adds custom settings url in plugins page.
- *
- * @param  array $links Default links.
- *
- * @return array        Default links and settings link.
- */
-function wcpagseguro_action_links( $links ) {
-
-	$settings = array(
-		'settings' => sprintf(
-			'<a href="%s">%s</a>',
-			admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' ),
-			__( 'Settings', 'wcpagseguro' )
-		)
-	);
-
-	return array_merge( $settings, $links );
-}
-
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wcpagseguro_action_links' );
