@@ -60,23 +60,6 @@ function wcpagseguro_gateway_load() {
 add_action( 'plugins_loaded', 'wcpagseguro_gateway_load', 0 );
 
 /**
- * Adds support to legacy IPN.
- *
- * @return void
- */
-function wcpagseguro_legacy_ipn() {
-	if ( isset( $_POST['notificationCode'] ) && ! isset( $_GET['wc-api'] ) ) {
-		global $woocommerce;
-
-		$woocommerce->payment_gateways();
-
-		do_action( 'woocommerce_api_wc_pagseguro_gateway' );
-	}
-}
-
-add_action( 'init', 'wcpagseguro_legacy_ipn' );
-
-/**
  * Hides the PagSeguro with payment method with the customer lives outside Brazil
  *
  * @param  array $available_gateways Default Available Gateways.
