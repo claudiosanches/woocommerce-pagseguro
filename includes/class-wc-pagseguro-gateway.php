@@ -33,23 +33,20 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->title          = $this->settings['title'];
-		$this->description    = $this->settings['description'];
-		$this->email          = $this->settings['email'];
-		$this->token          = $this->settings['token'];
-		$this->invoice_prefix = ! empty( $this->settings['invoice_prefix'] ) ? $this->settings['invoice_prefix'] : 'WC-';
-		$this->debug          = $this->settings['debug'];
+		$this->title          = $this->get_option( 'title' );
+		$this->description    = $this->get_option( 'description' );
+		$this->email          = $this->get_option( 'email' );
+		$this->token          = $this->get_option( 'token' );
+		$this->invoice_prefix = $this->get_option( 'invoice_prefix', 'WC-' );
+		$this->debug          = $this->get_option( 'debug' );
 
 		// Actions.
 		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( &$this, 'check_ipn_response' ) );
 		add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
-		if ( version_compare( WOOCOMMERCE_VERSION, '2.0.0', '>=' ) )
-			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) );
-		else
-			add_action( 'woocommerce_update_options_payment_gateways', array( &$this, 'process_admin_options' ) );
+		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) );
 
 		// Valid for use.
-		$this->enabled = ( 'yes' == $this->settings['enabled'] ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->is_valid_for_use();
+		$this->enabled = ( 'yes' == $this->get_option( 'enabled' ) ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->is_valid_for_use();
 
 		// Checks if email is not empty.
 		if ( empty( $this->email ) ) {
