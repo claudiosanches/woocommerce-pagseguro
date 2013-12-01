@@ -60,7 +60,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		// Active logs.
 		if ( 'yes' == $this->debug ) {
-			$this->log = $woocommerce->logger();
+			if ( class_exists( 'WC_Logger' ) ) {
+				$this->log = new WC_Logger();
+			} else {
+				$this->log = $woocommerce->logger();
+			}
 		}
 	}
 
