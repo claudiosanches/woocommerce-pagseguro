@@ -171,7 +171,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		global $woocommerce;
 
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
-			wc_add_error( $message );
+			wc_add_notice( $message, 'error' );
 		} else {
 			$woocommerce->add_error( $message );
 		}
