@@ -2,7 +2,7 @@
 /**
  * Extends the SimpleXMLElement class to add CDATA element.
  *
- * @since 2.0.0
+ * @since 2.2.0
  */
 class WC_PagSeguro_SimpleXML extends SimpleXMLElement {
 

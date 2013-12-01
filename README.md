@@ -2,9 +2,9 @@
 **Contributors:** claudiosanches, Gabriel Reguly  
 **Donate link:** http://claudiosmweb.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
-**Requires at least:** 3.0  
-**Tested up to:** 3.6  
-**Stable tag:** 2.1.1  
+**Requires at least:** 3.8  
+**Tested up to:** 3.8  
+**Stable tag:** 2.2.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -197,6 +197,12 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Changelog ##
 
+### 2.2.0 - 01/12/2013 ###
+
+* Corrigido padrões de código.
+* Removida compatibilidade com versões 1.6.X ou inferiores do WooCommerce.
+* Adicionada compatibilidade com WooCommerce 2.1 ou superior.
+
 ### 2.1.1 - 03/09/2013 ###
 
 * Adicionada mensagem sobre DDD errado nas mensagens de erro do PagSeguro.
@@ -308,10 +314,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Upgrade Notice ##
 
-### 2.1.1 ###
+### 2.2.0 ###
 
-* Adicionada mensagem sobre DDD errado nas mensagens de erro do PagSeguro.
-* Correção da verificação do IPN.
+* Removida compatibilidade com versões 1.6.X ou inferiores do WooCommerce.
+* Adicionada compatibilidade com WooCommerce 2.1 ou superior.
 
 ## License ##
 
