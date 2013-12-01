@@ -258,6 +258,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		// Items.
 		$items = $xml->addChild( 'items' );
 
+		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+			$shipping_total = $order->get_total_shipping();
+		} else {
+			$shipping_total = $order->get_shipping();
+		}
+
 		// If prices include tax or have order discounts, send the whole order as a single item.
 		if ( 'yes' == get_option( 'woocommerce_prices_include_tax' ) || $order->get_order_discount() > 0 ) {
 
@@ -281,11 +287,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			$item = $items->addChild( 'item' );
 			$item->addChild( 'id', 1 );
 			$item->addChild( 'description' )->addCData( substr( sprintf( __( 'Order %s', 'wcpagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ) );
-			$item->addChild( 'amount', number_format( $order->get_total() - $order->get_shipping() - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' ) );
+			$item->addChild( 'amount', number_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount(), 2, '.', '' ) );
 			$item->addChild( 'quantity', 1 );
 
-			if ( ( $order->get_shipping() + $order->get_shipping_tax() ) > 0 ) {
-				$shipping->addChild( 'cost', number_format( $order->get_shipping() + $order->get_shipping_tax(), 2, '.', '' ) );
+			if ( ( $shipping_total + $order->get_shipping_tax() ) > 0 ) {
+				$shipping->addChild( 'cost', number_format( $shipping_total + $order->get_shipping_tax(), 2, '.', '' ) );
 			}
 
 		} else {
@@ -313,8 +319,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			}
 
 			// Shipping Cost item.
-			if ( $order->get_shipping() > 0 ) {
-				$shipping->addChild( 'cost', number_format( $order->get_shipping(), 2, '.', '' ) );
+			if ( $shipping_total > 0 ) {
+				$shipping->addChild( 'cost', number_format( $shipping_total, 2, '.', '' ) );
 			}
 
 			// Extras Amount.
