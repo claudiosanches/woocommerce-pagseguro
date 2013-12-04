@@ -36,7 +36,7 @@ Este plugin desenvolvido a partir da [documentação oficial do PagSeguro](https
 
 Compatível com as versão 2.0.x e 2.1.x do WooCommerce.
 
-= Instalação: =
+= Instalação =
 
 Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/).
 
