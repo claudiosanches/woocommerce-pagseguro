@@ -32,6 +32,10 @@ O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum incentivo do PagSegur
 
 Este plugin desenvolvido a partir da [documentação oficial do PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html) e utiliza a última versão da API de pagamentos.
 
+= Compatibilidade =
+
+Compatível com as versão 2.0.x e 2.1.x do WooCommerce.
+
 = Instalação: =
 
 Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/).
@@ -196,7 +200,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 = 2.2.0 - 01/12/2013 =
 
 * Corrigido padrões de código.
-* Removida compatibilidade com versões 1.6.X ou inferiores do WooCommerce.
+* Removida compatibilidade com versões 1.6.x ou inferiores do WooCommerce.
 * Adicionada compatibilidade com WooCommerce 2.1 ou superior.
 
 = 2.1.1 - 03/09/2013 =
@@ -245,7 +249,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 * Adicionado suporte para WooCommerce 2.1.
 * Adicionado o ID da compra no filtro `woocommerce_pagseguro_args`.
 
-= 1.4 - 02/04/2013 =
+= 1.4.0 - 02/04/2013 =
 
 * Correção do retorno automático de dados na versão 2.0.0 ou superior do WooCommerce.
 
@@ -266,7 +270,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 * Melhoria no método que atualiza o status do pedido.
 * Correção da quantidade de caracteres das descrição dos produtos no PagSeguro.
 
-= 1.3 - 30/11/2012 =
+= 1.3.0 - 30/11/2012 =
 
 * Adicionada opção para logs de erro.
 * Adiciona opção para validar ou não endereço (quando ativo força cliente a informar os dados corretamente e ir direto para a página de pagamento do PagSeguro).
@@ -279,7 +283,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 * Corrigido o problema de produto com a descrição/nome muito grande no PagSeguro.
 
-= 1.2 =
+= 1.2.0 =
 
 * Removida a classe do retorno automático que usava cURL em favor da função wp_remote_post().
 * Otimizado o retorno automático de dados.
@@ -289,7 +293,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 * Tradução revisada.
 * Melhorada a integração de retorno automático para o status de "Aguardando pagamento".
 
-= 1.1 =
+= 1.1.0 =
 
 * Adicionado retorno automático de dados.
 * Melhorado o sistema de notificações.
@@ -304,7 +308,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 * Correção para impedir que o portal de pagamento seja habilitado se a conta de email do PagSeguro estiver em branco
 
-= 1.0 =
+= 1.0.0 =
 
 * Versão incial do plugin.
 
@@ -312,7 +316,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 = 2.2.0 =
 
-* Removida compatibilidade com versões 1.6.X ou inferiores do WooCommerce.
+* Removida compatibilidade com versões 1.6.x ou inferiores do WooCommerce.
 * Adicionada compatibilidade com WooCommerce 2.1 ou superior.
 
 == License ==
