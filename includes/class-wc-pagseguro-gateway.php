@@ -15,7 +15,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id             = 'pagseguro';
-		$this->icon           = apply_filters( 'woocommerce_pagseguro_icon', WOO_PAGSEGURO_URL . 'images/pagseguro.png' );
+		$this->icon           = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
 		$this->has_fields     = false;
 		$this->method_title   = __( 'PagSeguro', 'wcpagseguro' );
 
@@ -223,7 +223,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	protected function generate_payment_xml( $order ) {
 		// Include the WC_PagSeguro_SimpleXML class.
-		require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-simplexml.php';
+		require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-simplexml.php';
 
 		// Creates the payment xml.
 		$xml = new WC_PagSeguro_SimpleXML( '<?xml version="1.0" encoding="utf-8" standalone="yes" ?><checkout></checkout>' );
@@ -373,9 +373,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return bool
 	 */
 	public function generate_payment_token( $order ) {
-
 		// Include the WC_PagSeguro_Helpers class.
-		require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-helpers.php';
+		require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-helpers.php';
 		$helper = new WC_PagSeguro_Helpers;
 
 		// Sets the url.
@@ -586,7 +585,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			// If true processes the payment.
 			if ( $order->id === $order_id ) {
 				// Include the WC_PagSeguro_Helpers class.
-				require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-helpers.php';
+				require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-helpers.php';
 				$helper = new WC_PagSeguro_Helpers;
 
 				if ( 'yes' == $this->debug ) {
