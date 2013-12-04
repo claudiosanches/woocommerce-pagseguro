@@ -17,18 +17,18 @@ class WC_PagSeguro_Helpers {
 	 */
 	public function payment_type( $value ) {
 		$types = array(
-			1 => __( 'Credit Card', 'wcpagseguro' ),
-			2 => __( 'Billet', 'wcpagseguro' ),
-			3 => __( 'Online Debit', 'wcpagseguro' ),
-			4 => __( 'PagSeguro credit', 'wcpagseguro' ),
-			5 => __( 'Oi Paggo', 'wcpagseguro' ),
-			7 => __( 'Account deposit', 'wcpagseguro' )
+			1 => __( 'Credit Card', 'woocommerce-pagseguro' ),
+			2 => __( 'Billet', 'woocommerce-pagseguro' ),
+			3 => __( 'Online Debit', 'woocommerce-pagseguro' ),
+			4 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
+			5 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
+			7 => __( 'Account deposit', 'woocommerce-pagseguro' )
 		);
 
 		if ( isset( $types[ $value ] ) ) {
 			return $types[ $value ];
 		} else {
-			return __( 'Unknown', 'wcpagseguro' );
+			return __( 'Unknown', 'woocommerce-pagseguro' );
 		}
 	}
 
@@ -40,9 +40,9 @@ class WC_PagSeguro_Helpers {
 	 * @return string        Method name.
 	 */
 	public function payment_method( $value ) {
-		$credit_card = __( 'Credit Card', 'wcpagseguro' );
-		$billet = __( 'Billet', 'wcpagseguro' );
-		$online_debit = __( 'Online Debit', 'wcpagseguro' );
+		$credit_card = __( 'Credit Card', 'woocommerce-pagseguro' );
+		$billet = __( 'Billet', 'woocommerce-pagseguro' );
+		$online_debit = __( 'Online Debit', 'woocommerce-pagseguro' );
 
 		$methods = array(
 			101 => $credit_card . ' ' . 'Visa',
@@ -73,15 +73,15 @@ class WC_PagSeguro_Helpers {
 			305 => $online_debit . ' ' . 'Real',
 			306 => $online_debit . ' ' . 'Banrisul',
 			307 => $online_debit . ' ' . 'HSBC',
-			401 => __( 'PagSeguro credit', 'wcpagseguro' ),
-			501 => __( 'Oi Paggo', 'wcpagseguro' ),
-			701 => __( 'Account deposit', 'wcpagseguro' )
+			401 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
+			501 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
+			701 => __( 'Account deposit', 'woocommerce-pagseguro' )
 		);
 
 		if ( isset( $methods[ $value ] ) ) {
 			return $methods[ $value ];
 		} else {
-			return __( 'Unknown', 'wcpagseguro' );
+			return __( 'Unknown', 'woocommerce-pagseguro' );
 		}
 	}
 
@@ -96,17 +96,17 @@ class WC_PagSeguro_Helpers {
 		switch ( $code ) {
 			case 11013:
 			case 11014:
-				return __( 'Please enter a valid phone number with DDD. Example: (11) 5555-5555.', 'wcpagseguro' );
+				return __( 'Please enter a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' );
 				break;
 			case 11017:
-				return __( 'Please enter a valid zip code number.', 'wcpagseguro' );
+				return __( 'Please enter a valid zip code number.', 'woocommerce-pagseguro' );
 				break;
 			case 11164:
-				return __( 'Please enter a valid CPF number.', 'wcpagseguro' );
+				return __( 'Please enter a valid CPF number.', 'woocommerce-pagseguro' );
 				break;
 
 			default:
-				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'wcpagseguro' );
+				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'woocommerce-pagseguro' );
 				break;
 		}
 	}

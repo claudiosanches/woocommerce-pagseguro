@@ -17,7 +17,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->id             = 'pagseguro';
 		$this->icon           = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
 		$this->has_fields     = false;
-		$this->method_title   = __( 'PagSeguro', 'wcpagseguro' );
+		$this->method_title   = __( 'PagSeguro', 'woocommerce-pagseguro' );
 
 		// API URLs.
 		$this->checkout_url   = 'https://ws.pagseguro.uol.com.br/v2/checkout';
@@ -97,12 +97,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Admin Panel Options.
 	 */
 	public function admin_options() {
-		echo '<h3>' . __( 'PagSeguro standard', 'wcpagseguro' ) . '</h3>';
-		echo '<p>' . __( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'wcpagseguro' ) . '</p>';
+		echo '<h3>' . __( 'PagSeguro standard', 'woocommerce-pagseguro' ) . '</h3>';
+		echo '<p>' . __( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'woocommerce-pagseguro' ) . '</p>';
 
 		// Checks if is valid for use.
 		if ( ! $this->is_valid_for_use() ) {
-			echo '<div class="inline error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . __( 'Works only with Brazilian Real.', 'wcpagseguro' ) . '</p></div>';
+			echo '<div class="inline error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'Works only with Brazilian Real.', 'woocommerce-pagseguro' ) . '</p></div>';
 		} else {
 			// Generate the HTML For the settings form.
 			echo '<table class="form-table">';
@@ -119,55 +119,55 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled' => array(
-				'title' => __( 'Enable/Disable', 'wcpagseguro' ),
+				'title' => __( 'Enable/Disable', 'woocommerce-pagseguro' ),
 				'type' => 'checkbox',
-				'label' => __( 'Enable PagSeguro standard', 'wcpagseguro' ),
+				'label' => __( 'Enable PagSeguro standard', 'woocommerce-pagseguro' ),
 				'default' => 'yes'
 			),
 			'title' => array(
-				'title' => __( 'Title', 'wcpagseguro' ),
+				'title' => __( 'Title', 'woocommerce-pagseguro' ),
 				'type' => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'wcpagseguro' ),
+				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-pagseguro' ),
 				'desc_tip' => true,
-				'default' => __( 'PagSeguro', 'wcpagseguro' )
+				'default' => __( 'PagSeguro', 'woocommerce-pagseguro' )
 			),
 			'description' => array(
-				'title' => __( 'Description', 'wcpagseguro' ),
+				'title' => __( 'Description', 'woocommerce-pagseguro' ),
 				'type' => 'textarea',
-				'description' => __( 'This controls the description which the user sees during checkout.', 'wcpagseguro' ),
-				'default' => __( 'Pay via PagSeguro', 'wcpagseguro' )
+				'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-pagseguro' ),
+				'default' => __( 'Pay via PagSeguro', 'woocommerce-pagseguro' )
 			),
 			'email' => array(
-				'title' => __( 'PagSeguro Email', 'wcpagseguro' ),
+				'title' => __( 'PagSeguro Email', 'woocommerce-pagseguro' ),
 				'type' => 'text',
-				'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'wcpagseguro' ),
+				'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'woocommerce-pagseguro' ),
 				'desc_tip' => true,
 				'default' => ''
 			),
 			'token' => array(
-				'title' => __( 'PagSeguro Token', 'wcpagseguro' ),
+				'title' => __( 'PagSeguro Token', 'woocommerce-pagseguro' ),
 				'type' => 'text',
-				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'wcpagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'wcpagseguro' ) . '</a>' ),
+				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'woocommerce-pagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default' => ''
 			),
 			'invoice_prefix' => array(
-				'title' => __( 'Invoice Prefix', 'wcpagseguro' ),
+				'title' => __( 'Invoice Prefix', 'woocommerce-pagseguro' ),
 				'type' => 'text',
-				'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'wcpagseguro' ),
+				'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'woocommerce-pagseguro' ),
 				'desc_tip' => true,
 				'default' => 'WC-'
 			),
 			'testing' => array(
-				'title' => __( 'Gateway Testing', 'wcpagseguro' ),
+				'title' => __( 'Gateway Testing', 'woocommerce-pagseguro' ),
 				'type' => 'title',
 				'description' => ''
 			),
 			'debug' => array(
-				'title' => __( 'Debug Log', 'wcpagseguro' ),
+				'title' => __( 'Debug Log', 'woocommerce-pagseguro' ),
 				'type' => 'checkbox',
-				'label' => __( 'Enable logging', 'wcpagseguro' ),
+				'label' => __( 'Enable logging', 'woocommerce-pagseguro' ),
 				'default' => 'no',
-				'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'wcpagseguro' ), '<code>woocommerce/logs/pagseguro-' . sanitize_file_name( wp_hash( 'pagseguro' ) ) . '.txt</code>' )
+				'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'woocommerce-pagseguro' ), '<code>woocommerce/logs/pagseguro-' . sanitize_file_name( wp_hash( 'pagseguro' ) ) . '.txt</code>' )
 			)
 		);
 	}
@@ -306,7 +306,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			$item = $items->addChild( 'item' );
 			$item->addChild( 'id', 1 );
-			$item->addChild( 'description' )->addCData( substr( sprintf( __( 'Order %s', 'wcpagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ) );
+			$item->addChild( 'description' )->addCData( substr( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ) );
 			$item->addChild( 'amount', $this->fix_money_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount() ) );
 			$item->addChild( 'quantity', 1 );
 
@@ -442,7 +442,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 
 		// Added error message.
-		$this->add_error( '<strong>PagSeguro</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'wcpagseguro' ) );
+		$this->add_error( '<strong>PagSeguro</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) );
 
 		return false;
 	}
@@ -563,7 +563,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			header( 'HTTP/1.1 200 OK' );
 			do_action( 'valid_pagseguro_ipn_request', $ipn );
 		} else {
-			wp_die( __( 'PagSeguro Request Failure', 'wcpagseguro' ) );
+			wp_die( __( 'PagSeguro Request Failure', 'woocommerce-pagseguro' ) );
 		}
 	}
 
@@ -594,11 +594,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 				switch ( (int) $posted->status ) {
 					case 1:
-						$order->add_order_note( __( 'PagSeguro: Awaiting payment.', 'wcpagseguro' ) );
+						$order->add_order_note( __( 'PagSeguro: Awaiting payment.', 'woocommerce-pagseguro' ) );
 
 						break;
 					case 2:
-						$order->update_status( 'on-hold', __( 'PagSeguro: Payment under review.', 'wcpagseguro' ) );
+						$order->update_status( 'on-hold', __( 'PagSeguro: Payment under review.', 'woocommerce-pagseguro' ) );
 
 						break;
 					case 3:
@@ -606,83 +606,83 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						if ( isset( $posted->code ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'PagSeguro Transaction ID', 'wcpagseguro' ),
+								__( 'PagSeguro Transaction ID', 'woocommerce-pagseguro' ),
 								(string) $posted->code
 							);
 						}
 						if ( isset( $posted->sender->email ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'Payer email', 'wcpagseguro' ),
+								__( 'Payer email', 'woocommerce-pagseguro' ),
 								(string) $posted->sender->email
 							);
 						}
 						if ( isset( $posted->sender->name ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'Payer name', 'wcpagseguro' ),
+								__( 'Payer name', 'woocommerce-pagseguro' ),
 								(string) $posted->sender->name
 							);
 						}
 						if ( isset( $posted->paymentMethod->type ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'Payment type', 'wcpagseguro' ),
+								__( 'Payment type', 'woocommerce-pagseguro' ),
 								$helper->payment_type( (int) $posted->paymentMethod->type )
 							);
 						}
 						if ( isset( $posted->paymentMethod->code ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'Payment method', 'wcpagseguro' ),
+								__( 'Payment method', 'woocommerce-pagseguro' ),
 								$helper->payment_method( (int) $posted->paymentMethod->code )
 							);
 						}
 						if ( isset( $posted->installmentCount ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'Installments', 'wcpagseguro' ),
+								__( 'Installments', 'woocommerce-pagseguro' ),
 								(string) $posted->installmentCount
 							);
 						}
 						if ( isset( $posted->paymentLink ) ) {
 							update_post_meta(
 								$order_id,
-								__( 'Payment url', 'wcpagseguro' ),
+								__( 'Payment url', 'woocommerce-pagseguro' ),
 								(string) $posted->paymentLink
 							);
 						}
 
-						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'wcpagseguro' ) );
+						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
 
 						// Changing the order for processing and reduces the stock.
 						$order->payment_complete();
 
 						break;
 					case 4:
-						$order->add_order_note( __( 'PagSeguro: Payment completed and credited to your account.', 'wcpagseguro' ) );
+						$order->add_order_note( __( 'PagSeguro: Payment completed and credited to your account.', 'woocommerce-pagseguro' ) );
 
 						break;
 					case 5:
-						$order->update_status( 'on-hold', __( 'PagSeguro: Payment came into dispute.', 'wcpagseguro' ) );
+						$order->update_status( 'on-hold', __( 'PagSeguro: Payment came into dispute.', 'woocommerce-pagseguro' ) );
 						$this->send_email(
-							sprintf( __( 'Payment for order %s came into dispute', 'wcpagseguro' ), $order->get_order_number() ),
-							__( 'Payment in dispute', 'wcpagseguro' ),
-							sprintf( __( 'Order %s has been marked as on-hold, because the payment came into dispute in PagSeguro.', 'wcpagseguro' ), $order->get_order_number() )
+							sprintf( __( 'Payment for order %s came into dispute', 'woocommerce-pagseguro' ), $order->get_order_number() ),
+							__( 'Payment in dispute', 'woocommerce-pagseguro' ),
+							sprintf( __( 'Order %s has been marked as on-hold, because the payment came into dispute in PagSeguro.', 'woocommerce-pagseguro' ), $order->get_order_number() )
 						);
 
 						break;
 					case 6:
-						$order->update_status( 'refunded', __( 'PagSeguro: Payment refunded.', 'wcpagseguro' ) );
+						$order->update_status( 'refunded', __( 'PagSeguro: Payment refunded.', 'woocommerce-pagseguro' ) );
 						$this->send_email(
-							sprintf( __( 'Payment for order %s refunded', 'wcpagseguro' ), $order->get_order_number() ),
-							__( 'Payment refunded', 'wcpagseguro' ),
-							sprintf( __( 'Order %s has been marked as refunded by PagSeguro.', 'wcpagseguro' ), $order->get_order_number() )
+							sprintf( __( 'Payment for order %s refunded', 'woocommerce-pagseguro' ), $order->get_order_number() ),
+							__( 'Payment refunded', 'woocommerce-pagseguro' ),
+							sprintf( __( 'Order %s has been marked as refunded by PagSeguro.', 'woocommerce-pagseguro' ), $order->get_order_number() )
 						);
 
 						break;
 					case 7:
-						$order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'wcpagseguro' ) );
+						$order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'woocommerce-pagseguro' ) );
 
 						break;
 
@@ -717,7 +717,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string Error Mensage.
 	 */
 	public function mail_missing_message() {
-		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your email address. %s', 'wcpagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'wcpagseguro' ) . '</a>' ) . '</p></div>';
+		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your email address. %s', 'woocommerce-pagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
 	}
 
 	/**
@@ -726,7 +726,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string Error Mensage.
 	 */
 	public function token_missing_message() {
-		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'wcpagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your token. %s', 'wcpagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'wcpagseguro' ) . '</a>' ) . '</p></div>';
+		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your token. %s', 'woocommerce-pagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
 	}
 
 }

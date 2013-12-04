@@ -7,7 +7,7 @@
  * Author URI: http://claudiosmweb.com/
  * Version: 2.2.0
  * License: GPLv2 or later
- * Text Domain: wcpagseguro
+ * Text Domain: woocommerce-pagseguro
  * Domain Path: /languages/
  */
 
@@ -15,7 +15,7 @@
  * WooCommerce fallback notice.
  */
 function wcpagseguro_woocommerce_fallback_notice() {
-	echo '<div class="error"><p>' . sprintf( __( 'WooCommerce PagSeguro Gateway depends on the last version of %s to work!', 'wcpagseguro' ), '<a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a>' ) . '</p></div>';
+	echo '<div class="error"><p>' . sprintf( __( 'WooCommerce PagSeguro Gateway depends on the last version of %s to work!', 'woocommerce-pagseguro' ), '<a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a>' ) . '</p></div>';
 }
 
 /**
@@ -33,7 +33,7 @@ function wcpagseguro_gateway_load() {
 	/**
 	 * Load textdomain.
 	 */
-	load_plugin_textdomain( 'wcpagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain( 'woocommerce-pagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	/**
 	 * Add the gateway to WooCommerce.
