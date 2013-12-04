@@ -14,8 +14,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function __construct() {
-		global $woocommerce;
-
 		$this->id             = 'pagseguro';
 		$this->icon           = apply_filters( 'woocommerce_pagseguro_icon', WOO_PAGSEGURO_URL . 'images/pagseguro.png' );
 		$this->has_fields     = false;
@@ -63,8 +61,22 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			if ( class_exists( 'WC_Logger' ) ) {
 				$this->log = new WC_Logger();
 			} else {
-				$this->log = $woocommerce->logger();
+				$this->log = $this->woocommerce_instance()->logger();
 			}
+		}
+	}
+
+	/**
+	 * Backwards compatibility with version prior to 2.1.
+	 *
+	 * @return object Returns the main instance of WooCommerce class.
+	 */
+	protected function woocommerce_instance() {
+		if ( function_exists( 'WC' ) ) {
+			return WC();
+		} else {
+			global $woocommerce;
+			return $woocommerce;
 		}
 	}
 
@@ -168,12 +180,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string         Displays the error message.
 	 */
 	protected function add_error( $message ) {
-		global $woocommerce;
-
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
 			wc_add_notice( $message, 'error' );
 		} else {
-			$woocommerce->add_error( $message );
+			$this->woocommerce_instance()->add_error( $message );
 		}
 	}
 
@@ -187,9 +197,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	protected function send_email( $subject, $title, $message ) {
-		global $woocommerce;
-
-		$mailer = $woocommerce->mailer();
+		$mailer = $this->woocommerce_instance()->mailer();
 
 		$mailer->send( get_option( 'admin_email' ), $subject, $mailer->wrap_message( $title, $message ) );
 	}
@@ -365,7 +373,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return bool
 	 */
 	public function generate_payment_token( $order ) {
-		global $woocommerce;
 
 		// Include the WC_PagSeguro_Helpers class.
 		require_once WOO_PAGSEGURO_PATH . 'includes/class-wc-pagseguro-helpers.php';
@@ -449,15 +456,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return array           Redirect.
 	 */
 	public function process_payment( $order_id ) {
-		global $woocommerce;
-
 		$order = new WC_Order( $order_id );
 
 		$token = $this->generate_payment_token( $order );
 
 		if ( $token ) {
 			// Remove cart.
-			$woocommerce->cart->empty_cart();
+			$this->woocommerce_instance()->cart->empty_cart();
 
 			return array(
 				'result'   => 'success',
