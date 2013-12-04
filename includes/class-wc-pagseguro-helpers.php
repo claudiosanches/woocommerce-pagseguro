@@ -16,29 +16,20 @@ class WC_PagSeguro_Helpers {
 	 * @return string        Type name.
 	 */
 	public function payment_type( $value ) {
-		switch ( $value ) {
-			case 1:
-				$type = __( 'Credit Card', 'wcpagseguro' );
-				break;
-			case 2:
-				$type = __( 'Billet', 'wcpagseguro' );
-				break;
-			case 3:
-				$type = __( 'Online Debit', 'wcpagseguro' );
-				break;
-			case 4:
-				$type = __( 'PagSeguro credit', 'wcpagseguro' );
-				break;
-			case 4:
-				$type = __( 'Oi Paggo', 'wcpagseguro' );
-				break;
+		$types = array(
+			1 => __( 'Credit Card', 'wcpagseguro' ),
+			2 => __( 'Billet', 'wcpagseguro' ),
+			3 => __( 'Online Debit', 'wcpagseguro' ),
+			4 => __( 'PagSeguro credit', 'wcpagseguro' ),
+			5 => __( 'Oi Paggo', 'wcpagseguro' ),
+			7 => __( 'Account deposit', 'wcpagseguro' )
+		);
 
-			default:
-				$type = __( 'Unknown', 'wcpagseguro' );
-				break;
+		if ( isset( $types[ $value ] ) ) {
+			return $types[ $value ];
+		} else {
+			return __( 'Unknown', 'wcpagseguro' );
 		}
-
-		return $type;
 	}
 
 	/**
@@ -53,104 +44,45 @@ class WC_PagSeguro_Helpers {
 		$billet = __( 'Billet', 'wcpagseguro' );
 		$online_debit = __( 'Online Debit', 'wcpagseguro' );
 
-		switch ( $value ) {
-			case 101:
-				$method = $credit_card . ' ' . 'Visa';
-				break;
-			case 102:
-				$method = $credit_card . ' ' . 'MasterCard';
-				break;
-			case 103:
-				$method = $credit_card . ' ' . 'American Express';
-				break;
-			case 104:
-				$method = $credit_card . ' ' . 'Diners';
-				break;
-			case 105:
-				$method = $credit_card . ' ' . 'Hipercard';
-				break;
-			case 106:
-				$method = $credit_card . ' ' . 'Aura';
-				break;
-			case 107:
-				$method = $credit_card . ' ' . 'Elo';
-				break;
-			case 108:
-				$method = $credit_card . ' ' . 'PLENOCard';
-				break;
-			case 109:
-				$method = $credit_card . ' ' . 'PersonalCard';
-				break;
-			case 110:
-				$method = $credit_card . ' ' . 'JCB';
-				break;
-			case 111:
-				$method = $credit_card . ' ' . 'Discover';
-				break;
-			case 112:
-				$method = $credit_card . ' ' . 'BrasilCard';
-				break;
-			case 113:
-				$method = $credit_card . ' ' . 'FORTBRASIL';
-				break;
-			case 114:
-				$method = $credit_card . ' ' . 'CARDBAN';
-				break;
-			case 115:
-				$method = $credit_card . ' ' . 'VALECARD';
-				break;
-			case 116:
-				$method = $credit_card . ' ' . 'Cabal';
-				break;
-			case 117:
-				$method = $credit_card . ' ' . 'Mais!';
-				break;
-			case 118:
-				$method = $credit_card . ' ' . 'Avista';
-				break;
-			case 119:
-				$method = $credit_card . ' ' . 'GRANDCARD';
-				break;
-			case 201:
-				$method = $billet . ' ' . 'Bradesco';
-				break;
-			case 202:
-				$method = $billet . ' ' . 'Santander';
-				break;
-			case 301:
-				$method = $online_debit . ' ' . 'Bradesco';
-				break;
-			case 302:
-				$method = $online_debit . ' ' . 'Itaú';
-				break;
-			case 303:
-				$method = $online_debit . ' ' . 'Unibanco';
-				break;
-			case 304:
-				$method = $online_debit . ' ' . 'Banco do Brasil';
-				break;
-			case 305:
-				$method = $online_debit . ' ' . 'Real';
-				break;
-			case 306:
-				$method = $online_debit . ' ' . 'Banrisul';
-				break;
-			case 307:
-				$method = $online_debit . ' ' . 'HSBC';
-				break;
-			case 401:
-				$method = __( 'PagSeguro credit', 'wcpagseguro' );
-				break;
-			case 501:
-				$method = __( 'Oi Paggo', 'wcpagseguro' );
-				break;
+		$methods = array(
+			101 => $credit_card . ' ' . 'Visa',
+			102 => $credit_card . ' ' . 'MasterCard',
+			103 => $credit_card . ' ' . 'American Express',
+			104 => $credit_card . ' ' . 'Diners',
+			105 => $credit_card . ' ' . 'Hipercard',
+			106 => $credit_card . ' ' . 'Aura',
+			107 => $credit_card . ' ' . 'Elo',
+			108 => $credit_card . ' ' . 'PLENOCard',
+			109 => $credit_card . ' ' . 'PersonalCard',
+			110 => $credit_card . ' ' . 'JCB',
+			111 => $credit_card . ' ' . 'Discover',
+			112 => $credit_card . ' ' . 'BrasilCard',
+			113 => $credit_card . ' ' . 'FORTBRASIL',
+			114 => $credit_card . ' ' . 'CARDBAN',
+			115 => $credit_card . ' ' . 'VALECARD',
+			116 => $credit_card . ' ' . 'Cabal',
+			117 => $credit_card . ' ' . 'Mais!',
+			118 => $credit_card . ' ' . 'Avista',
+			119 => $credit_card . ' ' . 'GRANDCARD',
+			201 => $billet . ' ' . 'Bradesco',
+			202 => $billet . ' ' . 'Santander',
+			301 => $online_debit . ' ' . 'Bradesco',
+			302 => $online_debit . ' ' . 'Itaú',
+			303 => $online_debit . ' ' . 'Unibanco',
+			304 => $online_debit . ' ' . 'Banco do Brasil',
+			305 => $online_debit . ' ' . 'Real',
+			306 => $online_debit . ' ' . 'Banrisul',
+			307 => $online_debit . ' ' . 'HSBC',
+			401 => __( 'PagSeguro credit', 'wcpagseguro' ),
+			501 => __( 'Oi Paggo', 'wcpagseguro' ),
+			701 => __( 'Account deposit', 'wcpagseguro' )
+		);
 
-			default:
-				$method = __( 'Unknown', 'wcpagseguro' );
-				break;
+		if ( isset( $methods[ $value ] ) ) {
+			return $methods[ $value ];
+		} else {
+			return __( 'Unknown', 'wcpagseguro' );
 		}
-
-		return $method;
 	}
 
 	/**
@@ -164,20 +96,18 @@ class WC_PagSeguro_Helpers {
 		switch ( $code ) {
 			case 11013:
 			case 11014:
-				$message = __( 'Please enter a valid phone number with DDD. Example: (11) 5555-5555.', 'wcpagseguro' );
+				return __( 'Please enter a valid phone number with DDD. Example: (11) 5555-5555.', 'wcpagseguro' );
 				break;
 			case 11017:
-				$message = __( 'Please enter a valid zip code number.', 'wcpagseguro' );
+				return __( 'Please enter a valid zip code number.', 'wcpagseguro' );
 				break;
 			case 11164:
-				$message = __( 'Please enter a valid CPF number.', 'wcpagseguro' );
+				return __( 'Please enter a valid CPF number.', 'wcpagseguro' );
 				break;
 
 			default:
-				$message = __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'wcpagseguro' );
+				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'wcpagseguro' );
 				break;
 		}
-
-		return $message;
 	}
 }
