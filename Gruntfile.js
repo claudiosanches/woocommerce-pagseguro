@@ -1,11 +1,11 @@
 /* jshint node:true */
-module.exports = function(grunt) {
-	'use strict';
+module.exports = function( grunt ) {
+'use strict';
 
 	grunt.initConfig({
 
 		// gets the package vars
-		pkg: grunt.file.readJSON('package.json'),
+		pkg: grunt.file.readJSON( 'package.json' ),
 		svn_settings: {
 			path: '../../../../wp_plugins/<%= pkg.name %>',
 			tag: '<%= svn_settings.path %>/tags/<%= pkg.version %>',
@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 				'.editorconfig',
 				'.git/',
 				'.gitignore',
+				'.jshintrc',
 				'node_modules/',
 				'Gruntfile.js',
 				'README.md',
@@ -65,14 +66,14 @@ module.exports = function(grunt) {
 	});
 
 	// load tasks
-	grunt.loadNpmTasks('grunt-rsync');
-	grunt.loadNpmTasks('grunt-shell');
+	grunt.loadNpmTasks( 'grunt-rsync' );
+	grunt.loadNpmTasks( 'grunt-shell' );
 
-	// default task
-	grunt.registerTask('default', [
+	// deploy task
+	grunt.registerTask( 'default', [
 		'rsync:tag',
 		'rsync:trunk',
 		'shell:svn_add',
 		'shell:svn_commit'
-	]);
+	] );
 };
