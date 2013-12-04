@@ -201,7 +201,7 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 ## Changelog ##
 
-### 2.2.0 - 01/12/2013 ###
+### 2.2.0 - 04/12/2013 ###
 
 * Corrigido padrões de código.
 * Removida compatibilidade com versões 1.6.x ou inferiores do WooCommerce.
