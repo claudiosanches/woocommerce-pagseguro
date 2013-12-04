@@ -2,7 +2,7 @@
 Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
-Requires at least: 3.8
+Requires at least: 3.5
 Tested up to: 3.8
 Stable tag: 2.2.0
 License: GPLv2 or later
