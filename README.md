@@ -118,7 +118,7 @@ Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
 ### What is needed to use this plugin? ###
 
-* WooCommerce installed and active
+* WooCommerce version 2.0 or latter installed and active.
 * Only one account on [PagSeguro](http://pagseguro.uol.com.br/ "PagSeguro").
 
 ### FAQ em Português: ###
@@ -129,7 +129,7 @@ Este plugin esta licenciado como GPL.
 
 ### O que eu preciso para utilizar este plugin? ###
 
-* Ter instalado o plugin WooCommerce.
+* Ter instalado o plugin WooCommerce 2.0 ou superior.
 * Possuir uma conta no PagSeguro.
 * Gerar um token de segurança no PagSeguro.
 * Utilizar uma das duas opções de configuração no PagSeguro (veja elas no guia de [instalação do plugin](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/)).
