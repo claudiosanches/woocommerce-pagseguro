@@ -4,7 +4,7 @@
  *
  * Built the PagSeguro method.
  *
- * @since 2.2.0
+ * @since 2.2.1
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
@@ -39,22 +39,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->debug          = $this->get_option( 'debug' );
 
 		// Actions.
-		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( &$this, 'check_ipn_response' ) );
-		add_action( 'valid_pagseguro_ipn_request', array( &$this, 'successful_request' ) );
-		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) );
-
-		// Valid for use.
-		$this->enabled = ( 'yes' == $this->get_option( 'enabled' ) ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->is_valid_for_use();
-
-		// Checks if email is not empty.
-		if ( empty( $this->email ) ) {
-			add_action( 'admin_notices', array( &$this, 'mail_missing_message' ) );
-		}
-
-		// Checks if token is not empty.
-		if ( empty( $this->token ) ) {
-			add_action( 'admin_notices', array( &$this, 'token_missing_message' ) );
-		}
+		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( $this, 'check_ipn_response' ) );
+		add_action( 'valid_pagseguro_ipn_request', array( $this, 'successful_request' ) );
+		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		// Active logs.
 		if ( 'yes' == $this->debug ) {
@@ -64,6 +51,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$this->log = $this->woocommerce_instance()->logger();
 			}
 		}
+
+		// Display admin notices.
+		$this->admin_notices();
 	}
 
 	/**
@@ -81,16 +71,53 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check if this gateway is enabled and available in the user's country.
+	 * Displays notifications when the admin has something wrong with the configuration.
+	 *
+	 * @return void
+	 */
+	protected function admin_notices() {
+		if ( is_admin() ) {
+			// Checks if email is not empty.
+			if ( empty( $this->email ) ) {
+				add_action( 'admin_notices', array( $this, 'mail_missing_message' ) );
+			}
+
+			// Checks if token is not empty.
+			if ( empty( $this->token ) ) {
+				add_action( 'admin_notices', array( $this, 'token_missing_message' ) );
+			}
+
+			// Checks that the currency is supported
+			if ( ! $this->using_supported_currency() ) {
+				add_action( 'admin_notices', array( $this, 'currency_not_supported_message' ) );
+			}
+		}
+	}
+
+	/**
+	 * Returns a bool that indicates if currency is amongst the supported ones.
 	 *
 	 * @return bool
 	 */
-	public function is_valid_for_use() {
-		if ( ! in_array( get_woocommerce_currency(), array( 'BRL' ) ) ) {
-			return false;
-		}
+	public function using_supported_currency() {
+		return in_array( get_woocommerce_currency(), array( 'BRL' ) );
+	}
 
-		return true;
+	/**
+	 * Returns a value indicating the the Gateway is available or not. It's called
+	 * automatically by WooCommerce before allowing customers to use the gateway
+	 * for payment.
+	 *
+	 * @return bool
+	 */
+	public function is_available() {
+		// Test if is valid for use.
+		$available = ( 'yes' == $this->settings['enabled'] ) &&
+					! empty( $this->email ) &&
+					! empty( $this->token ) &&
+					$this->using_supported_currency();
+
+		return $available;
 	}
 
 	/**
@@ -100,15 +127,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		echo '<h3>' . __( 'PagSeguro standard', 'woocommerce-pagseguro' ) . '</h3>';
 		echo '<p>' . __( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'woocommerce-pagseguro' ) . '</p>';
 
-		// Checks if is valid for use.
-		if ( ! $this->is_valid_for_use() ) {
-			echo '<div class="inline error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'Works only with Brazilian Real.', 'woocommerce-pagseguro' ) . '</p></div>';
-		} else {
-			// Generate the HTML For the settings form.
-			echo '<table class="form-table">';
-			$this->generate_settings_html();
-			echo '</table>';
-		}
+		// Generate the HTML For the settings form.
+		echo '<table class="form-table">';
+		$this->generate_settings_html();
+		echo '</table>';
 	}
 
 	/**
@@ -727,6 +749,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function token_missing_message() {
 		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your token. %s', 'woocommerce-pagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
+	}
+
+	/**
+	 * Adds error message when an unsupported currency is used.
+	 *
+	 * @return string
+	 */
+	public function currency_not_supported_message() {
+		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'Currency <code>%s</code> is not supported. Works only with Brazilian Real.', 'woocommerce-pagseguro' ), get_woocommerce_currency() ) . '</p></div>';
 	}
 
 }

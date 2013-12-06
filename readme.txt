@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -197,6 +197,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 2.2.1 - 06/12/2013 =
+
+* Melhoria na compatibilidade com o WooCommerce 2.1.
+
 = 2.2.0 - 04/12/2013 =
 
 * Corrigido padrões de código.
@@ -314,10 +318,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 2.2.0 =
+= 2.2.1 =
 
-* Removida compatibilidade com versões 1.6.x ou inferiores do WooCommerce.
-* Adicionada compatibilidade com WooCommerce 2.1 ou superior.
+* Melhoria na compatibilidade com o WooCommerce 2.1.
 
 == License ==
 
