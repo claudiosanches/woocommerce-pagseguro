@@ -34,7 +34,7 @@ Este plugin desenvolvido a partir da [documentação oficial do PagSeguro](https
 
 = Compatibilidade =
 
-Compatível com as versão 2.0.x e 2.1.x do WooCommerce.
+Compatível com as versões 2.0.x e 2.1.x do WooCommerce.
 
 = Instalação =
 
