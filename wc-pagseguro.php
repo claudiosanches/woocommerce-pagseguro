@@ -58,12 +58,25 @@ class WC_PagSeguro {
 	 */
 	protected static $instance = null;
 
-	public function __construct() {
+	/**
+	 * Initialize the plugin public actions.
+	 *
+	 * @since  2.3.0
+	 */
+	private function __construct() {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
-		// Initialize the plugin actions.
-		$this->init();
+		// Checks with WooCommerce is installed.
+		if ( class_exists( 'WC_Payment_Gateway' ) ) {
+			// Include the WC_PagSeguro_Gateway class.
+			include_once 'includes/class-wc-pagseguro-gateway.php';
+
+			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
+			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
+		} else {
+			add_action( 'admin_notices', array( $this, 'woocommerce_missing_notice' ) );
+		}
 	}
 
 	/**
@@ -117,26 +130,6 @@ class WC_PagSeguro {
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
-
-	/**
-	 * Initialize the plugin public actions.
-	 *
-	 * @since  2.3.0
-	 *
-	 * @return  void
-	 */
-	protected function init() {
-		// Checks with WooCommerce is installed.
-		if ( class_exists( 'WC_Payment_Gateway' ) ) {
-			// Include the WC_PagSeguro_Gateway class.
-			include_once 'includes/class-wc-pagseguro-gateway.php';
-
-			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
-			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
-		} else {
-			add_action( 'admin_notices', array( $this, 'woocommerce_missing_notice' ) );
-		}
 	}
 
 	/**
