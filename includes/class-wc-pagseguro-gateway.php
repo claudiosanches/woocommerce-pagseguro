@@ -558,7 +558,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			$html .= '<p id="browser-no-has-javascript">' . __( 'Thank you for your order, please click the button below to pay with PagSeguro.', $this->plugin_slug ) . '</p>';
 
-			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', $this->plugin_slug ) . '</a> <a id="submit-payment" class="checkout-button button alt" href="' . esc_url_raw( $this->payment_url . $token['token'] ) . '">' . __( 'Pay via PagSeguro', $this->plugin_slug ) . '</a>';
+			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', $this->plugin_slug ) . '</a> <a id="submit-payment" class="button alt" href="' . esc_url_raw( $this->payment_url . $token['token'] ) . '">' . __( 'Pay via PagSeguro', $this->plugin_slug ) . '</a>';
 
 			// PagSeguro lightbox API.
 			$html .= '<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>';
