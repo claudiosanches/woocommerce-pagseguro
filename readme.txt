@@ -3,8 +3,8 @@ Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 2.2.1
+Tested up to: 3.9
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -197,6 +197,10 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Changelog ==
 
+= 2.3.0 - 02/04/2014 =
+
+* Adicionada opção para selecionar pagamento direto com redirecionamento ou pelo Lightbox do PagSeguro.
+
 = 2.2.1 - 06/12/2013 =
 
 * Melhoria na compatibilidade com o WooCommerce 2.1.
@@ -318,9 +322,9 @@ Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-
 
 == Upgrade Notice ==
 
-= 2.2.1 =
+= 2.3.0 =
 
-* Melhoria na compatibilidade com o WooCommerce 2.1.
+* Adicionada opção para selecionar pagamento direto com redirecionamento ou pelo Lightbox do PagSeguro.
 
 == License ==
 
