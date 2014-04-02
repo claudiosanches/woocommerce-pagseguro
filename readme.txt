@@ -32,6 +32,12 @@ O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum incentivo do PagSegur
 
 Este plugin desenvolvido a partir da [documentação oficial do PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html) e utiliza a última versão da API de pagamentos.
 
+Estão disponíveis as seguintes modalidades de pagamento:
+
+* Padrão - Cliente é redirecionado ao PagSeguro para concluir a compra.
+* Lightbox - Uma janela do PagSeguro é aberta na finalização para o cliente fazer o pagamento.
+* Transparente - Em breve!
+
 = Compatibilidade =
 
 Compatível com as versões 2.0.x e 2.1.x do WooCommerce.
@@ -185,6 +191,14 @@ Me envie o link por [e-mail](http://claudiosmweb.com/contato/), desta forma poss
 = A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
 
 Para resolver este problema vá até "WooCommerce" > "Configurações" > "Inventário" e limpe (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
+
+== Funciona com o Lightbox do PagSeguro? ==
+
+Sim, basta ativar esta nas opções do plugin.
+
+== Funciona com o checkout transparente do PagSeguro? ==
+
+No momento não, estaremos implementando isso em futuras versões do plugin, aguarde!
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
