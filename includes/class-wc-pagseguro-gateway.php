@@ -36,6 +36,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->description    = $this->get_option( 'description' );
 		$this->email          = $this->get_option( 'email' );
 		$this->token          = $this->get_option( 'token' );
+		$this->method         = $this->get_option( 'method', 'direct' );
 		$this->invoice_prefix = $this->get_option( 'invoice_prefix', 'WC-' );
 		$this->debug          = $this->get_option( 'debug' );
 
@@ -43,6 +44,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( $this, 'check_ipn_response' ) );
 		add_action( 'valid_pagseguro_ipn_request', array( $this, 'successful_request' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
 
 		// Active logs.
 		if ( 'yes' == $this->debug ) {
@@ -173,6 +175,17 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', $this->plugin_slug ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', $this->plugin_slug ) . '</a>' ),
 				'default' => ''
 			),
+			'method' => array(
+				'title' => __( 'Integration method', $this->plugin_slug ),
+				'type' => 'select',
+				'description' => __( 'Choose how the customer will interact with the PagSeguro. Redirect (Client goes to PagSeguro page) or Lightbox (Inside your store)', $this->plugin_slug ),
+				'desc_tip' => true,
+				'default' => 'direct',
+				'options' => array(
+					'redirect' => __( 'Redirect (default)', $this->plugin_slug ),
+					'lightbox' => __( 'Lightbox', $this->plugin_slug )
+				)
+			),
 			'invoice_prefix' => array(
 				'title' => __( 'Invoice Prefix', $this->plugin_slug ),
 				'type' => 'text',
@@ -196,17 +209,21 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Add error message in checkout.
+	 * Add error messages in checkout.
 	 *
-	 * @param string $message Error message.
+	 * @param string $messages Error message.
 	 *
-	 * @return string         Displays the error message.
+	 * @return string          Displays the error messages.
 	 */
-	protected function add_error( $message ) {
+	protected function add_error( $messages ) {
 		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
-			wc_add_notice( $message, 'error' );
+			foreach ( $messages as $message ) {
+				wc_add_notice( $message, 'error' );
+			}
 		} else {
-			$this->woocommerce_instance()->add_error( $message );
+			foreach ( $messages as $message ) {
+				$this->woocommerce_instance()->add_error( $message );
+			}
 		}
 	}
 
@@ -393,7 +410,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param object $order Order data.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	public function generate_payment_token( $order ) {
 		// Include the WC_PagSeguro_Helpers class.
@@ -447,27 +464,36 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					$this->log->add( $this->id, 'PagSeguro Payment Token created with success! The Token is: ' . $body->code );
 				}
 
-				return (string) $body->code;
+				return array(
+					'token' => (string) $body->code,
+					'error' => ''
+				);
 			}
 
 			if ( isset( $body->error ) ) {
+				$errors = array();
+
 				if ( 'yes' == $this->debug ) {
 					$this->log->add( $this->id, 'Failed to generate the PagSeguro Payment Token: ' . print_r( $response, true ) );
 				}
 
 				foreach ( $body->error as $key => $value ) {
-					$this->add_error( '<strong>PagSeguro</strong>: ' . $helper->error_message( $value->code ) );
+					$errors[] = '<strong>PagSeguro</strong>: ' . $helper->error_message( $value->code );
 				}
 
-				return false;
+				return array(
+					'token' => '',
+					'error' => $errors
+				);
 			}
 
 		}
 
-		// Added error message.
-		$this->add_error( '<strong>PagSeguro</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', $this->plugin_slug ) );
-
-		return false;
+		// return error message.
+		return array(
+			'token' => '',
+			'error' => array( '<strong>PagSeguro</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', $this->plugin_slug ) )
+		);
 	}
 
 	/**
@@ -480,16 +506,100 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = new WC_Order( $order_id );
 
+		if ( 'redirect' == $this->method ) {
+			$token = $this->generate_payment_token( $order );
+
+			if ( $token['token'] ) {
+				// Remove cart.
+				$this->woocommerce_instance()->cart->empty_cart();
+
+				return array(
+					'result'   => 'success',
+					'redirect' => esc_url_raw( $this->payment_url . $token['token'] )
+				);
+			} else {
+				$this->add_error( $token['error'] );
+
+				return array(
+					'result'   => 'fail',
+					'redirect' => ''
+				);
+			}
+		} else {
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+				return array(
+					'result'   => 'success',
+					'redirect' => $order->get_checkout_payment_url( true )
+				);
+			} else {
+				return array(
+					'result'   => 'success',
+					'redirect' => add_query_arg( 'order', $order->id, add_query_arg( 'key', $order->order_key, get_permalink( woocommerce_get_page_id( 'pay' ) ) ) )
+				);
+			}
+		}
+	}
+
+	/**
+	 * Output for the order received page.
+	 *
+	 * @param  $order_id Order ID.
+	 *
+	 * @return string    PagSeguro lightbox.
+	 */
+	public function receipt_page( $order_id ) {
+		$order = new WC_Order( $order_id );
 		$token = $this->generate_payment_token( $order );
 
-		if ( $token ) {
-			// Remove cart.
-			$this->woocommerce_instance()->cart->empty_cart();
+		if ( $token['token'] ) {
 
-			return array(
-				'result'   => 'success',
-				'redirect' => esc_url_raw( $this->payment_url . $token )
-			);
+			// Display checkout.
+			$html = '<p id="browser-has-javascript" style="display: none;">' . __( 'Thank you for your order, please wait a few seconds to make the payment with PagSeguro.', $this->plugin_slug ) . '</p>';
+
+			$html .= '<p id="browser-no-has-javascript">' . __( 'Thank you for your order, please click the button below to pay with PagSeguro.', $this->plugin_slug ) . '</p>';
+
+			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', $this->plugin_slug ) . '</a> <a id="submit-payment" class="checkout-button button alt" href="' . esc_url_raw( $this->payment_url . $token['token'] ) . '">' . __( 'Pay via PagSeguro', $this->plugin_slug ) . '</a>';
+
+			// PagSeguro lightbox API.
+			$html .= '<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>';
+
+			// Payment script.
+			$js = '
+				document.getElementById( "submit-payment" ).style.display = "none";
+				document.getElementById( "browser-has-javascript" ).style.display = "block";
+				document.getElementById( "browser-no-has-javascript" ).style.display = "none";
+				var code = "' . esc_attr( $token['token'] ) . '";
+				var isOpenLightbox = PagSeguroLightbox({
+						code: code
+					}, {
+						success: function( transactionCode ) {
+							window.location.href="' . str_replace( '&amp;', '&', $this->get_return_url( $order ) ) . '";
+						}, abort: function() {
+							window.location.href="' . str_replace( '&amp;', '&', $order->get_cancel_order_url() ) . '";
+						}
+				});
+				if ( ! isOpenLightbox ) {
+					location.href="' . $this->payment_url . '" + code;
+				}
+			';
+
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+				wc_enqueue_js( $js );
+			} else {
+				$this->woocommerce_instance()->add_inline_js( $js );
+			}
+
+			echo $html;
+		} else {
+			$html = '<ul class="woocommerce-error">';
+				foreach ( $token['error'] as $message ) {
+					$html .= '<li>' . $message . '</li>';
+				}
+			$html .= '</ul>';
+
+			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Click to try again', $this->plugin_slug ) . '</a>';
+
+			echo $html;
 		}
 	}
 
