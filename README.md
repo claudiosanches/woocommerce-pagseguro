@@ -100,7 +100,7 @@ Deve ser ativado em "Integrações" > "[Retorno automático de dados](https://pa
 
 ### Configurações do Plugin: ###
 
-Com o plugin instalado acesse o admin do WordPress e entre em "WooCommerce" > "Configurações" > "Portais de pagamento"  > "PagSeguro".
+Com o plugin instalado acesse o admin do WordPress e entre em "WooCommerce" > "Configurações" > "Finalizar compra" > "PagSeguro".
 
 Habilite o PagSeguro, adicione o seu e-mail e o token do PagSeguro. O token é utilizado para gerar os pagamentos e fazer o retorno de dados.
 
@@ -112,7 +112,7 @@ No WooCommerce 2.0 ou superior existe uma opção para cancelar a compra e liber
 
 Esta opção não funciona muito bem com o PagSeguro, pois pagamentos por boleto bancário pode demorar até 48 horas para serem validados.
 
-Para corrigir isso é necessário ir em "WooCommerce" > "Configurações" > "Inventário" e limpar (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
+Para corrigir isso é necessário ir em "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpar (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
 
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
@@ -190,7 +190,7 @@ Me envie o link por [e-mail](http://claudiosmweb.com/contato/), desta forma poss
 
 ### A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? ###
 
-Para resolver este problema vá até "WooCommerce" > "Configurações" > "Inventário" e limpe (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
+Para resolver este problema vá até "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpe (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
 
 ## Funciona com o Lightbox do PagSeguro? ##
 
