@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://claudiosmweb.com/
- * Version: 2.3.0
+ * Version: 2.3.1
  * License: GPLv2 or later
  * Text Domain: woocommerce-pagseguro
  * Domain Path: /languages/
@@ -25,34 +25,19 @@ class WC_PagSeguro {
 	/**
 	 * Plugin version.
 	 *
-	 * @since 2.3.0
-	 *
 	 * @var   string
 	 */
-	const VERSION = '2.3.0';
+	const VERSION = '2.3.1';
 
 	/**
 	 * Integration id.
-	 *
-	 * @since 2.3.0
 	 *
 	 * @var   string
 	 */
 	protected static $gateway_id = 'pagseguro';
 
 	/**
-	 * Plugin slug.
-	 *
-	 * @since 2.3.0
-	 *
-	 * @var   string
-	 */
-	protected static $plugin_slug = 'woocommerce-pagseguro';
-
-	/**
 	 * Instance of this class.
-	 *
-	 * @since 2.3.0
 	 *
 	 * @var   object
 	 */
@@ -60,8 +45,6 @@ class WC_PagSeguro {
 
 	/**
 	 * Initialize the plugin public actions.
-	 *
-	 * @since  2.3.0
 	 */
 	private function __construct() {
 		// Load plugin text domain
@@ -82,8 +65,6 @@ class WC_PagSeguro {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since  2.3.0
-	 *
 	 * @return object A single instance of this class.
 	 */
 	public static function get_instance() {
@@ -96,20 +77,7 @@ class WC_PagSeguro {
 	}
 
 	/**
-	 * Return the plugin slug.
-	 *
-	 * @since  2.3.0
-	 *
-	 * @return string Plugin slug variable.
-	 */
-	public static function get_plugin_slug() {
-		return self::$plugin_slug;
-	}
-
-	/**
 	 * Return the gateway id/slug.
-	 *
-	 * @since  2.3.0
 	 *
 	 * @return string Gateway id/slug variable.
 	 */
@@ -120,22 +88,17 @@ class WC_PagSeguro {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since  2.3.0
-	 *
 	 * @return void
 	 */
 	public function load_plugin_textdomain() {
-		$domain = self::$plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-pagseguro' );
 
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_textdomain( 'woocommerce-pagseguro', trailingslashit( WP_LANG_DIR ) . 'woocommerce-pagseguro/woocommerce-pagseguro-' . $locale . '.mo' );
+		load_plugin_textdomain( 'woocommerce-pagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
 	 * Add the gateway to WooCommerce.
-	 *
-	 * @version 2.3.0
 	 *
 	 * @param   array $methods WooCommerce payment methods.
 	 *
@@ -150,18 +113,14 @@ class WC_PagSeguro {
 	/**
 	 * WooCommerce fallback notice.
 	 *
-	 * @version 2.3.0
-	 *
 	 * @return  string
 	 */
 	public function woocommerce_missing_notice() {
-		echo '<div class="error"><p>' . sprintf( __( 'WooCommerce PagSeguro Gateway depends on the last version of %s to work!', self::$plugin_slug ), '<a href="http://wordpress.org/extend/plugins/woocommerce/">' . __( 'WooCommerce', self::$plugin_slug ) . '</a>' ) . '</p></div>';
+		echo '<div class="error"><p>' . sprintf( __( 'WooCommerce PagSeguro Gateway depends on the last version of %s to work!', 'woocommerce-pagseguro' ), '<a href="http://wordpress.org/extend/plugins/woocommerce/">' . __( 'WooCommerce', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
 	}
 
 	/**
 	 * Hides the PagSeguro with payment method with the customer lives outside Brazil.
-	 *
-	 * @version 2.3.0
 	 *
 	 * @param   array $available_gateways Default Available Gateways.
 	 *
