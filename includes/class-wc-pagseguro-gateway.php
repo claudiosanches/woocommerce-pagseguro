@@ -725,7 +725,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 				switch ( (int) $posted->status ) {
 					case 1:
-						$order->update_status( 'on-hold', __( 'PagSeguro: the buyer initiated the transaction, but so far the PagSeguro not received any payment information.', 'woocommerce-pagseguro' ) );
+						$order->update_status( 'on-hold', __( 'PagSeguro: The buyer initiated the transaction, but so far the PagSeguro not received any payment information.', 'woocommerce-pagseguro' ) );
 
 						break;
 					case 2:
