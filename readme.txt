@@ -3,8 +3,8 @@ Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
-Tested up to: 3.9
-Stable tag: 2.3.0
+Tested up to: 3.9.1
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -213,6 +213,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Changelog ==
 
+= 2.3.0 - 24/05/2014 =
+
+* Melhoria nos status do pedido, agora ao gerar um boleto o pedido é alterado para "aguardando".
+* Modificado o botão "Finalizar pedido", com o WooCommerce 2.1 ou superior vai mostrar a mensagem "Realizar pagamento".
+
 = 2.3.0 - 02/04/2014 =
 
 * Adicionada opção para selecionar pagamento direto com redirecionamento ou pelo Lightbox do PagSeguro.
@@ -338,9 +343,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.3.0 =
+= 2.3.1 =
 
-* Adicionada opção para selecionar pagamento direto com redirecionamento ou pelo Lightbox do PagSeguro.
+* Melhoria nos status do pedido, agora ao gerar um boleto o pedido é alterado para "aguardando".
+* Modificado o botão "Finalizar pedido", com o WooCommerce 2.1 ou superior vai mostrar a mensagem "Realizar pagamento".
 
 == License ==
 
