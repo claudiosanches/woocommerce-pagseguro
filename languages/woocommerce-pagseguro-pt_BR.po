@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro v2.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2014-05-24 18:29:40+0000\n"
+"PO-Revision-Date: 2014-05-24 18:40:47+0000\n"
 "Last-Translator: Claudio Sanches <contato@claudiosmweb.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -421,7 +421,7 @@ msgstr "WooCommerce"
 #: includes/class-wc-pagseguro-gateway.php:19
 #@ woocommerce-pagseguro
 msgid "Proceed to payment"
-msgstr "Ir para o pagamento"
+msgstr "Realizar pagamento"
 
 #. translators: plugin header field 'Version'
 #: wc-pagseguro.php:0
