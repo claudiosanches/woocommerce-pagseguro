@@ -12,11 +12,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->id                = WC_PagSeguro::get_gateway_id();
-		$this->icon              = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
-		$this->has_fields        = false;
-		$this->method_title      = __( 'PagSeguro', 'woocommerce-pagseguro' );
-		$this->order_button_text = __( 'Proceed to payment', 'woocommerce-pagseguro' );
+		$this->id                 = WC_PagSeguro::get_gateway_id();
+		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
+		$this->has_fields         = false;
+		$this->method_title       = __( 'PagSeguro', 'woocommerce-pagseguro' );
+		$this->method_description = __( 'Accept payments by credit card, bank debit or banking ticket using the PagSeguro.', 'woocommerce-pagseguro' );
+		$this->order_button_text  = __( 'Proceed to payment', 'woocommerce-pagseguro' );
 
 		// API URLs.
 		$this->production_checkout_url = 'https://ws.pagseguro.uol.com.br/v2/checkout';
@@ -128,19 +129,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Admin Panel Options.
-	 */
-	public function admin_options() {
-		echo '<h3>' . __( 'PagSeguro standard', 'woocommerce-pagseguro' ) . '</h3>';
-		echo '<p>' . __( 'PagSeguro standard works by sending the user to PagSeguro to enter their payment information.', 'woocommerce-pagseguro' ) . '</p>';
-
-		// Generate the HTML For the settings form.
-		echo '<table class="form-table">';
-		$this->generate_settings_html();
-		echo '</table>';
-	}
-
-	/**
 	 * Initialise Gateway Settings Form Fields.
 	 *
 	 * @return void
@@ -150,7 +138,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			'enabled' => array(
 				'title' => __( 'Enable/Disable', 'woocommerce-pagseguro' ),
 				'type' => 'checkbox',
-				'label' => __( 'Enable PagSeguro standard', 'woocommerce-pagseguro' ),
+				'label' => __( 'Enable PagSeguro', 'woocommerce-pagseguro' ),
 				'default' => 'yes'
 			),
 			'title' => array(
@@ -207,7 +195,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'type'        => 'checkbox',
 				'label'       => __( 'Enable PagSeguro Sandbox', 'woocommerce-pagseguro' ),
 				'default'     => 'no',
-				'description' => sprintf( __( 'PagSeguro Sandbox can be used to test the payments. <strong>Note:</strong> you must use the development token that can be found in %s', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/dados-de-teste.html" target="_blank">' . __( 'PagSeguro Sandbox' ) .'</a>' )
+				'description' => sprintf( __( 'PagSeguro Sandbox can be used to test the payments. <strong>Note:</strong> you must use the development token that can be found in %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/dados-de-teste.html" target="_blank">' . __( 'PagSeguro Sandbox' ) .'</a>' )
 			),
 			'debug' => array(
 				'title' => __( 'Debug Log', 'woocommerce-pagseguro' ),
