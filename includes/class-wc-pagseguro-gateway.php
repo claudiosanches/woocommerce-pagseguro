@@ -19,9 +19,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->order_button_text = __( 'Proceed to payment', 'woocommerce-pagseguro' );
 
 		// API URLs.
-		$this->checkout_url = 'https://ws.pagseguro.uol.com.br/v2/checkout';
-		$this->payment_url  = 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code=';
-		$this->notify_url   = 'https://ws.pagseguro.uol.com.br/v2/transactions/notifications/';
+		$this->production_checkout_url = 'https://ws.pagseguro.uol.com.br/v2/checkout';
+		$this->sandbox_checkout_url    = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+		$this->production_payment_url  = 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code=';
+		$this->sandbox_payment_url     = 'https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=';
+		$this->production_lightbox_url = 'https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js';
+		$this->sandbox_lightbox_url    = 'https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js';
+		$this->production_notify_url   = 'https://ws.pagseguro.uol.com.br/v2/transactions/notifications/';
+		$this->sandbox_notify_url      = 'https://ws.sandbox.pagseguro.uol.com.br/v2/transactions/notifications/';
 
 		// Load the form fields.
 		$this->init_form_fields();
@@ -36,6 +41,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->token          = $this->get_option( 'token' );
 		$this->method         = $this->get_option( 'method', 'direct' );
 		$this->invoice_prefix = $this->get_option( 'invoice_prefix', 'WC-' );
+		$this->sandbox        = $this->get_option( 'sandbox', 'no' );
 		$this->debug          = $this->get_option( 'debug' );
 
 		// Actions.
@@ -196,6 +202,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 				'description' => ''
 			),
+			'sandbox' => array(
+				'title'       => __( 'PagSeguro Sandbox', 'woocommerce-pagseguro' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Enable PagSeguro Sandbox', 'woocommerce-pagseguro' ),
+				'default'     => 'no',
+				'description' => sprintf( __( 'PagSeguro Sandbox can be used to test the payments. <strong>Note:</strong> you must use the development token that can be found in %s', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/dados-de-teste.html" target="_blank">' . __( 'PagSeguro Sandbox' ) .'</a>' )
+			),
 			'debug' => array(
 				'title' => __( 'Debug Log', 'woocommerce-pagseguro' ),
 				'type' => 'checkbox',
@@ -262,6 +275,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	protected function generate_payment_xml( $order ) {
 		// Include the WC_PagSeguro_SimpleXML class.
 		require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-simplexml.php';
+
+		if ( function_exists( 'WC' ) ) {
+			$notification_url = WC()->api_request_url( 'WC_PagSeguro_Gateway' );
+		} else {
+			$notification_url = $woocommerce->api_request_url( 'WC_PagSeguro_Gateway' );
+		}
 
 		// Creates the payment xml.
 		$xml = new WC_PagSeguro_SimpleXML( '<?xml version="1.0" encoding="utf-8" standalone="yes" ?><checkout></checkout>' );
@@ -388,7 +407,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		// Checks if is localhost. PagSeguro not accept localhost urls!
 		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
 			$xml->addChild( 'redirectURL' )->addCData( $this->get_return_url( $order ) );
-			$xml->addChild( 'notificationURL' )->addCData( home_url( '/?wc-api=WC_PagSeguro_Gateway' ) );
+			$xml->addChild( 'notificationURL' )->addCData( $notification_url );
 		}
 
 		// Max uses.
@@ -416,12 +435,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$helper = new WC_PagSeguro_Helpers;
 
 		// Sets the url.
-		$url = esc_url_raw( sprintf(
-			"%s?email=%s&token=%s",
-			$this->checkout_url,
-			$this->email,
-			$this->token
-		) );
+		$checkout_url = ( 'yes' == $this->sandbox ) ? $this->sandbox_checkout_url : $this->production_checkout_url;
+		$url          = add_query_arg( array( 'email' => $this->email, 'token' => $this->token ), $checkout_url );
 
 		// Sets the xml.
 		$xml = $this->generate_payment_xml( $order );
@@ -514,9 +529,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				// Remove cart.
 				$this->woocommerce_instance()->cart->empty_cart();
 
+				$payment_url = ( 'yes' == $this->sandbox ) ? $this->sandbox_payment_url : $this->production_payment_url;
+
 				return array(
 					'result'   => 'success',
-					'redirect' => esc_url_raw( $this->payment_url . $token['token'] )
+					'redirect' => esc_url_raw( $payment_url . $token['token'] )
 				);
 			} else {
 				$this->add_error( $token['error'] );
@@ -549,8 +566,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string    PagSeguro lightbox.
 	 */
 	public function receipt_page( $order_id ) {
-		$order = new WC_Order( $order_id );
-		$token = $this->generate_payment_token( $order );
+		$order        = new WC_Order( $order_id );
+		$token        = $this->generate_payment_token( $order );
+		$payment_url  = ( 'yes' == $this->sandbox ) ? $this->sandbox_payment_url : $this->production_payment_url;
+		$lightbox_url = ( 'yes' == $this->sandbox ) ? $this->sandbox_lightbox_url : $this->production_lightbox_url;
 
 		if ( $token['token'] ) {
 
@@ -559,10 +578,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			$html .= '<p id="browser-no-has-javascript">' . __( 'Thank you for your order, please click the button below to pay with PagSeguro.', 'woocommerce-pagseguro' ) . '</p>';
 
-			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'woocommerce-pagseguro' ) . '</a> <a id="submit-payment" class="button alt" href="' . esc_url_raw( $this->payment_url . $token['token'] ) . '">' . __( 'Pay via PagSeguro', 'woocommerce-pagseguro' ) . '</a>';
+			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'woocommerce-pagseguro' ) . '</a> <a id="submit-payment" class="button alt" href="' . esc_url_raw( $payment_url . $token['token'] ) . '">' . __( 'Pay via PagSeguro', 'woocommerce-pagseguro' ) . '</a>';
 
 			// PagSeguro lightbox API.
-			$html .= '<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>';
+			$html .= '<script type="text/javascript" src="' . esc_url_raw( $lightbox_url ) . '"></script>';
 
 			// Payment script.
 			$js = '
@@ -580,7 +599,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						}
 				});
 				if ( ! isOpenLightbox ) {
-					location.href="' . $this->payment_url . '" + code;
+					location.href="' . $payment_url . '" + code;
 				}
 			';
 
@@ -634,13 +653,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 
 		// Notification url.
-		$url = esc_url_raw( sprintf(
-			'%s%s?email=%s&token=%s',
-			$this->notify_url,
-			esc_attr( $data['notificationCode'] ),
-			$this->email,
-			$this->token
-		) );
+		$notify_url = ( 'yes' == $this->sandbox ) ? $this->sandbox_notify_url : $this->production_notify_url;
+		$url        = add_query_arg( array( 'email' => $this->email, 'token' => $this->token ), $notify_url . esc_attr( $data['notificationCode'] ) );
 
 		// Sets the get params.
 		$params = array(
