@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: claudiosanches, Gabriel Reguly
  * Author URI: http://claudiosmweb.com/
- * Version: 2.3.1
+ * Version: 2.4.0
  * License: GPLv2 or later
  * Text Domain: woocommerce-pagseguro
  * Domain Path: /languages/
@@ -25,21 +25,21 @@ class WC_PagSeguro {
 	/**
 	 * Plugin version.
 	 *
-	 * @var   string
+	 * @var string
 	 */
-	const VERSION = '2.3.1';
+	const VERSION = '2.4.0';
 
 	/**
 	 * Integration id.
 	 *
-	 * @var   string
+	 * @var string
 	 */
 	protected static $gateway_id = 'pagseguro';
 
 	/**
 	 * Instance of this class.
 	 *
-	 * @var   object
+	 * @var object
 	 */
 	protected static $instance = null;
 

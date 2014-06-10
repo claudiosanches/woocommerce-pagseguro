@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: 2.3.1
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,8 @@ Estão disponíveis as seguintes modalidades de pagamento:
 * Padrão - Cliente é redirecionado ao PagSeguro para concluir a compra.
 * Lightbox - Uma janela do PagSeguro é aberta na finalização para o cliente fazer o pagamento.
 * Transparente - Em breve!
+
+Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html).
 
 = Compatibilidade =
 
@@ -112,7 +114,7 @@ No WooCommerce 2.0 ou superior existe uma opção para cancelar a compra e liber
 
 Esta opção não funciona muito bem com o PagSeguro, pois pagamentos por boleto bancário pode demorar até 48 horas para serem validados.
 
-Para corrigir isso é necessário ir em "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpar (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
+Para corrigir isso é necessário ir em "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpar (deixe em branco) a opção **Manter Estoque (minutos)**.
 
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
@@ -182,15 +184,19 @@ Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for
 
 = Ao tentar finalizar a compra aparece a mensagem "PagSeguro: Um erro ocorreu ao processar o seu pagamento, por favor, tente novamente ou entre em contato para obter ajuda." o que fazer? =
 
-Esta mensagem geralmente aparece por causa que não foi configurado um Token válido.  
+Esta mensagem geralmente aparece por causa que não foi configurado um **Token válido**.  
 Gere um novo Token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)" e adicione ele nas configurações do plugin.
+
+Outro erro comum é gerar um token e cadastrar nas configurações do plugin um e-mail que não é o proprietário do token, então tenha certeza que estes dados estão realmente corretos!
+
+Note que caso você esteja utilizando a opção de **sandbox** é necessário usar um e-mail e token de teste que podem ser encontrados em "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html)".
 
 Caso o erro persista mesmo com o novo Token, você deve ativar a opção **Log de depuração** nas configurações do plugin e tentar novamente fechar uma compra para que desta forma seja gerado o log.  
 Me envie o link por [e-mail](http://claudiosmweb.com/contato/), desta forma posso te ajudar a resolver o problema.
 
 = A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
 
-Para resolver este problema vá até "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpe (deixe em branco) o valor da opção **Manter Estoque (minutos)**.
+Para resolver este problema vá até "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpe (deixe em branco) a opção **Manter Estoque (minutos)**.
 
 == Funciona com o Lightbox do PagSeguro? ==
 
@@ -200,6 +206,12 @@ Sim, basta ativar esta nas opções do plugin.
 
 No momento não, estaremos implementando isso em futuras versões do plugin, aguarde!
 
+== Funciona com o Sandbox do PagSeguro? ==
+
+Sim, funciona e basta você ativar isso nas opções do plugin, além de configurar o seu token de desenvolvedor.
+
+Para conseguir o token de desenvolver você deve acessar "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html)".
+
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
 Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
@@ -208,12 +220,18 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Screenshots ==
 
-1. Settings page.
-2. Checkout page.
+1. Plugin settings page.
+2. WooCommerce payment methods in checkout page.
+2. Lightbox in sandbox environment example.
 
 == Changelog ==
 
-= 2.3.0 - 24/05/2014 =
+= 2.4.0 - 10/06/2014 =
+
+* Correções nas mensagens do log para a criação de tokens de pagamento.
+* Adicionada opção de ambiente sandbox.
+
+= 2.3.1 - 24/05/2014 =
 
 * Melhoria nos status do pedido, agora ao gerar um boleto o pedido é alterado para "aguardando".
 * Modificado o botão "Finalizar pedido", com o WooCommerce 2.1 ou superior vai mostrar a mensagem "Realizar pagamento".
