@@ -198,15 +198,15 @@ Me envie o link por [e-mail](http://claudiosmweb.com/contato/), desta forma poss
 
 Para resolver este problema vá até "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpe (deixe em branco) a opção **Manter Estoque (minutos)**.
 
-== Funciona com o Lightbox do PagSeguro? ==
+= Funciona com o Lightbox do PagSeguro? =
 
 Sim, basta ativar esta nas opções do plugin.
 
-== Funciona com o checkout transparente do PagSeguro? ==
+= Funciona com o checkout transparente do PagSeguro? =
 
 No momento não, estaremos implementando isso em futuras versões do plugin, aguarde!
 
-== Funciona com o Sandbox do PagSeguro? ==
+= Funciona com o Sandbox do PagSeguro? =
 
 Sim, funciona e basta você ativar isso nas opções do plugin, além de configurar o seu token de desenvolvedor.
 
