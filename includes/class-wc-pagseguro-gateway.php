@@ -448,7 +448,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			}
 		} else {
 			try {
-				$body = new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+				$body = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
 			} catch ( Exception $e ) {
 				$body = '';
 
@@ -484,7 +484,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'error' => $errors
 				);
 			}
+		}
 
+		if ( 'yes' == $this->debug ) {
+			$this->log->add( $this->id, 'Error generating the PagSeguro payment token: ' . print_r( $response, true ) );
 		}
 
 		// return error message.
