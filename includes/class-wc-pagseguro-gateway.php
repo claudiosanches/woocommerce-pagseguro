@@ -261,10 +261,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string        Payment xml.
 	 */
 	protected function generate_payment_xml( $order ) {
+		global $woocommerce;
+
 		// Include the WC_PagSeguro_SimpleXML class.
 		require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-simplexml.php';
 
-		if ( function_exists( 'WC' ) ) {
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 			$notification_url = WC()->api_request_url( 'WC_PagSeguro_Gateway' );
 		} else {
 			$notification_url = $woocommerce->api_request_url( 'WC_PagSeguro_Gateway' );
