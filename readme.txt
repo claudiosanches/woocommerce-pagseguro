@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -226,6 +226,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Changelog ==
 
+= 2.4.1 - 12/06/2014 =
+
+* Corrigida a URL de notifição para versões 2.0.x do WooCommerce.
+
 = 2.4.0 - 10/06/2014 =
 
 * Correções nas mensagens do log para a criação de tokens de pagamento.
@@ -361,10 +365,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.3.1 =
+= 2.4.1 =
 
-* Melhoria nos status do pedido, agora ao gerar um boleto o pedido é alterado para "aguardando".
-* Modificado o botão "Finalizar pedido", com o WooCommerce 2.1 ou superior vai mostrar a mensagem "Realizar pagamento".
+* Corrigida a URL de notifição para versões 2.0.x do WooCommerce.
+* Correções nas mensagens do log para a criação de tokens de pagamento.
+* Adicionada opção de ambiente sandbox.
 
 == License ==
 
