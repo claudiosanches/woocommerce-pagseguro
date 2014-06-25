@@ -182,6 +182,14 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 
 Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
+= Ao pagar o pedido fica com o status "processando", isto esta certo ? =
+
+Sim, esta certo e significa que o plugin esta trabalhando como deveria.
+
+Todo gateway de pagamentos no WooCommerce deve mudar o status do pedido para "processando" no momento que é confirmado o pagamento e nunca deve ser alterado sozinho para "concluído", pois o pedido deve ir apenas para o status "concluído" após ele ter sido entregue.
+
+Para produtos baixáveis a configuração padrão do WooCommerce é permitir o acesso apenas quando o pedido tem o status "concluído", entretanto nas configurações do WooCommerce na aba *Produtos* é possível ativar a opção **"Conceder acesso para download do produto após o pagamento"** e assim liberar o download quando o status do pedido esta como "processando".
+
 = Ao tentar finalizar a compra aparece a mensagem "PagSeguro: Um erro ocorreu ao processar o seu pagamento, por favor, tente novamente ou entre em contato para obter ajuda." o que fazer? =
 
 Esta mensagem geralmente aparece por causa que não foi configurado um **Token válido**.  
@@ -191,8 +199,13 @@ Outro erro comum é gerar um token e cadastrar nas configurações do plugin um 
 
 Note que caso você esteja utilizando a opção de **sandbox** é necessário usar um e-mail e token de teste que podem ser encontrados em "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html)".
 
-Caso o erro persista mesmo com o novo Token, você deve ativar a opção **Log de depuração** nas configurações do plugin e tentar novamente fechar uma compra para que desta forma seja gerado o log.  
-Me envie o link por [e-mail](http://claudiosmweb.com/contato/), desta forma posso te ajudar a resolver o problema.
+Se você tem certeza que o Token e Login estão corretos você deve acessar a página "WooCommerce > Status do Sistema" e verificar se **fsockopen** e **cURL** estão ativos. É necessário procurar ajuda do seu provedor de hospedagem caso você tenha o **fsockopen** e/ou o **cURL** desativados.
+
+Por último é possível ativar a opção de **Log de depuração** nas configurações do plugin e tentar novamente fechar um pedido (você deve tentar fechar um pedido para que o log será gerado e o erro gravado nele).  
+Com o log é possível saber exatamente o que esta dando de errado com a sua instalação.
+
+Caso você não entenda o conteúdo do log não tem problema, você pode me enviar um [e-mail](http://claudiosmweb.com/contato/) com o link do log (utilize o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com) para salvar o conteúdo do log).  
+ATENÇÃO! Eu não vou responder nenhum e-mail que não esteja com o arquivo de log exatamente da forma que eu estou pedindo aqui!
 
 = A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
 
@@ -216,7 +229,7 @@ Para conseguir o token de desenvolver você deve acessar "[PagSeguro Sandbox > D
 
 Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
 
-Por favor, caso você tenha algum problema com o funcionamento do plugin, envie o log (ative ele nas opções do plugin e tente fazer uma compra, ele vai ficar dentro da pasta wp-content/plugins/woocommerce/logs/) usando o `pastebin.com` ou o `gist.github.com`, desta forma fica mais rápido para fazer o diagnóstico.
+Por favor, caso você tenha algum problema com o funcionamento do plugin, envie o log (ative ele nas opções do plugin e tente fazer uma compra, ele vai ficar dentro da pasta wp-content/plugins/woocommerce/logs/) usando o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com), desta forma fica mais rápido para fazer o diagnóstico.
 
 == Screenshots ==
 
