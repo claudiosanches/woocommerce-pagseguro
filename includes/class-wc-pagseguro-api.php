@@ -52,7 +52,7 @@ class WC_PagSeguro_API {
 	 *
 	 * @return string.
 	 */
-	protected function get_lightbox_url() {
+	public function get_lightbox_url() {
 		return 'https://stc.' . $this->get_environment() . 'pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js';
 	}
 
@@ -305,14 +305,15 @@ class WC_PagSeguro_API {
 			}
 
 			if ( isset( $body->code ) ) {
-				$code = (string) $body->code;
+				$token = (string) $body->code;
 
 				if ( 'yes' == $this->gateway->debug ) {
-					$this->gateway->log->add( $this->gateway->id, 'PagSeguro Payment Token created with success! The Token is: ' . $code );
+					$this->gateway->log->add( $this->gateway->id, 'PagSeguro Payment Token created with success! The Token is: ' . $token );
 				}
 
 				return array(
-					'url'   => $this->get_payment_url() . $code,
+					'url'   => $this->get_payment_url() . $token,
+					'token' => $token,
 					'error' => ''
 				);
 			}
@@ -330,6 +331,7 @@ class WC_PagSeguro_API {
 
 				return array(
 					'url'   => '',
+					'token' => '',
 					'error' => $errors
 				);
 			}
@@ -342,6 +344,7 @@ class WC_PagSeguro_API {
 		// Return error message.
 		return array(
 			'url'   => '',
+			'token' => '',
 			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) )
 		);
 	}

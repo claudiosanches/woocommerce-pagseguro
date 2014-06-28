@@ -289,53 +289,42 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string    PagSeguro lightbox.
 	 */
 	public function receipt_page( $order_id ) {
-		$order        = new WC_Order( $order_id );
-		$token        = $this->generate_payment_token( $order );
-		$payment_url  = ( 'yes' == $this->sandbox ) ? $this->sandbox_payment_url : $this->production_payment_url;
-		$lightbox_url = ( 'yes' == $this->sandbox ) ? $this->sandbox_lightbox_url : $this->production_lightbox_url;
+		global $woocommerce;
 
-		if ( $token['token'] ) {
+		$order    = new WC_Order( $order_id );
+		$response = $this->api->do_payment_request( $order );
 
-			// Display checkout.
-			$html = '<p id="browser-has-javascript" style="display: none;">' . __( 'Thank you for your order, please wait a few seconds to make the payment with PagSeguro.', 'woocommerce-pagseguro' ) . '</p>';
-
-			$html .= '<p id="browser-no-has-javascript">' . __( 'Thank you for your order, please click the button below to pay with PagSeguro.', 'woocommerce-pagseguro' ) . '</p>';
-
-			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Cancel order &amp; restore cart', 'woocommerce-pagseguro' ) . '</a> <a id="submit-payment" class="button alt" href="' . esc_url_raw( $payment_url . $token['token'] ) . '">' . __( 'Pay via PagSeguro', 'woocommerce-pagseguro' ) . '</a>';
-
-			// PagSeguro lightbox API.
-			$html .= '<script type="text/javascript" src="' . esc_url_raw( $lightbox_url ) . '"></script>';
-
-			// Payment script.
+		if ( $response['url'] ) {
+			// Lightbox script.
 			$js = '
-				document.getElementById( "submit-payment" ).style.display = "none";
-				document.getElementById( "browser-has-javascript" ).style.display = "block";
-				document.getElementById( "browser-no-has-javascript" ).style.display = "none";
-				var code = "' . esc_attr( $token['token'] ) . '";
+				$( "submit-payment" ).hide();
+				$( "browser-has-javascript" ).show();
+				$( "browser-no-has-javascript" ).hide();
 				var isOpenLightbox = PagSeguroLightbox({
-						code: code
+						code: "' . esc_attr( $response['token'] ) . '"
 					}, {
-						success: function( transactionCode ) {
-							window.location.href="' . str_replace( '&amp;', '&', $this->get_return_url( $order ) ) . '";
-						}, abort: function() {
-							window.location.href="' . str_replace( '&amp;', '&', $order->get_cancel_order_url() ) . '";
+						success: function ( transactionCode ) {
+							window.location.href = "' . str_replace( '&amp;', '&', $this->get_return_url( $order ) ) . '";
+						},
+						abort: function () {
+							window.location.href = "' . str_replace( '&amp;', '&', $order->get_cancel_order_url() ) . '";
 						}
 				});
 				if ( ! isOpenLightbox ) {
-					location.href="' . $payment_url . '" + code;
+					window.location.href = "' . $response['url'] . '";
 				}
 			';
 
-			if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+			if ( function_exists( 'wc_enqueue_js' ) ) {
 				wc_enqueue_js( $js );
 			} else {
-				$this->woocommerce_instance()->add_inline_js( $js );
+				$woocommerce->add_inline_js( $js );
 			}
 
-			echo $html;
+			include_once 'views/html-lightbox-checkout.php';
 		} else {
 			$html = '<ul class="woocommerce-error">';
-				foreach ( $token['error'] as $message ) {
+				foreach ( $response['error'] as $message ) {
 					$html .= '<li>' . $message . '</li>';
 				}
 			$html .= '</ul>';
