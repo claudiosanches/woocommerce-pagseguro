@@ -90,27 +90,18 @@ class WC_PagSeguro_API {
 		$params = array(
 			'method'    => $method,
 			'sslverify' => false,
-			'timeout'   => 60,
-			'headers'   => array(
-				'Content-Type' => 'application/xml;charset=UTF-8',
-			)
+			'timeout'   => 60
 		);
 
 		if ( 'POST' == $method ) {
-			$params = array_merge( array( 'body' => $data ), $params );
+			$params['body'] = $data;
 		}
 
 		if ( ! empty( $headers ) ) {
-			$params['headers'] = array_merge( $params['headers'], $headers );
+			$params['headers'] = $headers;
 		}
 
-		$response = wp_remote_post( $url, $params );
-
-		if ( is_wp_error( $response ) ) {
-			return array( 'WP_Error: ' . $response->get_error_message() );
-		}
-
-		return $response;
+		return wp_remote_post( $url, $params );
 	}
 
 	/**
@@ -287,7 +278,7 @@ class WC_PagSeguro_API {
 		}
 
 		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_checkout_url() );
-		$response = $this->do_request( $url, 'POST', $xml );
+		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
 			if ( 'yes' == $this->gateway->debug ) {
@@ -348,4 +339,70 @@ class WC_PagSeguro_API {
 			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) )
 		);
 	}
+
+	/**
+	 * Process the IPN.
+	 *
+	 * @return bool
+	 */
+	public function process_ipn_request( $data ) {
+
+		if ( 'yes' == $this->gateway->debug ) {
+			$this->gateway->log->add( $this->gateway->id, 'Checking IPN request...' );
+		}
+
+		// Valid the post data.
+		if ( ! isset( $data['notificationCode'] ) && ! isset( $data['notificationType'] ) ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'Invalid IPN request: ' . print_r( $data, true ) );
+			}
+
+			return false;
+		}
+
+		// Checks the notificationType.
+		if ( 'transaction' != $data['notificationType'] ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'Invalid IPN request, invalid "notificationType": ' . print_r( $data, true ) );
+			}
+
+			return false;
+		}
+
+		// Gets the PagSeguro response.
+		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_notification_url() . esc_attr( $data['notificationCode'] ) );
+		$response = do_request( $url, 'GET' );
+
+		// Check to see if the request was valid.
+		if ( is_wp_error( $response ) ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'WP_Error in IPN: ' . $response->get_error_message() );
+			}
+		} else {
+			try {
+				$body = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+			} catch ( Exception $e ) {
+				$body = '';
+
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro IPN response: ' . print_r( $e->getMessage(), true ) );
+				}
+			}
+
+			if ( isset( $body->code ) ) {
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'PagSeguro IPN is valid! The return is: ' . print_r( $body, true ) );
+				}
+
+				return $body;
+			}
+		}
+
+		if ( 'yes' == $this->gateway->debug ) {
+			$this->gateway->log->add( $this->gateway->id, 'IPN Response: ' . print_r( $response, true ) );
+		}
+
+		return false;
+	}
+
 }

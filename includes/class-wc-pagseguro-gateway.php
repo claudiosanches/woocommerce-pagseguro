@@ -336,80 +336,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Process the IPN.
-	 *
-	 * @return bool
-	 */
-	public function process_ipn_request( $data ) {
-
-		if ( 'yes' == $this->debug ) {
-			$this->log->add( $this->id, 'Checking IPN request...' );
-		}
-
-		// Valid the post data.
-		if ( ! isset( $data['notificationCode'] ) && ! isset( $data['notificationType'] ) ) {
-			if ( 'yes' == $this->debug ) {
-				$this->log->add( $this->id, 'Invalid IPN request: ' . print_r( $data, true ) );
-			}
-
-			return false;
-		}
-
-		// Checks the notificationType.
-		if ( 'transaction' != $data['notificationType'] ) {
-			if ( 'yes' == $this->debug ) {
-				$this->log->add( $this->id, 'Invalid IPN request, invalid "notificationType": ' . print_r( $data, true ) );
-			}
-
-			return false;
-		}
-
-		// Notification url.
-		$notify_url = ( 'yes' == $this->sandbox ) ? $this->sandbox_notify_url : $this->production_notify_url;
-		$url        = add_query_arg( array( 'email' => $this->email, 'token' => $this->token ), $notify_url . esc_attr( $data['notificationCode'] ) );
-
-		// Sets the get params.
-		$params = array(
-			'sslverify' => false,
-			'timeout'   => 60
-		);
-
-		// Gets the PagSeguro response.
-		$response = wp_remote_get( $url, $params );
-
-		// Check to see if the request was valid.
-		if ( is_wp_error( $response ) ) {
-			if ( 'yes' == $this->debug ) {
-				$this->log->add( $this->id, 'WP_Error in IPN: ' . $response->get_error_message() );
-			}
-		} else {
-			try {
-				$body = new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
-			} catch ( Exception $e ) {
-				$body = '';
-
-				if ( 'yes' == $this->debug ) {
-					$this->log->add( $this->id, 'Error while parsing the PagSeguro IPN response: ' . print_r( $e->getMessage(), true ) );
-				}
-			}
-
-			if ( isset( $body->code ) ) {
-				if ( 'yes' == $this->debug ) {
-					$this->log->add( $this->id, 'PagSeguro IPN is valid! The return is: ' . print_r( $body, true ) );
-				}
-
-				return $body;
-			}
-		}
-
-		if ( 'yes' == $this->debug ) {
-			$this->log->add( $this->id, 'IPN Response: ' . print_r( $response, true ) );
-		}
-
-		return false;
-	}
-
-	/**
 	 * Check API Response.
 	 *
 	 * @return void
@@ -417,7 +343,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function check_ipn_response() {
 		@ob_clean();
 
-		$ipn = $this->process_ipn_request( $_POST );
+		$ipn = $this->api->process_ipn_request( $_POST );
 
 		if ( $ipn ) {
 			header( 'HTTP/1.1 200 OK' );
@@ -444,24 +370,22 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			// Checks whether the invoice number matches the order.
 			// If true processes the payment.
 			if ( $order->id === $order_id ) {
-				// Include the WC_PagSeguro_Helpers class.
-				require_once plugin_dir_path( __FILE__ ) . 'class-wc-pagseguro-helpers.php';
-				$helper = new WC_PagSeguro_Helpers;
+				$helper = new WC_PagSeguro_Helpers();
 
 				if ( 'yes' == $this->debug ) {
 					$this->log->add( $this->id, 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . $posted->status );
 				}
 
-				switch ( (int) $posted->status ) {
-					case 1:
+				switch ( intval( $posted->status ) ) {
+					case 1 :
 						$order->update_status( 'on-hold', __( 'PagSeguro: The buyer initiated the transaction, but so far the PagSeguro not received any payment information.', 'woocommerce-pagseguro' ) );
 
 						break;
-					case 2:
+					case 2 :
 						$order->update_status( 'on-hold', __( 'PagSeguro: Payment under review.', 'woocommerce-pagseguro' ) );
 
 						break;
-					case 3:
+					case 3 :
 						// Order details.
 						if ( isset( $posted->code ) ) {
 							update_post_meta(
@@ -519,11 +443,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						$order->payment_complete();
 
 						break;
-					case 4:
+					case 4 :
 						$order->add_order_note( __( 'PagSeguro: Payment completed and credited to your account.', 'woocommerce-pagseguro' ) );
 
 						break;
-					case 5:
+					case 5 :
 						$order->update_status( 'on-hold', __( 'PagSeguro: Payment came into dispute.', 'woocommerce-pagseguro' ) );
 						$this->send_email(
 							sprintf( __( 'Payment for order %s came into dispute', 'woocommerce-pagseguro' ), $order->get_order_number() ),
@@ -532,7 +456,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						);
 
 						break;
-					case 6:
+					case 6 :
 						$order->update_status( 'refunded', __( 'PagSeguro: Payment refunded.', 'woocommerce-pagseguro' ) );
 						$this->send_email(
 							sprintf( __( 'Payment for order %s refunded', 'woocommerce-pagseguro' ), $order->get_order_number() ),
@@ -541,12 +465,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						);
 
 						break;
-					case 7:
+					case 7 :
 						$order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'woocommerce-pagseguro' ) );
 
 						break;
 
-					default:
+					default :
 						// No action xD.
 						break;
 				}
@@ -556,6 +480,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				}
 			}
 		}
+
+		exit;
 	}
 
 	/**
@@ -564,7 +490,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string
 	 */
 	protected function admin_url() {
-		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 			return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' );
 		}
 
