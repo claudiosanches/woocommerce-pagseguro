@@ -45,8 +45,7 @@ class WC_PagSeguro {
 
 		// Checks with WooCommerce is installed.
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
-			// Include the WC_PagSeguro_Gateway class.
-			include_once 'includes/class-wc-pagseguro-gateway.php';
+			$this->includes();
 
 			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
@@ -79,6 +78,18 @@ class WC_PagSeguro {
 
 		load_textdomain( 'woocommerce-pagseguro', trailingslashit( WP_LANG_DIR ) . 'woocommerce-pagseguro/woocommerce-pagseguro-' . $locale . '.mo' );
 		load_plugin_textdomain( 'woocommerce-pagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+
+	/**
+	 * Includes.
+	 *
+	 * @return void
+	 */
+	private function includes() {
+		include_once 'includes/class-wc-pagseguro-helpers.php';
+		include_once 'includes/class-wc-pagseguro-simplexml.php';
+		include_once 'includes/class-wc-pagseguro-api.php';
+		include_once 'includes/class-wc-pagseguro-gateway.php';
 	}
 
 	/**
