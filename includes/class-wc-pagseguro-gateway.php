@@ -54,6 +54,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		add_action( 'valid_pagseguro_ipn_request', array( $this, 'successful_request' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
+		add_action( 'woocommerce_before_checkout_form', array( $this, 'transparent_checkout_init' ) );
 
 		// Display admin notices.
 		$this->admin_notices();
@@ -114,58 +115,59 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled' => array(
-				'title' => __( 'Enable/Disable', 'woocommerce-pagseguro' ),
-				'type' => 'checkbox',
-				'label' => __( 'Enable PagSeguro', 'woocommerce-pagseguro' ),
+				'title'   => __( 'Enable/Disable', 'woocommerce-pagseguro' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable PagSeguro', 'woocommerce-pagseguro' ),
 				'default' => 'yes'
 			),
 			'title' => array(
-				'title' => __( 'Title', 'woocommerce-pagseguro' ),
-				'type' => 'text',
+				'title'       => __( 'Title', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-pagseguro' ),
-				'desc_tip' => true,
-				'default' => __( 'PagSeguro', 'woocommerce-pagseguro' )
+				'desc_tip'    => true,
+				'default'     => __( 'PagSeguro', 'woocommerce-pagseguro' )
 			),
 			'description' => array(
-				'title' => __( 'Description', 'woocommerce-pagseguro' ),
-				'type' => 'textarea',
+				'title'       => __( 'Description', 'woocommerce-pagseguro' ),
+				'type'        => 'textarea',
 				'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-pagseguro' ),
-				'default' => __( 'Pay via PagSeguro', 'woocommerce-pagseguro' )
+				'default'     => __( 'Pay via PagSeguro', 'woocommerce-pagseguro' )
 			),
 			'email' => array(
-				'title' => __( 'PagSeguro Email', 'woocommerce-pagseguro' ),
-				'type' => 'text',
+				'title'       => __( 'PagSeguro Email', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
 				'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'woocommerce-pagseguro' ),
-				'desc_tip' => true,
-				'default' => ''
+				'desc_tip'    => true,
+				'default'     => ''
 			),
 			'token' => array(
-				'title' => __( 'PagSeguro Token', 'woocommerce-pagseguro' ),
-				'type' => 'text',
+				'title'       => __( 'PagSeguro Token', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
 				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'woocommerce-pagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
-				'default' => ''
+				'default'     => ''
 			),
 			'method' => array(
-				'title' => __( 'Integration method', 'woocommerce-pagseguro' ),
-				'type' => 'select',
+				'title'       => __( 'Integration method', 'woocommerce-pagseguro' ),
+				'type'        => 'select',
 				'description' => __( 'Choose how the customer will interact with the PagSeguro. Redirect (Client goes to PagSeguro page) or Lightbox (Inside your store)', 'woocommerce-pagseguro' ),
-				'desc_tip' => true,
-				'default' => 'direct',
-				'options' => array(
-					'redirect' => __( 'Redirect (default)', 'woocommerce-pagseguro' ),
-					'lightbox' => __( 'Lightbox', 'woocommerce-pagseguro' )
+				'desc_tip'    => true,
+				'default'     => 'direct',
+				'options'     => array(
+					'redirect'    => __( 'Redirect (default)', 'woocommerce-pagseguro' ),
+					'lightbox'    => __( 'Lightbox', 'woocommerce-pagseguro' ),
+					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' )
 				)
 			),
 			'invoice_prefix' => array(
-				'title' => __( 'Invoice Prefix', 'woocommerce-pagseguro' ),
-				'type' => 'text',
+				'title'       => __( 'Invoice Prefix', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
 				'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'woocommerce-pagseguro' ),
-				'desc_tip' => true,
-				'default' => 'WC-'
+				'desc_tip'    => true,
+				'default'     => 'WC-'
 			),
 			'testing' => array(
-				'title' => __( 'Gateway Testing', 'woocommerce-pagseguro' ),
-				'type' => 'title',
+				'title'       => __( 'Gateway Testing', 'woocommerce-pagseguro' ),
+				'type'        => 'title',
 				'description' => ''
 			),
 			'sandbox' => array(
@@ -176,10 +178,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'description' => sprintf( __( 'PagSeguro Sandbox can be used to test the payments. <strong>Note:</strong> you must use the development token that can be found in %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/dados-de-teste.html" target="_blank">' . __( 'PagSeguro Sandbox' ) .'</a>' )
 			),
 			'debug' => array(
-				'title' => __( 'Debug Log', 'woocommerce-pagseguro' ),
-				'type' => 'checkbox',
-				'label' => __( 'Enable logging', 'woocommerce-pagseguro' ),
-				'default' => 'no',
+				'title'       => __( 'Debug Log', 'woocommerce-pagseguro' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Enable logging', 'woocommerce-pagseguro' ),
+				'default'     => 'no',
 				'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'woocommerce-pagseguro' ), '<code>woocommerce/logs/' . esc_attr( $this->id ) . '-' . sanitize_file_name( wp_hash( $this->id ) ) . '.txt</code>' )
 			)
 		);
@@ -239,7 +241,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		$order = new WC_Order( $order_id );
 
-		if ( 'redirect' == $this->method ) {
+		if ( 'lightbox' != $this->method ) {
 			$response = $this->api->do_payment_request( $order );
 
 			if ( $response['url'] ) {
@@ -328,6 +330,24 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Click to try again', 'woocommerce-pagseguro' ) . '</a>';
 
 			echo $html;
+		}
+	}
+
+	/**
+	 * Initialize the transparent checkout.
+	 *
+	 * @param  WC_Checkout $checkout Checkout data.
+	 *
+	 * @return string
+	 */
+	public function transparent_checkout_init( $checkout ) {
+		if ( 'transparent' == $this->method ) {
+			$session_id = $this->api->get_session_id();
+
+			if ( $session_id ) {
+				echo '<script type="text/javascript" src="' . $this->api->get_direct_payment_url() . '"></script>';
+				echo '<script type="text/javascript">PagSeguroDirectPayment.setSessionId( "' . esc_attr( $session_id ) . '" );</script>';
+			}
 		}
 	}
 

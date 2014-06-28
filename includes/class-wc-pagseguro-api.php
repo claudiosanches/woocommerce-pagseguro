@@ -39,6 +39,15 @@ class WC_PagSeguro_API {
 	}
 
 	/**
+	 * Get the sessions URL.
+	 *
+	 * @return string.
+	 */
+	protected function get_sessions_url() {
+		return 'https://ws.' . $this->get_environment() . 'pagseguro.uol.com.br/v2/sessions';
+	}
+
+	/**
 	 * Get the payment URL.
 	 *
 	 * @return string.
@@ -54,6 +63,15 @@ class WC_PagSeguro_API {
 	 */
 	public function get_lightbox_url() {
 		return 'https://stc.' . $this->get_environment() . 'pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js';
+	}
+
+	/**
+	 * Get the direct payment URL.
+	 *
+	 * @return string.
+	 */
+	public function get_direct_payment_url() {
+		return 'https://stc.' . $this->get_environment() . 'pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js';
 	}
 
 	/**
@@ -196,7 +214,7 @@ class WC_PagSeguro_API {
 			'timeout'   => 60
 		);
 
-		if ( 'POST' == $method ) {
+		if ( 'POST' == $method && ! empty( $data ) ) {
 			$params['body'] = $data;
 		}
 
@@ -472,7 +490,7 @@ class WC_PagSeguro_API {
 
 		// Gets the PagSeguro response.
 		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_notification_url() . esc_attr( $data['notificationCode'] ) );
-		$response = do_request( $url, 'GET' );
+		$response = $this->do_request( $url, 'GET' );
 
 		// Check to see if the request was valid.
 		if ( is_wp_error( $response ) ) {
@@ -501,6 +519,52 @@ class WC_PagSeguro_API {
 
 		if ( 'yes' == $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'IPN Response: ' . print_r( $response, true ) );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get session ID.
+	 *
+	 * @return string
+	 */
+	public function get_session_id() {
+
+		if ( 'yes' == $this->gateway->debug ) {
+			$this->gateway->log->add( $this->gateway->id, 'Requesting session ID...' );
+		}
+
+		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_sessions_url() );
+		$response = $this->do_request( $url, 'POST' );
+
+		// Check to see if the request was valid.
+		if ( is_wp_error( $response ) ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'WP_Error requesting session ID: ' . $response->get_error_message() );
+			}
+		} else {
+			try {
+				$session = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+			} catch ( Exception $e ) {
+				$session = '';
+
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro session response: ' . print_r( $e->getMessage(), true ) );
+				}
+			}
+
+			if ( isset( $session->id ) ) {
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'PagSeguro session is valid! The return is: ' . print_r( $session, true ) );
+				}
+
+				return (string) $session->id;
+			}
+		}
+
+		if ( 'yes' == $this->gateway->debug ) {
+			$this->gateway->log->add( $this->gateway->id, 'Session Response: ' . print_r( $response, true ) );
 		}
 
 		return false;
