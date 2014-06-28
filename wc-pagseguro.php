@@ -86,7 +86,6 @@ class WC_PagSeguro {
 	 * @return void
 	 */
 	private function includes() {
-		include_once 'includes/class-wc-pagseguro-helpers.php';
 		include_once 'includes/class-wc-pagseguro-simplexml.php';
 		include_once 'includes/class-wc-pagseguro-api.php';
 		include_once 'includes/class-wc-pagseguro-gateway.php';

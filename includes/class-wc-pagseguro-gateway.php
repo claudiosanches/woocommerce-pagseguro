@@ -370,7 +370,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			// Checks whether the invoice number matches the order.
 			// If true processes the payment.
 			if ( $order->id === $order_id ) {
-				$helper = new WC_PagSeguro_Helpers();
 
 				if ( 'yes' == $this->debug ) {
 					$this->log->add( $this->id, 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . $posted->status );
@@ -412,14 +411,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 							update_post_meta(
 								$order_id,
 								__( 'Payment type', 'woocommerce-pagseguro' ),
-								$helper->payment_type( (int) $posted->paymentMethod->type )
+								$this->api->get_payment_name_by_type( intval( $posted->paymentMethod->type ) )
 							);
 						}
 						if ( isset( $posted->paymentMethod->code ) ) {
 							update_post_meta(
 								$order_id,
 								__( 'Payment method', 'woocommerce-pagseguro' ),
-								$helper->payment_method( (int) $posted->paymentMethod->code )
+								$this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) )
 							);
 						}
 						if ( isset( $posted->installmentCount ) ) {
