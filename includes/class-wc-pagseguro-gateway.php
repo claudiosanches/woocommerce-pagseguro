@@ -12,7 +12,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->id                 = WC_PagSeguro::get_gateway_id();
+		$this->id                 = 'pagseguro';
 		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
 		$this->has_fields         = false;
 		$this->method_title       = __( 'PagSeguro', 'woocommerce-pagseguro' );

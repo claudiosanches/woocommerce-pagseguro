@@ -30,13 +30,6 @@ class WC_PagSeguro {
 	const VERSION = '2.5.0';
 
 	/**
-	 * Integration id.
-	 *
-	 * @var string
-	 */
-	protected static $gateway_id = 'pagseguro';
-
-	/**
 	 * Instance of this class.
 	 *
 	 * @var object
@@ -74,15 +67,6 @@ class WC_PagSeguro {
 		}
 
 		return self::$instance;
-	}
-
-	/**
-	 * Return the gateway id/slug.
-	 *
-	 * @return string Gateway id/slug variable.
-	 */
-	public static function get_gateway_id() {
-		return self::$gateway_id;
 	}
 
 	/**
