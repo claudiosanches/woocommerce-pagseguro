@@ -12,6 +12,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function __construct() {
+		global $woocommerce;
+
 		$this->id                 = 'pagseguro';
 		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
 		$this->has_fields         = false;
@@ -40,7 +42,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			if ( class_exists( 'WC_Logger' ) ) {
 				$this->log = new WC_Logger();
 			} else {
-				$this->log = $this->woocommerce_instance()->logger();
+				$this->log = $woocommerce->logger();
 			}
 		}
 
@@ -55,20 +57,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		// Display admin notices.
 		$this->admin_notices();
-	}
-
-	/**
-	 * Backwards compatibility with version prior to 2.1.
-	 *
-	 * @return object Returns the main instance of WooCommerce class.
-	 */
-	protected function woocommerce_instance() {
-		if ( function_exists( 'WC' ) ) {
-			return WC();
-		} else {
-			global $woocommerce;
-			return $woocommerce;
-		}
 	}
 
 	/**
@@ -205,13 +193,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string          Displays the error messages.
 	 */
 	protected function add_error( $messages ) {
-		if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+		global $woocommerce;
+
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 			foreach ( $messages as $message ) {
 				wc_add_notice( $message, 'error' );
 			}
 		} else {
 			foreach ( $messages as $message ) {
-				$this->woocommerce_instance()->add_error( $message );
+				$woocommerce->add_error( $message );
 			}
 		}
 	}
@@ -226,7 +216,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	protected function send_email( $subject, $title, $message ) {
-		$mailer = $this->woocommerce_instance()->mailer();
+		global $woocommerce;
+
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
+			$mailer = WC()->mailer();
+		} else {
+			$mailer = $woocommerce->mailer();
+		}
 
 		$mailer->send( get_option( 'admin_email' ), $subject, $mailer->wrap_message( $title, $message ) );
 	}
@@ -364,8 +360,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		if ( isset( $posted->reference ) ) {
 			$order_id = (int) str_replace( $this->invoice_prefix, '', $posted->reference );
-
-			$order = new WC_Order( $order_id );
+			$order    = new WC_Order( $order_id );
 
 			// Checks whether the invoice number matches the order.
 			// If true processes the payment.
