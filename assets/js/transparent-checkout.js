@@ -180,10 +180,10 @@
 						expirationYear:  expirationYear,
 						success: function ( data ) {
 							// Remove any old hash input.
-							$( 'input[name=pagseguro_card_hash], input[name=pagseguro_sender_hash]', form ).remove();
+							$( 'input[name=pagseguro_credit_card_hash], input[name=pagseguro_credit_card_hash], input[name=pagseguro_installment_value]', form ).remove();
 
 							// Add the hash input.
-							form.append( $( '<input name="pagseguro_card_hash" type="hidden" />' ).val( data.card.token ) );
+							form.append( $( '<input name="pagseguro_credit_card_hash" type="hidden" />' ).val( data.card.token ) );
 							form.append( $( '<input name="pagseguro_sender_hash" type="hidden" />' ).val( PagSeguroDirectPayment.getSenderHash() ) );
 							form.append( $( '<input name="pagseguro_installment_value" type="hidden" />' ).val( $( 'option:selected', installments ).attr( 'data-installment-value' ) ) );
 
@@ -226,6 +226,10 @@
 				}).trigger( 'focusout' );
 			});
 
+		} else {
+			$( 'body' ).on( 'updated_checkout', function () {
+				$( '#pagseguro-payment-form' ).remove();
+			});
 		}
 	});
 

@@ -44,11 +44,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</p>
 		<div class="clear"></div>
 		<p class="form-row form-row-first">
-			<label for="pagseguro-card-holder-birth-date"><?php _e( 'Holder Birth Date', 'woocommerce-pagseguro' ); ?> <span class="required">*</span></label>
+			<label for="pagseguro-card-holder-birth-date"><?php _e( 'Card Holder Birth Date', 'woocommerce-pagseguro' ); ?> <span class="required">*</span></label>
 			<input id="pagseguro-card-holder-birth-date" name="pagseguro_card_holder_birth_date" class="input-text" type="text" autocomplete="off" placeholder="<?php _e( 'DD / MM / YYYY', 'woocommerce-pagseguro' ); ?>" style="font-size: 1.5em; padding: 8px;" />
 		</p>
 		<p class="form-row form-row-last">
-			<label for="pagseguro-card-holder-phone"><?php _e( 'Holder Phone', 'woocommerce-pagseguro' ); ?> <span class="required">*</span></label>
+			<label for="pagseguro-card-holder-phone"><?php _e( 'Card Holder Phone', 'woocommerce-pagseguro' ); ?> <span class="required">*</span></label>
 			<input id="pagseguro-card-holder-phone" name="pagseguro_card_holder_phone" class="input-text" type="text" autocomplete="off" placeholder="<?php _e( '(xx) xxxx-xxxx', 'woocommerce-pagseguro' ); ?>" style="font-size: 1.5em; padding: 8px;" />
 		</p>
 		<div class="clear"></div>

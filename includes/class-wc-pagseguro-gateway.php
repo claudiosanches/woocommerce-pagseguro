@@ -51,7 +51,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		// Actions.
 		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( $this, 'check_ipn_response' ) );
-		add_action( 'valid_pagseguro_ipn_request', array( $this, 'successful_request' ) );
+		add_action( 'valid_pagseguro_ipn_request', array( $this, 'update_order_status' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'checkout_scripts' ) );
@@ -296,7 +296,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$order = new WC_Order( $order_id );
 
 		if ( 'lightbox' != $this->method ) {
-			$response = $this->api->do_payment_request( $order, $_POST );
+			if ( isset( $_POST['pagseguro_sender_hash'] ) ) {
+				$response = $this->api->do_payment_request( $order, $_POST );
+
+				if ( $response['data'] ) {
+					$this->update_order_status( $response['data'] );
+				}
+			} else {
+				$response = $this->api->do_checkout_request( $order, $_POST );
+			}
 
 			if ( $response['url'] ) {
 				// Remove cart.
@@ -400,19 +408,20 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		if ( $ipn ) {
 			header( 'HTTP/1.1 200 OK' );
 			do_action( 'valid_pagseguro_ipn_request', $ipn );
+			exit();
 		} else {
 			wp_die( __( 'PagSeguro Request Failure', 'woocommerce-pagseguro' ) );
 		}
 	}
 
 	/**
-	 * Successful Payment!
+	 * Update order status.
 	 *
 	 * @param array $posted PagSeguro post data.
 	 *
 	 * @return void
 	 */
-	public function successful_request( $posted ) {
+	public function update_order_status( $posted ) {
 
 		if ( isset( $posted->reference ) ) {
 			$order_id = (int) str_replace( $this->invoice_prefix, '', $posted->reference );
@@ -426,6 +435,65 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					$this->log->add( $this->id, 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . $posted->status );
 				}
 
+				// Order details.
+				$order_details = array();
+				if ( isset( $posted->code ) ) {
+					update_post_meta(
+						$order->id,
+						__( 'PagSeguro Transaction ID', 'woocommerce-pagseguro' ),
+						(string) $posted->code
+					);
+				}
+				if ( isset( $posted->sender->email ) ) {
+					update_post_meta(
+						$order->id,
+						__( 'Payer email', 'woocommerce-pagseguro' ),
+						(string) $posted->sender->email
+					);
+				}
+				if ( isset( $posted->sender->name ) ) {
+					update_post_meta(
+						$order->id,
+						__( 'Payer name', 'woocommerce-pagseguro' ),
+						(string) $posted->sender->name
+					);
+				}
+				if ( isset( $posted->paymentMethod->type ) ) {
+					$order_details['type'] = intval( $posted->paymentMethod->type );
+					update_post_meta(
+						$order->id,
+						__( 'Payment type', 'woocommerce-pagseguro' ),
+						$this->api->get_payment_name_by_type( $order_details['type'] )
+					);
+				}
+				if ( isset( $posted->paymentMethod->code ) ) {
+					update_post_meta(
+						$order->id,
+						__( 'Payment method', 'woocommerce-pagseguro' ),
+						$this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) )
+					);
+				}
+				if ( isset( $posted->installmentCount ) ) {
+					update_post_meta(
+						$order->id,
+						__( 'Installments', 'woocommerce-pagseguro' ),
+						(string) $posted->installmentCount
+					);
+				}
+				if ( isset( $posted->paymentLink ) ) {
+					$order_details['link'] = (string) $posted->paymentLink;
+					update_post_meta(
+						$order->id,
+						__( 'Payment url', 'woocommerce-pagseguro' ),
+						$order_details['link']
+					);
+				}
+
+				// Save/update payment information for transparente checkout.
+				if ( 'transparent' == $this->method ) {
+					update_post_meta( $order->id, '_wc_pagseguro_payment_data', $order_details );
+				}
+
 				switch ( intval( $posted->status ) ) {
 					case 1 :
 						$order->update_status( 'on-hold', __( 'PagSeguro: The buyer initiated the transaction, but so far the PagSeguro not received any payment information.', 'woocommerce-pagseguro' ) );
@@ -436,57 +504,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 						break;
 					case 3 :
-						// Order details.
-						if ( isset( $posted->code ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'PagSeguro Transaction ID', 'woocommerce-pagseguro' ),
-								(string) $posted->code
-							);
-						}
-						if ( isset( $posted->sender->email ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'Payer email', 'woocommerce-pagseguro' ),
-								(string) $posted->sender->email
-							);
-						}
-						if ( isset( $posted->sender->name ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'Payer name', 'woocommerce-pagseguro' ),
-								(string) $posted->sender->name
-							);
-						}
-						if ( isset( $posted->paymentMethod->type ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'Payment type', 'woocommerce-pagseguro' ),
-								$this->api->get_payment_name_by_type( intval( $posted->paymentMethod->type ) )
-							);
-						}
-						if ( isset( $posted->paymentMethod->code ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'Payment method', 'woocommerce-pagseguro' ),
-								$this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) )
-							);
-						}
-						if ( isset( $posted->installmentCount ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'Installments', 'woocommerce-pagseguro' ),
-								(string) $posted->installmentCount
-							);
-						}
-						if ( isset( $posted->paymentLink ) ) {
-							update_post_meta(
-								$order_id,
-								__( 'Payment url', 'woocommerce-pagseguro' ),
-								(string) $posted->paymentLink
-							);
-						}
-
 						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
 
 						// Changing the order for processing and reduces the stock.
@@ -530,8 +547,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				}
 			}
 		}
-
-		exit;
 	}
 
 	/**

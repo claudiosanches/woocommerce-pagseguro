@@ -50,10 +50,21 @@ class WC_PagSeguro_API {
 	/**
 	 * Get the payment URL.
 	 *
+	 * @param  string $token
+	 *
 	 * @return string.
 	 */
-	protected function get_payment_url() {
-		return 'https://' . $this->get_environment() . 'pagseguro.uol.com.br/v2/checkout/payment.html?code=';
+	protected function get_payment_url( $token ) {
+		return 'https://' . $this->get_environment() . 'pagseguro.uol.com.br/v2/checkout/payment.html?code=' . $token;
+	}
+
+	/**
+	 * Get the transactions URL.
+	 *
+	 * @return string.
+	 */
+	protected function get_transactions_url() {
+		return 'https://ws.' . $this->get_environment() . 'pagseguro.uol.com.br/v2/transactions';
 	}
 
 	/**
@@ -172,6 +183,31 @@ class WC_PagSeguro_API {
 	}
 
 	/**
+	 * Get the paymet method.
+	 *
+	 * @param  string $method
+	 *
+	 * @return string
+	 */
+	public function get_payment_method( $method ) {
+		switch ( $method ) {
+			case 'credit-card' :
+				return 'creditCard';
+				break;
+			case 'banking-ticket' :
+				return 'boleto';
+				break;
+			case 'online-debit' :
+				return 'eft';
+				break;
+
+			default:
+				return '';
+				break;
+		}
+	}
+
+	/**
 	 * Get error message.
 	 *
 	 * @param  int    $code Error code.
@@ -182,13 +218,13 @@ class WC_PagSeguro_API {
 		switch ( $code ) {
 			case 11013:
 			case 11014:
-				return __( 'Please enter a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' );
+				return __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' );
 				break;
 			case 11017:
-				return __( 'Please enter a valid zip code number.', 'woocommerce-pagseguro' );
+				return __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' );
 				break;
 			case 11164:
-				return __( 'Please enter a valid CPF number.', 'woocommerce-pagseguro' );
+				return __( 'Please enter with a valid CPF number.', 'woocommerce-pagseguro' );
 				break;
 
 			default:
@@ -327,18 +363,18 @@ class WC_PagSeguro_API {
 	}
 
 	/**
-	 * Generate the payment xml.
+	 * Get the checkout xml.
 	 *
 	 * @param object  $order Order data.
 	 *
 	 * @return string        Payment xml.
 	 */
-	protected function generate_payment_xml( $order, $posted ) {
+	protected function get_checkout_xml( $order, $posted ) {
 		$data    = $this->get_order_items( $order );
 		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
 
-		// Creates the payment xml.
-		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="utf-8" standalone="yes"?><checkout></checkout>' );
+		// Creates the checkout xml.
+		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout></checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
 		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
 		$xml->add_sender_data( $order );
@@ -348,12 +384,62 @@ class WC_PagSeguro_API {
 
 		// Checks if is localhost... PagSeguro not accept localhost urls!
 		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
-			$xml->add_redirect_url( $this->get_return_url( $order ) );
+			$xml->add_redirect_url( $this->gateway->get_return_url( $order ) );
 			$xml->add_notification_url( $this->get_wc_request_url() );
 		}
 
 		$xml->add_max_uses( 1 );
 		$xml->add_max_age( 120 );
+
+		// Filter the XML.
+		$xml = apply_filters( 'woocommerce_pagseguro_checkout_xml', $xml, $order );
+
+		return $xml->render();
+	}
+
+	/**
+	 * Get the direct payment xml.
+	 *
+	 * @param object  $order Order data.
+	 *
+	 * @return string        Payment xml.
+	 */
+	protected function get_payment_xml( $order, $posted ) {
+		$data    = $this->get_order_items( $order );
+		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
+		$method  = isset( $posted['pagseguro_payment_method'] ) ? $this->get_payment_method( $posted['pagseguro_payment_method'] ) : '';
+		$hash    = isset( $posted['pagseguro_sender_hash'] ) ? sanitize_text_field( $posted['pagseguro_sender_hash'] ) : '';
+
+		// Creates the payment xml.
+		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><payment></payment>' );
+		$xml->add_mode( 'default' );
+		$xml->add_method( $method );
+		$xml->add_sender_data( $order, $hash );
+		$xml->add_currency( get_woocommerce_currency() );
+		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
+			$xml->add_notification_url( $this->get_wc_request_url() );
+		}
+		$xml->add_items( $data['items'] );
+		$xml->add_extra_amount( $data['extra_amount'] );
+		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
+		$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+		// Items related to the payment method.
+		if ( 'creditCard' == $method ) {
+			$credit_card_token = isset( $posted['pagseguro_credit_card_hash'] ) ? sanitize_text_field( $posted['pagseguro_credit_card_hash'] ) : '';
+			$installment       = array(
+				'quantity' => isset( $posted['pagseguro_card_installments'] ) ? absint( $posted['pagseguro_card_installments'] ) : '',
+				'value'    => isset( $posted['pagseguro_installment_value'] ) ? $this->money_format( $posted['pagseguro_installment_value'] ) : ''
+			);
+			$holder_data       = array(
+				'name'       => isset( $posted['pagseguro_card_holder_name'] ) ? sanitize_text_field( $posted['pagseguro_card_holder_name'] ) : '',
+				'cpf'        => isset( $posted['pagseguro_card_holder_cpf'] ) ? sanitize_text_field( $posted['pagseguro_card_holder_cpf'] ) : '',
+				'birth_date' => isset( $posted['pagseguro_card_holder_birth_date'] ) ? sanitize_text_field( $posted['pagseguro_card_holder_birth_date'] ) : '',
+				'phone'      => isset( $posted['pagseguro_card_holder_phone'] ) ? sanitize_text_field( $posted['pagseguro_card_holder_phone'] ) : '',
+			);
+
+			$xml->add_credit_card_data( $order, $credit_card_token, $installment, $holder_data );
+		}
 
 		// Filter the XML.
 		$xml = apply_filters( 'woocommerce_pagseguro_payment_xml', $xml, $order );
@@ -362,15 +448,15 @@ class WC_PagSeguro_API {
 	}
 
 	/**
-	 * Do payment request.
+	 * Do checkout request.
 	 *
 	 * @param object $order Order data.
 	 *
 	 * @return array
 	 */
-	public function do_payment_request( $order, $posted ) {
+	public function do_checkout_request( $order, $posted ) {
 		// Sets the xml.
-		$xml = $this->generate_payment_xml( $order, $posted );
+		$xml = $this->get_checkout_xml( $order, $posted );
 
 		if ( 'yes' == $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting token for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
@@ -402,7 +488,7 @@ class WC_PagSeguro_API {
 				}
 
 				return array(
-					'url'   => $this->get_payment_url() . $token,
+					'url'   => $this->get_payment_url( $token ),
 					'token' => $token,
 					'error' => ''
 				);
@@ -435,6 +521,82 @@ class WC_PagSeguro_API {
 		return array(
 			'url'   => '',
 			'token' => '',
+			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) )
+		);
+	}
+
+	/**
+	 * Do payment request.
+	 *
+	 * @param object $order Order data.
+	 *
+	 * @return array
+	 */
+	public function do_payment_request( $order, $posted ) {
+		// Sets the xml.
+		$xml = $this->get_payment_xml( $order, $posted );
+
+		if ( 'yes' == $this->gateway->debug ) {
+			$this->gateway->log->add( $this->gateway->id, 'Requesting direct payment for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
+		}
+
+		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_transactions_url() );
+		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
+
+		if ( is_wp_error( $response ) ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'WP_Error in requesting the direct payment: ' . $response->get_error_message() );
+			}
+		} else {
+			try {
+				$data = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+			} catch ( Exception $e ) {
+				$data = '';
+
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro response: ' . print_r( $e->getMessage(), true ) );
+				}
+			}
+
+			if ( isset( $data->code ) ) {
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'PagSeguro direct payment created successfully!' );
+				}
+
+				return array(
+					'url'   => $this->gateway->get_return_url( $order ),
+					'data'  => $data,
+					'error' => ''
+				);
+			}
+
+			if ( isset( $data->error ) ) {
+				$errors = array();
+
+				if ( 'yes' == $this->gateway->debug ) {
+					$this->gateway->log->add( $this->gateway->id, 'An error occurred while generating the PagSeguro direct payment: ' . print_r( $response, true ) );
+				}
+
+				foreach ( $data->error as $error_key => $error ) {
+					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
+				}
+
+				return array(
+					'url'   => '',
+					'data'  => '',
+					'error' => $errors
+				);
+			}
+		}
+
+		if ( 'yes' == $this->gateway->debug ) {
+			$this->gateway->log->add( $this->gateway->id, 'An error occurred while generating the PagSeguro direct payment: ' . print_r( $response, true ) );
+		}
+
+		// Return error message.
+		return array(
+			'url'   => '',
+			'data'  => '',
 			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) )
 		);
 	}

@@ -37,6 +37,24 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	}
 
 	/**
+	 * Add payment mode.
+	 *
+	 * @param string $mode Payment mode.
+	 */
+	public function add_mode( $mode = 'default' ) {
+		$this->addChild( 'mode', $mode );
+	}
+
+	/**
+	 * Add payment method.
+	 *
+	 * @param string $method Payment method (creditCard, boleto or eft).
+	 */
+	public function add_method( $method = 'creditCard' ) {
+		$this->addChild( 'method', $method );
+	}
+
+	/**
 	 * Add reference.
 	 *
 	 * @param string $reference Payment reference.
@@ -59,8 +77,9 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * Add sender data.
 	 *
 	 * @param WC_Order $order Order data.
+	 * @param string   $hash  Sender hash.
 	 */
-	public function add_sender_data( $order ) {
+	public function add_sender_data( $order, $hash = '' ) {
 		$sender = $this->addChild( 'sender' );
 		$sender->addChild( 'name' )->add_cdata( $order->billing_first_name . ' ' . $order->billing_last_name );
 		$sender->addChild( 'email' )->add_cdata( $order->billing_email );
@@ -77,6 +96,10 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$phone        = $sender->addChild( 'phone' );
 			$phone->addChild( 'areaCode', substr( $phone_number, 0, 2 ) );
 			$phone->addChild( 'number', substr( $phone_number, 2 ) );
+		}
+
+		if ( '' != $hash ) {
+			$sender->addChild( 'hash', $hash );
 		}
 	}
 
@@ -147,6 +170,52 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		if ( '' != $extra_amount ) {
 			$this->addChild( 'extraAmount', $extra_amount );
 		}
+	}
+
+	/**
+	 * Add credit card data.
+	 *
+	 * @param WC_Order $order           Order data.
+	 * @param string $credit_card_token Credit card token.
+	 * @param array  $installment_data  Installment data (quantity and value).
+	 * @param array  $holder_data       Holder data (name, cpf, birth_date and phone).
+	 */
+	public function add_credit_card_data( $order, $credit_card_token, $installment_data, $holder_data ) {
+		$credit_card = $this->addChild( 'creditCard' );
+
+		$credit_card->addChild( 'token', $credit_card_token );
+
+		$installment = $credit_card->addChild( 'installment' );
+		$installment->addChild( 'quantity', $installment_data['quantity'] );
+		$installment->addChild( 'value', $installment_data['value'] );
+
+		$holder = $credit_card->addChild( 'holder' );
+		$holder->addChild( 'name' )->add_cdata( $holder_data['name'] );
+		$documents = $holder->addChild( 'documents' );
+		$document = $documents->addChild( 'document' );
+		$document->addChild( 'type', 'CPF' );
+		$document->addChild( 'value', $this->get_numbers( $holder_data['cpf'] ) );
+		$holder->addChild( 'birthDate', str_replace( ' ', '', $holder_data['birth_date'] ) );
+		$phone_number = $this->get_numbers( $holder_data['phone'] );
+		$phone = $holder->addChild( 'phone' );
+		$phone->addChild( 'areaCode', substr( $phone_number, 0, 2 ) );
+		$phone->addChild( 'number', substr( $phone_number, 2 ) );
+
+		$billing_address = $credit_card->addChild( 'billingAddress' );
+		$billing_address->addChild( 'street' )->add_cdata( $order->billing_address_1 );
+		if ( isset( $order->billing_number ) ) {
+			$billing_address->addChild( 'number', $order->billing_number );
+		}
+		if ( ! empty( $order->billing_address_2 ) ) {
+			$billing_address->addChild( 'complement' )->add_cdata( $order->billing_address_2 );
+		}
+		if ( isset( $order->billing_neighborhood ) ) {
+			$billing_address->addChild( 'district' )->add_cdata( $order->billing_neighborhood );
+		}
+		$billing_address->addChild( 'city' )->add_cdata( $order->billing_city );
+		$billing_address->addChild( 'state', $order->billing_state );
+		$billing_address->addChild( 'country', 'BRA' );
+		$billing_address->addChild( 'postalCode', $this->get_numbers( $order->billing_postcode ) );
 	}
 
 	/**
