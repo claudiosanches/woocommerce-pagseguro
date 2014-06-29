@@ -226,73 +226,31 @@ class WC_PagSeguro_API {
 	}
 
 	/**
-	 * Generate the payment xml.
+	 * Get WooCommerce return URL.
 	 *
-	 * @param object  $order Order data.
-	 *
-	 * @return string        Payment xml.
+	 * @return string
 	 */
-	protected function generate_payment_xml( $order ) {
+	protected function get_wc_request_url() {
 		global $woocommerce;
 
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			$notification_url = WC()->api_request_url( 'WC_PagSeguro_Gateway' );
+			return WC()->api_request_url( 'WC_PagSeguro_Gateway' );
 		} else {
-			$notification_url = $woocommerce->api_request_url( 'WC_PagSeguro_Gateway' );
+			return $woocommerce->api_request_url( 'WC_PagSeguro_Gateway' );
 		}
+	}
 
-		// Creates the payment xml.
-		$xml = new WC_PagSeguro_SimpleXML( '<?xml version="1.0" encoding="utf-8" standalone="yes" ?><checkout></checkout>' );
-
-		// Currency.
-		$xml->addChild( 'currency', get_woocommerce_currency() );
-
-		// Reference.
-		$xml->addChild( 'reference' )->addCData( $this->gateway->invoice_prefix . $order->id );
-
-		// Receiver data.
-		// $receiver = $xml->addChild( 'receiver' );
-		// $receiver->addChild( 'email', $this->email );
-
-		// Sender info.
-		$sender = $xml->addChild( 'sender' );
-		$sender->addChild( 'name' )->addCData( $order->billing_first_name . ' ' . $order->billing_last_name );
-		$sender->addChild( 'email' )->addCData( $order->billing_email );
-		// $documents = $sender->addChild( 'documents' );
-		// $document = $documents->addChild( 'document' );
-		// $document->addChild( 'type', 'CPF' );
-		// $document->addChild( 'value', '' );
-
-		if ( isset( $order->billing_phone ) && ! empty( $order->billing_phone ) ) {
-			// Fix phone number.
-			$order->billing_phone = str_replace( array( '(', '-', ' ', ')' ), '', $order->billing_phone );
-
-			$phone = $sender->addChild( 'phone' );
-			$phone->addChild( 'areaCode', substr( $order->billing_phone, 0, 2 ) );
-			$phone->addChild( 'number', substr( $order->billing_phone, 2 ) );
-		}
-
-		// Shipping info.
-		if ( isset( $order->billing_postcode ) && ! empty( $order->billing_postcode ) ) {
-			$shipping = $xml->addChild( 'shipping' );
-			$shipping->addChild( 'type', 3 );
-
-			// Address infor
-			$address = $shipping->addChild( 'address' );
-			$address->addChild( 'street' )->addCData( $order->billing_address_1 );
-			// $address->addChild( 'number', '' );
-			if ( ! empty( $order->billing_address_2 ) ) {
-				$address->addChild( 'complement' )->addCData( $order->billing_address_2 );
-			}
-			// $address->addChild( 'district' )->addCData( '' );
-			$address->addChild( 'postalCode', str_replace( array( '-', ' ' ), '', $order->billing_postcode ) );
-			$address->addChild( 'city' )->addCData( $order->billing_city );
-			$address->addChild( 'state', $order->billing_state );
-			$address->addChild( 'country', 'BRA' );
-		}
-
-		// Items.
-		$items = $xml->addChild( 'items' );
+	/**
+	 * Get order items.
+	 *
+	 * @param  WC_Order $order Order data.
+	 *
+	 * @return array           Items list, extra amount and shipping cost.
+	 */
+	protected function get_order_items( $order ) {
+		$items         = array();
+		$extra_amount  = '';
+		$shipping_cost = '';
 
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 			$shipping_total = $this->money_format( $order->get_total_shipping() );
@@ -305,7 +263,7 @@ class WC_PagSeguro_API {
 
 			// Discount.
 			if ( $order->get_order_discount() > 0 ) {
-				$xml->addChild( 'extraAmount', '-' . $this->money_format( $order->get_order_discount() ) );
+				$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
 			}
 
 			// Don't pass items - PagSeguro borks tax due to prices including tax.
@@ -320,24 +278,22 @@ class WC_PagSeguro_API {
 				}
 			}
 
-			$item = $items->addChild( 'item' );
-			$item->addChild( 'id', 1 );
-			$item->addChild( 'description' )->addCData( substr( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ) );
-			$item->addChild( 'amount', $this->money_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount() ) );
-			$item->addChild( 'quantity', 1 );
+			$items[] = array(
+				'description' => substr( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ),
+				'amount'      => $this->money_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount() ),
+				'quantity'    => 1
+			);
 
 			if ( ( $shipping_total + $order->get_shipping_tax() ) > 0 ) {
-				$shipping->addChild( 'cost', $this->money_format( $shipping_total + $order->get_shipping_tax(), 2, '.', '' ) );
+				$shipping_cost = $this->money_format( $shipping_total + $order->get_shipping_tax() );
 			}
 
 		} else {
 
 			// Cart Contents.
-			$item_loop = 0;
 			if ( sizeof( $order->get_items() ) > 0 ) {
 				foreach ( $order->get_items() as $order_item ) {
 					if ( $order_item['qty'] ) {
-						$item_loop++;
 						$item_name = $order_item['name'];
 						$item_meta = new WC_Order_Item_Meta( $order_item['item_meta'] );
 
@@ -345,40 +301,64 @@ class WC_PagSeguro_API {
 							$item_name .= ' - ' . $meta;
 						}
 
-						$item = $items->addChild( 'item' );
-						$item->addChild( 'id', $item_loop );
-						$item->addChild( 'description' )->addCData( substr( sanitize_text_field( $item_name ), 0, 95 ) );
-						$item->addChild( 'amount', $this->money_format( $order->get_item_total( $order_item, false ) ) );
-						$item->addChild( 'quantity', $order_item['qty'] );
+						$items[] = array(
+							'description' => substr( sanitize_text_field( $item_name ), 0, 95 ),
+							'amount'      => $this->money_format( $order->get_item_total( $order_item, false ) ),
+							'quantity'    => $order_item['qty']
+						);
 					}
 				}
 			}
 
 			// Shipping Cost item.
 			if ( $shipping_total > 0 ) {
-				$shipping->addChild( 'cost', $this->money_format( $shipping_total, 2, '.', '' ) );
+				$shipping_cost = $this->money_format( $shipping_total );
 			}
 
 			// Extras Amount.
-			$xml->addChild( 'extraAmount', $this->money_format( $order->get_total_tax() ) );
+			$extra_amount = $this->money_format( $order->get_total_tax() );
 		}
 
-		// Checks if is localhost. PagSeguro not accept localhost urls!
+		return array(
+			'items'         => $items,
+			'extra_amount'  => $extra_amount,
+			'shipping_cost' => $shipping_cost
+		);
+	}
+
+	/**
+	 * Generate the payment xml.
+	 *
+	 * @param object  $order Order data.
+	 *
+	 * @return string        Payment xml.
+	 */
+	protected function generate_payment_xml( $order, $posted ) {
+		$data    = $this->get_order_items( $order );
+		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
+
+		// Creates the payment xml.
+		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="utf-8" standalone="yes"?><checkout></checkout>' );
+		$xml->add_currency( get_woocommerce_currency() );
+		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
+		$xml->add_sender_data( $order );
+		$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+		$xml->add_items( $data['items'] );
+		$xml->add_extra_amount( $data['extra_amount'] );
+
+		// Checks if is localhost... PagSeguro not accept localhost urls!
 		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
-			$xml->addChild( 'redirectURL' )->addCData( $this->get_return_url( $order ) );
-			$xml->addChild( 'notificationURL' )->addCData( $notification_url );
+			$xml->add_redirect_url( $this->get_return_url( $order ) );
+			$xml->add_notification_url( $this->get_wc_request_url() );
 		}
 
-		// Max uses.
-		$xml->addChild( 'maxUses', 1 );
-
-		// Max age.
-		$xml->addChild( 'maxAge', 120 );
+		$xml->add_max_uses( 1 );
+		$xml->add_max_age( 120 );
 
 		// Filter the XML.
 		$xml = apply_filters( 'woocommerce_pagseguro_payment_xml', $xml, $order );
 
-		return $xml->asXML();
+		return $xml->render();
 	}
 
 	/**
@@ -388,9 +368,9 @@ class WC_PagSeguro_API {
 	 *
 	 * @return array
 	 */
-	public function do_payment_request( $order ) {
+	public function do_payment_request( $order, $posted ) {
 		// Sets the xml.
-		$xml = $this->generate_payment_xml( $order );
+		$xml = $this->generate_payment_xml( $order, $posted );
 
 		if ( 'yes' == $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting token for order ' . $order->get_order_number() . ' with the following data: ' . $xml );

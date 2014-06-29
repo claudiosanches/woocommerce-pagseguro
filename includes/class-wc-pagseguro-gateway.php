@@ -296,7 +296,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$order = new WC_Order( $order_id );
 
 		if ( 'lightbox' != $this->method ) {
-			$response = $this->api->do_payment_request( $order );
+			$response = $this->api->do_payment_request( $order, $_POST );
 
 			if ( $response['url'] ) {
 				// Remove cart.
