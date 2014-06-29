@@ -15,7 +15,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		global $woocommerce;
 
 		$this->id                 = 'pagseguro';
-		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
+		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'assets/images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
 		$this->has_fields         = false;
 		$this->method_title       = __( 'PagSeguro', 'woocommerce-pagseguro' );
 		$this->method_description = __( 'Accept payments by credit card, bank debit or banking ticket using the PagSeguro.', 'woocommerce-pagseguro' );
@@ -54,7 +54,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		add_action( 'valid_pagseguro_ipn_request', array( $this, 'successful_request' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-		add_action( 'woocommerce_before_checkout_form', array( $this, 'transparent_checkout_init' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'checkout_scripts' ) );
 
 		// Display admin notices.
 		$this->admin_notices();
@@ -105,6 +105,35 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$available = ( 'yes' == $this->settings['enabled'] ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->using_supported_currency();
 
 		return $available;
+	}
+
+	/**
+	 * Checkout scripts.
+	 *
+	 * @return void
+	 */
+	public function checkout_scripts() {
+		if ( is_checkout() && 'transparent' == $this->method ) {
+			$session_id = $this->api->get_session_id();
+			$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
+			wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-public' ), WC_PagSeguro::VERSION, true );
+
+			wp_localize_script(
+				'pagseguro-checkout',
+				'wc_pagseguro_params',
+				array(
+					'session_id'         => $session_id,
+					'interest_free'      => __( 'interest free', 'woocommerce-pagseguro' ),
+					'invalid_card'       => __( 'Invalid credit card number.', 'woocommerce-pagseguro' ),
+					'invalid_expiry'     => __( 'Invalid expiry date, please use the MM / YYYY date format.', 'woocommerce-pagseguro' ),
+					'expired_date'       => __( 'Please check the expiry date and use a valid format as MM / YYYY.', 'woocommerce-pagseguro' ),
+					'general_error'      => __( 'Unable to process the data from your credit card on the PagSeguro, please try again or contact us for assistance.', 'woocommerce-pagseguro' ),
+					'empty_installments' => __( 'Select a number of installments.', 'woocommerce-pagseguro' ),
+				)
+			);
+		}
 	}
 
 	/**
@@ -230,6 +259,31 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Payment fields.
+	 *
+	 * @return string
+	 */
+	public function payment_fields() {
+		global $woocommerce;
+
+		wp_enqueue_script( 'wc-credit-card-form' );
+
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
+			$cart_total = (float) WC()->cart->total;
+		} else {
+			$cart_total = (float) $woocommerce->cart->total;
+		}
+
+		if ( $description = $this->get_description() ) {
+			echo wpautop( wptexturize( $description ) );
+		}
+
+		if ( 'transparent' == $this->method ) {
+			include_once( 'views/html-transparent-checkout-form.php' );
+		}
+	}
+
+	/**
 	 * Process the payment and return the result.
 	 *
 	 * @param int    $order_id Order ID.
@@ -330,24 +384,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			$html .= '<a class="button cancel" href="' . esc_url( $order->get_cancel_order_url() ) . '">' . __( 'Click to try again', 'woocommerce-pagseguro' ) . '</a>';
 
 			echo $html;
-		}
-	}
-
-	/**
-	 * Initialize the transparent checkout.
-	 *
-	 * @param  WC_Checkout $checkout Checkout data.
-	 *
-	 * @return string
-	 */
-	public function transparent_checkout_init( $checkout ) {
-		if ( 'transparent' == $this->method ) {
-			$session_id = $this->api->get_session_id();
-
-			if ( $session_id ) {
-				echo '<script type="text/javascript" src="' . $this->api->get_direct_payment_url() . '"></script>';
-				echo '<script type="text/javascript">PagSeguroDirectPayment.setSessionId( "' . esc_attr( $session_id ) . '" );</script>';
-			}
 		}
 	}
 

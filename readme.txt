@@ -182,7 +182,7 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 
 Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
-= Ao pagar o pedido fica com o status "processando", isto esta certo ? =
+= O pedido foi pago e ficou com o status de "processando" e não como "concluído", isto esta certo ? =
 
 Sim, esta certo e significa que o plugin esta trabalhando como deveria.
 
