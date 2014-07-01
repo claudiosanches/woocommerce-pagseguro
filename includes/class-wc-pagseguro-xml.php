@@ -219,6 +219,16 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	}
 
 	/**
+	 * Add bank data.
+	 *
+	 * @param string $bank_name bradesco, itau, bancodobrasil, banrisul or hsbc.
+	 */
+	public function add_bank_data( $bank_name ) {
+		$bank = $this->addChild( 'bank' );
+		$bank->addChild( 'name', $bank_name );
+	}
+
+	/**
 	 * Add redirect URL.
 	 *
 	 * @param string $redirect_url URL to redirect from PagSeguro.

@@ -293,7 +293,7 @@ msgstr "Boleto"
 #: includes/class-wc-pagseguro-helpers.php:22
 #: includes/class-wc-pagseguro-helpers.php:45
 #@ woocommerce-pagseguro
-msgid "Online Debit"
+msgid "Bank Transfer"
 msgstr "Débito Online"
 
 #: includes/class-wc-pagseguro-helpers.php:23

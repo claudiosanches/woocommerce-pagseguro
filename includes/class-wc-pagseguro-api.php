@@ -116,7 +116,7 @@ class WC_PagSeguro_API {
 		$types = array(
 			1 => __( 'Credit Card', 'woocommerce-pagseguro' ),
 			2 => __( 'Billet', 'woocommerce-pagseguro' ),
-			3 => __( 'Online Debit', 'woocommerce-pagseguro' ),
+			3 => __( 'Bank Transfer', 'woocommerce-pagseguro' ),
 			4 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
 			5 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
 			7 => __( 'Account deposit', 'woocommerce-pagseguro' )
@@ -139,7 +139,7 @@ class WC_PagSeguro_API {
 	public function get_payment_method_name( $value ) {
 		$credit = __( 'Credit Card', 'woocommerce-pagseguro' );
 		$ticket = __( 'Billet', 'woocommerce-pagseguro' );
-		$debit  = __( 'Online Debit', 'woocommerce-pagseguro' );
+		$debit  = __( 'Bank Transfer', 'woocommerce-pagseguro' );
 
 		$methods = array(
 			101 => $credit . ' ' . 'Visa',
@@ -197,7 +197,7 @@ class WC_PagSeguro_API {
 			case 'banking-ticket' :
 				return 'boleto';
 				break;
-			case 'online-debit' :
+			case 'bank-transfer' :
 				return 'eft';
 				break;
 
@@ -226,11 +226,37 @@ class WC_PagSeguro_API {
 			case 11164:
 				return __( 'Please enter with a valid CPF number.', 'woocommerce-pagseguro' );
 				break;
+			case 53111:
+				return __( 'Please select a bank to make payment by bank transfer.', 'woocommerce-pagseguro' );
+				break;
 
 			default:
 				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'woocommerce-pagseguro' );
 				break;
 		}
+	}
+
+	/**
+	 * Get the available payment methods.
+	 *
+	 * @return array
+	 */
+	protected function get_available_payment_methods() {
+		$methods = array();
+
+		if ( 'yes' == $this->gateway->tc_credit ) {
+			$methods[] = 'credit-card';
+		}
+
+		if ( 'yes' == $this->gateway->tc_transfer ) {
+			$methods[] = 'bank-transfer';
+		}
+
+		if ( 'yes' == $this->gateway->tc_ticket ) {
+			$methods[] = 'banking-ticket';
+		}
+
+		return $methods;
 	}
 
 	/**
@@ -439,6 +465,9 @@ class WC_PagSeguro_API {
 			);
 
 			$xml->add_credit_card_data( $order, $credit_card_token, $installment, $holder_data );
+		} elseif ( 'eft' == $method ) {
+			$bank_name = isset( $posted['pagseguro_bank_transfer'] ) ? sanitize_text_field( $posted['pagseguro_bank_transfer'] ) : '';
+			$xml->add_bank_data( $bank_name );
 		}
 
 		// Filter the XML.
@@ -450,7 +479,8 @@ class WC_PagSeguro_API {
 	/**
 	 * Do checkout request.
 	 *
-	 * @param object $order Order data.
+	 * @param  WC_Order $order  Order data.
+	 * @param  array    $posted Posted data.
 	 *
 	 * @return array
 	 */
@@ -528,11 +558,30 @@ class WC_PagSeguro_API {
 	/**
 	 * Do payment request.
 	 *
-	 * @param object $order Order data.
+	 * @param  WC_Order $order  Order data.
+	 * @param  array    $posted Posted data.
 	 *
 	 * @return array
 	 */
 	public function do_payment_request( $order, $posted ) {
+		$payment_method = isset( $posted['pagseguro_payment_method'] ) ? $posted['pagseguro_payment_method'] : '';
+
+		/**
+		 * Validate if has selected a payment method.
+		 */
+		if ( ! in_array( $payment_method, $this->get_available_payment_methods() ) ) {
+			return array(
+				'url'   => '',
+				'data'  => '',
+				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' .  __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) )
+			);
+		}
+
+		$valid = $this->validate_payment_request( $posted );
+		if ( ! $valid['valid'] ) {
+			return $valid;
+		}
+
 		// Sets the xml.
 		$xml = $this->get_payment_xml( $order, $posted );
 

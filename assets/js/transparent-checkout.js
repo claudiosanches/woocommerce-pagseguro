@@ -52,19 +52,79 @@
 			wrapper.prepend( '<div class="woocommerce-error" style="margin-bottom: 0.5em !important;">' + error + '</div>' );
 		}
 
+		/**
+		 * Hide payment methods if have only one.
+		 *
+		 * @return {void}
+		 */
+		function pagSeguroHidePaymentMethods() {
+			var paymentMethods = $( '#pagseguro-payment-methods' );
+
+			if ( 1 === $( 'input[type=radio]', paymentMethods ).length ) {
+				paymentMethods.hide();
+			}
+		}
+
+		/**
+		 * Show/hide the method form.
+		 *
+		 * @param  {string} method
+		 *
+		 * @return {void}
+		 */
+		function pagSeguroShowHideMethodForm( method ) {
+			// window.alert( method );
+			$( '.pagseguro-method-form' ).hide();
+			$( '#pagseguro-' + method + '-form' ).show();
+		}
+
 		// Transparent checkout actions.
 		if ( wc_pagseguro_params.session_id ) {
 			// Initialize the transparent checkout.
 			PagSeguroDirectPayment.setSessionId( wc_pagseguro_params.session_id );
+
+			// Display the payment for and init the input masks.
+			$( 'body' ).on( 'updated_checkout', function () {
+				pagSeguroHidePaymentMethods();
+
+				$( '#pagseguro-payment-form' ).show();
+
+				pagSeguroShowHideMethodForm( $( '#pagseguro-payment-methods input[type=radio]:checked' ).val() );
+
+				// CPF.
+				$( '#pagseguro-card-holder-cpf' ).mask( '999.999.999-99', { placeholder: ' ' } );
+
+				// Birth Date.
+				$( '#pagseguro-card-holder-birth-date' ).mask( '99 / 99 / 9999', { placeholder: ' ' } );
+
+				// Phone.
+				$( '#pagseguro-card-holder-phone' ).focusout( function () {
+					var phone, element;
+					element = $( this );
+					element.unmask();
+					phone = element.val().replace( /\D/g, '' );
+
+					if ( phone.length > 10 ) {
+						element.mask( '(99) 99999-999?9', { placeholder: ' ' } );
+					} else {
+						element.mask( '(99) 9999-9999?9', { placeholder: ' ' } );
+					}
+				}).trigger( 'focusout' );
+			});
+
+			// Switch the payment method form.
+			$( 'body' ).on( 'click', '#pagseguro-payment-methods input[type=radio]', function () {
+				pagSeguroShowHideMethodForm( $( this ).val() );
+			});
 
 			// Get the credit card brand.
 			$( 'body' ).on( 'focusout', '#pagseguro-card-number', function () {
 				var bin = $( this ).val().replace( /[^\d]/g, '' ).substr( 0, 6 ),
 					instalmments = $( 'body #pagseguro-card-installments' );
 
-					// Reset the installments.
-					instalmments.empty();
-					instalmments.attr( 'disabled', 'disabled' );
+				// Reset the installments.
+				instalmments.empty();
+				instalmments.attr( 'disabled', 'disabled' );
 
 				PagSeguroDirectPayment.getBrand({
 					cardBin: bin,
@@ -120,14 +180,10 @@
 					return true;
 				}
 
-				if ( 'radio' === $( 'body li.payment_method_pagseguro input[name=pagseguro_payment_method]' ).attr( 'type' ) ) {
-					if ( 'credit-card' !== $( 'body li.payment_method_pagseguro input[name=pagseguro_payment_method]:checked' ).val() ) {
-						return true;
-					}
-				} else {
-					if ( 'credit-card' !== $( 'body li.payment_method_pagseguro input[name=pagseguro_payment_method]' ).val() ) {
-						return true;
-					}
+				if ( 'credit-card' !== $( 'body li.payment_method_pagseguro input[name=pagseguro_payment_method]:checked' ).val() ) {
+					$( 'form.checkout, form#order_review' ).append( $( '<input name="pagseguro_sender_hash" type="hidden" />' ).val( PagSeguroDirectPayment.getSenderHash() ) );
+
+					return true;
 				}
 
 				var form = $( 'form.checkout, form#order_review' ),
@@ -201,29 +257,6 @@
 				}
 
 				return false;
-			});
-
-			// Input masks.
-			$( 'body' ).on( 'updated_checkout', function () {
-				// CPF.
-				$( '#pagseguro-card-holder-cpf' ).mask( '999.999.999-99', { placeholder: ' ' } );
-
-				// Birth Date.
-				$( '#pagseguro-card-holder-birth-date' ).mask( '99 / 99 / 9999', { placeholder: ' ' } );
-
-				// Phone.
-				$( '#pagseguro-card-holder-phone' ).focusout( function () {
-					var phone, element;
-					element = $( this );
-					element.unmask();
-					phone = element.val().replace( /\D/g, '' );
-
-					if ( phone.length > 10 ) {
-						element.mask( '(99) 99999-999?9', { placeholder: ' ' } );
-					} else {
-						element.mask( '(99) 9999-9999?9', { placeholder: ' ' } );
-					}
-				}).trigger( 'focusout' );
 			});
 
 		} else {

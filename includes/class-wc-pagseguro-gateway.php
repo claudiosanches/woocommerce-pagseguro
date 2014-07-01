@@ -33,6 +33,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->email          = $this->get_option( 'email' );
 		$this->token          = $this->get_option( 'token' );
 		$this->method         = $this->get_option( 'method', 'direct' );
+		$this->tc_credit      = $this->get_option( 'tc_credit', 'yes' );
+		$this->tc_transfer    = $this->get_option( 'tc_transfer', 'yes' );
+		$this->tc_ticket      = $this->get_option( 'tc_ticket', 'yes' );
 		$this->invoice_prefix = $this->get_option( 'invoice_prefix', 'WC-' );
 		$this->sandbox        = $this->get_option( 'sandbox', 'no' );
 		$this->debug          = $this->get_option( 'debug' );
@@ -117,6 +120,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			$session_id = $this->api->get_session_id();
 			$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
+			wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PagSeguro::VERSION );
 			wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
 			wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-public' ), WC_PagSeguro::VERSION, true );
 
@@ -186,6 +190,24 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'lightbox'    => __( 'Lightbox', 'woocommerce-pagseguro' ),
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' )
 				)
+			),
+			'tc_credit' => array(
+				'title'   => __( 'Credit Card', 'woocommerce-pagseguro' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable Credit Card for Transparente Checkout', 'woocommerce-pagseguro' ),
+				'default' => 'yes'
+			),
+			'tc_transfer' => array(
+				'title'   => __( 'Bank Transfer', 'woocommerce-pagseguro' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable Bank Transfer for Transparente Checkout', 'woocommerce-pagseguro' ),
+				'default' => 'yes'
+			),
+			'tc_ticket' => array(
+				'title'   => __( 'Banking Ticket', 'woocommerce-pagseguro' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable Banking Ticket for Transparente Checkout', 'woocommerce-pagseguro' ),
+				'default' => 'yes'
 			),
 			'invoice_prefix' => array(
 				'title'       => __( 'Invoice Prefix', 'woocommerce-pagseguro' ),
@@ -296,7 +318,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$order = new WC_Order( $order_id );
 
 		if ( 'lightbox' != $this->method ) {
-			if ( isset( $_POST['pagseguro_sender_hash'] ) ) {
+			if ( isset( $_POST['pagseguro_sender_hash'] ) && 'transparent' == $this->method ) {
 				$response = $this->api->do_payment_request( $order, $_POST );
 
 				if ( $response['data'] ) {
