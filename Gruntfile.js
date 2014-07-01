@@ -62,8 +62,29 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Minify all .css files.
+		cssmin: {
+			minify: {
+				expand: true,
+				cwd: '<%= dirs.css %>/',
+				src: [
+					'*.css',
+					'!*.min.css'
+				],
+				dest: '<%= dirs.css %>/',
+				ext: '.min.css'
+			}
+		},
+
 		// Watch changes for assets
 		watch: {
+			css: {
+				files: [
+					'<%= dirs.css %>/*.css',
+					'!<%= dirs.css %>/*.min.css'
+				],
+				tasks: ['cssmin']
+			},
 			js: {
 				files: [
 					'<%= dirs.js %>/*js',
@@ -135,6 +156,7 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-imagemin' );
 	grunt.loadNpmTasks( 'grunt-rsync' );
 	grunt.loadNpmTasks( 'grunt-shell' );
