@@ -577,11 +577,6 @@ class WC_PagSeguro_API {
 			);
 		}
 
-		$valid = $this->validate_payment_request( $posted );
-		if ( ! $valid['valid'] ) {
-			return $valid;
-		}
-
 		// Sets the xml.
 		$xml = $this->get_payment_xml( $order, $posted );
 

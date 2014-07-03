@@ -11,7 +11,7 @@
 		 * @param {string} brand
 		 */
 		function pagSeguroSetCreditCardBrand( brand ) {
-			$( '#pagseguro-credit-cart-form' ).attr( 'data-credit-card-brand', brand );
+			$( '#pagseguro-credit-card-form' ).attr( 'data-credit-card-brand', brand );
 		}
 
 		/**
@@ -46,7 +46,7 @@
 		 * @return {void}
 		 */
 		function pagSeguroAddErrorMessage( error ) {
-			var wrapper = $( '#pagseguro-credit-cart-form' );
+			var wrapper = $( '#pagseguro-credit-card-form' );
 
 			$( '.woocommerce-error', wrapper ).remove();
 			wrapper.prepend( '<div class="woocommerce-error" style="margin-bottom: 0.5em !important;">' + error + '</div>' );
@@ -141,7 +141,7 @@
 
 			// Set the errors.
 			$( 'body' ).on( 'focus', '#pagseguro-card-number, #pagseguro-card-expiry', function () {
-				$( '#pagseguro-credit-cart-form .woocommerce-error' ).remove();
+				$( '#pagseguro-credit-card-form .woocommerce-error' ).remove();
 			});
 
 			// Get the installments.
@@ -187,7 +187,7 @@
 				}
 
 				var form = $( 'form.checkout, form#order_review' ),
-					creditCardForm  = $( '#pagseguro-credit-cart-form', form ),
+					creditCardForm  = $( '#pagseguro-credit-card-form', form ),
 					error           = false,
 					errorHtml       = '',
 					brand           = creditCardForm.attr( 'data-credit-card-brand' ),
