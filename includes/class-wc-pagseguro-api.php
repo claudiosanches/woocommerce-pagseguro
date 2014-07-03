@@ -216,18 +216,31 @@ class WC_PagSeguro_API {
 	 */
 	public function get_error_message( $code ) {
 		switch ( $code ) {
-			case 11013:
-			case 11014:
+			case 11013 :
+			case 11014 :
 				return __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' );
 				break;
-			case 11017:
+			case 11017 :
 				return __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' );
 				break;
-			case 11164:
+			case 11164 :
 				return __( 'Please enter with a valid CPF number.', 'woocommerce-pagseguro' );
 				break;
-			case 53111:
+			case 53111 :
 				return __( 'Please select a bank to make payment by bank transfer.', 'woocommerce-pagseguro' );
+				break;
+			case 53045 :
+				return __( 'Credit card holder CPF is required.', 'woocommerce-pagseguro' );
+				break;
+			case 53047 :
+				return __( 'Credit card holder birthdate is required.', 'woocommerce-pagseguro' );
+				break;
+			case 53042 :
+				return __( 'Credit card holder name is required.', 'woocommerce-pagseguro' );
+				break;
+			case 53049 :
+			case 53051 :
+				return __( 'Credit card holder phone is required.', 'woocommerce-pagseguro' );
 				break;
 
 			default:

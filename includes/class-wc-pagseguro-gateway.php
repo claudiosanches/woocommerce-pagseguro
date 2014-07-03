@@ -248,6 +248,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	protected function add_error( $messages ) {
 		global $woocommerce;
 
+		// Remove duplicate messages.
+		$messages = array_unique( $messages );
+
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 			foreach ( $messages as $message ) {
 				wc_add_notice( $message, 'error' );
