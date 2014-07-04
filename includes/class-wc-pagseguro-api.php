@@ -243,6 +243,10 @@ class WC_PagSeguro_API {
 			case 53051 :
 				return __( 'Credit card holder phone is required.', 'woocommerce-pagseguro' );
 				break;
+			case 11020 :
+			case 53028 :
+				return __( 'The address complement is too long, it cannot be more than 40 characters.', 'woocommerce-pagseguro' );
+				break;
 
 			default:
 				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'woocommerce-pagseguro' );
