@@ -53,12 +53,18 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		// Set the API.
 		$this->api = new WC_PagSeguro_API( $this );
 
-		// Actions.
+		// Main actions.
 		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( $this, 'check_ipn_response' ) );
 		add_action( 'valid_pagseguro_ipn_request', array( $this, 'update_order_status' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'checkout_scripts' ) );
+
+		// Transparent checkout actions.
+		if ( 'transparent' == $this->method ) {
+			add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
+			add_action( 'woocommerce_email_after_order_table', array( $this, 'email_instructions' ), 10, 3 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'checkout_scripts' ) );
+		}
 
 		// Display admin notices.
 		$this->admin_notices();
@@ -117,7 +123,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function checkout_scripts() {
-		if ( is_checkout() && 'transparent' == $this->method ) {
+		if ( is_checkout() ) {
 			$session_id = $this->api->get_session_id();
 			$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
@@ -504,17 +510,19 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					);
 				}
 				if ( isset( $posted->paymentMethod->code ) ) {
+					$order_details['method'] = $this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) );
 					update_post_meta(
 						$order->id,
 						__( 'Payment method', 'woocommerce-pagseguro' ),
-						$this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) )
+						$order_details['method']
 					);
 				}
 				if ( isset( $posted->installmentCount ) ) {
+					$order_details['installments'] = (string) $posted->installmentCount;
 					update_post_meta(
 						$order->id,
 						__( 'Installments', 'woocommerce-pagseguro' ),
-						(string) $posted->installmentCount
+						$order_details['installments']
 					);
 				}
 				if ( isset( $posted->paymentLink ) ) {
@@ -583,6 +591,42 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					$this->log->add( $this->id, 'Error: Order Key does not match with PagSeguro reference.' );
 				}
 			}
+		}
+	}
+
+	/**
+	 * Thank You page message.
+	 *
+	 * @param  int    $order_id Order ID.
+	 *
+	 * @return string
+	 */
+	public function thankyou_page( $order_id ) {
+		$data = get_post_meta( $order_id, '_wc_pagseguro_payment_data', true );
+
+		include_once( 'views/html-payment-instructions.php' );
+	}
+
+	/**
+	 * Add content to the WC emails.
+	 *
+	 * @param  object $order         Order object.
+	 * @param  bool   $sent_to_admin Send to admin.
+	 * @param  bool   $plain_text    Plain text or HTML.
+	 *
+	 * @return string                Payment instructions.
+	 */
+	public function email_instructions( $order, $sent_to_admin, $plain_text ) {
+		if ( $sent_to_admin || 'on-hold' !== $order->status || $this->id !== $order->payment_method ) {
+			return;
+		}
+
+		$data = get_post_meta( $order->id, '_wc_pagseguro_payment_data', true );
+
+		if ( $plain_text ) {
+			include_once( 'views/plain-email-instructions.php' );
+		} else {
+			include_once( 'views/html-email-instructions.php' );
 		}
 	}
 
