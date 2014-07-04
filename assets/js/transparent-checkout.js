@@ -1,4 +1,3 @@
-/*jshint devel:true */
 /*global wc_pagseguro_params, PagSeguroDirectPayment */
 (function ( $ ) {
 	'use strict';

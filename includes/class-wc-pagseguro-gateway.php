@@ -58,6 +58,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		add_action( 'valid_pagseguro_ipn_request', array( $this, 'update_order_status' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
 		// Transparent checkout actions.
 		if ( 'transparent' == $this->method ) {
@@ -115,6 +116,21 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$available = ( 'yes' == $this->settings['enabled'] ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->using_supported_currency();
 
 		return $available;
+	}
+
+	/**
+	 * Admin scripts.
+	 *
+	 * @param  string $hook Page slug.
+	 *
+	 * @return void
+	 */
+	public function admin_scripts( $hook ) {
+		if ( in_array( $hook, array( 'woocommerce_page_wc-settings', 'woocommerce_page_woocommerce_settings' ) ) && ( isset( $_GET['section'] ) && 'wc_pagseguro_gateway' == strtolower( $_GET['section'] ) ) ) {
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			wp_enqueue_script( 'pagseguro-admin', plugins_url( 'assets/js/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_PagSeguro::VERSION, true );
+		}
 	}
 
 	/**
