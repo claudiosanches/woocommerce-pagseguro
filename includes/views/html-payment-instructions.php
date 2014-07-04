@@ -18,7 +18,7 @@ if ( ! isset( $data['type'] ) ) {
 <?php elseif ( 3 == $data['type'] ) : ?>
 
 	<div class="woocommerce-message">
-		<span><a class="button" href="<?php echo esc_url( $data['link'] ); ?>" target="_blank"><?php _e( 'Pay at your bank', 'woocommerce-pagseguro' ); ?></a><?php _e( 'Please use the following button to make the payment in your bankline.', 'woocommerce-pagseguro' ); ?><br /><?php _e( 'The bank sends us confirmation of your payment.', 'woocommerce-pagseguro' ); ?><br /><?php _e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
+		<span><a class="button" href="<?php echo esc_url( $data['link'] ); ?>" target="_blank"><?php _e( 'Pay at your bank', 'woocommerce-pagseguro' ); ?></a><?php _e( 'Please use the following button to make the payment in your bankline.', 'woocommerce-pagseguro' ); ?><br /><?php _e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
 	</div>
 
 <?php else : ?>
