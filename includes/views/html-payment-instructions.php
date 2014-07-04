@@ -2,6 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+if ( ! isset( $data['type'] ) ) {
+	return;
+}
+
 ?>
 
 <?php if ( 2 == $data['type'] ) : ?>

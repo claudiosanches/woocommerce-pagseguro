@@ -2,6 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+if ( ! isset( $data['type'] ) ) {
+	return;
+}
+
 ?>
 
 <h2><?php _e( 'Payment', 'woocommerce-pagseguro' ); ?></h2>
