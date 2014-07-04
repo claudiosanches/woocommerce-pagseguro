@@ -24,7 +24,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		$node = dom_import_simplexml( $this );
 		$no   = $node->ownerDocument;
 
-		$node->appendChild( $no->createCDATASection( $string ) );
+		$node->appendChild( $no->createCDATASection( trim( $string ) ) );
 	}
 
 	/**
