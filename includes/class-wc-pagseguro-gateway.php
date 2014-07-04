@@ -28,17 +28,18 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Define user set variables.
-		$this->title          = $this->get_option( 'title' );
-		$this->description    = $this->get_option( 'description' );
-		$this->email          = $this->get_option( 'email' );
-		$this->token          = $this->get_option( 'token' );
-		$this->method         = $this->get_option( 'method', 'direct' );
-		$this->tc_credit      = $this->get_option( 'tc_credit', 'yes' );
-		$this->tc_transfer    = $this->get_option( 'tc_transfer', 'yes' );
-		$this->tc_ticket      = $this->get_option( 'tc_ticket', 'yes' );
-		$this->invoice_prefix = $this->get_option( 'invoice_prefix', 'WC-' );
-		$this->sandbox        = $this->get_option( 'sandbox', 'no' );
-		$this->debug          = $this->get_option( 'debug' );
+		$this->title             = $this->get_option( 'title' );
+		$this->description       = $this->get_option( 'description' );
+		$this->email             = $this->get_option( 'email' );
+		$this->token             = $this->get_option( 'token' );
+		$this->method            = $this->get_option( 'method', 'direct' );
+		$this->tc_credit         = $this->get_option( 'tc_credit', 'yes' );
+		$this->tc_transfer       = $this->get_option( 'tc_transfer', 'yes' );
+		$this->tc_ticket         = $this->get_option( 'tc_ticket', 'yes' );
+		$this->tc_ticket_message = $this->get_option( 'tc_ticket_message', 'yes' );
+		$this->invoice_prefix    = $this->get_option( 'invoice_prefix', 'WC-' );
+		$this->sandbox           = $this->get_option( 'sandbox', 'no' );
+		$this->debug             = $this->get_option( 'debug' );
 
 		// Active logs.
 		if ( 'yes' == $this->debug ) {
@@ -191,6 +192,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' )
 				)
 			),
+			'transparent_checkout' => array(
+				'title'       => __( 'Transparent Checkout Options', 'woocommerce-pagseguro' ),
+				'type'        => 'title',
+				'description' => ''
+			),
 			'tc_credit' => array(
 				'title'   => __( 'Credit Card', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
@@ -207,6 +213,12 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'title'   => __( 'Banking Ticket', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Banking Ticket for Transparente Checkout', 'woocommerce-pagseguro' ),
+				'default' => 'yes'
+			),
+			'tc_ticket_message' => array(
+				'title'   => __( 'Banking Ticket Tax Message', 'woocommerce-pagseguro' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Display a message alerting the customer that will be charged R$ 1,00 for payment by Banking Ticket', 'woocommerce-pagseguro' ),
 				'default' => 'yes'
 			),
 			'invoice_prefix' => array(

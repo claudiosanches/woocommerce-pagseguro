@@ -2,3 +2,184 @@
 #pagseguro-payment-form {
 	display: none;
 }
+
+#pagseguro-payment-methods:before,
+#pagseguro-payment-methods:after,
+#pagseguro-bank-transfer-form ul:before,
+#pagseguro-bank-transfer-form ul:after {
+	content: " ";
+	display: table;
+}
+
+#pagseguro-payment-methods:after,
+#pagseguro-bank-transfer-form ul:after {
+	clear: both;
+}
+
+#pagseguro-payment-methods,
+#pagseguro-bank-transfer-form ul {
+	list-style: none;
+	margin: 0 0 10px;
+	padding: 0;
+	*zoom: 1;
+}
+
+#pagseguro-payment-methods input[type="radio"],
+#pagseguro-bank-transfer-form ul input[type="radio"] {
+	display: none;
+}
+
+/* Payment methods */
+.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods li {
+	border-color: transparent transparent #bbb;
+	border-style: solid;
+	border-width: 1px;
+	display: block;
+	float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
+
+.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods label,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods label {
+	cursor: pointer;
+	display: block;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px 10px;
+}
+
+/* Bank transfer items */
+.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li.active,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods li.active {
+	border-color: #bbb #bbb transparent;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form p,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-bank-transfer-form p {
+	margin-bottom: .5em;
+}
+
+.woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form li,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-bank-transfer-form li {
+	display: block;
+	float: left;
+	list-style: none;
+	width: 130px;
+	margin: 0;
+	padding: 0;
+}
+
+.woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form label,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-bank-transfer-form label {
+	cursor: pointer;
+	display: block;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px 10px;
+	text-align: center;
+}
+
+.woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form i,
+.woocommerce-page #payment ul.payment_methods li #pagseguro-bank-transfer-form i {
+	background-color: transparent;
+	background-image: url("../images/transparent-checkout-icons.png");
+	background-repeat: no-repeat;
+	display: block;
+	height: 51px;
+	margin: 0 auto;
+	width: 51px;
+}
+
+#pagseguro-icon-bradesco {
+	background-position: 0 -51px;
+}
+
+#pagseguro-icon-itau {
+	background-position: -204px -51px;
+}
+
+#pagseguro-icon-bancodobrasil {
+	background-position: -51px -51px;
+}
+
+#pagseguro-icon-banrisul {
+	background-position: -102px -51px;
+}
+
+#pagseguro-icon-hsbc {
+	background-position: -153px -51px;
+}
+
+#pagseguro-bank-transfer-form li.active #pagseguro-icon-bradesco,
+#pagseguro-icon-bradesco:hover {
+	background-position: 0 0;
+}
+
+#pagseguro-bank-transfer-form li.active #pagseguro-icon-itau,
+#pagseguro-icon-itau:hover {
+	background-position: -204px 0;
+}
+
+#pagseguro-bank-transfer-form li.active #pagseguro-icon-bancodobrasil,
+#pagseguro-icon-bancodobrasil:hover {
+	background-position: -51px 0;
+}
+
+#pagseguro-bank-transfer-form li.active #pagseguro-icon-banrisul,
+#pagseguro-icon-banrisul:hover {
+	background-position: -102px 0;
+}
+
+#pagseguro-bank-transfer-form li.active #pagseguro-icon-hsbc,
+#pagseguro-icon-hsbc:hover {
+	background-position: -153px 0;
+}
+
+/* Banking ticket */
+#pagseguro-icon-ticket {
+	background: transparent url("../images/transparent-checkout-icons.png") no-repeat top right;
+	display: block;
+	float: left;
+	height: 51px;
+	margin: 0 10px 5px 0;
+	width: 51px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 500px) {
+	.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li,
+	.woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods li {
+		border: none;
+		float: none;
+		margin: 0;
+		padding: 0;
+		-webkit-border-radius: 0;
+		border-radius: 0;
+	}
+
+	.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li.active,
+	.woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods li.active {
+		border: none;
+	}
+
+	#pagseguro-payment-methods input[type="radio"] {
+		display: inline;
+	}
+
+	.woocommerce #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-first,
+	.woocommerce-page #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-first,
+	.woocommerce #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-last,
+	.woocommerce-page #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-last {
+		float: none;
+		width: 96%;
+	}
+
+
+}

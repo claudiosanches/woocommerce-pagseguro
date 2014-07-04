@@ -75,7 +75,9 @@
 		function pagSeguroShowHideMethodForm( method ) {
 			// window.alert( method );
 			$( '.pagseguro-method-form' ).hide();
+			$( '#pagseguro-payment-methods li' ).removeClass( 'active' );
 			$( '#pagseguro-' + method + '-form' ).show();
+			$( '#pagseguro-payment-method-' + method ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
 		}
 
 		// Transparent checkout actions.
@@ -110,6 +112,14 @@
 						element.mask( '(99) 9999-9999?9', { placeholder: ' ' } );
 					}
 				}).trigger( 'focusout' );
+
+				$( '#pagseguro-bank-transfer-form input[type=radio]:checked' ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
+			});
+
+			// Update the bank transfer icons classes.
+			$( 'body' ).on( 'click', '#pagseguro-bank-transfer-form input[type=radio]', function () {
+				$( '#pagseguro-bank-transfer-form li' ).removeClass( 'active' );
+				$( this ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
 			});
 
 			// Switch the payment method form.

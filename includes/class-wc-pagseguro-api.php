@@ -226,6 +226,7 @@ class WC_PagSeguro_API {
 			case 11164 :
 				return __( 'Please enter with a valid CPF number.', 'woocommerce-pagseguro' );
 				break;
+			case 53110 :
 			case 53111 :
 				return __( 'Please select a bank to make payment by bank transfer.', 'woocommerce-pagseguro' );
 				break;
