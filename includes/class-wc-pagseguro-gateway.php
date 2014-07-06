@@ -88,6 +88,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				add_action( 'admin_notices', array( $this, 'token_missing_message' ) );
 			}
 
+			if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+				add_action( 'admin_notices', array( $this, 'requires_extra_checkout_fields_for_brazil' ) );
+			}
+
 			// Checks that the currency is supported
 			if ( ! $this->using_supported_currency() ) {
 				add_action( 'admin_notices', array( $this, 'currency_not_supported_message' ) );
@@ -114,6 +118,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function is_available() {
 		// Test if is valid for use.
 		$available = ( 'yes' == $this->settings['enabled'] ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->using_supported_currency();
+
+		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+			$available = false;
+		}
 
 		return $available;
 	}
@@ -145,7 +153,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PagSeguro::VERSION );
 			wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
-			wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-public' ), WC_PagSeguro::VERSION, true );
+			wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PagSeguro::VERSION, true );
 
 			wp_localize_script(
 				'pagseguro-checkout',
@@ -491,7 +499,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			if ( $order->id === $order_id ) {
 
 				if ( 'yes' == $this->debug ) {
-					$this->log->add( $this->id, 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . $posted->status );
+					$this->log->add( $this->id, 'PagSeguro payment status for order ' . $order->get_order_number() . ' is: ' . intval( $posted->status ) );
 				}
 
 				// Order details.
@@ -675,6 +683,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function token_missing_message() {
 		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your token. %s', 'woocommerce-pagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
+	}
+
+	/**
+	 * Adds error message when not installed the Extra Checkout Fields for Brazil plugin.
+	 *
+	 * @return string Error Mensage.
+	 */
+	public function requires_extra_checkout_fields_for_brazil() {
+		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'Checkout Transparent requires the latest version of the %s to works.', 'woocommerce-pagseguro' ), '<a href="http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/">' . __( 'Extra Checkout Fields for Brazil', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
 	}
 
 	/**
