@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro v2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2014-07-04 03:11:24+0000\n"
+"PO-Revision-Date: 2014-07-06 03:37:37+0000\n"
 "Last-Translator: Claudio Sanches <contato@claudiosmweb.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -567,7 +567,7 @@ msgstr "Pagamento"
 #: includes/views/plain-email-instructions.php:16
 #@ woocommerce-pagseguro
 msgid "Please use the link below to view your Banking Ticket, you can print and pay in your internet banking or in a lottery retailer:"
-msgstr "Por favor, utilize o link abaixo para ver o seu boleto bancário, você pode imprimi-lo e fazer o pagamento pelo seu site do seu banco ou por uma casa lotérica."
+msgstr "Por favor, utilize o link abaixo para ver o seu boleto bancário, você pode imprimi-lo e fazer o pagamento pelo site do seu banco ou por uma casa lotérica."
 
 #: includes/views/html-email-instructions.php:16
 #: includes/views/html-payment-instructions.php:15
@@ -624,7 +624,7 @@ msgstr "Por favor, click no botão a seguinte para visualizar o seu boleto banc�
 #: includes/views/html-payment-instructions.php:15
 #@ woocommerce-pagseguro
 msgid "You can print and pay in your internet banking or in a lottery retailer."
-msgstr "Você pode imprimi-lo e fazer o pagamento pelo seu site do seu banco ou por uma casa lotérica."
+msgstr "Você pode imprimi-lo e fazer o pagamento pelo site do seu banco ou por uma casa lotérica."
 
 #: includes/views/html-payment-instructions.php:21
 #@ woocommerce-pagseguro
