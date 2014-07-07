@@ -144,21 +144,23 @@
 				var bin = $( this ).val().replace( /[^\d]/g, '' ).substr( 0, 6 ),
 					instalmments = $( 'body #pagseguro-card-installments' );
 
-				// Reset the installments.
-				instalmments.empty();
-				instalmments.attr( 'disabled', 'disabled' );
+				if ( 6 === bin.length ) {
+					// Reset the installments.
+					instalmments.empty();
+					instalmments.attr( 'disabled', 'disabled' );
 
-				PagSeguroDirectPayment.getBrand({
-					cardBin: bin,
-					success: function ( data ) {
-						$( 'body' ).trigger( 'pagseguro_credit_card_brand', data.brand.name );
-						pagSeguroSetCreditCardBrand( data.brand.name );
-					},
-					error: function () {
-						$( 'body' ).trigger( 'pagseguro_credit_card_brand', 'error' );
-						pagSeguroSetCreditCardBrand( 'error' );
-					}
-				});
+					PagSeguroDirectPayment.getBrand({
+						cardBin: bin,
+						success: function ( data ) {
+							$( 'body' ).trigger( 'pagseguro_credit_card_brand', data.brand.name );
+							pagSeguroSetCreditCardBrand( data.brand.name );
+						},
+						error: function () {
+							$( 'body' ).trigger( 'pagseguro_credit_card_brand', 'error' );
+							pagSeguroSetCreditCardBrand( 'error' );
+						}
+					});
+				}
 			});
 
 			// Set the errors.
