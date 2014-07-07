@@ -148,26 +148,34 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function checkout_scripts() {
 		if ( is_checkout() ) {
-			$session_id = $this->api->get_session_id();
-			$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
+				$order_received_page = get_query_var( 'order-received' );
+			} else {
+				$order_received_page = ( isset( $_GET['order'] ) && isset( $_GET['key'] ) );
+			}
 
-			wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PagSeguro::VERSION );
-			wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
-			wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PagSeguro::VERSION, true );
+			if ( ! $order_received_page ) {
+				$session_id = $this->api->get_session_id();
+				$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_localize_script(
-				'pagseguro-checkout',
-				'wc_pagseguro_params',
-				array(
-					'session_id'         => $session_id,
-					'interest_free'      => __( 'interest free', 'woocommerce-pagseguro' ),
-					'invalid_card'       => __( 'Invalid credit card number.', 'woocommerce-pagseguro' ),
-					'invalid_expiry'     => __( 'Invalid expiry date, please use the MM / YYYY date format.', 'woocommerce-pagseguro' ),
-					'expired_date'       => __( 'Please check the expiry date and use a valid format as MM / YYYY.', 'woocommerce-pagseguro' ),
-					'general_error'      => __( 'Unable to process the data from your credit card on the PagSeguro, please try again or contact us for assistance.', 'woocommerce-pagseguro' ),
-					'empty_installments' => __( 'Select a number of installments.', 'woocommerce-pagseguro' ),
-				)
-			);
+				wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PagSeguro::VERSION );
+				wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
+				wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PagSeguro::VERSION, true );
+
+				wp_localize_script(
+					'pagseguro-checkout',
+					'wc_pagseguro_params',
+					array(
+						'session_id'         => $session_id,
+						'interest_free'      => __( 'interest free', 'woocommerce-pagseguro' ),
+						'invalid_card'       => __( 'Invalid credit card number.', 'woocommerce-pagseguro' ),
+						'invalid_expiry'     => __( 'Invalid expiry date, please use the MM / YYYY date format.', 'woocommerce-pagseguro' ),
+						'expired_date'       => __( 'Please check the expiry date and use a valid format as MM / YYYY.', 'woocommerce-pagseguro' ),
+						'general_error'      => __( 'Unable to process the data from your credit card on the PagSeguro, please try again or contact us for assistance.', 'woocommerce-pagseguro' ),
+						'empty_installments' => __( 'Select a number of installments.', 'woocommerce-pagseguro' ),
+					)
+				);
+			}
 		}
 	}
 
@@ -335,9 +343,20 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		wp_enqueue_script( 'wc-credit-card-form' );
 
+		$cart_total = 0;
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			$cart_total = (float) WC()->cart->total;
+			$order_id = absint( get_query_var( 'order-pay' ) );
 		} else {
+			$order_id = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
+		}
+
+		// Gets order total from "pay for order" page.
+		if ( 0 < $order_id ) {
+			$order      = new WC_Order( $order_id );
+			$cart_total = (float) $order->get_total();
+
+		// Gets order total from cart/checkout.
+		} elseif ( 0 < $woocommerce->cart->total ) {
 			$cart_total = (float) $woocommerce->cart->total;
 		}
 

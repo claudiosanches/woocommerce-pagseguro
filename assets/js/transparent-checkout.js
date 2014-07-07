@@ -1,4 +1,4 @@
-/*global wc_pagseguro_params, PagSeguroDirectPayment */
+/*global wc_pagseguro_params, PagSeguroDirectPayment, wc_checkout_params */
 (function ( $ ) {
 	'use strict';
 
@@ -79,41 +79,54 @@
 			$( '#pagseguro-payment-method-' + method ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
 		}
 
+		/**
+		 * Initialize the payment form.
+		 *
+		 * @return {void}
+		 */
+		function pagSeguroInitPaymentForm() {
+			pagSeguroHidePaymentMethods();
+
+			$( '#pagseguro-payment-form' ).show();
+
+			pagSeguroShowHideMethodForm( $( '#pagseguro-payment-methods input[type=radio]:checked' ).val() );
+
+			// CPF.
+			$( '#pagseguro-card-holder-cpf' ).mask( '999.999.999-99', { placeholder: ' ' } );
+
+			// Birth Date.
+			$( '#pagseguro-card-holder-birth-date' ).mask( '99 / 99 / 9999', { placeholder: ' ' } );
+
+			// Phone.
+			$( '#pagseguro-card-holder-phone' ).focusout( function () {
+				var phone, element;
+				element = $( this );
+				element.unmask();
+				phone = element.val().replace( /\D/g, '' );
+
+				if ( phone.length > 10 ) {
+					element.mask( '(99) 99999-999?9', { placeholder: ' ' } );
+				} else {
+					element.mask( '(99) 9999-9999?9', { placeholder: ' ' } );
+				}
+			}).trigger( 'focusout' );
+
+			$( '#pagseguro-bank-transfer-form input[type=radio]:checked' ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
+		}
+
 		// Transparent checkout actions.
 		if ( wc_pagseguro_params.session_id ) {
 			// Initialize the transparent checkout.
 			PagSeguroDirectPayment.setSessionId( wc_pagseguro_params.session_id );
 
 			// Display the payment for and init the input masks.
-			$( 'body' ).on( 'updated_checkout', function () {
-				pagSeguroHidePaymentMethods();
-
-				$( '#pagseguro-payment-form' ).show();
-
-				pagSeguroShowHideMethodForm( $( '#pagseguro-payment-methods input[type=radio]:checked' ).val() );
-
-				// CPF.
-				$( '#pagseguro-card-holder-cpf' ).mask( '999.999.999-99', { placeholder: ' ' } );
-
-				// Birth Date.
-				$( '#pagseguro-card-holder-birth-date' ).mask( '99 / 99 / 9999', { placeholder: ' ' } );
-
-				// Phone.
-				$( '#pagseguro-card-holder-phone' ).focusout( function () {
-					var phone, element;
-					element = $( this );
-					element.unmask();
-					phone = element.val().replace( /\D/g, '' );
-
-					if ( phone.length > 10 ) {
-						element.mask( '(99) 99999-999?9', { placeholder: ' ' } );
-					} else {
-						element.mask( '(99) 9999-9999?9', { placeholder: ' ' } );
-					}
-				}).trigger( 'focusout' );
-
-				$( '#pagseguro-bank-transfer-form input[type=radio]:checked' ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
-			});
+			if ( '1' === wc_checkout_params.is_checkout ) {
+				$( 'body' ).on( 'updated_checkout', function () {
+					pagSeguroInitPaymentForm();
+				});
+			} else {
+				pagSeguroInitPaymentForm();
+			}
 
 			// Update the bank transfer icons classes.
 			$( 'body' ).on( 'click', '#pagseguro-bank-transfer-form input[type=radio]', function () {
