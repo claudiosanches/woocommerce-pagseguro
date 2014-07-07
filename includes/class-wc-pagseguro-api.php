@@ -247,6 +247,9 @@ class WC_PagSeguro_API {
 			case 53028 :
 				return __( 'The address complement is too long, it cannot be more than 40 characters.', 'woocommerce-pagseguro' );
 				break;
+			case 53122 :
+				return __( 'Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox.', 'woocommerce-pagseguro' );
+				break;
 
 			default:
 				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'woocommerce-pagseguro' );

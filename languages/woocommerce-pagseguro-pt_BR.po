@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro v2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-25 14:13-0300\n"
-"PO-Revision-Date: 2014-07-06 04:03:37+0000\n"
+"PO-Revision-Date: 2014-07-07 03:42:18+0000\n"
 "Last-Translator: Claudio Sanches <contato@claudiosmweb.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: includes/class-wc-pagseguro-api.php:553
-#: includes/class-wc-pagseguro-api.php:572
-#: includes/class-wc-pagseguro-api.php:594
-#: includes/class-wc-pagseguro-api.php:643
-#: includes/class-wc-pagseguro-api.php:662
+#: includes/class-wc-pagseguro-api.php:556
+#: includes/class-wc-pagseguro-api.php:575
+#: includes/class-wc-pagseguro-api.php:597
+#: includes/class-wc-pagseguro-api.php:646
+#: includes/class-wc-pagseguro-api.php:665
 #: includes/class-wc-pagseguro-gateway.php:20
 #: includes/class-wc-pagseguro-gateway.php:192
 #@ woocommerce-pagseguro
@@ -77,7 +77,7 @@ msgstr "Prefixo de pedido"
 msgid "Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number."
 msgstr "Por favor informe um prefixo para utilizar com os números de pedidos. Caso você utilize sua conta do PagSeguro em mais de uma loja, procure utilizar um prefixo único para cada loja."
 
-#: includes/class-wc-pagseguro-api.php:362
+#: includes/class-wc-pagseguro-api.php:365
 #, php-format
 #@ woocommerce-pagseguro
 msgid "Order %s"
@@ -232,8 +232,8 @@ msgstr "WooCommerce PagSeguro Gateway depende da última versão do %s para func
 msgid "Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s."
 msgstr "Por favor digite seu token do PagSeguro. É necessário para processar o pagamento e as notificações de status da compra. É possível gerar um novo token %s."
 
-#: includes/class-wc-pagseguro-api.php:572
-#: includes/class-wc-pagseguro-api.php:662
+#: includes/class-wc-pagseguro-api.php:575
+#: includes/class-wc-pagseguro-api.php:665
 #@ woocommerce-pagseguro
 msgid "An error has occurred while processing your payment, please try again. Or contact us for assistance."
 msgstr "Um erro ocorreu ao processar o seu pagamento, por favor, tente novamente ou entre em contato para obter ajuda."
@@ -338,7 +338,7 @@ msgstr "O pedido %s mudou de status para aguardando, por causa que o pagamento e
 msgid "Order %s has been marked as refunded by PagSeguro."
 msgstr "O pedido %s mudou de status para reembolsado pelo PagSeguro."
 
-#: includes/class-wc-pagseguro-api.php:252
+#: includes/class-wc-pagseguro-api.php:255
 #@ woocommerce-pagseguro
 msgid "An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance."
 msgstr "Um erro ocorreu ao processar o seu pagamento, por favor, revise os seus dados e tente novamente. Ou entre em contato conosco para obter assistência."
@@ -482,7 +482,7 @@ msgstr "É obrigatório informar o número de telefone do portador do cartão de
 msgid "The address complement is too long, it cannot be more than 40 characters."
 msgstr "O complemento do endereço é muito grande, não pode ter mais do que 40 caráteres."
 
-#: includes/class-wc-pagseguro-api.php:594
+#: includes/class-wc-pagseguro-api.php:597
 #@ woocommerce-pagseguro
 msgid "Please, select a payment method."
 msgstr "Por favor, selecione um método de pagamento."
@@ -768,4 +768,9 @@ msgstr "Para utilizar o Checkout Transparente é necessário instalar a última 
 #@ woocommerce-pagseguro
 msgid "Extra Checkout Fields for Brazil"
 msgstr "Extra Checkout Fields for Brazil"
+
+#: includes/class-wc-pagseguro-api.php:251
+#@ woocommerce-pagseguro
+msgid "Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox."
+msgstr "Domínio do e-mail é inválido. Você deve utilizar um e-mail @sandbox.pagseguro.com.br enquanto você esta usando o Sandbox do PagSeguro."
 
