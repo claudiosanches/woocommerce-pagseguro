@@ -112,22 +112,40 @@ module.exports = function( grunt ) {
 
 		// Rsync commands used to take the files to svn repository
 		rsync: {
+			options: {
+				args: ['--verbose'],
+				exclude: '<%= svn_settings.exclude %>',
+				syncDest: true,
+				recursive: true
+			},
 			tag: {
-				src: './',
-				dest: '<%= svn_settings.tag %>',
-				recursive: true,
-				exclude: '<%= svn_settings.exclude %>'
+				options: {
+					src: './',
+					dest: '<%= svn_settings.tag %>'
+				}
 			},
 			trunk: {
+				options: {
 				src: './',
-				dest: '<%= svn_settings.trunk %>',
-				recursive: true,
-				exclude: '<%= svn_settings.exclude %>'
+				dest: '<%= svn_settings.trunk %>'
+				}
 			}
 		},
 
 		// Shell command to commit the new version of the plugin
 		shell: {
+			// Remove delete files.
+			svn_remove: {
+				command: 'svn st | grep \'^!\' | awk \'{print $2}\' | xargs svn --force delete',
+				options: {
+					stdout: true,
+					stderr: true,
+					execOptions: {
+						cwd: '<%= svn_settings.path %>'
+					}
+				}
+			},
+			// Add new files.
 			svn_add: {
 				command: 'svn add --force * --auto-props --parents --depth infinity -q',
 				options: {
@@ -138,6 +156,7 @@ module.exports = function( grunt ) {
 					}
 				}
 			},
+			// Commit the changes.
 			svn_commit: {
 				command: 'svn commit -m "updated the plugin version to <%= pkg.version %>"',
 				options: {
