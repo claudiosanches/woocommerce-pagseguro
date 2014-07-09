@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,6 +127,8 @@ Para utilizar o checkout transparente é necessário utilizar o plugin [WooComme
 Com o **WooCommerce Extra Checkout Fields for Brazil** instalado e ativado você deve ir até "WooCommerce > Campos do Checkout" e configurar a opção "Exibir Tipo de Pessoa" como "Pessoa Fisíca apenas".
 
 Isto é necessário porque é obrigatório o envio de CPF para o PagSeguro, além de que o PagSeguro aceita apenas CPF.
+
+Note que é necessário aprovação do PagSeguro para utilizar o Checkout Transparente, saiba mais em "[Como receber pagamentos pelo PagSeguro](https://pagseguro.uol.com.br/receba-pagamentos.jhtml)".
 
 = Configurações no WooCommerce =
 
@@ -264,6 +266,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 6. Pagamento com boleto bancário usando o Checkout Transparente.
 
 == Changelog ==
+
+= 2.5.1 - 09/07/2014 =
+
+* Adicionada feature que permite usar o Checkout Transparente sem precisar digitar uma descrição para o método de pagamento.
+* Correção do checkout com Lightbox.
 
 = 2.5.0 - 08/07/2014 =
 
@@ -410,11 +417,13 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.5.0 =
+= 2.5.1 =
 
 * Implementando o Checkout Transparente do PagSeguro.
 * Melhorada todo o código de integração para tornar possível trabalhar bem o checkout padrão, Lightbox e Checkout Transparente.
 * Melhoria nas mensagens de erro.
+* Adicionada feature que permite usar o Checkout Transparente sem precisar digitar uma descrição para o método de pagamento.
+* Correção do checkout com Lightbox.
 
 == License ==
 

@@ -1,7 +1,7 @@
 {
   "name": "woocommerce-pagseguro",
   "description": "Gateway de pagamento PagSeguro para WooCommerce",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "main": "Gruntfile.js",
   "devDependencies": {
     "grunt": "^0.4.5",
