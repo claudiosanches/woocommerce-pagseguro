@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 3.5  
 **Tested up to:** 3.9.1  
-**Stable tag:** 2.4.1  
+**Stable tag:** 2.5.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -36,13 +36,15 @@ Estão disponíveis as seguintes modalidades de pagamento:
 
 * Padrão - Cliente é redirecionado ao PagSeguro para concluir a compra.
 * Lightbox - Uma janela do PagSeguro é aberta na finalização para o cliente fazer o pagamento.
-* Transparente - Em breve!
+* Transparente - O cliente faz o pagamento direto no seu site sem precisar ir ao site do PagSeguro.
 
 Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html).
 
 ### Compatibilidade ###
 
 Compatível com as versões 2.0.x e 2.1.x do WooCommerce.
+
+Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
 ### Instalação ###
 
@@ -59,6 +61,10 @@ Você pode esclarecer suas dúvidas usando:
 ### Coloborar ###
 
 Você pode contribuir com código-fonte em nossa página no [GitHub](https://github.com/claudiosmweb/woocommerce-pagseguro).
+
+### Agradecimentos ###
+
+* [Leandro Matos]() ajudou com o layout e os ícones do Checkout Transparente.
 
 ## Installation ##
 
@@ -107,6 +113,20 @@ Com o plugin instalado acesse o admin do WordPress e entre em "WooCommerce" > "C
 Habilite o PagSeguro, adicione o seu e-mail e o token do PagSeguro. O token é utilizado para gerar os pagamentos e fazer o retorno de dados.
 
 Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segurança](https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml)".
+
+É possível escolher entre três opções de pagamento que são:
+
+* Checkout no PagSeguro (padrão) - O cliente e redirecionado para o site do PagSeguro
+* Checkout em Lighbox - O cliente permance no seu site é aberto um Lightbox do PagSeguro onde o cliente fará o pagamento
+* Checkout Transparente - O cliente faz o pagamento direto em seu site na página de finalizar pedido utilizando a API do PagSeguro.
+
+### Checkout Transparente ###
+
+Para utilizar o checkout transparente é necessário utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/).
+
+Com o **WooCommerce Extra Checkout Fields for Brazil** instalado e ativado você deve ir até "WooCommerce > Campos do Checkout" e configurar a opção "Exibir Tipo de Pessoa" como "Pessoa Fisíca apenas".
+
+Isto é necessário porque é obrigatório o envio de CPF para o PagSeguro, além de que o PagSeguro aceita apenas CPF.
 
 ### Configurações no WooCommerce ###
 
@@ -182,7 +202,7 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 
 Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
-### Ao pagar o pedido fica com o status "processando", isto esta certo ? ###
+### O pedido foi pago e ficou com o status de "processando" e não como "concluído", isto esta certo ? ###
 
 Sim, esta certo e significa que o plugin esta trabalhando como deveria.
 
@@ -201,6 +221,8 @@ Note que caso você esteja utilizando a opção de **sandbox** é necessário us
 
 Se você tem certeza que o Token e Login estão corretos você deve acessar a página "WooCommerce > Status do Sistema" e verificar se **fsockopen** e **cURL** estão ativos. É necessário procurar ajuda do seu provedor de hospedagem caso você tenha o **fsockopen** e/ou o **cURL** desativados.
 
+Para quem estiver utilizando o **Checkout Transparente** é obrigatório o uso do plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/) para enviar o CPF ao PagSeguro, caso o contrário será impossível de finalizar o pedido, veja no [guia de instalação](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/) como fazer isso.
+
 Por último é possível ativar a opção de **Log de depuração** nas configurações do plugin e tentar novamente fechar um pedido (você deve tentar fechar um pedido para que o log será gerado e o erro gravado nele).  
 Com o log é possível saber exatamente o que esta dando de errado com a sua instalação.
 
@@ -217,7 +239,8 @@ Sim, basta ativar esta nas opções do plugin.
 
 ### Funciona com o checkout transparente do PagSeguro? ###
 
-No momento não, estaremos implementando isso em futuras versões do plugin, aguarde!
+Sim, funciona. Você deve ativar nas opções do plugin.  
+Note que é necessário aprovação do PagSeguro para utilizar o Checkout Transparente, saiba mais em "[Como receber pagamentos pelo PagSeguro](https://pagseguro.uol.com.br/receba-pagamentos.jhtml)".
 
 ### Funciona com o Sandbox do PagSeguro? ###
 
@@ -233,17 +256,32 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 ## Screenshots ##
 
-### 1. Plugin settings page. ###
-![1. Plugin settings page.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-1.png)
+### 1. Configurações do plugin. ###
+![1. Configurações do plugin.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-1.png)
 
-### 2. WooCommerce payment methods in checkout page. ###
-![2. WooCommerce payment methods in checkout page.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-2.png)
+### 2. Método de pagamento na página de finalizar o pedido. ###
+![2. Método de pagamento na página de finalizar o pedido.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-2.png)
 
-### 2. Lightbox in sandbox environment example. ###
-![2. Lightbox in sandbox environment example.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-3.png)
+### 3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro. ###
+![3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-3.png)
+
+### 4. Pagamento com cartão de crédito usando o Checkout Transparente. ###
+![4. Pagamento com cartão de crédito usando o Checkout Transparente.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-4.png)
+
+### 5. Pagamento com debito online usando o Checkout Transparente. ###
+![5. Pagamento com debito online usando o Checkout Transparente.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-5.png)
+
+### 6. Pagamento com boleto bancário usando o Checkout Transparente. ###
+![6. Pagamento com boleto bancário usando o Checkout Transparente.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-6.png)
 
 
 ## Changelog ##
+
+### 2.5.0 - 08/07/2014 ###
+
+* Implementando o Checkout Transparente do PagSeguro.
+* Melhorada todo o código de integração para tornar possível trabalhar bem o checkout padrão, Lightbox e Checkout Transparente.
+* Melhoria nas mensagens de erro.
 
 ### 2.4.1 - 12/06/2014 ###
 
@@ -384,11 +422,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 ## Upgrade Notice ##
 
-### 2.4.1 ###
+### 2.5.0 ###
 
-* Corrigida a URL de notifição para versões 2.0.x do WooCommerce.
-* Correções nas mensagens do log para a criação de tokens de pagamento.
-* Adicionada opção de ambiente sandbox.
+* Implementando o Checkout Transparente do PagSeguro.
+* Melhorada todo o código de integração para tornar possível trabalhar bem o checkout padrão, Lightbox e Checkout Transparente.
+* Melhoria nas mensagens de erro.
 
 ## License ##
 
