@@ -446,7 +446,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		global $woocommerce;
 
 		$order    = new WC_Order( $order_id );
-		$response = $this->api->do_payment_request( $order );
+		$response = $this->api->do_checkout_request( $order, $_POST );
 
 		if ( $response['url'] ) {
 			// Lightbox script.
