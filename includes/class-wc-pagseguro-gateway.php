@@ -16,7 +16,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		$this->id                 = 'pagseguro';
 		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'assets/images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
-		$this->has_fields         = false;
 		$this->method_title       = __( 'PagSeguro', 'woocommerce-pagseguro' );
 		$this->method_description = __( 'Accept payments by credit card, bank debit or banking ticket using the PagSeguro.', 'woocommerce-pagseguro' );
 		$this->order_button_text  = __( 'Proceed to payment', 'woocommerce-pagseguro' );
@@ -124,6 +123,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 
 		return $available;
+	}
+
+	/**
+	 * Has fields.
+	 *
+	 * @return bool
+	 */
+	public function has_fields() {
+		return ( 'transparent' == $this->method ) ? true : false;
 	}
 
 	/**
