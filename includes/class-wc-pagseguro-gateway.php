@@ -276,7 +276,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			'send_only_total' => array(
 				'title'   => __( 'Send only the order total', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'If checked will only send the order total and not the items list.', 'woocommerce-pagseguro' ),
+				'label'   => __( 'If this option is enabled will only send the order total, not the list of items.', 'woocommerce-pagseguro' ),
 				'default' => 'no'
 			),
 			'invoice_prefix' => array(
