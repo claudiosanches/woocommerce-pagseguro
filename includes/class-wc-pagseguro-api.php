@@ -402,6 +402,18 @@ class WC_PagSeguro_API {
 			$extra_amount = $this->money_format( $order->get_total_tax() );
 		}
 
+		$fees = $order->get_fees();
+
+		if( !empty( $fees ) ) {
+			foreach( $fees as $fee ) {
+				$items[] = array(
+					'description'	=> $fee['name'],
+					'amount'		=> $this->money_format( $fee['line_total'] ),
+					'quantity'		=> '1'
+				);
+			}
+		}
+
 		return array(
 			'items'         => $items,
 			'extra_amount'  => $extra_amount,
