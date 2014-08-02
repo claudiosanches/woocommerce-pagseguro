@@ -19,8 +19,9 @@ module.exports = function( grunt ) {
 			tag: '<%= svn_settings.path %>/tags/<%= pkg.version %>',
 			trunk: '<%= svn_settings.path %>/trunk',
 			exclude: [
-				'.editorconfig',
 				'.git/',
+				'.tx/',
+				'.editorconfig',
 				'.gitignore',
 				'.jshintrc',
 				'node_modules/',
