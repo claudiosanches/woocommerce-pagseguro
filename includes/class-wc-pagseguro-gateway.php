@@ -36,6 +36,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->tc_transfer       = $this->get_option( 'tc_transfer', 'yes' );
 		$this->tc_ticket         = $this->get_option( 'tc_ticket', 'yes' );
 		$this->tc_ticket_message = $this->get_option( 'tc_ticket_message', 'yes' );
+		$this->send_only_total   = $this->get_option( 'send_only_total', 'no' );
 		$this->invoice_prefix    = $this->get_option( 'invoice_prefix', 'WC-' );
 		$this->sandbox           = $this->get_option( 'sandbox', 'no' );
 		$this->debug             = $this->get_option( 'debug' );
@@ -266,6 +267,17 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'type'    => 'checkbox',
 				'label'   => __( 'Display a message alerting the customer that will be charged R$ 1,00 for payment by Banking Ticket', 'woocommerce-pagseguro' ),
 				'default' => 'yes'
+			),
+			'behavior' => array(
+				'title'       => __( 'Integration Behavior', 'woocommerce-pagseguro' ),
+				'type'        => 'title',
+				'description' => ''
+			),
+			'send_only_total' => array(
+				'title'   => __( 'Send only the order total', 'woocommerce-pagseguro' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'If checked will only send the order total and not the items list.', 'woocommerce-pagseguro' ),
+				'default' => 'no'
 			),
 			'invoice_prefix' => array(
 				'title'       => __( 'Invoice Prefix', 'woocommerce-pagseguro' ),

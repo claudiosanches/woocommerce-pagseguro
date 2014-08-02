@@ -108,9 +108,9 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 *
 	 * @param WC_Order  $order         Order data.
 	 * @param bool      $ship_to       Ship to (true = shipping address, false = billing address).
-	 * @param string    $shipping_cost Shipping cost.
+	 * @param float     $shipping_cost Shipping cost.
 	 */
-	public function add_shipping_data( $order, $ship_to = false, $shipping_cost = '' ) {
+	public function add_shipping_data( $order, $ship_to = false, $shipping_cost = 0 ) {
 		$type = ( $ship_to ) ? 'shipping' : 'billing';
 
 		$shipping = $this->addChild( 'shipping' );
@@ -138,9 +138,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$address->addChild( 'country', 'BRA' );
 		}
 
-		if ( '' != $shipping_cost ) {
-			$shipping->addChild( 'cost', $shipping_cost );
-		}
+		$shipping->addChild( 'cost', $shipping_cost );
 	}
 
 	/**
@@ -164,10 +162,10 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add extra amount.
 	 *
-	 * @param string $extra_amount Extra amount.
+	 * @param float $extra_amount Extra amount.
 	 */
-	public function add_extra_amount( $extra_amount ) {
-		if ( '' != $extra_amount ) {
+	public function add_extra_amount( $extra_amount = 0 ) {
+		if ( 0 != $extra_amount ) {
 			$this->addChild( 'extraAmount', $extra_amount );
 		}
 	}

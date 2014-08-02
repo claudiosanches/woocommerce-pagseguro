@@ -106,6 +106,17 @@ class WC_PagSeguro_API {
 	}
 
 	/**
+	 * Sanitize the item description.
+	 *
+	 * @param  string $description
+	 *
+	 * @return string
+	 */
+	protected function sanitize_description( $description ) {
+		return sanitize_text_field( substr( $description, 0, 95 ) );
+	}
+
+	/**
 	 * Get payment name by type.
 	 *
 	 * @param  int    $value Payment Type number.
@@ -332,49 +343,20 @@ class WC_PagSeguro_API {
 	 */
 	protected function get_order_items( $order ) {
 		$items         = array();
-		$extra_amount  = '';
-		$shipping_cost = '';
+		$extra_amount  = 0;
+		$shipping_cost = 0;
 
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			$shipping_total = $this->money_format( $order->get_total_shipping() );
-		} else {
-			$shipping_total = $this->money_format( $order->get_shipping() );
-		}
-
-		// If prices include tax or have order discounts, send the whole order as a single item.
-		if ( 'yes' == get_option( 'woocommerce_prices_include_tax' ) || $order->get_order_discount() > 0 ) {
-
-			// Discount.
-			if ( $order->get_order_discount() > 0 ) {
-				$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
-			}
-
-			// Don't pass items - PagSeguro borks tax due to prices including tax.
-			// PagSeguro has no option for tax inclusive pricing sadly. Pass 1 item for the order items overall.
-			$item_names = array();
-
-			if ( sizeof( $order->get_items() ) > 0 ) {
-				foreach ( $order->get_items() as $order_item ) {
-					if ( $order_item['qty'] ) {
-						$item_names[] = $order_item['name'] . ' x ' . $order_item['qty'];
-					}
-				}
-			}
-
+		// Force only one item.
+		if ( 'yes' == $this->gateway->send_only_total ) {
 			$items[] = array(
-				'description' => substr( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) . ' - ' . implode( ', ', $item_names ), 0, 95 ),
-				'amount'      => $this->money_format( $order->get_total() - $shipping_total - $order->get_shipping_tax() + $order->get_order_discount() ),
+				'description' => $this->sanitize_description( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) ),
+				'amount'      => $this->money_format( $order->get_total() ),
 				'quantity'    => 1
 			);
-
-			if ( ( $shipping_total + $order->get_shipping_tax() ) > 0 ) {
-				$shipping_cost = $this->money_format( $shipping_total + $order->get_shipping_tax() );
-			}
-
 		} else {
 
-			// Cart Contents.
-			if ( sizeof( $order->get_items() ) > 0 ) {
+			// Products.
+			if ( 0 < sizeof( $order->get_items() ) ) {
 				foreach ( $order->get_items() as $order_item ) {
 					if ( $order_item['qty'] ) {
 						$item_name = $order_item['name'];
@@ -385,32 +367,50 @@ class WC_PagSeguro_API {
 						}
 
 						$items[] = array(
-							'description' => substr( sanitize_text_field( $item_name ), 0, 95 ),
-							'amount'      => $this->money_format( $order->get_item_total( $order_item, false ) ),
+							'description' => $this->sanitize_description( $item_name ),
+							'amount'      => $this->money_format( $order->get_line_total( $order_item, false ) ),
 							'quantity'    => $order_item['qty']
 						);
 					}
 				}
 			}
 
-			// Shipping Cost item.
+			// Fees.
+			if ( 0 < sizeof( $order->get_fees() ) ) {
+				foreach ( $order->get_fees() as $fee ) {
+					$items[] = array(
+						'description' => $this->sanitize_description( $fee['name'] ),
+						'amount'      => $this->money_format( $fee['line_total'] ),
+						'quantity'    => 1
+					);
+				}
+			}
+
+			// Taxes.
+			if ( 0 < sizeof( $order->get_taxes() ) ) {
+				foreach ( $order->get_taxes() as $tax ) {
+					$items[] = array(
+						'description' => $this->sanitize_description( $tax['label'] ),
+						'amount'      => $this->money_format( $tax['tax_amount'] + $tax['shipping_tax_amount'] ),
+						'quantity'    => 1
+					);
+				}
+			}
+
+			// Shipping Cost.
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
+				$shipping_total = $this->money_format( $order->get_total_shipping() );
+			} else {
+				$shipping_total = $this->money_format( $order->get_shipping() );
+			}
+
 			if ( $shipping_total > 0 ) {
 				$shipping_cost = $this->money_format( $shipping_total );
 			}
 
-			// Extras Amount.
-			$extra_amount = $this->money_format( $order->get_total_tax() );
-		}
-
-		$fees = $order->get_fees();
-
-		if( !empty( $fees ) ) {
-			foreach( $fees as $fee ) {
-				$items[] = array(
-					'description'	=> $fee['name'],
-					'amount'		=> $this->money_format( $fee['line_total'] ),
-					'quantity'		=> '1'
-				);
+			// Discount.
+			if ( 0 < $order->get_order_discount() ) {
+				$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
 			}
 		}
 
