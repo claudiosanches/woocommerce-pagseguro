@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: 2.5.1
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,9 +34,9 @@ Este plugin foi desenvolvido a partir da [documentação oficial do PagSeguro](h
 
 Estão disponíveis as seguintes modalidades de pagamento:
 
-* Padrão - Cliente é redirecionado ao PagSeguro para concluir a compra.
-* Lightbox - Uma janela do PagSeguro é aberta na finalização para o cliente fazer o pagamento.
-* Transparente - O cliente faz o pagamento direto no seu site sem precisar ir ao site do PagSeguro.
+- **Padrão:** Cliente é redirecionado ao PagSeguro para concluir a compra.
+- **Lightbox:** Uma janela do PagSeguro é aberta na finalização para o cliente fazer o pagamento.
+- **Transparente:** O cliente faz o pagamento direto no seu site sem precisar ir ao site do PagSeguro.
 
 Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html).
 
@@ -64,7 +64,7 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 = Agradecimentos =
 
-* [Leandro Matos]() ajudou com o layout e os ícones do Checkout Transparente.
+* [Leandro Matos](http://is-uz.com/) ajudou com o layout e os ícones do Checkout Transparente.
 
 == Installation ==
 
@@ -116,9 +116,14 @@ Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segur
 
 É possível escolher entre três opções de pagamento que são:
 
-* Checkout no PagSeguro (padrão) - O cliente e redirecionado para o site do PagSeguro
-* Checkout em Lighbox - O cliente permance no seu site é aberto um Lightbox do PagSeguro onde o cliente fará o pagamento
-* Checkout Transparente - O cliente faz o pagamento direto em seu site na página de finalizar pedido utilizando a API do PagSeguro.
+- **Checkout no PagSeguro (padrão):** O cliente e redirecionado para o site do PagSeguro
+- **Checkout em Lighbox:** O cliente permance no seu site é aberto um Lightbox do PagSeguro onde o cliente fará o pagamento
+- **Checkout Transparente:** O cliente faz o pagamento direto em seu site na página de finalizar pedido utilizando a API do PagSeguro.
+
+Você ainda pode definir o comportamento da integração utilizando as opções:
+
+- **Enviar apenas o total do pedido:** Permite enviar apenas o total do pedido no lugar da lista de itens, esta opção deve ser utilizada apenas quando o total do pedido no WooCommerce esta ficando diferente do total no PagSeguro.
+- **Prefixo de pedido:** Esta opção é útil quando você esta utilizando a mesma conta do PagSeguro em várias lojas e com isso você pode diferenciar os pagamentos pelo prefixo.
 
 = Checkout Transparente =
 
@@ -250,6 +255,10 @@ Sim, funciona e basta você ativar isso nas opções do plugin, além de configu
 
 Para conseguir o token de desenvolver você deve acessar "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html)".
 
+= O total do pedido no WooCommerce é diferente do enviado para o PagSeguro, como eu resolvo isso? =
+
+Caso você tenha este problema, basta marcar ativar a opção **Enviar apenas o total do pedido** na página de configurações do plugin.
+
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
 Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
@@ -266,6 +275,12 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 6. Pagamento com boleto bancário usando o Checkout Transparente.
 
 == Changelog ==
+
+= 2.6.0 - 02/08/2014 =
+
+* Melhoria na lista de itens do pedido que é enviado para o PagSeguro, agora é possível ver o total de taxas enviadas.
+* Adicionada a opção "Enviar apenas o total do pedido" que envia apenas o total para o PagSeguro no lugar da lista de itens do pedido.
+* Corrigida a exibição da opção "Prefixo de pedido" na página de opções do plugin.
 
 = 2.5.1 - 09/07/2014 =
 
@@ -417,13 +432,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.5.1 =
+= 2.6.0 =
 
-* Implementando o Checkout Transparente do PagSeguro.
-* Melhorada todo o código de integração para tornar possível trabalhar bem o checkout padrão, Lightbox e Checkout Transparente.
-* Melhoria nas mensagens de erro.
-* Adicionada feature que permite usar o Checkout Transparente sem precisar digitar uma descrição para o método de pagamento.
-* Correção do checkout com Lightbox.
+* Melhoria na lista de itens do pedido que é enviado para o PagSeguro, agora é possível ver o total de taxas enviadas.
+* Adicionada a opção "Enviar apenas o total do pedido" que envia apenas o total para o PagSeguro no lugar da lista de itens do pedido.
 
 == License ==
 
