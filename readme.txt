@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -276,6 +276,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Changelog ==
 
+= 2.6.1 - 04/08/2014 =
+
+* Corrigido o valor individual de cada produto.
+
 = 2.6.0 - 02/08/2014 =
 
 * Melhoria na lista de itens do pedido que é enviado para o PagSeguro, agora é possível ver o total de taxas enviadas.
@@ -432,10 +436,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.6.0 =
+= 2.6.1 =
 
 * Melhoria na lista de itens do pedido que é enviado para o PagSeguro, agora é possível ver o total de taxas enviadas.
 * Adicionada a opção "Enviar apenas o total do pedido" que envia apenas o total para o PagSeguro no lugar da lista de itens do pedido.
+* Corrigido o valor individual de cada produto.
 
 == License ==
 

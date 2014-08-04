@@ -368,7 +368,7 @@ class WC_PagSeguro_API {
 
 						$items[] = array(
 							'description' => $this->sanitize_description( $item_name ),
-							'amount'      => $this->money_format( $order->get_line_total( $order_item, false ) ),
+							'amount'      => $this->money_format( $order->get_item_total( $order_item, false ) ),
 							'quantity'    => $order_item['qty']
 						);
 					}
