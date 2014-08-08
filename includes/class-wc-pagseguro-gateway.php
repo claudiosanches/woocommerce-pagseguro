@@ -463,9 +463,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		if ( $response['url'] ) {
 			// Lightbox script.
 			$js = '
-				$( "submit-payment" ).hide();
-				$( "browser-has-javascript" ).show();
-				$( "browser-no-has-javascript" ).hide();
+				$( "#browser-has-javascript" ).show();
+				$( "#browser-no-has-javascript, #cancel-payment, #submit-payment" ).hide();
 				var isOpenLightbox = PagSeguroLightbox({
 						code: "' . esc_attr( $response['token'] ) . '"
 					}, {

@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 3.5  
 **Tested up to:** 3.9.1  
-**Stable tag:** 2.6.1  
+**Stable tag:** 2.6.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -287,6 +287,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 
 ## Changelog ##
+
+### 2.6.2 - 07/08/2014 ###
+
+* Corrigido o script que escondes os botões "Pagar com PagSeguro" e "Cancelar pedido &amp; restaurar carrinho" quando o Lightbox é carregado.
 
 ### 2.6.1 - 04/08/2014 ###
 
