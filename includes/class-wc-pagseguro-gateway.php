@@ -385,7 +385,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( 'transparent' == $this->method ) {
-			include_once( 'views/html-transparent-checkout-form.php' );
+			include_once( apply_filters( 'woocommerce_pagseguro_transparent_checkout_form_view', 'views/html-transparent-checkout-form.php' ) );
 		}
 	}
 
@@ -486,7 +486,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$woocommerce->add_inline_js( $js );
 			}
 
-			include_once 'views/html-lightbox-checkout.php';
+			include_once( apply_filters( 'woocommerce_pagseguro_lightbox_checkout_view', 'views/html-lightbox-checkout.php' ) );
 		} else {
 			$html = '<ul class="woocommerce-error">';
 				foreach ( $response['error'] as $message ) {
@@ -666,7 +666,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function thankyou_page( $order_id ) {
 		$data = get_post_meta( $order_id, '_wc_pagseguro_payment_data', true );
 
-		include_once( 'views/html-payment-instructions.php' );
+		include_once( apply_filters( 'woocommerce_pagseguro_payment_instructions_view', 'views/html-payment-instructions.php' ) );
 	}
 
 	/**
@@ -686,9 +686,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$data = get_post_meta( $order->id, '_wc_pagseguro_payment_data', true );
 
 		if ( $plain_text ) {
-			include_once( 'views/plain-email-instructions.php' );
+			include_once( apply_filters( 'woocommerce_pagseguro_plain_email_instructions_view', 'views/plain-email-instructions.php' ) );
 		} else {
-			include_once( 'views/html-email-instructions.php' );
+			include_once( apply_filters( 'woocommerce_pagseguro_html_email_instructions_view', 'views/html-email-instructions.php' ) );
 		}
 	}
 
