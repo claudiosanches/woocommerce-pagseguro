@@ -3,8 +3,8 @@ Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
-Tested up to: 3.9.1
-Stable tag: 2.6.2
+Tested up to: 3.9.2
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -276,6 +276,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Changelog ==
 
+= 2.7.0 - 16/08/2014 =
+
+* Adicionado sistema de templates para personalizar os templates de checkout e outros. Para fazer isso basta copiar a pasta `templates/` deste plugin para dentro do seu tema, devendo ficar como `woocommerce/pagseguro/`.
+* Corrigido o nome do arquivo principal do plugin.
+
 = 2.6.2 - 07/08/2014 =
 
 * Corrigido o script que escondes os botões "Pagar com PagSeguro" e "Cancelar pedido &amp; restaurar carrinho" quando o Lightbox é carregado.
@@ -440,11 +445,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.6.1 =
+= 2.7.0 =
 
-* Melhoria na lista de itens do pedido que é enviado para o PagSeguro, agora é possível ver o total de taxas enviadas.
-* Adicionada a opção "Enviar apenas o total do pedido" que envia apenas o total para o PagSeguro no lugar da lista de itens do pedido.
-* Corrigido o valor individual de cada produto.
+* Adicionado sistema de templates para personalizar os templates de checkout e outros. Para fazer isso basta copiar a pasta `templates/` deste plugin para dentro do seu tema, devendo ficar como `woocommerce/pagseguro/`.
+* Corrigido o nome do arquivo principal do plugin.
 
 == License ==
 
