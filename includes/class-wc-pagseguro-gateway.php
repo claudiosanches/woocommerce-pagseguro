@@ -385,7 +385,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( 'transparent' == $this->method ) {
-			include_once( apply_filters( 'woocommerce_pagseguro_transparent_checkout_form_view', 'views/html-transparent-checkout-form.php' ) );
+			woocommerce_get_template( 'transparent-checkout-form.php', array(
+				'cart_total'        => $cart_total,
+				'tc_credit'         => $this->tc_credit,
+				'tc_transfer'       => $this->tc_transfer,
+				'tc_ticket'         => $this->tc_ticket,
+				'tc_ticket_message' => $this->tc_ticket_message,
+			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 		}
 	}
 
@@ -486,7 +492,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$woocommerce->add_inline_js( $js );
 			}
 
-			include_once( apply_filters( 'woocommerce_pagseguro_lightbox_checkout_view', 'views/html-lightbox-checkout.php' ) );
+			woocommerce_get_template( 'lightbox-checkout.php', array(
+				'cancel_order_url'    => $order->get_cancel_order_url(),
+				'payment_url'         => $response['url'],
+				'lightbox_script_url' => $this->api->get_lightbox_url(),
+			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 		} else {
 			$html = '<ul class="woocommerce-error">';
 				foreach ( $response['error'] as $message ) {
@@ -666,7 +676,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function thankyou_page( $order_id ) {
 		$data = get_post_meta( $order_id, '_wc_pagseguro_payment_data', true );
 
-		include_once( apply_filters( 'woocommerce_pagseguro_payment_instructions_view', 'views/html-payment-instructions.php' ) );
+		if ( isset( $data['type'] ) ) {
+			woocommerce_get_template( 'payment-instructions.php', array(
+				'type'         => $data['type'],
+				'link'         => $data['link'],
+				'method'       => $data['method'],
+				'installments' => $data['installments'],
+			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+		}
 	}
 
 	/**
@@ -685,10 +702,22 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		$data = get_post_meta( $order->id, '_wc_pagseguro_payment_data', true );
 
-		if ( $plain_text ) {
-			include_once( apply_filters( 'woocommerce_pagseguro_plain_email_instructions_view', 'views/plain-email-instructions.php' ) );
-		} else {
-			include_once( apply_filters( 'woocommerce_pagseguro_html_email_instructions_view', 'views/html-email-instructions.php' ) );
+		if ( isset( $data['type'] ) ) {
+			if ( $plain_text ) {
+				woocommerce_get_template( 'emails/plain-instructions.php', array(
+					'type'         => $data['type'],
+					'link'         => $data['link'],
+					'method'       => $data['method'],
+					'installments' => $data['installments'],
+				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+			} else {
+				woocommerce_get_template( 'emails/html-instructions.php', array(
+					'type'         => $data['type'],
+					'link'         => $data['link'],
+					'method'       => $data['method'],
+					'installments' => $data['installments'],
+				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+			}
 		}
 	}
 

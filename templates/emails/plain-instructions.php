@@ -3,33 +3,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! isset( $data['type'] ) ) {
-	return;
-}
-
 _e( 'Payment', 'woocommerce-pagseguro' );
 
 echo "\n\n";
 
-if ( 2 == $data['type'] ) {
+if ( 2 == $type ) {
 
 	_e( 'Please use the link below to view your Banking Ticket, you can print and pay in your internet banking or in a lottery retailer:', 'woocommerce-pagseguro' );
 
 	echo "\n";
 
-	echo esc_url( $data['link'] );
+	echo esc_url( $link );
 
 	echo "\n";
 
 	_e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' );
 
-} elseif ( 3 == $data['type'] ) {
+} elseif ( 3 == $type ) {
 
 	_e( 'Please use the link below to make the payment in your bankline:', 'woocommerce-pagseguro' );
 
 	echo "\n";
 
-	echo esc_url( $data['link'] );
+	echo esc_url( $link );
 
 	echo "\n";
 
@@ -37,7 +33,7 @@ if ( 2 == $data['type'] ) {
 
 } else {
 
-	echo sprintf( __( 'You just made the payment in %s using the %s.', 'woocommerce-pagseguro' ), $data['installments'] . 'x', $data['method'] );
+	echo sprintf( __( 'You just made the payment in %s using the %s.', 'woocommerce-pagseguro' ), $installments . 'x', $method );
 
 	echo "\n";
 

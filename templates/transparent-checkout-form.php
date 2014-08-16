@@ -8,21 +8,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<input type="hidden" id="pagseguro-cart-total" value="<?php echo number_format( $cart_total, 2, '.', '' ); ?>" />
 
 	<ul id="pagseguro-payment-methods">
-		<?php if ( 'yes' == $this->tc_credit ) : ?>
-		<li><label><input id="pagseguro-payment-method-credit-card" type="radio" name="pagseguro_payment_method" value="credit-card" <?php checked( true, ( 'yes' == $this->tc_credit ), true ); ?> /> <?php _e( 'Credit Card', 'woocommerce-pagseguro' ); ?></label></li>
+		<?php if ( 'yes' == $tc_credit ) : ?>
+		<li><label><input id="pagseguro-payment-method-credit-card" type="radio" name="pagseguro_payment_method" value="credit-card" <?php checked( true, ( 'yes' == $tc_credit ), true ); ?> /> <?php _e( 'Credit Card', 'woocommerce-pagseguro' ); ?></label></li>
 		<?php endif; ?>
 
-		<?php if ( 'yes' == $this->tc_transfer ) : ?>
-		<li><label><input id="pagseguro-payment-method-bank-transfer" type="radio" name="pagseguro_payment_method" value="bank-transfer" <?php checked( true, ( 'no' == $this->tc_credit && 'yes' == $this->tc_transfer ), true ); ?> /> <?php _e( 'Bank Transfer', 'woocommerce-pagseguro' ); ?></label></li>
+		<?php if ( 'yes' == $tc_transfer ) : ?>
+		<li><label><input id="pagseguro-payment-method-bank-transfer" type="radio" name="pagseguro_payment_method" value="bank-transfer" <?php checked( true, ( 'no' == $tc_credit && 'yes' == $tc_transfer ), true ); ?> /> <?php _e( 'Bank Transfer', 'woocommerce-pagseguro' ); ?></label></li>
 		<?php endif; ?>
 
-		<?php if ( 'yes' == $this->tc_ticket ) : ?>
-		<li><label><input id="pagseguro-payment-method-banking-ticket" type="radio" name="pagseguro_payment_method" value="banking-ticket" <?php checked( true, ( 'no' == $this->tc_credit && 'no' == $this->tc_transfer && 'yes' == $this->tc_ticket ), true ); ?> /> <?php _e( 'Banking Ticket', 'woocommerce-pagseguro' ); ?></label></li>
+		<?php if ( 'yes' == $tc_ticket ) : ?>
+		<li><label><input id="pagseguro-payment-method-banking-ticket" type="radio" name="pagseguro_payment_method" value="banking-ticket" <?php checked( true, ( 'no' == $tc_credit && 'no' == $tc_transfer && 'yes' == $tc_ticket ), true ); ?> /> <?php _e( 'Banking Ticket', 'woocommerce-pagseguro' ); ?></label></li>
 		<?php endif; ?>
 	</ul>
 	<div class="clear"></div>
 
-	<?php if ( 'yes' == $this->tc_credit ) : ?>
+	<?php if ( 'yes' == $tc_credit ) : ?>
 		<div id="pagseguro-credit-card-form" class="pagseguro-method-form">
 			<p class="form-row form-row-first">
 				<label for="pagseguro-card-holder-name"><?php _e( 'Card Holder Name', 'woocommerce-pagseguro' ); ?> <small>(<?php _e( 'as recorded on the card', 'woocommerce-pagseguro' ); ?>)</small> <span class="required">*</span></label>
@@ -65,7 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	<?php endif; ?>
 
-	<?php if ( 'yes' == $this->tc_transfer ) : ?>
+	<?php if ( 'yes' == $tc_transfer ) : ?>
 		<div id="pagseguro-bank-transfer-form" class="pagseguro-method-form">
 			<p><?php _e( 'Select your bank:', 'woocommerce-pagseguro' ); ?></p>
 			<ul>
@@ -80,12 +80,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	<?php endif; ?>
 
-	<?php if ( 'yes' == $this->tc_ticket ) : ?>
+	<?php if ( 'yes' == $tc_ticket ) : ?>
 		<div id="pagseguro-banking-ticket-form" class="pagseguro-method-form">
 			<p>
 				<i id="pagseguro-icon-ticket"></i>
 				<?php _e( 'The order will be confirmed only after the payment approval.', 'woocommerce-pagseguro' ); ?>
-				<?php if ( 'yes' === $this->tc_ticket_message ) : ?>
+				<?php if ( 'yes' === $tc_ticket_message ) : ?>
 				<br />
 				<strong><?php _e( 'Tax', 'woocommerce-pagseguro' ); ?>:</strong> <?php _e( 'R$ 1,00 (rate applied to cover management risk costs of the payment method).', 'woocommerce-pagseguro' ); ?>
 				<?php endif; ?>
