@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/woocommerce-pagseguro/\n"
-"POT-Creation-Date: 2014-08-02 18:28:28+00:00\n"
+"POT-Creation-Date: 2014-08-16 18:46:54+00:00\n"
 "PO-Revision-Date: 2014-08-02 18:29+0000\n"
 "Last-Translator: Claudio Sanches <contato@claudiosmweb.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/woocommerce-pagseguro/language/pt_BR/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: includes/class-wc-pagseguro-api.php:128
 #: includes/class-wc-pagseguro-api.php:151
 #: includes/class-wc-pagseguro-gateway.php:248
-#: includes/views/html-transparent-checkout-form.php:12
+#: templates/transparent-checkout-form.php:12
 msgid "Credit Card"
 msgstr "Cartão de Crédito"
 
@@ -32,7 +32,7 @@ msgstr "Boleto"
 #: includes/class-wc-pagseguro-api.php:130
 #: includes/class-wc-pagseguro-api.php:153
 #: includes/class-wc-pagseguro-gateway.php:254
-#: includes/views/html-transparent-checkout-form.php:16
+#: templates/transparent-checkout-form.php:16
 msgid "Bank Transfer"
 msgstr "Débito Online"
 
@@ -192,7 +192,7 @@ msgid "This controls the description which the user sees during checkout."
 msgstr "Isso controla a descrição que o usuário vê durante o checkout."
 
 #: includes/class-wc-pagseguro-gateway.php:215
-#: includes/views/html-lightbox-checkout.php:11
+#: templates/lightbox-checkout.php:11
 msgid "Pay via PagSeguro"
 msgstr "Pagar com PagSeguro"
 
@@ -255,7 +255,7 @@ msgid "Enable Bank Transfer for Transparente Checkout"
 msgstr "Ativar transferência bancária para o checkout transparente"
 
 #: includes/class-wc-pagseguro-gateway.php:260
-#: includes/views/html-transparent-checkout-form.php:20
+#: templates/transparent-checkout-form.php:20
 msgid "Banking Ticket"
 msgstr "Boleto Bancário"
 
@@ -329,327 +329,327 @@ msgstr "Habilitar log"
 msgid "Log PagSeguro events, such as API requests, inside %s"
 msgstr "Registrar log de eventos do PagSeguro, como solicitações de API, dentro do arquivo %s"
 
-#: includes/class-wc-pagseguro-gateway.php:498
+#: includes/class-wc-pagseguro-gateway.php:507
 msgid "Click to try again"
 msgstr "Clique para tentar novamente"
 
-#: includes/class-wc-pagseguro-gateway.php:519
+#: includes/class-wc-pagseguro-gateway.php:528
 msgid "PagSeguro Request Failure"
 msgstr "PagSeguro falha do pedido"
 
-#: includes/class-wc-pagseguro-gateway.php:549
+#: includes/class-wc-pagseguro-gateway.php:558
 msgid "PagSeguro Transaction ID"
 msgstr "PagSeguro: ID da transação"
 
-#: includes/class-wc-pagseguro-gateway.php:556
+#: includes/class-wc-pagseguro-gateway.php:565
 msgid "Payer email"
 msgstr "E-mail do comprador"
 
-#: includes/class-wc-pagseguro-gateway.php:563
+#: includes/class-wc-pagseguro-gateway.php:572
 msgid "Payer name"
 msgstr "Nome do comprador"
 
-#: includes/class-wc-pagseguro-gateway.php:571
+#: includes/class-wc-pagseguro-gateway.php:580
 msgid "Payment type"
 msgstr "Tipo de pagamento"
 
-#: includes/class-wc-pagseguro-gateway.php:579
+#: includes/class-wc-pagseguro-gateway.php:588
 msgid "Payment method"
 msgstr "Método de pagamento"
 
-#: includes/class-wc-pagseguro-gateway.php:587
-#: includes/views/html-transparent-checkout-form.php:46
+#: includes/class-wc-pagseguro-gateway.php:596
+#: templates/transparent-checkout-form.php:46
 msgid "Installments"
 msgstr "Parcelas"
 
-#: includes/class-wc-pagseguro-gateway.php:595
+#: includes/class-wc-pagseguro-gateway.php:604
 msgid "Payment url"
 msgstr "Link de pagamento"
 
-#: includes/class-wc-pagseguro-gateway.php:607
+#: includes/class-wc-pagseguro-gateway.php:616
 msgid ""
 "PagSeguro: The buyer initiated the transaction, but so far the PagSeguro not"
 " received any payment information."
 msgstr "PagSeguro: O comprador iniciou a transação, mas até o momento o PagSeguro não recebeu nenhuma informação sobre o pagamento."
 
-#: includes/class-wc-pagseguro-gateway.php:611
+#: includes/class-wc-pagseguro-gateway.php:620
 msgid "PagSeguro: Payment under review."
 msgstr "PagSeguro: Pagamento em análise."
 
-#: includes/class-wc-pagseguro-gateway.php:615
+#: includes/class-wc-pagseguro-gateway.php:624
 msgid "PagSeguro: Payment approved."
 msgstr "PagSeguro: Pagamento aprovado."
 
-#: includes/class-wc-pagseguro-gateway.php:622
+#: includes/class-wc-pagseguro-gateway.php:631
 msgid "PagSeguro: Payment completed and credited to your account."
 msgstr "PagSeguro: Pagamento concluído e creditado na sua conta."
 
-#: includes/class-wc-pagseguro-gateway.php:626
+#: includes/class-wc-pagseguro-gateway.php:635
 msgid "PagSeguro: Payment came into dispute."
 msgstr "PagSeguro: O pagamento entrou em disputa."
 
-#: includes/class-wc-pagseguro-gateway.php:628
+#: includes/class-wc-pagseguro-gateway.php:637
 msgid "Payment for order %s came into dispute"
 msgstr "Pagamento do pedido %s entrou em disputa"
 
-#: includes/class-wc-pagseguro-gateway.php:629
+#: includes/class-wc-pagseguro-gateway.php:638
 msgid "Payment in dispute"
 msgstr "Pagamento em disputa"
 
-#: includes/class-wc-pagseguro-gateway.php:630
+#: includes/class-wc-pagseguro-gateway.php:639
 msgid ""
 "Order %s has been marked as on-hold, because the payment came into dispute "
 "in PagSeguro."
 msgstr "O pedido %s mudou de status para aguardando, por causa que o pagamento entrou em disputa no PagSeguro."
 
-#: includes/class-wc-pagseguro-gateway.php:635
+#: includes/class-wc-pagseguro-gateway.php:644
 msgid "PagSeguro: Payment refunded."
 msgstr "PagSeguro: Pagamento devolvido."
 
-#: includes/class-wc-pagseguro-gateway.php:637
+#: includes/class-wc-pagseguro-gateway.php:646
 msgid "Payment for order %s refunded"
 msgstr "O pagamento do pedido %s foi devolvido"
 
-#: includes/class-wc-pagseguro-gateway.php:638
+#: includes/class-wc-pagseguro-gateway.php:647
 msgid "Payment refunded"
 msgstr "Pagamento reembolsado"
 
-#: includes/class-wc-pagseguro-gateway.php:639
+#: includes/class-wc-pagseguro-gateway.php:648
 msgid "Order %s has been marked as refunded by PagSeguro."
 msgstr "O pedido %s mudou de status para reembolsado pelo PagSeguro."
 
-#: includes/class-wc-pagseguro-gateway.php:644
+#: includes/class-wc-pagseguro-gateway.php:653
 msgid "PagSeguro: Payment canceled."
 msgstr "PagSeguro: Pagamento cancelado."
 
-#: includes/class-wc-pagseguro-gateway.php:715
-#: includes/class-wc-pagseguro-gateway.php:724
-#: includes/class-wc-pagseguro-gateway.php:733
-#: includes/class-wc-pagseguro-gateway.php:742
+#: includes/class-wc-pagseguro-gateway.php:743
+#: includes/class-wc-pagseguro-gateway.php:752
+#: includes/class-wc-pagseguro-gateway.php:761
+#: includes/class-wc-pagseguro-gateway.php:770
 msgid "PagSeguro Disabled"
 msgstr "PagSeguro Desabilitado"
 
-#: includes/class-wc-pagseguro-gateway.php:715
+#: includes/class-wc-pagseguro-gateway.php:743
 msgid "You should inform your email address. %s"
 msgstr "Você deve informar o seu endereço de email. %s"
 
-#: includes/class-wc-pagseguro-gateway.php:715
-#: includes/class-wc-pagseguro-gateway.php:724
+#: includes/class-wc-pagseguro-gateway.php:743
+#: includes/class-wc-pagseguro-gateway.php:752
 msgid "Click here to configure!"
 msgstr "Clique aqui para configurar!"
 
-#: includes/class-wc-pagseguro-gateway.php:724
+#: includes/class-wc-pagseguro-gateway.php:752
 msgid "You should inform your token. %s"
 msgstr "Você deve informar o seu token. %s"
 
-#: includes/class-wc-pagseguro-gateway.php:733
+#: includes/class-wc-pagseguro-gateway.php:761
 msgid "Checkout Transparent requires the latest version of the %s to works."
 msgstr "Para utilizar o Checkout Transparente é necessário instalar a última versão do %s."
 
-#: includes/class-wc-pagseguro-gateway.php:733
+#: includes/class-wc-pagseguro-gateway.php:761
 msgid "Extra Checkout Fields for Brazil"
 msgstr "Extra Checkout Fields for Brazil"
 
-#: includes/class-wc-pagseguro-gateway.php:742
+#: includes/class-wc-pagseguro-gateway.php:770
 msgid ""
 "Currency <code>%s</code> is not supported. Works only with Brazilian Real."
 msgstr "A moeda <code>%s</code> não é suportada. Funciona apenas com Real (BRL)."
 
-#: includes/views/html-email-instructions.php:12
-#: includes/views/plain-email-instructions.php:10
+#: templates/emails/html-instructions.php:7
+#: templates/emails/plain-instructions.php:6
 msgid "Payment"
 msgstr "Pagamento"
 
-#: includes/views/html-email-instructions.php:16
-#: includes/views/plain-email-instructions.php:16
+#: templates/emails/html-instructions.php:11
+#: templates/emails/plain-instructions.php:12
 msgid ""
 "Please use the link below to view your Banking Ticket, you can print and pay"
 " in your internet banking or in a lottery retailer:"
 msgstr "Por favor, utilize o link abaixo para ver o seu boleto bancário, você pode imprimi-lo e fazer o pagamento pelo site do seu banco ou por uma casa lotérica."
 
-#: includes/views/html-email-instructions.php:16
-#: includes/views/html-payment-instructions.php:15
+#: templates/emails/html-instructions.php:11
+#: templates/payment-instructions.php:10
 msgid "Pay the Banking Ticket"
 msgstr "Pagar boleto bancário"
 
-#: includes/views/html-email-instructions.php:16
-#: includes/views/html-payment-instructions.php:15
-#: includes/views/plain-email-instructions.php:24
+#: templates/emails/html-instructions.php:11
+#: templates/emails/plain-instructions.php:20
+#: templates/payment-instructions.php:10
 msgid ""
 "After we receive the ticket payment confirmation, your order will be "
 "processed."
 msgstr "O seu pedido será processando assim que recebermos a confirmação do pagamento do seu boleto."
 
-#: includes/views/html-email-instructions.php:20
-#: includes/views/plain-email-instructions.php:28
+#: templates/emails/html-instructions.php:15
+#: templates/emails/plain-instructions.php:24
 msgid "Please use the link below to make the payment in your bankline:"
 msgstr "Por favor, utilize o link abaixo para realizar o pagamento pelo do seu banco:"
 
-#: includes/views/html-email-instructions.php:20
-#: includes/views/html-payment-instructions.php:21
+#: templates/emails/html-instructions.php:15
+#: templates/payment-instructions.php:16
 msgid "Pay at your bank"
 msgstr "Pagar no seu banco"
 
-#: includes/views/html-email-instructions.php:20
-#: includes/views/html-payment-instructions.php:21
-#: includes/views/plain-email-instructions.php:36
+#: templates/emails/html-instructions.php:15
+#: templates/emails/plain-instructions.php:32
+#: templates/payment-instructions.php:16
 msgid ""
 "After we receive the confirmation from the bank, your order will be "
 "processed."
 msgstr "O seu pedido será processando assim que recebermos a confirmação do pagamento pelo seu banco."
 
-#: includes/views/html-email-instructions.php:24
-#: includes/views/html-payment-instructions.php:27
-#: includes/views/plain-email-instructions.php:40
+#: templates/emails/html-instructions.php:19
+#: templates/emails/plain-instructions.php:36
+#: templates/payment-instructions.php:22
 msgid "You just made the payment in %s using the %s."
 msgstr "Você acabou de fazer o pagamento em %s usando %s."
 
-#: includes/views/html-email-instructions.php:24
-#: includes/views/html-payment-instructions.php:27
-#: includes/views/plain-email-instructions.php:44
+#: templates/emails/html-instructions.php:19
+#: templates/emails/plain-instructions.php:40
+#: templates/payment-instructions.php:22
 msgid ""
 "As soon as the credit card operator confirm the payment, your order will be "
 "processed."
 msgstr "O seu pedido será processado assim que a operadora do seu cartão de crédito confirmar o pagamento."
 
-#: includes/views/html-lightbox-checkout.php:7
+#: templates/lightbox-checkout.php:7
 msgid ""
 "Thank you for your order, please wait a few seconds to make the payment with"
 " PagSeguro."
 msgstr "Obrigado pelo seu pedido, por favor, aguarde alguns segundos para fazer o pagamento com o PagSeguro."
 
-#: includes/views/html-lightbox-checkout.php:9
+#: templates/lightbox-checkout.php:9
 msgid ""
 "Thank you for your order, please click the button below to pay with "
 "PagSeguro."
 msgstr "Obrigado pelo seu pedido, por favor, clique no botão abaixo para pagar com o PagSeguro."
 
-#: includes/views/html-lightbox-checkout.php:11
+#: templates/lightbox-checkout.php:11
 msgid "Cancel order &amp; restore cart"
 msgstr "Cancelar pedido &amp; restaurar carrinho"
 
-#: includes/views/html-payment-instructions.php:15
+#: templates/payment-instructions.php:10
 msgid "Please click in the following button to view your Banking Ticket."
 msgstr "Por favor, click no botão a seguinte para visualizar o seu boleto bancário."
 
-#: includes/views/html-payment-instructions.php:15
+#: templates/payment-instructions.php:10
 msgid ""
 "You can print and pay in your internet banking or in a lottery retailer."
 msgstr "Você pode imprimi-lo e fazer o pagamento pelo site do seu banco ou por uma casa lotérica."
 
-#: includes/views/html-payment-instructions.php:21
+#: templates/payment-instructions.php:16
 msgid "Please use the following button to make the payment in your bankline."
 msgstr "Por favor, utilize o botão a seguinte para fazer o pagamento no seu banco."
 
-#: includes/views/html-transparent-checkout-form.php:28
+#: templates/transparent-checkout-form.php:28
 msgid "Card Holder Name"
 msgstr "Nome do portador"
 
-#: includes/views/html-transparent-checkout-form.php:28
+#: templates/transparent-checkout-form.php:28
 msgid "as recorded on the card"
 msgstr "como gravado no cartão"
 
-#: includes/views/html-transparent-checkout-form.php:32
+#: templates/transparent-checkout-form.php:32
 msgid "Card Number"
 msgstr "Número do cartão"
 
-#: includes/views/html-transparent-checkout-form.php:37
+#: templates/transparent-checkout-form.php:37
 msgid "Expiry (MM/YYYY)"
 msgstr "Validade (MM/AAAA)"
 
-#: includes/views/html-transparent-checkout-form.php:38
+#: templates/transparent-checkout-form.php:38
 msgid "MM / YYYY"
 msgstr "MM / AAAA"
 
-#: includes/views/html-transparent-checkout-form.php:41
+#: templates/transparent-checkout-form.php:41
 msgid "Security Code"
 msgstr "Código de segurança"
 
-#: includes/views/html-transparent-checkout-form.php:42
+#: templates/transparent-checkout-form.php:42
 msgid "CVC"
 msgstr "CVV"
 
-#: includes/views/html-transparent-checkout-form.php:46
+#: templates/transparent-checkout-form.php:46
 msgid "the minimum value of the installment is R$ 5,00"
 msgstr "o valor mínimo da parcela é R$ 5,00"
 
-#: includes/views/html-transparent-checkout-form.php:52
+#: templates/transparent-checkout-form.php:52
 msgid "Card Holder CPF"
 msgstr "CPF do portador"
 
-#: includes/views/html-transparent-checkout-form.php:57
+#: templates/transparent-checkout-form.php:57
 msgid "Card Holder Birth Date"
 msgstr "Data de nascimento do portador"
 
-#: includes/views/html-transparent-checkout-form.php:58
+#: templates/transparent-checkout-form.php:58
 msgid "DD / MM / YYYY"
 msgstr "DD / MM / AAAA"
 
-#: includes/views/html-transparent-checkout-form.php:61
+#: templates/transparent-checkout-form.php:61
 msgid "Card Holder Phone"
 msgstr "Telefone do portador"
 
-#: includes/views/html-transparent-checkout-form.php:62
+#: templates/transparent-checkout-form.php:62
 msgid "(xx) xxxx-xxxx"
 msgstr "(xx) xxxx-xxxx"
 
-#: includes/views/html-transparent-checkout-form.php:70
+#: templates/transparent-checkout-form.php:70
 msgid "Select your bank:"
 msgstr "Selecione o seu banco:"
 
-#: includes/views/html-transparent-checkout-form.php:72
+#: templates/transparent-checkout-form.php:72
 msgid "Banco Bradesco"
 msgstr "Banco Bradesco"
 
-#: includes/views/html-transparent-checkout-form.php:73
+#: templates/transparent-checkout-form.php:73
 msgid "Banco Ita&uacute;"
 msgstr "Banco Ita&uacute;"
 
-#: includes/views/html-transparent-checkout-form.php:74
+#: templates/transparent-checkout-form.php:74
 msgid "Banco do Brasil"
 msgstr "Banco do Brasil"
 
-#: includes/views/html-transparent-checkout-form.php:75
+#: templates/transparent-checkout-form.php:75
 msgid "Banco Banrisul"
 msgstr "Banco Banrisul"
 
-#: includes/views/html-transparent-checkout-form.php:76
+#: templates/transparent-checkout-form.php:76
 msgid "Banco HSBC"
 msgstr "Banco HSBC"
 
-#: includes/views/html-transparent-checkout-form.php:78
+#: templates/transparent-checkout-form.php:78
 msgid ""
 "* After clicking \"Proceed to payment\" you will have access to the link "
 "that will take you to your bank's website, so you can make the payment in "
 "total security."
 msgstr "* Após clicar em \"Realizar pagamento\" você receberá acesso ao link que o levará ao site do seu banco, assim é possível realizar o pagamento em total segurança."
 
-#: includes/views/html-transparent-checkout-form.php:87
+#: templates/transparent-checkout-form.php:87
 msgid "The order will be confirmed only after the payment approval."
 msgstr "O pedido será confirmado apenas após a confirmação do pagamento."
 
-#: includes/views/html-transparent-checkout-form.php:90
+#: templates/transparent-checkout-form.php:90
 msgid "Tax"
 msgstr "Taxa"
 
-#: includes/views/html-transparent-checkout-form.php:90
+#: templates/transparent-checkout-form.php:90
 msgid ""
 "R$ 1,00 (rate applied to cover management risk costs of the payment method)."
 msgstr "R$ 1,00 (taxa aplicada para cobrir custos de gestão de risco do meio de pagamento)."
 
-#: includes/views/html-transparent-checkout-form.php:93
+#: templates/transparent-checkout-form.php:93
 msgid ""
 "*  After clicking \"Proceed to payment\" you will have access to banking "
 "ticket which you can print and pay in your internet banking or in a lottery "
 "retailer."
 msgstr "* Após clicar em \"Realizar pagamento\" você receberá o seu boleto bancário, é possível imprimi-lo e pagar pelo site do seu banco ou por uma casa lotérica."
 
-#: wc-pagseguro.php:113
+#: woocommerce-pagseguro.php:122
 msgid ""
 "WooCommerce PagSeguro Gateway depends on the last version of %s to work!"
 msgstr "WooCommerce PagSeguro Gateway depende da última versão do %s para funcionar!"
 
-#: wc-pagseguro.php:113
+#: woocommerce-pagseguro.php:122
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
