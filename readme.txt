@@ -38,7 +38,7 @@ Estão disponíveis as seguintes modalidades de pagamento:
 - **Lightbox:** Uma janela do PagSeguro é aberta na finalização para o cliente fazer o pagamento.
 - **Transparente:** O cliente faz o pagamento direto no seu site sem precisar ir ao site do PagSeguro.
 
-Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html).
+Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html).
 
 = Compatibilidade =
 
@@ -224,7 +224,7 @@ Gere um novo Token no PagSeguro em "Integrações" > "[Token de Segurança](http
 
 Outro erro comum é gerar um token e cadastrar nas configurações do plugin um e-mail que não é o proprietário do token, então tenha certeza que estes dados estão realmente corretos!
 
-Note que caso você esteja utilizando a opção de **sandbox** é necessário usar um e-mail e token de teste que podem ser encontrados em "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html)".
+Note que caso você esteja utilizando a opção de **sandbox** é necessário usar um e-mail e token de teste que podem ser encontrados em "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html)".
 
 Se você tem certeza que o Token e Login estão corretos você deve acessar a página "WooCommerce > Status do Sistema" e verificar se **fsockopen** e **cURL** estão ativos. É necessário procurar ajuda do seu provedor de hospedagem caso você tenha o **fsockopen** e/ou o **cURL** desativados.
 
@@ -253,7 +253,7 @@ Note que é necessário aprovação do PagSeguro para utilizar o Checkout Transp
 
 Sim, funciona e basta você ativar isso nas opções do plugin, além de configurar o seu token de desenvolvedor.
 
-Para conseguir o token de desenvolver você deve acessar "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/dados-de-teste.html)".
+Para conseguir o token de desenvolver você deve acessar "[PagSeguro Sandbox > Dados de Teste](https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html)".
 
 = O total do pedido no WooCommerce é diferente do enviado para o PagSeguro, como eu resolvo isso? =
 
