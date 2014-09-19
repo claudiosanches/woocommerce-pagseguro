@@ -3,7 +3,7 @@
 **Donate link:** http://claudiosmweb.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 3.5  
-**Tested up to:** 3.9.2  
+**Tested up to:** 4.0  
 **Stable tag:** 2.7.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -268,22 +268,22 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 ## Screenshots ##
 
 ### 1. Configurações do plugin. ###
-![1. Configurações do plugin.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-1.png)
+![1. Configurações do plugin.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-1.png)
 
 ### 2. Método de pagamento na página de finalizar o pedido. ###
-![2. Método de pagamento na página de finalizar o pedido.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-2.png)
+![2. Método de pagamento na página de finalizar o pedido.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-2.png)
 
 ### 3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro. ###
-![3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-3.png)
+![3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-3.png)
 
 ### 4. Pagamento com cartão de crédito usando o Checkout Transparente. ###
-![4. Pagamento com cartão de crédito usando o Checkout Transparente.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-4.png)
+![4. Pagamento com cartão de crédito usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-4.png)
 
 ### 5. Pagamento com debito online usando o Checkout Transparente. ###
-![5. Pagamento com debito online usando o Checkout Transparente.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-5.png)
+![5. Pagamento com debito online usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-5.png)
 
 ### 6. Pagamento com boleto bancário usando o Checkout Transparente. ###
-![6. Pagamento com boleto bancário usando o Checkout Transparente.](http://s.wordpress.org/extend/plugins/woocommerce-pagseguro/screenshot-6.png)
+![6. Pagamento com boleto bancário usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-6.png)
 
 
 ## Changelog ##
