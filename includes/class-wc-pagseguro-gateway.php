@@ -623,6 +623,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					case 3 :
 						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
 
+						// For WooCommerce 2.2 or later.
+						add_post_meta( $order->id, '_transaction_id', (string) $posted->code, true );
+
 						// Changing the order for processing and reduces the stock.
 						$order->payment_complete();
 
