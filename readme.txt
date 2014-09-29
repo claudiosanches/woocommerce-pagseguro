@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,7 @@ Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pa
 
 = Compatibilidade =
 
-Compatível com as versões 2.0.x e 2.1.x do WooCommerce.
+Compatível com as versões 2.0.x, 2.1.x, 2.2.x do WooCommerce.
 
 Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
@@ -276,6 +276,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Changelog ==
 
+= 2.7.1 - 29/09/2014 =
+
+* Corrigido link dos dados de sandbox
+* Adicionado suporte para _transaction_id do WooCommerce 2.2
+
 = 2.7.0 - 16/08/2014 =
 
 * Adicionado sistema de templates para personalizar os templates de checkout e outros. Para fazer isso basta copiar a pasta `templates/` deste plugin para dentro do seu tema, devendo ficar como `woocommerce/pagseguro/`.
@@ -445,10 +450,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, envie 
 
 == Upgrade Notice ==
 
-= 2.7.0 =
+= 2.7.1 =
 
-* Adicionado sistema de templates para personalizar os templates de checkout e outros. Para fazer isso basta copiar a pasta `templates/` deste plugin para dentro do seu tema, devendo ficar como `woocommerce/pagseguro/`.
-* Corrigido o nome do arquivo principal do plugin.
+* Corrigido link dos dados de sandbox
+* Adicionado suporte para _transaction_id do WooCommerce 2.2
 
 == License ==
 
