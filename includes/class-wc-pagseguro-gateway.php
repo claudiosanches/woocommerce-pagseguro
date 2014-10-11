@@ -551,7 +551,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				}
 
 				// Order details.
-				$order_details = array();
+				$order_details = array(
+					'type'         => '',
+					'method'       => '',
+					'installments' => '',
+					'link'         => ''
+				);
+
 				if ( isset( $posted->code ) ) {
 					update_post_meta(
 						$order->id,
