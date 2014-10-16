@@ -261,9 +261,9 @@ Caso você tenha este problema, basta marcar ativar a opção **Enviar apenas o 
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
-Entre em contato [clicando aqui](http://claudiosmweb.com/plugins/pagseguro-para-woocommerce/).
-
 Por favor, caso você tenha algum problema com o funcionamento do plugin, envie o log (ative ele nas opções do plugin e tente fazer uma compra, ele vai ficar dentro da pasta wp-content/plugins/woocommerce/logs/) usando o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com), desta forma fica mais rápido para fazer o diagnóstico.
+
+Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/support/plugin/woocommerce-pagseguro).
 
 == Screenshots ==
 
