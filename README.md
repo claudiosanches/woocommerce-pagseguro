@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 3.5  
 **Tested up to:** 4.0  
-**Stable tag:** 2.7.2  
+**Stable tag:** 2.7.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -288,6 +288,10 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 ## Changelog ##
 
+### 2.7.3 - 26/10/2014 ###
+
+* Adicionadas mensagens de erro para DDD e CEP inválidos.
+
 ### 2.7.2 - 11/10/2014 ###
 
 * Melhorado o salvamento dos detalhes do pedido que o PagSeguro retorna para a loja, como link de boleto, método de pagamento utilizando e outros.
@@ -466,9 +470,9 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 ## Upgrade Notice ##
 
-### 2.7.2 ###
+### 2.7.3 ###
 
-* Melhorado o salvamento dos detalhes do pedido que o PagSeguro retorna para a loja, como link de boleto, método de pagamento utilizando e outros.
+* Adicionadas mensagens de erro para DDD e CEP inválidos.
 
 ## License ##
 
