@@ -229,9 +229,17 @@ class WC_PagSeguro_API {
 		switch ( $code ) {
 			case 11013 :
 			case 11014 :
+			case 53018 :
+			case 53019 :
+			case 53020 :
+			case 53021 :
 				return __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' );
 				break;
 			case 11017 :
+			case 53022 :
+			case 53023 :
+			case 53053 :
+			case 53054 :
 				return __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' );
 				break;
 			case 11164 :
