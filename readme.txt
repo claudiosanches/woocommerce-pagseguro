@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.7.3
+Stable tag: 2.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -275,6 +275,10 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 6. Pagamento com boleto bancário usando o Checkout Transparente.
 
 == Changelog ==
+
+= 2.7.4 - 05/11/2014 =
+
+* Adicionado alerta quando o usuário não preenche o campo bairro no checkout transparente.
 
 = 2.7.3 - 26/10/2014 =
 
