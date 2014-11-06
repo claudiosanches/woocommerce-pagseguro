@@ -266,6 +266,9 @@ class WC_PagSeguro_API {
 			case 53028 :
 				return __( 'The address complement is too long, it cannot be more than 40 characters.', 'woocommerce-pagseguro' );
 				break;
+			case 53029 :
+				return __( '<strong>Neighborhood</strong> is a required field.', 'woocommerce-pagseguro' );
+				break;
 			case 53122 :
 				return __( 'Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox.', 'woocommerce-pagseguro' );
 				break;
