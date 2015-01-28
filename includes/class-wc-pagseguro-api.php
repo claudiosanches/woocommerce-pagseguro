@@ -410,9 +410,9 @@ class WC_PagSeguro_API {
 
 			// Shipping Cost.
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-				$shipping_total = $this->money_format( $order->get_total_shipping() );
+				$shipping_total = $order->get_total_shipping();
 			} else {
-				$shipping_total = $this->money_format( $order->get_shipping() );
+				$shipping_total = $order->get_shipping();
 			}
 
 			if ( $shipping_total > 0 ) {
