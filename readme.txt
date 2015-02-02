@@ -50,6 +50,13 @@ Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for 
 
 Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/).
 
+= Integração =
+
+Este plugin funciona perfeitamente em conjunto com:
+
+* [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/).
+* [WooCommerce Multilingual](https://wordpress.org/plugins/woocommerce-multilingual/).
+
 = Dúvidas? =
 
 Você pode esclarecer suas dúvidas usando:

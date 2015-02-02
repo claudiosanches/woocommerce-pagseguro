@@ -93,7 +93,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			}
 
 			// Checks that the currency is supported
-			if ( ! $this->using_supported_currency() ) {
+			if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
 				add_action( 'admin_notices', array( $this, 'currency_not_supported_message' ) );
 			}
 		}
