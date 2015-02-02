@@ -67,35 +67,32 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			add_action( 'wp_enqueue_scripts', array( $this, 'checkout_scripts' ) );
 		}
 
-		// Display admin notices.
-		$this->admin_notices();
+		if ( is_admin() ) {
+			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		}
 	}
 
 	/**
 	 * Displays notifications when the admin has something wrong with the configuration.
-	 *
-	 * @return void
 	 */
-	protected function admin_notices() {
-		if ( is_admin() ) {
-			// Checks if email is not empty.
-			if ( empty( $this->email ) ) {
-				add_action( 'admin_notices', array( $this, 'mail_missing_message' ) );
-			}
+	public function admin_notices() {
+		// Checks if email is not empty.
+		if ( empty( $this->email ) ) {
+			include_once 'views/html-notice-email-missing.php';
+		}
 
-			// Checks if token is not empty.
-			if ( empty( $this->token ) ) {
-				add_action( 'admin_notices', array( $this, 'token_missing_message' ) );
-			}
+		// Checks if token is not empty.
+		if ( empty( $this->token ) ) {
+			include_once 'views/html-notice-token-missing.php';
+		}
 
-			if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
-				add_action( 'admin_notices', array( $this, 'requires_extra_checkout_fields_for_brazil' ) );
-			}
+		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+			include_once 'views/html-notice-ecfb-missing.php';
+		}
 
-			// Checks that the currency is supported
-			if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
-				add_action( 'admin_notices', array( $this, 'currency_not_supported_message' ) );
-			}
+		// Checks that the currency is supported
+		if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
+			include_once 'views/html-notice-currency-not-supported.php';
 		}
 	}
 
@@ -742,41 +739,4 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		return admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' );
 	}
-
-	/**
-	 * Adds error message when not configured the email.
-	 *
-	 * @return string Error Mensage.
-	 */
-	public function mail_missing_message() {
-		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your email address. %s', 'woocommerce-pagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
-	}
-
-	/**
-	 * Adds error message when not configured the token.
-	 *
-	 * @return string Error Mensage.
-	 */
-	public function token_missing_message() {
-		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'You should inform your token. %s', 'woocommerce-pagseguro' ), '<a href="' . $this->admin_url() . '">' . __( 'Click here to configure!', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
-	}
-
-	/**
-	 * Adds error message when not installed the Extra Checkout Fields for Brazil plugin.
-	 *
-	 * @return string Error Mensage.
-	 */
-	public function requires_extra_checkout_fields_for_brazil() {
-		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'Checkout Transparent requires the latest version of the %s to works.', 'woocommerce-pagseguro' ), '<a href="http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/">' . __( 'Extra Checkout Fields for Brazil', 'woocommerce-pagseguro' ) . '</a>' ) . '</p></div>';
-	}
-
-	/**
-	 * Adds error message when an unsupported currency is used.
-	 *
-	 * @return string
-	 */
-	public function currency_not_supported_message() {
-		echo '<div class="error"><p><strong>' . __( 'PagSeguro Disabled', 'woocommerce-pagseguro' ) . '</strong>: ' . sprintf( __( 'Currency <code>%s</code> is not supported. Works only with Brazilian Real.', 'woocommerce-pagseguro' ), get_woocommerce_currency() ) . '</p></div>';
-	}
-
 }
