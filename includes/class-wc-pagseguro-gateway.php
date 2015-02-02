@@ -8,8 +8,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * Constructor for the gateway.
-	 *
-	 * @return void
 	 */
 	public function __construct() {
 		global $woocommerce;
@@ -135,9 +133,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Admin scripts.
 	 *
-	 * @param  string $hook Page slug.
-	 *
-	 * @return void
+	 * @param string $hook Page slug.
 	 */
 	public function admin_scripts( $hook ) {
 		if ( in_array( $hook, array( 'woocommerce_page_wc-settings', 'woocommerce_page_woocommerce_settings' ) ) && ( isset( $_GET['section'] ) && 'wc_pagseguro_gateway' == strtolower( $_GET['section'] ) ) ) {
@@ -149,8 +145,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * Checkout scripts.
-	 *
-	 * @return void
 	 */
 	public function checkout_scripts() {
 		if ( is_checkout() ) {
@@ -187,8 +181,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * Initialise Gateway Settings Form Fields.
-	 *
-	 * @return void
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
@@ -308,9 +300,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Add error messages in checkout.
 	 *
-	 * @param string $messages Error message.
+	 * @param  string $messages Error message.
 	 *
-	 * @return string          Displays the error messages.
+	 * @return string           Displays the error messages.
 	 */
 	protected function add_error( $messages ) {
 		global $woocommerce;
@@ -332,11 +324,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Send email notification.
 	 *
-	 * @param  string $subject Email subject.
-	 * @param  string $title   Email title.
-	 * @param  string $message Email message.
-	 *
-	 * @return void
+	 * @param string $subject Email subject.
+	 * @param string $title   Email title.
+	 * @param string $message Email message.
 	 */
 	protected function send_email( $subject, $title, $message ) {
 		global $woocommerce;
@@ -395,9 +385,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Process the payment and return the result.
 	 *
-	 * @param int    $order_id Order ID.
+	 * @param  int    $order_id Order ID.
 	 *
-	 * @return array           Redirect.
+	 * @return array            Redirect.
 	 */
 	public function process_payment( $order_id ) {
 		global $woocommerce;
@@ -509,8 +499,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * Check API Response.
-	 *
-	 * @return void
 	 */
 	public function check_ipn_response() {
 		@ob_clean();
@@ -530,8 +518,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Update order status.
 	 *
 	 * @param array $posted PagSeguro post data.
-	 *
-	 * @return void
 	 */
 	public function update_order_status( $posted ) {
 

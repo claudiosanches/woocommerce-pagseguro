@@ -40,9 +40,7 @@
 		/**
 		 * Add error message
 		 *
-		 * @param  {string} error
-		 *
-		 * @return {void}
+		 * @param {string} error
 		 */
 		function pagSeguroAddErrorMessage( error ) {
 			var wrapper = $( '#pagseguro-credit-card-form' );
@@ -53,8 +51,6 @@
 
 		/**
 		 * Hide payment methods if have only one.
-		 *
-		 * @return {void}
 		 */
 		function pagSeguroHidePaymentMethods() {
 			var paymentMethods = $( '#pagseguro-payment-methods' );
@@ -67,9 +63,7 @@
 		/**
 		 * Show/hide the method form.
 		 *
-		 * @param  {string} method
-		 *
-		 * @return {void}
+		 * @param {string} method
 		 */
 		function pagSeguroShowHideMethodForm( method ) {
 			// window.alert( method );
@@ -81,8 +75,6 @@
 
 		/**
 		 * Initialize the payment form.
-		 *
-		 * @return {void}
 		 */
 		function pagSeguroInitPaymentForm() {
 			pagSeguroHidePaymentMethods();

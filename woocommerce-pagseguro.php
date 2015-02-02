@@ -79,8 +79,6 @@ class WC_PagSeguro {
 
 	/**
 	 * Load the plugin text domain for translation.
-	 *
-	 * @return void
 	 */
 	public function load_plugin_textdomain() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-pagseguro' );
@@ -91,8 +89,6 @@ class WC_PagSeguro {
 
 	/**
 	 * Includes.
-	 *
-	 * @return void
 	 */
 	private function includes() {
 		include_once 'includes/class-wc-pagseguro-xml.php';
