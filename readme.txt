@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.7.4
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,7 @@ Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pa
 
 = Compatibilidade =
 
-Compatível com as versões 2.0.x, 2.1.x, 2.2.x do WooCommerce.
+Compatível com as versões 2.0.x, 2.1.x, 2.2.x, 2.3.x do WooCommerce.
 
 Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
@@ -283,154 +283,162 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 == Changelog ==
 
-= 2.7.4 - 05/11/2014 =
+= 2.8.0 - 2015/02/03 =
+
+* Adicionado suporte para o WooCommerce 2.3.
+* Adicionado suporte para WooCommerce Multilingual. 
+* Adicionado recurso para utilizar o endereço de entrega no Lightbox (antes funcionava apenas com checkout normal ou transparente).
+* Adicionada alerta de erro para CPF invalido com checkout transparente.
+* Correções na tradução do plugin.
+
+= 2.7.4 - 2014/11/05 =
 
 * Adicionado alerta quando o usuário não preenche o campo bairro no checkout transparente.
 
-= 2.7.3 - 26/10/2014 =
+= 2.7.3 - 2014/10/26 =
 
 * Adicionadas mensagens de erro para DDD e CEP inválidos.
 
-= 2.7.2 - 11/10/2014 =
+= 2.7.2 - 2014/10/11 =
 
 * Melhorado o salvamento dos detalhes do pedido que o PagSeguro retorna para a loja, como link de boleto, método de pagamento utilizando e outros.
 
-= 2.7.1 - 29/09/2014 =
+= 2.7.1 - 2014/09/29 =
 
 * Corrigido link dos dados de sandbox
 * Adicionado suporte para _transaction_id do WooCommerce 2.2
 
-= 2.7.0 - 16/08/2014 =
+= 2.7.0 - 2014/08/16 =
 
 * Adicionado sistema de templates para personalizar os templates de checkout e outros. Para fazer isso basta copiar a pasta `templates/` deste plugin para dentro do seu tema, devendo ficar como `woocommerce/pagseguro/`.
 * Corrigido o nome do arquivo principal do plugin.
 
-= 2.6.2 - 07/08/2014 =
+= 2.6.2 - 2014/08/07 =
 
 * Corrigido o script que escondes os botões "Pagar com PagSeguro" e "Cancelar pedido &amp; restaurar carrinho" quando o Lightbox é carregado.
 
-= 2.6.1 - 04/08/2014 =
+= 2.6.1 - 2014/08/04 =
 
 * Corrigido o valor individual de cada produto.
 
-= 2.6.0 - 02/08/2014 =
+= 2.6.0 - 2014/08/02 =
 
 * Melhoria na lista de itens do pedido que é enviado para o PagSeguro, agora é possível ver o total de taxas enviadas.
 * Adicionada a opção "Enviar apenas o total do pedido" que envia apenas o total para o PagSeguro no lugar da lista de itens do pedido.
 * Corrigida a exibição da opção "Prefixo de pedido" na página de opções do plugin.
 
-= 2.5.1 - 09/07/2014 =
+= 2.5.1 - 2014/07/09 =
 
 * Adicionada feature que permite usar o Checkout Transparente sem precisar digitar uma descrição para o método de pagamento.
 * Correção do checkout com Lightbox.
 
-= 2.5.0 - 08/07/2014 =
+= 2.5.0 - 2014/07/08 =
 
 * Implementando o Checkout Transparente do PagSeguro.
 * Melhorada todo o código de integração para tornar possível trabalhar bem o checkout padrão, Lightbox e Checkout Transparente.
 * Melhoria nas mensagens de erro.
 
-= 2.4.1 - 12/06/2014 =
+= 2.4.1 - 2014/06/12 =
 
 * Corrigida a URL de notifição para versões 2.0.x do WooCommerce.
 
-= 2.4.0 - 10/06/2014 =
+= 2.4.0 - 2014/06/10 =
 
 * Correções nas mensagens do log para a criação de tokens de pagamento.
 * Adicionada opção de ambiente sandbox.
 
-= 2.3.1 - 24/05/2014 =
+= 2.3.1 - 2014/05/24 =
 
 * Melhoria nos status do pedido, agora ao gerar um boleto o pedido é alterado para "aguardando".
 * Modificado o botão "Finalizar pedido", com o WooCommerce 2.1 ou superior vai mostrar a mensagem "Realizar pagamento".
 
-= 2.3.0 - 02/04/2014 =
+= 2.3.0 - 2014/04/02 =
 
 * Adicionada opção para selecionar pagamento direto com redirecionamento ou pelo Lightbox do PagSeguro.
 
-= 2.2.1 - 06/12/2013 =
+= 2.2.1 - 2013/12/06 =
 
 * Melhoria na compatibilidade com o WooCommerce 2.1.
 
-= 2.2.0 - 04/12/2013 =
+= 2.2.0 - 2013/12/04 =
 
 * Corrigido padrões de código.
 * Removida compatibilidade com versões 1.6.x ou inferiores do WooCommerce.
 * Adicionada compatibilidade com WooCommerce 2.1 ou superior.
 
-= 2.1.1 - 03/09/2013 =
+= 2.1.1 - 2013/09/03 =
 
 * Adicionada mensagem sobre DDD errado nas mensagens de erro do PagSeguro.
 * Correção da verificação do IPN.
 
-= 2.1.0 - 29/08/2013 =
+= 2.1.0 - 2013/08/29 =
 
 * Adicionada função para tratar as mensagens de erro do PagSeguro para CPF, CEP e número de telefone.
 
-= 2.0.3 - 22/08/2013 =
+= 2.0.3 - 2013/08/22 =
 
 * Correção da alteração de status pelo pela notificação de pagamento do PagSeguro.
 
-= 2.0.2 - 22/08/2013 =
+= 2.0.2 - 2013/08/22 =
 
 * Corrigido o erro causado com números de telefone sem DDD.
 
-= 2.0.1 - 19/08/2013 =
+= 2.0.1 - 2013/08/19 =
 
 * Removida a obrigatoriedade de enviar os campos de endereço.
 
-= 2.0.0 - 17/08/2013 =
+= 2.0.0 - 2013/08/17 =
 
 * Adicionadas as novas APIs de pagamentos e notificações do PagSeguro.
 * Removidas as APIs antigas de pagamento e notificações do PagSeguro.
 * Melhoria nos status de pagamento.
 * Melhorias na notificações sobre compras em disputas ou que tiveram o pagamento devolvido.
 
-= 1.6.1 - 14/08/2013 =
+= 1.6.1 - 2013/08/14 =
 
 * Melhoria no JavaScript inline no formulário de checkout.
 
-= 1.6.0 - 26/07/2013 =
+= 1.6.0 - 2013/07/26 =
 
 * Adicionado o filtro `woocommerce_pagseguro_icon` para troca do ícone do método de pagamento.
 * Melhoria no filtro `woocommerce_pagseguro_args`, agora ele aceita o objeto `WC_Order` no lugar do ID.
 * Melhoria nas opções do plugin.
 * Melhoria nas mensagens de status do pedido.
 
-= 1.5.0 - 24/06/2013 =
+= 1.5.0 - 2013/06/24 =
 
 * Adicionado link de `Configurações` na página de plugins.
 * Melhorias no código.
 * Adicionado suporte para WooCommerce 2.1.
 * Adicionado o ID da compra no filtro `woocommerce_pagseguro_args`.
 
-= 1.4.0 - 02/04/2013 =
+= 1.4.0 - 2013/04/02 =
 
 * Correção do retorno automático de dados na versão 2.0.0 ou superior do WooCommerce.
 
-= 1.3.4 - 06/03/2013 =
+= 1.3.4 - 2013/03/06 =
 
 * Corrigida a compatibilidade com WooCommerce 2.0.0 ou mais recente.
 
-= 1.3.3 - 08/02/2013 =
+= 1.3.3 - 2013/02/08 =
 
 * Corrigido o hook responsavel por salvar as opções para a versão 2.0 RC do WooCommerce.
 
-= 1.3.2 - 08/02/2013 =
+= 1.3.2 - 2013/02/08 =
 
 * Plugin corrigido para a versão 2.0 do WooCommerce.
 
-= 1.3.1 - 08/12/2012 =
+= 1.3.1 - 2012/12/08 =
 
 * Melhoria no método que atualiza o status do pedido.
 * Correção da quantidade de caracteres das descrição dos produtos no PagSeguro.
 
-= 1.3.0 - 30/11/2012 =
+= 1.3.0 - 2012/11/30 =
 
 * Adicionada opção para logs de erro.
 * Adiciona opção para validar ou não endereço (quando ativo força cliente a informar os dados corretamente e ir direto para a página de pagamento do PagSeguro).
 
-= 1.2.2 - 19/11/2012 =
+= 1.2.2 - 2012/11/19 =
 
 * Corrigido problema com cupons de desconto (descontos no carrinho).
 
@@ -469,9 +477,13 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 == Upgrade Notice ==
 
-= 2.7.3 =
+= 2.8.0 =
 
-* Adicionadas mensagens de erro para DDD e CEP inválidos.
+* Adicionado suporte para o WooCommerce 2.3.
+* Adicionado suporte para WooCommerce Multilingual. 
+* Adicionado recurso para utilizar o endereço de entrega no Lightbox (antes funcionava apenas com checkout normal ou transparente).
+* Adicionada alerta de erro para CPF invalido com checkout transparente.
+* Correções na tradução do plugin.
 
 == License ==
 
