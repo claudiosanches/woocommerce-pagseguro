@@ -42,6 +42,7 @@ class WC_PagSeguro {
 	private function __construct() {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 		// Checks with WooCommerce is installed.
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
@@ -85,6 +86,32 @@ class WC_PagSeguro {
 
 		load_textdomain( 'woocommerce-pagseguro', trailingslashit( WP_LANG_DIR ) . 'woocommerce-pagseguro/woocommerce-pagseguro-' . $locale . '.mo' );
 		load_plugin_textdomain( 'woocommerce-pagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+
+	/**
+	 * Action links.
+	 *
+	 * @param  array $links
+	 *
+	 * @return array
+	 */
+	public function plugin_action_links( $links ) {
+		$plugin_links = array();
+
+		if ( defined( 'WOOCOMMERCE_VERSION' ) ) {
+			if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
+				$settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' );
+			} else {
+				$settings_url = admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' );
+			}
+
+			$plugin_links[] = '<a href="' . esc_url( $settings_url ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
+		}
+
+		$plugin_links[] = '<a href="https://claudiosmweb.freshdesk.com/support/solutions/folders/1000209510" target="_blank">' . __( 'Documentation', 'woocommerce-pagseguro' ) . '</a>';
+		$plugin_links[] = '<a href="https://claudiosmweb.freshdesk.com/support/tickets/new" target="_blank">' . __( 'Support', 'woocommerce-pagseguro' ) . '</a>';
+
+		return array_merge( $plugin_links, $links );
 	}
 
 	/**
