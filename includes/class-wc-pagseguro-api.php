@@ -269,6 +269,9 @@ class WC_PagSeguro_API {
 			case 53029 :
 				return __( '<strong>Neighborhood</strong> is a required field.', 'woocommerce-pagseguro' );
 				break;
+			case 53046 :
+				return __( 'Credit card holder CPF invalid.', 'woocommerce-pagseguro' );
+				break;
 			case 53122 :
 				return __( 'Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox.', 'woocommerce-pagseguro' );
 				break;
