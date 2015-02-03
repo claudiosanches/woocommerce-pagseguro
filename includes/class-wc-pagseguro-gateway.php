@@ -440,15 +440,17 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				);
 			}
 		} else {
+			$use_shipping = isset( $_POST['ship_to_different_address'] ) ? true : false;
+
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 				return array(
 					'result'   => 'success',
-					'redirect' => $order->get_checkout_payment_url( true )
+					'redirect' => add_query_arg( array( 'use_shipping' => $use_shipping ), $order->get_checkout_payment_url( true ) )
 				);
 			} else {
 				return array(
 					'result'   => 'success',
-					'redirect' => add_query_arg( 'order', $order->id, add_query_arg( 'key', $order->order_key, get_permalink( woocommerce_get_page_id( 'pay' ) ) ) )
+					'redirect' => add_query_arg( array( 'order' => $order->id, 'key' => $order->order_key, 'use_shipping' => $use_shipping ), get_permalink( woocommerce_get_page_id( 'pay' ) ) )
 				);
 			}
 		}
@@ -464,8 +466,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function receipt_page( $order_id ) {
 		global $woocommerce;
 
-		$order    = new WC_Order( $order_id );
-		$response = $this->api->do_checkout_request( $order, $_POST );
+		$order        = new WC_Order( $order_id );
+		$request_data = $_POST;
+		if ( isset( $_GET['use_shipping'] ) && true == $_GET['use_shipping'] ) {
+			$request_data['ship_to_different_address'] = true;
+		}
+
+		$response = $this->api->do_checkout_request( $order, $request_data );
 
 		if ( $response['url'] ) {
 			// Lightbox script.
