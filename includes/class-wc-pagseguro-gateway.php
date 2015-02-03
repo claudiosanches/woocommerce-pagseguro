@@ -235,6 +235,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'description' => __( 'Choose how the customer will interact with the PagSeguro. Redirect (Client goes to PagSeguro page) or Lightbox (Inside your store)', 'woocommerce-pagseguro' ),
 				'desc_tip'    => true,
 				'default'     => 'direct',
+				'class'       => 'wc-enhanced-select',
 				'options'     => array(
 					'redirect'    => __( 'Redirect (default)', 'woocommerce-pagseguro' ),
 					'lightbox'    => __( 'Lightbox', 'woocommerce-pagseguro' ),

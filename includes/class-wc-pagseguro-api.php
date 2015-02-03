@@ -420,8 +420,10 @@ class WC_PagSeguro_API {
 			}
 
 			// Discount.
-			if ( 0 < $order->get_order_discount() ) {
-				$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.3', '<' ) ) {
+				if ( 0 < $order->get_order_discount() ) {
+					$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
+				}
 			}
 		}
 
