@@ -3,8 +3,8 @@ Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 2.8.0
+Tested up to: 4.1
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -283,6 +283,10 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 == Changelog ==
 
+= 2.8.1 - 2015/02/07 =
+
+* Melhorado o suporte do Checkout Transparente no WooCommerce 2.3.
+
 = 2.8.0 - 2015/02/03 =
 
 * Adicionado suporte para o WooCommerce 2.3.
@@ -477,13 +481,14 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 == Upgrade Notice ==
 
-= 2.8.0 =
+= 2.8.1 =
 
 * Adicionado suporte para o WooCommerce 2.3.
 * Adicionado suporte para WooCommerce Multilingual. 
 * Adicionado recurso para utilizar o endereço de entrega no Lightbox (antes funcionava apenas com checkout normal ou transparente).
 * Adicionada alerta de erro para CPF invalido com checkout transparente.
 * Correções na tradução do plugin.
+* Melhorado o suporte do Checkout Transparente no WooCommerce 2.3.
 
 == License ==
 
