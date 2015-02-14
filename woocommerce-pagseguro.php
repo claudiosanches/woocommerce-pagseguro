@@ -163,6 +163,6 @@ class WC_PagSeguro {
 	}
 }
 
-add_action( 'plugins_loaded', array( 'WC_PagSeguro', 'get_instance' ), 0 );
+add_action( 'plugins_loaded', array( 'WC_PagSeguro', 'get_instance' ) );
 
 endif;
