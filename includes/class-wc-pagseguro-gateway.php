@@ -74,23 +74,25 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Displays notifications when the admin has something wrong with the configuration.
 	 */
 	public function admin_notices() {
-		// Checks if email is not empty.
-		if ( empty( $this->email ) ) {
-			include_once 'views/html-notice-email-missing.php';
-		}
+		if ( 'yes' == $this->get_option( 'enabled' ) ) {
+			// Checks if email is not empty.
+			if ( empty( $this->email ) ) {
+				include_once 'views/html-notice-email-missing.php';
+			}
 
-		// Checks if token is not empty.
-		if ( empty( $this->token ) ) {
-			include_once 'views/html-notice-token-missing.php';
-		}
+			// Checks if token is not empty.
+			if ( empty( $this->token ) ) {
+				include_once 'views/html-notice-token-missing.php';
+			}
 
-		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
-			include_once 'views/html-notice-ecfb-missing.php';
-		}
+			if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+				include_once 'views/html-notice-ecfb-missing.php';
+			}
 
-		// Checks that the currency is supported
-		if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
-			include_once 'views/html-notice-currency-not-supported.php';
+			// Checks that the currency is supported
+			if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
+				include_once 'views/html-notice-currency-not-supported.php';
+			}
 		}
 	}
 
@@ -112,7 +114,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function is_available() {
 		// Test if is valid for use.
-		$available = ( 'yes' == $this->settings['enabled'] ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->using_supported_currency();
+		$available = ( 'yes' == $this->get_option( 'enabled' ) ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->using_supported_currency();
 
 		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
 			$available = false;
@@ -147,7 +149,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Checkout scripts.
 	 */
 	public function checkout_scripts() {
-		if ( is_checkout() ) {
+		if ( is_checkout() && $this->is_available() ) {
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
 				$order_received_page = get_query_var( 'order-received' );
 			} else {
@@ -715,7 +717,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return string                Payment instructions.
 	 */
-	public function email_instructions( $order, $sent_to_admin, $plain_text ) {
+	public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
 		if ( $sent_to_admin || 'on-hold' !== $order->status || $this->id !== $order->payment_method ) {
 			return;
 		}
