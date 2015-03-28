@@ -308,7 +308,7 @@ class WC_PagSeguro_API {
 	/**
 	 * Do requests in the PagSeguro API.
 	 *
-	 * @param  string $endpoint API Endpoint.
+	 * @param  string $url      URL.
 	 * @param  string $method   Request method.
 	 * @param  array  $data     Request data.
 	 * @param  array  $headers  Request headers.
