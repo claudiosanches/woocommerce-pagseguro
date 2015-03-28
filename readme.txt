@@ -92,26 +92,11 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 = Configurações no PagSeguro: =
 
-**Configuração Segura (recomendado):**
-
 No PagSeguro basta aceitar receber pagamentos apenas pela **API**.
 
 Você deve ativar esta opção em "Integrações" > "[Pagamentos via API](https://pagseguro.uol.com.br/integracao/pagamentos-via-api.jhtml)".
 
 Apenas com isso já é possível receber os pagamentos e fazer o retorno automático de dados.
-
-**Configuração menos segura (não recomendado):**
-
-Para esta opção você deve deixar a opção de **Pagamentos via API** desativada e configurar a página de redirecionamento.
-
-Desta forma você deve ir até "Integrações" > "[Página de redirecionamento](https://pagseguro.uol.com.br/integracao/pagina-de-redirecionamento.jhtml)":
-
-Ative a opção de "Página fixa de redirecionamento" e configure ela como por exemplo:
-
-	http://seusite.com/finalizar-compra/pedido-recebido/
-
-Habilite também o retorno automático de dados;
-Deve ser ativado em "Integrações" > "[Retorno automático de dados](https://pagseguro.uol.com.br/integracao/retorno-automatico-de-dados.jhtml)".
 
 = Configurações do Plugin: =
 
