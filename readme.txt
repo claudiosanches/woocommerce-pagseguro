@@ -159,8 +159,8 @@ Este plugin esta licenciado como GPL.
 * Ter instalado o plugin WooCommerce 2.0 ou superior.
 * Possuir uma conta no PagSeguro.
 * Gerar um token de segurança no PagSeguro.
+* Ativar os pagamentos via API.
 * Utilizar uma das duas opções de configuração no PagSeguro (veja elas no guia de [instalação do plugin](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/)).
-* Desativar os pagamentos via API.
 
 = Como funciona o PagSeguro? =
 
