@@ -29,6 +29,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->description       = $this->get_option( 'description' );
 		$this->email             = $this->get_option( 'email' );
 		$this->token             = $this->get_option( 'token' );
+		$this->installment       = $this->get_option( 'installment' );
 		$this->method            = $this->get_option( 'method', 'direct' );
 		$this->tc_credit         = $this->get_option( 'tc_credit', 'yes' );
 		$this->tc_transfer       = $this->get_option( 'tc_transfer', 'yes' );
@@ -230,6 +231,28 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'type'        => 'text',
 				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'woocommerce-pagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default'     => ''
+			),
+			'installment' => array(
+				'title'       => __( 'Parcelamento (Sem Juros)', 'woocommerce-pagseguro' ),
+				'type'        => 'select',
+				'description' => sprintf( __( 'Informe aqui o parcelamento que você configurou no PagSeguro.', 'woocommerce-pagseguro' )),
+				'desc_tip'    => true,
+				'default'     => 'zero',
+				'class'       => 'wc-enhanced-select',
+				'options'     => array(
+					'1'	=> __( 'Desativado (Padrão)', 'woocommerce-pagseguro' ),
+					'2'	=> __( '2x Sem Juros', 'woocommerce-pagseguro' ),
+					'3'	=> __( '3x Sem Juros', 'woocommerce-pagseguro' ),
+					'4'	=> __( '4x Sem Juros', 'woocommerce-pagseguro' ),
+					'5'	=> __( '5x Sem Juros', 'woocommerce-pagseguro' ),
+					'6'	=> __( '6x Sem Juros', 'woocommerce-pagseguro' ),
+					'7' => __( '7x Sem Juros', 'woocommerce-pagseguro' ),
+					'8' => __( '8x Sem Juros', 'woocommerce-pagseguro' ),
+					'9' => __( '9x Sem Juros', 'woocommerce-pagseguro' ),
+					'10' => __( '10x Sem Juros', 'woocommerce-pagseguro' ),
+					'11' => __( '11x Sem Juros', 'woocommerce-pagseguro' ),
+					'12' => __( '12x Sem Juros', 'woocommerce-pagseguro' ),
+				)
 			),
 			'method' => array(
 				'title'       => __( 'Integration method', 'woocommerce-pagseguro' ),
