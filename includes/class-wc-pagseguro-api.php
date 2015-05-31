@@ -317,9 +317,8 @@ class WC_PagSeguro_API {
 	 */
 	protected function do_request( $url, $method = 'POST', $data = array(), $headers = array() ) {
 		$params = array(
-			'method'    => $method,
-			'sslverify' => false,
-			'timeout'   => 60
+			'method'  => $method,
+			'timeout' => 60
 		);
 
 		if ( 'POST' == $method && ! empty( $data ) ) {
@@ -330,7 +329,7 @@ class WC_PagSeguro_API {
 			$params['headers'] = $headers;
 		}
 
-		return wp_remote_post( $url, $params );
+		return wp_safe_remote_post( $url, $params );
 	}
 
 	/**
