@@ -225,8 +225,8 @@ Para quem estiver utilizando o **Checkout Transparente** é obrigatório o uso d
 Por último é possível ativar a opção de **Log de depuração** nas configurações do plugin e tentar novamente fechar um pedido (você deve tentar fechar um pedido para que o log será gerado e o erro gravado nele).  
 Com o log é possível saber exatamente o que esta dando de errado com a sua instalação.
 
-Caso você não entenda o conteúdo do log não tem problema, você pode me enviar um [e-mail](http://claudiosmweb.com/contato/) com o link do log (utilize o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com) para salvar o conteúdo do log).  
-ATENÇÃO! Eu não vou responder nenhum e-mail que não esteja com o arquivo de log exatamente da forma que eu estou pedindo aqui!
+Caso você não entenda o conteúdo do log não tem problema, você pode me abrir um [tópico no fórum do plugin](https://wordpress.org/support/plugin/woocommerce-pagseguro#postform) com o link do log (utilize o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com) para salvar o conteúdo do log).  
+ATENÇÃO!
 
 = A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
 
@@ -253,7 +253,7 @@ Caso você tenha este problema, basta marcar ativar a opção **Enviar apenas o 
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
-Por favor, caso você tenha algum problema com o funcionamento do plugin, envie o log (ative ele nas opções do plugin e tente fazer uma compra, ele vai ficar dentro da pasta wp-content/plugins/woocommerce/logs/) usando o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com), desta forma fica mais rápido para fazer o diagnóstico.
+Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra um tópico no fórum do plugin](https://wordpress.org/support/plugin/woocommerce-pagseguro#postform) com o link arquivo de log (ative ele nas opções do plugin e tente fazer uma compra, depois vá até WooCommerce > Status do Sistema, selecione o log do *pagseguro* e copie os dados, depois crie um link usando o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com)), desta forma fica mais rápido para fazer o diagnóstico.
 
 Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/support/plugin/woocommerce-pagseguro).
 
