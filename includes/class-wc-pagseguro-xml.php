@@ -90,7 +90,14 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$document->addChild( 'type', 'CPF' );
 			$document->addChild( 'value', $this->get_numbers( $order->billing_cpf ) );
 		}
-
+		
+		if ( isset( $order->billing_cnpj ) && ! empty( $order->billing_cnpj ) ) {
+			$documents = $sender->addChild( 'documents' );
+			$document  = $documents->addChild( 'document' );
+			$document->addChild( 'type', 'CNPJ' );
+			$document->addChild( 'value', $this->get_numbers( $order->billing_cnpj ) );
+		}
+		
 		if ( isset( $order->billing_phone ) && ! empty( $order->billing_phone ) ) {
 			$phone_number = $this->get_numbers( $order->billing_phone );
 			$phone        = $sender->addChild( 'phone' );
