@@ -225,7 +225,7 @@ Sim, o status é alterado automaticamente usando a API de notificações de muda
 
 Caso o status dos seus pedidos não estiverem sendo alterados pode ser por causa de um dos motivos a baixo:
 
-* Site com CloudFlare, pois por padrão comunicação de outros servidores com o seu serão bloqueadas. Você pode tentar desbloquear seguindo este tutorial: [Como reparar o problema de retorno do pagseguro no CloudFlare](http://www.carlosstenzel.com/TI/como-reparar-o-problema-de-retorno-do-pagseguro-no-cloudflare/).
+* Site com CloudFlare, pois por padrão sera bloqueada qualquer comunicação de outros servidores com o seu. Você pode tentar desbloquear seguindo este tutorial: [Como reparar o problema de retorno do pagseguro no CloudFlare](http://www.carlosstenzel.com/TI/como-reparar-o-problema-de-retorno-do-pagseguro-no-cloudflare/).
 * Plugin de segurança como o "iThemes Security" com a opção para adicionar a lista do HackRepair.com no .htaccess do site. Acontece que o user-agent do PagSeguro esta no meio da lista e vai bloquear qualquer comunicação. Você pode remover isso da lista, basta encontrar onde bloquea o user-agent "jakarta" e deletar ou criar uma regra para aceitar os IPs do PagSeguro).
 * `mod_security` habilitado, neste caso vai acontecer igual com o CloudFlare bloqueando qualquer comunicação de outros servidores com o seu. Como solução você pode desativar ou permitir os IPs do PagSeguro (você pode encontrar uma lista de IPs do PagSeguro no tutorial sobre o CloudFlare).
 
@@ -251,8 +251,6 @@ Caso você tenha este problema, basta marcar ativar a opção **Enviar apenas o 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
 Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra um tópico no fórum do plugin](https://wordpress.org/support/plugin/woocommerce-pagseguro#postform) com o link arquivo de log (ative ele nas opções do plugin e tente fazer uma compra, depois vá até WooCommerce > Status do Sistema, selecione o log do *pagseguro* e copie os dados, depois crie um link usando o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com)), desta forma fica mais rápido para fazer o diagnóstico.
-
-Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/support/plugin/woocommerce-pagseguro).
 
 == Screenshots ==
 
