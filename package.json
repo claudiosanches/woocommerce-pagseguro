@@ -1,7 +1,7 @@
 {
   "name": "woocommerce-pagseguro",
   "description": "Gateway de pagamento PagSeguro para WooCommerce",
-  "version": "2.8.1",
+  "version": "2.9.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/claudiosmweb/woocommerce-pagseguro"
@@ -15,9 +15,6 @@
     "grunt-contrib-uglify": "^0.5.1",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-imagemin": "^0.7.1",
-    "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-checktextdomain": "^0.1.1",
-    "grunt-wp-i18n": "^0.4.6",
-    "grunt-po2mo": "^0.1.0"
+    "grunt-contrib-cssmin": "^0.10.0"
   }
 }
