@@ -83,9 +83,6 @@ class WC_PagSeguro {
 	 * Load the plugin text domain for translation.
 	 */
 	public function load_plugin_textdomain() {
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-pagseguro' );
-
-		load_textdomain( 'woocommerce-pagseguro', trailingslashit( WP_LANG_DIR ) . 'woocommerce-pagseguro/woocommerce-pagseguro-' . $locale . '.mo' );
 		load_plugin_textdomain( 'woocommerce-pagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
