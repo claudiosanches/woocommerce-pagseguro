@@ -17,7 +17,6 @@ $reviews_url = 'https://wordpress.org/support/view/plugin-reviews/woocommerce-pa
 <?php if ( apply_filters( 'woocommerce_pagseguro_help_message', true ) ) : ?>
 	<div class="updated woocommerce-message">
 		<p><?php printf( __( 'Help us keep the %s plugin free making a %s or rate %s on %s. Thank you in advance!', 'woocommerce-pagseguro' ), '<strong>' . __( 'WooCommerce PagSeguro', 'woocommerce-pagseguro' ) . '</strong>', '<a href="http://claudiosmweb.com/doacoes/">' . __( 'donation', 'woocommerce-pagseguro' ) . '</a>', '<a href="' . $reviews_url . '" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a>', '<a href="' . $reviews_url . '" target="_blank">' . __( 'WordPress.org', 'woocommerce-pagseguro' ) . '</a>' ); ?></p>
-		<p><?php printf( __( 'Need help? Check the %s or %s.', 'woocommerce-pagseguro' ), '<a href="https://claudiosmweb.freshdesk.com/support/solutions/folders/1000209510" target="_blank">' . __( 'official documentation', 'woocommerce-pagseguro' ) . '</a>', '<a href="https://claudiosmweb.freshdesk.com/support/tickets/new" target="_blank">' . __( 'contact us', 'woocommerce-pagseguro' ) . '</a>' ); ?></p>
 	</div>
 <?php endif; ?>
 
