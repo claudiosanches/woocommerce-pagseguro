@@ -2,9 +2,9 @@
 Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
-Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 2.8.1
+Requires at least: 4.0
+Tested up to: 4.2
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +48,7 @@ Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for 
 
 = Instalação =
 
-Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/).
+Confira o nosso guia de instalação e configuração do PagSeguro na aba [Installation](http://wordpress.org/plugins/woocommerce-pagseguro/installation/).
 
 = Integração =
 
@@ -61,7 +61,7 @@ Este plugin funciona perfeitamente em conjunto com:
 
 Você pode esclarecer suas dúvidas usando:
 
-* A nossa sessão de [FAQ](http://wordpress.org/extend/plugins/woocommerce-pagseguro/faq/).
+* A nossa sessão de [FAQ](http://wordpress.org/plugins/woocommerce-pagseguro/faq/).
 * Utilizando o nosso [fórum no Github](https://github.com/claudiosmweb/woocommerce-pagseguro).
 * Criando um tópico no [fórum de ajuda do WordPress](http://wordpress.org/support/plugin/woocommerce-pagseguro).
 
@@ -88,7 +88,7 @@ Você pode contribuir com código-fonte em nossa página no [GitHub](https://git
 
 = Requerimentos: =
 
-É necessário possuir uma conta no [PagSeguro](http://pagseguro.uol.com.br/) e ter instalado o [WooCommerce](http://wordpress.org/extend/plugins/woocommerce/).
+É necessário possuir uma conta no [PagSeguro](http://pagseguro.uol.com.br/) e ter instalado o [WooCommerce](http://wordpress.org/plugins/woocommerce/).
 
 = Configurações no PagSeguro: =
 
@@ -127,14 +127,6 @@ Isto é necessário porque é obrigatório o envio de CPF para o PagSeguro, alé
 
 Note que é necessário aprovação do PagSeguro para utilizar o Checkout Transparente, saiba mais em "[Como receber pagamentos pelo PagSeguro](https://pagseguro.uol.com.br/receba-pagamentos.jhtml)".
 
-= Configurações no WooCommerce =
-
-No WooCommerce 2.0 ou superior existe uma opção para cancelar a compra e liberar o estoque depois de alguns minutos.
-
-Esta opção não funciona muito bem com o PagSeguro, pois pagamentos por boleto bancário pode demorar até 48 horas para serem validados.
-
-Para corrigir isso é necessário ir em "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpar (deixe em branco) a opção **Manter Estoque (minutos)**.
-
 Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
 == Frequently Asked Questions ==
@@ -160,7 +152,7 @@ Este plugin esta licenciado como GPL.
 * Possuir uma conta no PagSeguro.
 * Gerar um token de segurança no PagSeguro.
 * Ativar os pagamentos via API.
-* Utilizar uma das duas opções de configuração no PagSeguro (veja elas no guia de [instalação do plugin](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/)).
+* Utilizar uma das duas opções de configuração no PagSeguro (veja elas no guia de [instalação do plugin](http://wordpress.org/plugins/woocommerce-pagseguro/installation/)).
 
 = Como funciona o PagSeguro? =
 
@@ -199,7 +191,7 @@ A opção de pagamento pelo PagSeguro funciona apenas com o Brasil.
 
 = É possível enviar os dados de "Número", "Bairro" e "CPF" para o PagSeguro? =
 
-Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/).
+Sim é possível, basta utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
 = O pedido foi pago e ficou com o status de "processando" e não como "concluído", isto esta certo ? =
 
@@ -220,17 +212,22 @@ Note que caso você esteja utilizando a opção de **sandbox** é necessário us
 
 Se você tem certeza que o Token e Login estão corretos você deve acessar a página "WooCommerce > Status do Sistema" e verificar se **fsockopen** e **cURL** estão ativos. É necessário procurar ajuda do seu provedor de hospedagem caso você tenha o **fsockopen** e/ou o **cURL** desativados.
 
-Para quem estiver utilizando o **Checkout Transparente** é obrigatório o uso do plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/extend/plugins/woocommerce-extra-checkout-fields-for-brazil/) para enviar o CPF ao PagSeguro, caso o contrário será impossível de finalizar o pedido, veja no [guia de instalação](http://wordpress.org/extend/plugins/woocommerce-pagseguro/installation/) como fazer isso.
+Para quem estiver utilizando o **Checkout Transparente** é obrigatório o uso do plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/) para enviar o CPF ao PagSeguro, caso o contrário será impossível de finalizar o pedido, veja no [guia de instalação](http://wordpress.org/plugins/woocommerce-pagseguro/installation/) como fazer isso.
 
 Por último é possível ativar a opção de **Log de depuração** nas configurações do plugin e tentar novamente fechar um pedido (você deve tentar fechar um pedido para que o log será gerado e o erro gravado nele).  
 Com o log é possível saber exatamente o que esta dando de errado com a sua instalação.
 
 Caso você não entenda o conteúdo do log não tem problema, você pode me abrir um [tópico no fórum do plugin](https://wordpress.org/support/plugin/woocommerce-pagseguro#postform) com o link do log (utilize o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com) para salvar o conteúdo do log).  
-ATENÇÃO!
 
-= A compra é cancelada após alguns minutos, mesmo com o pedido sendo pago, como resolvo isso? =
+= O status do pedido não é alterado automaticamente? =
 
-Para resolver este problema vá até "WooCommerce" > "Configurações" > "Produtos" > "Inventário" e limpe (deixe em branco) a opção **Manter Estoque (minutos)**.
+Sim, o status é alterado automaticamente usando a API de notificações de mudança de status do PagSeguro.
+
+Caso o status dos seus pedidos não estiverem sendo alterados pode ser por causa de um dos motivos a baixo:
+
+* Site com CloudFlare, pois por padrão comunicação de outros servidores com o seu serão bloqueadas. Você pode tentar desbloquear seguindo este tutorial: [Como reparar o problema de retorno do pagseguro no CloudFlare](http://www.carlosstenzel.com/TI/como-reparar-o-problema-de-retorno-do-pagseguro-no-cloudflare/).
+* Plugin de segurança como o "iThemes Security" com a opção para adicionar a lista do HackRepair.com no .htaccess do site. Acontece que o user-agent do PagSeguro esta no meio da lista e vai bloquear qualquer comunicação. Você pode remover isso da lista, basta encontrar onde bloquea o user-agent "jakarta" e deletar ou criar uma regra para aceitar os IPs do PagSeguro).
+* `mod_security` habilitado, neste caso vai acontecer igual com o CloudFlare bloqueando qualquer comunicação de outros servidores com o seu. Como solução você pode desativar ou permitir os IPs do PagSeguro (você pode encontrar uma lista de IPs do PagSeguro no tutorial sobre o CloudFlare).
 
 = Funciona com o Lightbox do PagSeguro? =
 
@@ -267,6 +264,10 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 6. Pagamento com boleto bancário usando o Checkout Transparente.
 
 == Changelog ==
+
+= 2.9.0 - 2015/06/23 =
+
+* Adicionado método para ignorar a opção "Manter Estoque (minutos)" do WooCommerce.
 
 = 2.8.1 - 2015/02/07 =
 
@@ -466,14 +467,9 @@ Com o log em mãos abra um [tópico em nosso fórum](http://wordpress.org/suppor
 
 == Upgrade Notice ==
 
-= 2.8.1 =
+= 2.9.0 =
 
-* Adicionado suporte para o WooCommerce 2.3.
-* Adicionado suporte para WooCommerce Multilingual. 
-* Adicionado recurso para utilizar o endereço de entrega no Lightbox (antes funcionava apenas com checkout normal ou transparente).
-* Adicionada alerta de erro para CPF invalido com checkout transparente.
-* Correções na tradução do plugin.
-* Melhorado o suporte do Checkout Transparente no WooCommerce 2.3.
+* Adicionado método para ignorar a opção "Manter Estoque (minutos)" do WooCommerce.
 
 == License ==
 
