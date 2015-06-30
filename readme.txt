@@ -250,7 +250,7 @@ Caso você tenha este problema, basta marcar ativar a opção **Enviar apenas o 
 
 = Quais URLs eu devo usar para configurar "Notificação de transação" e "Página de redirecionamento"? =
 
-Não é necessário configurar qualquer URL para "Notificação de transação" ou para "Página de redirecionamento", o plugin já diz para o PagSeguro quais URLs devem ser utilizadas.
+Não é necessário configurar qualquer URL para "Notificação de transação" ou para "Página de redirecionamento", o plugin já diz para o PagSeguro quais URLs serão utilizadas.
 
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
