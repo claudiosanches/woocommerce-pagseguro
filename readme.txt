@@ -248,6 +248,10 @@ Para conseguir o token de desenvolver você deve acessar "[PagSeguro Sandbox > D
 
 Caso você tenha este problema, basta marcar ativar a opção **Enviar apenas o total do pedido** na página de configurações do plugin.
 
+= Quais URLs eu devo usar para configurar "Notificação de transação" e "Página de redirecionamento"? =
+
+Não é necessário configurar qualquer URL para "Notificação de transação" ou para "Página de redirecionamento", o plugin já diz para o PagSeguro quais URLs devem ser utilizadas.
+
 = Mais dúvidas relacionadas ao funcionamento do plugin? =
 
 Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra um tópico no fórum do plugin](https://wordpress.org/support/plugin/woocommerce-pagseguro#postform) com o link arquivo de log (ative ele nas opções do plugin e tente fazer uma compra, depois vá até WooCommerce > Status do Sistema, selecione o log do *pagseguro* e copie os dados, depois crie um link usando o [pastebin.com](http://pastebin.com) ou o [gist.github.com](http://gist.github.com)), desta forma fica mais rápido para fazer o diagnóstico.
