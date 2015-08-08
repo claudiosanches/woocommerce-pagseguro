@@ -342,7 +342,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$cart_total = $this->get_order_total();
 
 		if ( 'transparent' == $this->method ) {
-			wc_get_template_part( 'transparent-checkout-form.php', array(
+			wc_get_template( 'transparent-checkout-form.php', array(
 				'cart_total'        => $cart_total,
 				'tc_credit'         => $this->tc_credit,
 				'tc_transfer'       => $this->tc_transfer,
@@ -442,7 +442,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				}
 			' );
 
-			wc_get_template_part( 'lightbox-checkout.php', array(
+			wc_get_template( 'lightbox-checkout.php', array(
 				'cancel_order_url'    => $order->get_cancel_order_url(),
 				'payment_url'         => $response['url'],
 				'lightbox_script_url' => $this->api->get_lightbox_url(),
@@ -632,7 +632,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$data = get_post_meta( $order_id, '_wc_pagseguro_payment_data', true );
 
 		if ( isset( $data['type'] ) ) {
-			wc_get_template_part( 'payment-instructions.php', array(
+			wc_get_template( 'payment-instructions.php', array(
 				'type'         => $data['type'],
 				'link'         => $data['link'],
 				'method'       => $data['method'],
@@ -659,14 +659,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		if ( isset( $data['type'] ) ) {
 			if ( $plain_text ) {
-				wc_get_template_part( 'emails/plain-instructions.php', array(
+				wc_get_template( 'emails/plain-instructions.php', array(
 					'type'         => $data['type'],
 					'link'         => $data['link'],
 					'method'       => $data['method'],
 					'installments' => $data['installments'],
 				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 			} else {
-				wc_get_template_part( 'emails/html-instructions.php', array(
+				wc_get_template( 'emails/html-instructions.php', array(
 					'type'         => $data['type'],
 					'link'         => $data['link'],
 					'method'       => $data['method'],
