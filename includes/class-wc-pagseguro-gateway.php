@@ -46,7 +46,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->api = new WC_PagSeguro_API( $this );
 
 		// Main actions.
-		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( $this, 'check_ipn_response' ) );
+		add_action( 'woocommerce_api_wc_pagseguro_gateway', array( $this, 'ipn_handler' ) );
 		add_action( 'valid_pagseguro_ipn_request', array( $this, 'update_order_status' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
@@ -461,9 +461,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check API Response.
+	 * IPN handler.
 	 */
-	public function check_ipn_response() {
+	public function ipn_handler() {
 		@ob_clean();
 
 		$ipn = $this->api->process_ipn_request( $_POST );
@@ -473,7 +473,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			do_action( 'valid_pagseguro_ipn_request', $ipn );
 			exit();
 		} else {
-			wp_die( __( 'PagSeguro Request Failure', 'woocommerce-pagseguro' ) );
+			$message = __( 'PagSeguro Request Unauthorized', 'woocommerce-pagseguro' );
+			wp_die( $message, $message, array( 'response' => 401 ) );
 		}
 	}
 
