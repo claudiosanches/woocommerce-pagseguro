@@ -412,9 +412,9 @@ class WC_PagSeguro_API {
 						$item_name = $order_item['name'];
 
 						if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.4.0', '<' ) ) {
-							$item_meta = new WC_Order_Item_Meta( $item['item_meta'] );
+							$item_meta = new WC_Order_Item_Meta( $order_item['item_meta'] );
 						} else {
-							$item_meta = new WC_Order_Item_Meta( $item );
+							$item_meta = new WC_Order_Item_Meta( $order_item );
 						}
 
 						if ( $meta = $item_meta->display( true, true ) ) {
