@@ -144,13 +144,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function checkout_scripts() {
 		if ( is_checkout() && $this->is_available() ) {
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-				$order_received_page = get_query_var( 'order-received' );
-			} else {
-				$order_received_page = ( isset( $_GET['order'] ) && isset( $_GET['key'] ) );
-			}
-
-			if ( ! $order_received_page ) {
+			if ( ! get_query_var( 'order-received' ) ) {
 				$session_id = $this->api->get_session_id();
 				$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
@@ -392,17 +386,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		} else {
 			$use_shipping = isset( $_POST['ship_to_different_address'] ) ? true : false;
 
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-				return array(
-					'result'   => 'success',
-					'redirect' => add_query_arg( array( 'use_shipping' => $use_shipping ), $order->get_checkout_payment_url( true ) )
-				);
-			} else {
-				return array(
-					'result'   => 'success',
-					'redirect' => add_query_arg( array( 'order' => $order->id, 'key' => $order->order_key, 'use_shipping' => $use_shipping ), get_permalink( wc_get_page_id( 'pay' ) ) )
-				);
-			}
+			return array(
+				'result'   => 'success',
+				'redirect' => add_query_arg( array( 'use_shipping' => $use_shipping ), $order->get_checkout_payment_url( true ) )
+			);
 		}
 	}
 
