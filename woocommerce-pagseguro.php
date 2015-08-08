@@ -42,7 +42,6 @@ class WC_PagSeguro {
 	private function __construct() {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 		// Checks with WooCommerce is installed.
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
@@ -51,6 +50,7 @@ class WC_PagSeguro {
 			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
 			add_filter( 'woocommerce_cancel_unpaid_order', array( $this, 'stop_cancel_unpaid_orders' ), 10, 2 );
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		} else {
 			add_action( 'admin_notices', array( $this, 'woocommerce_missing_notice' ) );
 		}
@@ -96,18 +96,7 @@ class WC_PagSeguro {
 	public function plugin_action_links( $links ) {
 		$plugin_links = array();
 
-		if ( defined( 'WOOCOMMERCE_VERSION' ) ) {
-			if ( version_compare( WOOCOMMERCE_VERSION, '2.1', '>=' ) ) {
-				$settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' );
-			} else {
-				$settings_url = admin_url( 'admin.php?page=woocommerce_settings&tab=payment_gateways&section=WC_PagSeguro_Gateway' );
-			}
-
-			$plugin_links[] = '<a href="' . esc_url( $settings_url ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
-		}
-
-		$plugin_links[] = '<a href="https://claudiosmweb.freshdesk.com/support/solutions/folders/1000209510" target="_blank">' . __( 'Documentation', 'woocommerce-pagseguro' ) . '</a>';
-		$plugin_links[] = '<a href="https://claudiosmweb.freshdesk.com/support/tickets/new" target="_blank">' . __( 'Support', 'woocommerce-pagseguro' ) . '</a>';
+		$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
 
 		return array_merge( $plugin_links, $links );
 	}
