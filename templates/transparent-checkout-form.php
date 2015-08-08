@@ -4,7 +4,7 @@
  *
  * @author  Claudio_Sanches
  * @package WooCommerce_PagSeguro/Templates
- * @version 2.7.0
+ * @version 2.10.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <fieldset id="pagseguro-payment-form">
-	<input type="hidden" id="pagseguro-cart-total" value="<?php echo number_format( $cart_total, 2, '.', '' ); ?>" />
+	<input type="hidden" id="pagseguro-cart-total" value="<?php echo esc_attr( number_format( $cart_total, 2, '.', '' ) ); ?>" />
 
 	<ul id="pagseguro-payment-methods">
 		<?php if ( 'yes' == $tc_credit ) : ?>
@@ -94,11 +94,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<i id="pagseguro-icon-ticket"></i>
 				<?php _e( 'The order will be confirmed only after the payment approval.', 'woocommerce-pagseguro' ); ?>
 				<?php if ( 'yes' === $tc_ticket_message ) : ?>
-				<br />
-				<strong><?php _e( 'Tax', 'woocommerce-pagseguro' ); ?>:</strong> <?php _e( 'R$ 1,00 (rate applied to cover management risk costs of the payment method).', 'woocommerce-pagseguro' ); ?>
+					<br />
+					<strong><?php _e( 'Tax', 'woocommerce-pagseguro' ); ?>:</strong> <?php _e( 'R$ 1,00 (rate applied to cover management risk costs of the payment method).', 'woocommerce-pagseguro' ); ?>
 				<?php endif; ?>
 			</p>
-			<p><?php _e( '*  After clicking "Proceed to payment" you will have access to banking ticket which you can print and pay in your internet banking or in a lottery retailer.', 'woocommerce-pagseguro' ); ?></p>
+			<p><?php _e( '* After clicking "Proceed to payment" you will have access to banking ticket which you can print and pay in your internet banking or in a lottery retailer.', 'woocommerce-pagseguro' ); ?></p>
 			<div class="clear"></div>
 		</div>
 	<?php endif; ?>

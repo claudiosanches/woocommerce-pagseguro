@@ -193,7 +193,7 @@ msgstr ""
 
 #: ../templates/transparent-checkout-form.php:101
 msgid ""
-"*  After clicking \"Proceed to payment\" you will have access to banking "
+"* After clicking \"Proceed to payment\" you will have access to banking "
 "ticket which you can print and pay in your internet banking or in a lottery "
 "retailer."
 msgstr ""
