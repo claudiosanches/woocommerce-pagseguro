@@ -3,8 +3,8 @@ Contributors: claudiosanches, Gabriel Reguly
 Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
-Tested up to: 4.2
-Stable tag: 2.9.0
+Tested up to: 4.3
+Stable tag: 2.10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,7 @@ Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pa
 
 = Compatibilidade =
 
-Compatível com as versões 2.0.x, 2.1.x, 2.2.x, 2.3.x do WooCommerce.
+Compatível com as versões 2.1.x, 2.2.x, 2.3.x e 2.4.x do WooCommerce.
 
 Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
@@ -137,7 +137,7 @@ Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
 = What is needed to use this plugin? =
 
-* WooCommerce version 2.0 or latter installed and active.
+* WooCommerce version 2.1 or latter installed and active.
 * Only one account on [PagSeguro](http://pagseguro.uol.com.br/ "PagSeguro").
 
 ### FAQ em Português: ###
@@ -148,7 +148,7 @@ Este plugin esta licenciado como GPL.
 
 = O que eu preciso para utilizar este plugin? =
 
-* Ter instalado o plugin WooCommerce 2.0 ou superior.
+* Ter instalado o plugin WooCommerce 2.1 ou superior.
 * Possuir uma conta no PagSeguro.
 * Gerar um token de segurança no PagSeguro.
 * Ativar os pagamentos via API.
@@ -266,6 +266,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 6. Pagamento com boleto bancário usando o Checkout Transparente.
 
 == Changelog ==
+
+= 2.10.0 - 2015/08/08 =
+
+* Adicionado suporte para WooCommerce 2.4.x
+* Removido suporte para WooCommerce 2.0.x
 
 = 2.9.0 - 2015/06/23 =
 
@@ -469,9 +474,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Upgrade Notice ==
 
-= 2.9.0 =
+= 2.10.0 =
 
-* Adicionado método para ignorar a opção "Manter Estoque (minutos)" do WooCommerce.
+* Adicionado suporte para WooCommerce 2.4.x
+* Removido suporte para WooCommerce 2.0.x
 
 == License ==
 
