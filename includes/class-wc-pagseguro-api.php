@@ -333,21 +333,6 @@ class WC_PagSeguro_API {
 	}
 
 	/**
-	 * Get WooCommerce return URL.
-	 *
-	 * @return string
-	 */
-	protected function get_wc_request_url() {
-		global $woocommerce;
-
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			return WC()->api_request_url( 'WC_PagSeguro_Gateway' );
-		} else {
-			return $woocommerce->api_request_url( 'WC_PagSeguro_Gateway' );
-		}
-	}
-
-	/**
 	 * Safe load XML.
 	 *
 	 * @param  string $source
@@ -501,7 +486,7 @@ class WC_PagSeguro_API {
 		// Checks if is localhost... PagSeguro not accept localhost urls!
 		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
 			$xml->add_redirect_url( $this->gateway->get_return_url( $order ) );
-			$xml->add_notification_url( $this->get_wc_request_url() );
+			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
 
 		$xml->add_max_uses( 1 );
@@ -533,7 +518,7 @@ class WC_PagSeguro_API {
 		$xml->add_sender_data( $order, $hash );
 		$xml->add_currency( get_woocommerce_currency() );
 		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
-			$xml->add_notification_url( $this->get_wc_request_url() );
+			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
 		$xml->add_items( $data['items'] );
 		$xml->add_extra_amount( $data['extra_amount'] );

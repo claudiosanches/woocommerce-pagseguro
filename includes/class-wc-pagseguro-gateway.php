@@ -10,8 +10,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Constructor for the gateway.
 	 */
 	public function __construct() {
-		global $woocommerce;
-
 		$this->id                 = 'pagseguro';
 		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'assets/images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
 		$this->method_title       = __( 'PagSeguro', 'woocommerce-pagseguro' );
@@ -41,11 +39,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		// Active logs.
 		if ( 'yes' == $this->debug ) {
-			if ( class_exists( 'WC_Logger' ) ) {
-				$this->log = new WC_Logger();
-			} else {
-				$this->log = $woocommerce->logger();
-			}
+			$this->log = new WC_Logger();
 		}
 
 		// Set the API.
@@ -321,30 +315,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Add error messages in checkout.
-	 *
-	 * @param  string $messages Error message.
-	 *
-	 * @return string           Displays the error messages.
-	 */
-	protected function add_error( $messages ) {
-		global $woocommerce;
-
-		// Remove duplicate messages.
-		$messages = array_unique( $messages );
-
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			foreach ( $messages as $message ) {
-				wc_add_notice( $message, 'error' );
-			}
-		} else {
-			foreach ( $messages as $message ) {
-				$woocommerce->add_error( $message );
-			}
-		}
-	}
-
-	/**
 	 * Send email notification.
 	 *
 	 * @param string $subject Email subject.
@@ -352,13 +322,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @param string $message Email message.
 	 */
 	protected function send_email( $subject, $title, $message ) {
-		global $woocommerce;
-
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			$mailer = WC()->mailer();
-		} else {
-			$mailer = $woocommerce->mailer();
-		}
+		$mailer = WC()->mailer();
 
 		$mailer->send( get_option( 'admin_email' ), $subject, $mailer->wrap_message( $title, $message ) );
 	}
@@ -369,33 +333,16 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string
 	 */
 	public function payment_fields() {
-		global $woocommerce;
-
 		wp_enqueue_script( 'wc-credit-card-form' );
-
-		$cart_total = 0;
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-			$order_id = absint( get_query_var( 'order-pay' ) );
-		} else {
-			$order_id = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
-		}
-
-		// Gets order total from "pay for order" page.
-		if ( 0 < $order_id ) {
-			$order      = new WC_Order( $order_id );
-			$cart_total = (float) $order->get_total();
-
-		// Gets order total from cart/checkout.
-		} elseif ( 0 < $woocommerce->cart->total ) {
-			$cart_total = (float) $woocommerce->cart->total;
-		}
 
 		if ( $description = $this->get_description() ) {
 			echo wpautop( wptexturize( $description ) );
 		}
 
+		$cart_total = $this->get_order_total();
+
 		if ( 'transparent' == $this->method ) {
-			woocommerce_get_template( 'transparent-checkout-form.php', array(
+			wc_get_template_part( 'transparent-checkout-form.php', array(
 				'cart_total'        => $cart_total,
 				'tc_credit'         => $this->tc_credit,
 				'tc_transfer'       => $this->tc_transfer,
@@ -413,8 +360,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return array            Redirect.
 	 */
 	public function process_payment( $order_id ) {
-		global $woocommerce;
-
 		$order = new WC_Order( $order_id );
 
 		if ( 'lightbox' != $this->method ) {
@@ -430,18 +375,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 			if ( $response['url'] ) {
 				// Remove cart.
-				if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-					WC()->cart->empty_cart();
-				} else {
-					$woocommerce->cart->empty_cart();
-				}
+				WC()->cart->empty_cart();
 
 				return array(
 					'result'   => 'success',
 					'redirect' => $response['url']
 				);
 			} else {
-				$this->add_error( $response['error'] );
+				wc_add_notice( $response['error'], 'error' );
 
 				return array(
 					'result'   => 'fail',
@@ -459,7 +400,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			} else {
 				return array(
 					'result'   => 'success',
-					'redirect' => add_query_arg( array( 'order' => $order->id, 'key' => $order->order_key, 'use_shipping' => $use_shipping ), get_permalink( woocommerce_get_page_id( 'pay' ) ) )
+					'redirect' => add_query_arg( array( 'order' => $order->id, 'key' => $order->order_key, 'use_shipping' => $use_shipping ), get_permalink( wc_get_page_id( 'pay' ) ) )
 				);
 			}
 		}
@@ -473,8 +414,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * @return string    PagSeguro lightbox.
 	 */
 	public function receipt_page( $order_id ) {
-		global $woocommerce;
-
 		$order        = new WC_Order( $order_id );
 		$request_data = $_POST;
 		if ( isset( $_GET['use_shipping'] ) && true == $_GET['use_shipping'] ) {
@@ -485,31 +424,25 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		if ( $response['url'] ) {
 			// Lightbox script.
-			$js = '
+			wc_enqueue_js( '
 				$( "#browser-has-javascript" ).show();
 				$( "#browser-no-has-javascript, #cancel-payment, #submit-payment" ).hide();
 				var isOpenLightbox = PagSeguroLightbox({
-						code: "' . esc_attr( $response['token'] ) . '"
+						code: "' . esc_js( $response['token'] ) . '"
 					}, {
 						success: function ( transactionCode ) {
-							window.location.href = "' . str_replace( '&amp;', '&', $this->get_return_url( $order ) ) . '";
+							window.location.href = "' . esc_js( str_replace( '&amp;', '&', $this->get_return_url( $order ) ) ) . '";
 						},
 						abort: function () {
-							window.location.href = "' . str_replace( '&amp;', '&', $order->get_cancel_order_url() ) . '";
+							window.location.href = "' . esc_js( str_replace( '&amp;', '&', $order->get_cancel_order_url() ) ) . '";
 						}
 				});
 				if ( ! isOpenLightbox ) {
-					window.location.href = "' . $response['url'] . '";
+					window.location.href = "' . esc_js( $response['url'] ) . '";
 				}
-			';
+			' );
 
-			if ( function_exists( 'wc_enqueue_js' ) ) {
-				wc_enqueue_js( $js );
-			} else {
-				$woocommerce->add_inline_js( $js );
-			}
-
-			woocommerce_get_template( 'lightbox-checkout.php', array(
+			wc_get_template_part( 'lightbox-checkout.php', array(
 				'cancel_order_url'    => $order->get_cancel_order_url(),
 				'payment_url'         => $response['url'],
 				'lightbox_script_url' => $this->api->get_lightbox_url(),
@@ -699,7 +632,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$data = get_post_meta( $order_id, '_wc_pagseguro_payment_data', true );
 
 		if ( isset( $data['type'] ) ) {
-			woocommerce_get_template( 'payment-instructions.php', array(
+			wc_get_template_part( 'payment-instructions.php', array(
 				'type'         => $data['type'],
 				'link'         => $data['link'],
 				'method'       => $data['method'],
@@ -726,14 +659,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		if ( isset( $data['type'] ) ) {
 			if ( $plain_text ) {
-				woocommerce_get_template( 'emails/plain-instructions.php', array(
+				wc_get_template_part( 'emails/plain-instructions.php', array(
 					'type'         => $data['type'],
 					'link'         => $data['link'],
 					'method'       => $data['method'],
 					'installments' => $data['installments'],
 				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 			} else {
-				woocommerce_get_template( 'emails/html-instructions.php', array(
+				wc_get_template_part( 'emails/html-instructions.php', array(
 					'type'         => $data['type'],
 					'link'         => $data['link'],
 					'method'       => $data['method'],
