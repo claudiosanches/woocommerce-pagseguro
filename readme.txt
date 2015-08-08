@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 4.3
-Stable tag: 2.10.0
+Stable tag: 2.10.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -267,10 +267,14 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.10.1 - 2015/08/08 =
+
+* Corrigido os links dos alertas sobre opções obrigatórios não configuradas do plugin.
+
 = 2.10.0 - 2015/08/08 =
 
-* Adicionado suporte para WooCommerce 2.4.x
-* Removido suporte para WooCommerce 2.0.x
+* Adicionado suporte para WooCommerce 2.4.x.
+* Removido suporte para WooCommerce 2.0.x.
 
 = 2.9.0 - 2015/06/23 =
 
@@ -474,10 +478,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Upgrade Notice ==
 
-= 2.10.0 =
+= 2.10.1 =
 
-* Adicionado suporte para WooCommerce 2.4.x
-* Removido suporte para WooCommerce 2.0.x
+* Adicionado suporte para WooCommerce 2.4.x.
+* Removido suporte para WooCommerce 2.0.x.
+* Corrigido os links dos alertas sobre opções obrigatórios não configuradas do plugin.
 
 == License ==
 
