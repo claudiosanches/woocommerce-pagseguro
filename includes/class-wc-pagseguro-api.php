@@ -348,6 +348,43 @@ class WC_PagSeguro_API {
 	}
 
 	/**
+	 * Safe load XML.
+	 *
+	 * @param  string $source
+	 * @param  int    $options
+	 *
+	 * @return SimpleXMLElement|bool
+	 */
+	protected function safe_load_xml( $source, $options = 0 ) {
+		$old = null;
+
+		if ( function_exists( 'libxml_disable_entity_loader' ) ) {
+			$old = libxml_disable_entity_loader( true );
+		}
+
+		$dom    = new DOMDocument();
+		$return = $dom->loadXML( $source, $options );
+
+		if ( ! is_null( $old ) ) {
+			libxml_disable_entity_loader( $old );
+		}
+
+		if ( ! $return ) {
+			return false;
+		}
+
+		if ( isset( $dom->doctype ) ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'Unsafe DOCTYPE Detected while XML parsing' );
+			}
+
+			return false;
+		}
+
+		return simplexml_import_dom( $dom );
+	}
+
+	/**
 	 * Get order items.
 	 *
 	 * @param  WC_Order $order Order data.
@@ -554,7 +591,8 @@ class WC_PagSeguro_API {
 			}
 		} else {
 			try {
-				$body = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+				libxml_disable_entity_loader( true );
+				$body = $this->safe_load_xml( $response['body'], LIBXML_NOCDATA );
 			} catch ( Exception $e ) {
 				$body = '';
 
@@ -646,7 +684,7 @@ class WC_PagSeguro_API {
 			}
 		} else {
 			try {
-				$data = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+				$data = $this->safe_load_xml( $response['body'], LIBXML_NOCDATA );
 			} catch ( Exception $e ) {
 				$data = '';
 
@@ -701,7 +739,7 @@ class WC_PagSeguro_API {
 	/**
 	 * Process the IPN.
 	 *
-	 * @return bool|SimpleXmlElement
+	 * @return bool|SimpleXMLElement
 	 */
 	public function process_ipn_request( $data ) {
 
@@ -738,7 +776,7 @@ class WC_PagSeguro_API {
 			}
 		} else {
 			try {
-				$body = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+				$body = $this->safe_load_xml( $response['body'], LIBXML_NOCDATA );
 			} catch ( Exception $e ) {
 				$body = '';
 
@@ -784,7 +822,7 @@ class WC_PagSeguro_API {
 			}
 		} else {
 			try {
-				$session = @new SimpleXmlElement( $response['body'], LIBXML_NOCDATA );
+				$session = $this->safe_load_xml( $response['body'], LIBXML_NOCDATA );
 			} catch ( Exception $e ) {
 				$session = '';
 
