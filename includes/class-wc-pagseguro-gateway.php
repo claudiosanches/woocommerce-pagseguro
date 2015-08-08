@@ -431,10 +431,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						code: "' . esc_js( $response['token'] ) . '"
 					}, {
 						success: function ( transactionCode ) {
-							window.location.href = "' . esc_js( str_replace( '&amp;', '&', $this->get_return_url( $order ) ) ) . '";
+							window.location.href = "' . str_replace( '&amp;', '&', esc_js( $this->get_return_url( $order ) ) ) . '";
 						},
 						abort: function () {
-							window.location.href = "' . esc_js( str_replace( '&amp;', '&', $order->get_cancel_order_url() ) ) . '";
+							window.location.href = "' . str_replace( '&amp;', '&', esc_js( $order->get_cancel_order_url() ) ) . '";
 						}
 				});
 				if ( ! isOpenLightbox ) {
