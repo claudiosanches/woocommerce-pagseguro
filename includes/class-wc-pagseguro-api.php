@@ -418,11 +418,13 @@ class WC_PagSeguro_API {
 			// Fees.
 			if ( 0 < sizeof( $order->get_fees() ) ) {
 				foreach ( $order->get_fees() as $fee ) {
-					$items[] = array(
-						'description' => $this->sanitize_description( $fee['name'] ),
-						'amount'      => $this->money_format( $fee['line_total'] ),
-						'quantity'    => 1
-					);
+					if ( 0 < $fee['line_total'] ) {
+						$items[] = array(
+							'description' => $this->sanitize_description( $fee['name'] ),
+							'amount'      => $this->money_format( $fee['line_total'] ),
+							'quantity'    => 1
+						);
+					}
 				}
 			}
 
