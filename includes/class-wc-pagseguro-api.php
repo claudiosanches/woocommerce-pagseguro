@@ -343,6 +343,10 @@ class WC_PagSeguro_API {
 	protected function safe_load_xml( $source, $options = 0 ) {
 		$old = null;
 
+		if ( '<' !== substr( $source, 0, 1 ) ) {
+			return false;
+		}
+
 		if ( function_exists( 'libxml_disable_entity_loader' ) ) {
 			$old = libxml_disable_entity_loader( true );
 		}
@@ -568,6 +572,16 @@ class WC_PagSeguro_API {
 			if ( 'yes' == $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in generate payment token: ' . $response->get_error_message() );
 			}
+		} else if ( 401 === $response['response']['code'] ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'Invalid token and/or email settings!' );
+			}
+
+			return array(
+				'url'   => '',
+				'data'  => '',
+				'error' => array( __( 'Too bad! The email or token from the PagSeguro are invalids my little friend!', 'woocommerce-pagseguro' ) )
+			);
 		} else {
 			try {
 				libxml_disable_entity_loader( true );
@@ -661,6 +675,16 @@ class WC_PagSeguro_API {
 			if ( 'yes' == $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in requesting the direct payment: ' . $response->get_error_message() );
 			}
+		} else if ( 401 === $response['response']['code'] ) {
+			if ( 'yes' == $this->gateway->debug ) {
+				$this->gateway->log->add( $this->gateway->id, 'The user does not have permissions to use the PagSeguro Transparent Checkout!' );
+			}
+
+			return array(
+				'url'   => '',
+				'data'  => '',
+				'error' => array( __( 'You are not allowed to use the PagSeguro Transparent Checkout. Looks like you neglected to installation guide of this plugin. This is not pretty, do you know?', 'woocommerce-pagseguro' ) )
+			);
 		} else {
 			try {
 				$data = $this->safe_load_xml( $response['body'], LIBXML_NOCDATA );

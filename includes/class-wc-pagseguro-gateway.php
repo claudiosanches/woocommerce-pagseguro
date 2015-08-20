@@ -376,7 +376,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'redirect' => $response['url']
 				);
 			} else {
-				wc_add_notice( $response['error'], 'error' );
+				foreach ( $response['error'] as $error ) {
+					wc_add_notice( $error, 'error' );
+				}
 
 				return array(
 					'result'   => 'fail',
