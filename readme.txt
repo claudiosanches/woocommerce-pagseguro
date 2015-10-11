@@ -223,11 +223,15 @@ Caso você não entenda o conteúdo do log não tem problema, você pode me abri
 
 Sim, o status é alterado automaticamente usando a API de notificações de mudança de status do PagSeguro.
 
-Caso o status dos seus pedidos não estiverem sendo alterados pode ser por causa de um dos motivos a baixo:
+Caso os status dos seus pedidos não estiverem sendo alterados siga o tutorial do PagSeguro:
 
-* Site com CloudFlare, pois por padrão sera bloqueada qualquer comunicação de outros servidores com o seu. Você pode tentar desbloquear seguindo este tutorial: [Como reparar o problema de retorno do pagseguro no CloudFlare](http://www.carlosstenzel.com/TI/como-reparar-o-problema-de-retorno-do-pagseguro-no-cloudflare/).
+* [Não recebi o POST do retorno automático. O que devo fazer?](https://pagseguro.uol.com.br/atendimento/perguntas_frequentes/nao-recebi-o-post-com-retorno-automatico-o-que-devo-fazer.jhtml)
+
+A seguir uma lista de ferramentas que podem estar bloqueando as notificações do PagSeguro:
+
+* Site com CloudFlare, pois por padrão serão bloqueadas quaisquer comunicações de outros servidores com o seu. É possível resolver isso desbloqueando a lista de IPs do PagSeguro.
 * Plugin de segurança como o "iThemes Security" com a opção para adicionar a lista do HackRepair.com no .htaccess do site. Acontece que o user-agent do PagSeguro esta no meio da lista e vai bloquear qualquer comunicação. Você pode remover isso da lista, basta encontrar onde bloquea o user-agent "jakarta" e deletar ou criar uma regra para aceitar os IPs do PagSeguro).
-* `mod_security` habilitado, neste caso vai acontecer igual com o CloudFlare bloqueando qualquer comunicação de outros servidores com o seu. Como solução você pode desativar ou permitir os IPs do PagSeguro (você pode encontrar uma lista de IPs do PagSeguro no tutorial sobre o CloudFlare).
+* `mod_security` habilitado, neste caso vai acontecer igual com o CloudFlare bloqueando qualquer comunicação de outros servidores com o seu. Como solução você pode desativar ou permitir os IPs do PagSeguro.
 
 = Funciona com o Lightbox do PagSeguro? =
 
