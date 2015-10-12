@@ -84,11 +84,18 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		$sender->addChild( 'name' )->add_cdata( $order->billing_first_name . ' ' . $order->billing_last_name );
 		$sender->addChild( 'email' )->add_cdata( $order->billing_email );
 
-		if ( isset( $order->billing_cpf ) && ! empty( $order->billing_cpf ) ) {
+		if ( 0 != $order->billing_persontype ) {
 			$documents = $sender->addChild( 'documents' );
 			$document  = $documents->addChild( 'document' );
-			$document->addChild( 'type', 'CPF' );
-			$document->addChild( 'value', $this->get_numbers( $order->billing_cpf ) );
+			
+			if ( 1 == $order->billing_persontype && isset( $order->billing_cpf ) && ! empty( $order->billing_cpf ) ) {
+				$document->addChild( 'type', 'CPF' );
+				$document->addChild( 'value', $this->get_numbers( $order->billing_cpf ) );
+			} elseif ( 2 == $order->billing_persontype && isset( $order->billing_cnpj ) && ! empty( $order->billing_cnpj ) ) {
+				$document->addChild( 'type', 'CNPJ' );
+				$document->addChild( 'value', $this->get_numbers( $order->billing_cnpj ) );
+			}
+
 		}
 
 		if ( isset( $order->billing_phone ) && ! empty( $order->billing_phone ) ) {
