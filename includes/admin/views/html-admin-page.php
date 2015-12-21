@@ -9,8 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$reviews_url = 'https://wordpress.org/support/view/plugin-reviews/woocommerce-pagseguro?filter=5#postform';
-
 ?>
 
 <h3><?php echo esc_html( $this->method_title ); ?></h3>
@@ -21,11 +19,11 @@ $reviews_url = 'https://wordpress.org/support/view/plugin-reviews/woocommerce-pa
 			include 'html-notice-currency-not-supported.php';
 		}
 
-		if ( empty( $this->get_email() ) ) {
+		if ( '' === $this->get_email() ) {
 			include_once 'html-notice-email-missing.php';
 		}
 
-		if ( empty( $this->get_token() ) ) {
+		if ( '' === $this->get_token() ) {
 			include_once 'html-notice-token-missing.php';
 		}
 	}

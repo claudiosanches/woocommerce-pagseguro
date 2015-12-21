@@ -106,7 +106,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function is_available() {
 		// Test if is valid for use.
-		$available = ( 'yes' == $this->get_option( 'enabled' ) ) && ! empty( $this->get_email() ) && ! empty( $this->get_token() ) && $this->using_supported_currency();
+		$available = 'yes' === $this->get_option( 'enabled' ) && '' !== $this->get_email() && '' !== $this->get_token() && $this->using_supported_currency();
 
 		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
 			$available = false;
