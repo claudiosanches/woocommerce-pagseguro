@@ -233,60 +233,40 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	public function get_error_message( $code ) {
-		switch ( $code ) {
-			case 11013 :
-			case 11014 :
-			case 53018 :
-			case 53019 :
-			case 53020 :
-			case 53021 :
-				return __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' );
-				break;
-			case 11017 :
-			case 53022 :
-			case 53023 :
-			case 53053 :
-			case 53054 :
-				return __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' );
-				break;
-			case 11164 :
-				return __( 'Please enter with a valid CPF number.', 'woocommerce-pagseguro' );
-				break;
-			case 53110 :
-			case 53111 :
-				return __( 'Please select a bank to make payment by bank transfer.', 'woocommerce-pagseguro' );
-				break;
-			case 53045 :
-				return __( 'Credit card holder CPF is required.', 'woocommerce-pagseguro' );
-				break;
-			case 53047 :
-				return __( 'Credit card holder birthdate is required.', 'woocommerce-pagseguro' );
-				break;
-			case 53042 :
-				return __( 'Credit card holder name is required.', 'woocommerce-pagseguro' );
-				break;
-			case 53049 :
-			case 53051 :
-				return __( 'Credit card holder phone is required.', 'woocommerce-pagseguro' );
-				break;
-			case 11020 :
-			case 53028 :
-				return __( 'The address complement is too long, it cannot be more than 40 characters.', 'woocommerce-pagseguro' );
-				break;
-			case 53029 :
-				return __( '<strong>Neighborhood</strong> is a required field.', 'woocommerce-pagseguro' );
-				break;
-			case 53046 :
-				return __( 'Credit card holder CPF invalid.', 'woocommerce-pagseguro' );
-				break;
-			case 53122 :
-				return __( 'Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox.', 'woocommerce-pagseguro' );
-				break;
+		$code = (string) $code;
 
-			default:
-				return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'woocommerce-pagseguro' );
-				break;
+		$messages = array(
+			'11013' => __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' ),
+			'11014' => __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' ),
+			'53018' => __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' ),
+			'53019' => __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' ),
+			'53020' => __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' ),
+			'53021' => __( 'Please enter with a valid phone number with DDD. Example: (11) 5555-5555.', 'woocommerce-pagseguro' ),
+			'11017' => __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' ),
+			'53022' => __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' ),
+			'53023' => __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' ),
+			'53053' => __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' ),
+			'53054' => __( 'Please enter with a valid zip code number.', 'woocommerce-pagseguro' ),
+			'11164' => __( 'Please enter with a valid CPF number.', 'woocommerce-pagseguro' ),
+			'53110' => '',
+			'53111' => __( 'Please select a bank to make payment by bank transfer.', 'woocommerce-pagseguro' ),
+			'53045' => __( 'Credit card holder CPF is required.', 'woocommerce-pagseguro' ),
+			'53047' => __( 'Credit card holder birthdate is required.', 'woocommerce-pagseguro' ),
+			'53042' => __( 'Credit card holder name is required.', 'woocommerce-pagseguro' ),
+			'53049' => __( 'Credit card holder phone is required.', 'woocommerce-pagseguro' ),
+			'53051' => __( 'Credit card holder phone is required.', 'woocommerce-pagseguro' ),
+			'11020' => __( 'The address complement is too long, it cannot be more than 40 characters.', 'woocommerce-pagseguro' ),
+			'53028' => __( 'The address complement is too long, it cannot be more than 40 characters.', 'woocommerce-pagseguro' ),
+			'53029' => __( '<strong>Neighborhood</strong> is a required field.', 'woocommerce-pagseguro' ),
+			'53046' => __( 'Credit card holder CPF invalid.', 'woocommerce-pagseguro' ),
+			'53122' => __( 'Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox.', 'woocommerce-pagseguro' ),
+		);
+
+		if ( isset( $messages[ $code ] ) ) {
+			return $messages[ $code ];
 		}
+
+		return __( 'An error has occurred while processing your payment, please review your data and try again. Or contact us for assistance.', 'woocommerce-pagseguro' );
 	}
 
 	/**
@@ -625,7 +605,9 @@ class WC_PagSeguro_API {
 				}
 
 				foreach ( $body->error as $error_key => $error ) {
-					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
+					if ( $message = $this->get_error_message( $error->code ) ) {
+						$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $message;
+					}
 				}
 
 				return array(
@@ -725,7 +707,9 @@ class WC_PagSeguro_API {
 				}
 
 				foreach ( $data->error as $error_key => $error ) {
-					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
+					if ( $message = $this->get_error_message( $error->code ) ) {
+						$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $message;
+					}
 				}
 
 				return array(
