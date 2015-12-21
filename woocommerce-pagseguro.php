@@ -53,6 +53,10 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
 				add_filter( 'woocommerce_cancel_unpaid_order', array( $this, 'stop_cancel_unpaid_orders' ), 10, 2 );
 				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+
+				if ( is_admin() ) {
+					add_action( 'admin_notices', array( $this, 'ecfb_missing_notice' ) );
+				}
 			} else {
 				add_action( 'admin_notices', array( $this, 'woocommerce_missing_notice' ) );
 			}
@@ -159,10 +163,21 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		}
 
 		/**
-		 * WooCommerce fallback notice.
+		 * WooCommerce Extra Checkout Fields for Brazil notice.
+		 */
+		public function ecfb_missing_notice() {
+			$settings = get_option( 'woocommerce_pagseguro_settings', array( 'method' => '' ) );
+
+			if ( 'transparent' === $settings['method'] && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+				include 'includes/admin/views/html-notice-missing-ecfb.php';
+			}
+		}
+
+		/**
+		 * WooCommerce missing notice.
 		 */
 		public function woocommerce_missing_notice() {
-			include 'admin/views/html-admin-missing-woocommerce.php';
+			include 'includes/admin/views/html-notice-missing-woocommerce.php';
 		}
 	}
 
