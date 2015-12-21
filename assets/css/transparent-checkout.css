@@ -33,6 +33,8 @@
 .woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li,
 .woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods li {
 	border-color: transparent transparent #bbb;
+	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
 	border-style: solid;
 	border-width: 1px;
 	display: block;
@@ -40,8 +42,11 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	-webkit-border-radius: 4px 4px 0 0;
-	border-radius: 4px 4px 0 0;
+}
+
+.woocommerce #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront #pagseguro-payment-methods li,
+.woocommerce-page #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront #pagseguro-payment-methods li {
+	padding: 5px !important;
 }
 
 .woocommerce #payment ul.payment_methods li #pagseguro-payment-methods label,
@@ -68,12 +73,13 @@
 
 .woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form li,
 .woocommerce-page #payment ul.payment_methods li #pagseguro-bank-transfer-form li {
+	border: none;
 	display: block;
 	float: left;
 	list-style: none;
-	width: 130px;
 	margin: 0;
 	padding: 0;
+	width: 130px;
 }
 
 .woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form label,
@@ -152,16 +158,33 @@
 	width: 51px;
 }
 
+.woocommerce #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-holder-name-field,
+.woocommerce #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-number-field,
+.woocommerce #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-installments-field,
+.woocommerce #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-holder-cpf-field,
+.woocommerce-page #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-holder-name-field,
+.woocommerce-page #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-number-field,
+.woocommerce-page #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-installments-field,
+.woocommerce-page #payment ul.payment_methods li .woocommerce-pagseguro-form-storefront p#pagseguro-card-holder-cpf-field {
+	float: none;
+	width: 100%;
+}
+
+.woocommerce-pagseguro-form-storefront .woocommerce-error ul {
+	margin: 0;
+	padding: 0;
+}
+
 /* Responsive styles */
 @media screen and (max-width: 500px) {
 	.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li,
 	.woocommerce-page #payment ul.payment_methods li #pagseguro-payment-methods li {
 		border: none;
+		-webkit-border-radius: 0;
+		border-radius: 0;
 		float: none;
 		margin: 0;
 		padding: 0;
-		-webkit-border-radius: 0;
-		border-radius: 0;
 	}
 
 	.woocommerce #payment ul.payment_methods li #pagseguro-payment-methods li.active,
@@ -174,12 +197,10 @@
 	}
 
 	.woocommerce #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-first,
-	.woocommerce-page #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-first,
 	.woocommerce #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-last,
+	.woocommerce-page #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-first,
 	.woocommerce-page #payment ul.payment_methods li #pagseguro-credit-card-form p.form-row.form-row-last {
 		float: none;
 		width: 96%;
 	}
-
-
 }
