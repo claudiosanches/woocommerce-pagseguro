@@ -36,6 +36,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->description       = $this->get_option( 'description' );
 		$this->email             = $this->get_option( 'email' );
 		$this->token             = $this->get_option( 'token' );
+		$this->sandbox_email     = $this->get_option( 'sandbox_email' );
+		$this->sandbox_token     = $this->get_option( 'sandbox_token' );
 		$this->method            = $this->get_option( 'method', 'direct' );
 		$this->tc_credit         = $this->get_option( 'tc_credit', 'yes' );
 		$this->tc_transfer       = $this->get_option( 'tc_transfer', 'yes' );
@@ -78,6 +80,24 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Get email.
+	 *
+	 * @return string
+	 */
+	public function get_email() {
+		return 'yes' === $this->sandbox ? $this->sandbox_email : $this->email;
+	}
+
+	/**
+	 * Get token.
+	 *
+	 * @return string
+	 */
+	public function get_token() {
+		return 'yes' === $this->sandbox ? $this->sandbox_token : $this->token;
+	}
+
+	/**
 	 * Returns a value indicating the the Gateway is available or not. It's called
 	 * automatically by WooCommerce before allowing customers to use the gateway
 	 * for payment.
@@ -86,7 +106,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function is_available() {
 		// Test if is valid for use.
-		$available = ( 'yes' == $this->get_option( 'enabled' ) ) && ! empty( $this->email ) && ! empty( $this->token ) && $this->using_supported_currency();
+		$available = ( 'yes' == $this->get_option( 'enabled' ) ) && ! empty( $this->get_email() ) && ! empty( $this->get_token() ) && $this->using_supported_currency();
 
 		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
 			$available = false;
@@ -171,18 +191,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-pagseguro' ),
 				'default'     => __( 'Pay via PagSeguro', 'woocommerce-pagseguro' ),
 			),
-			'email' => array(
-				'title'       => __( 'PagSeguro Email', 'woocommerce-pagseguro' ),
-				'type'        => 'text',
-				'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'woocommerce-pagseguro' ),
-				'desc_tip'    => true,
-				'default'     => '',
-			),
-			'token' => array(
-				'title'       => __( 'PagSeguro Token', 'woocommerce-pagseguro' ),
-				'type'        => 'text',
-				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'woocommerce-pagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
-				'default'     => '',
+			'integration' => array(
+				'title'       => __( 'Integration', 'woocommerce-pagseguro' ),
+				'type'        => 'title',
+				'description' => '',
 			),
 			'method' => array(
 				'title'       => __( 'Integration method', 'woocommerce-pagseguro' ),
@@ -196,6 +208,39 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'lightbox'    => __( 'Lightbox', 'woocommerce-pagseguro' ),
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' ),
 				),
+			),
+			'sandbox' => array(
+				'title'       => __( 'PagSeguro Sandbox', 'woocommerce-pagseguro' ),
+				'type'        => 'checkbox',
+				'label'       => __( 'Enable PagSeguro Sandbox', 'woocommerce-pagseguro' ),
+				'desc_tip'    => true,
+				'default'     => 'no',
+				'description' => __( 'PagSeguro Sandbox can be used to test the payments.', 'woocommerce-pagseguro' ),
+			),
+			'email' => array(
+				'title'       => __( 'PagSeguro Email', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
+				'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'woocommerce-pagseguro' ),
+				'desc_tip'    => true,
+				'default'     => '',
+			),
+			'token' => array(
+				'title'       => __( 'PagSeguro Token', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
+				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'woocommerce-pagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
+				'default'     => '',
+			),
+			'sandbox_email' => array(
+				'title'       => __( 'PagSeguro Sandbox Email', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
+				'description' => sprintf( __( 'Please enter your PagSeguro sandbox email address. You can get your sandbox email %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
+				'default'     => '',
+			),
+			'sandbox_token' => array(
+				'title'       => __( 'PagSeguro Sandbox Token', 'woocommerce-pagseguro' ),
+				'type'        => 'text',
+				'description' => sprintf( __( 'Please enter your PagSeguro sandbox token. You can get your sandbox token %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
+				'default'     => '',
 			),
 			'transparent_checkout' => array(
 				'title'       => __( 'Transparent Checkout Options', 'woocommerce-pagseguro' ),
@@ -248,13 +293,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Gateway Testing', 'woocommerce-pagseguro' ),
 				'type'        => 'title',
 				'description' => '',
-			),
-			'sandbox' => array(
-				'title'       => __( 'PagSeguro Sandbox', 'woocommerce-pagseguro' ),
-				'type'        => 'checkbox',
-				'label'       => __( 'Enable PagSeguro Sandbox', 'woocommerce-pagseguro' ),
-				'default'     => 'no',
-				'description' => sprintf( __( 'PagSeguro Sandbox can be used to test the payments. <strong>Note:</strong> you must use the development token that can be found in %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html" target="_blank">' . __( 'PagSeguro Sandbox', 'woocommerce-pagseguro' ) .'</a>' ),
 			),
 			'debug' => array(
 				'title'       => __( 'Debug Log', 'woocommerce-pagseguro' ),

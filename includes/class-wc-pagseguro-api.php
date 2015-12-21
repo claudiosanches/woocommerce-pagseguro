@@ -574,7 +574,7 @@ class WC_PagSeguro_API {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting token for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_checkout_url() );
+		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_checkout_url() );
 		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
@@ -677,7 +677,7 @@ class WC_PagSeguro_API {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting direct payment for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_transactions_url() );
+		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_transactions_url() );
 		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
@@ -780,7 +780,7 @@ class WC_PagSeguro_API {
 		}
 
 		// Gets the PagSeguro response.
-		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_notification_url() . esc_attr( $data['notificationCode'] ) );
+		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_notification_url() . esc_attr( $data['notificationCode'] ) );
 		$response = $this->do_request( $url, 'GET' );
 
 		// Check to see if the request was valid.
@@ -826,7 +826,7 @@ class WC_PagSeguro_API {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting session ID...' );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->email, 'token' => $this->gateway->token ), $this->get_sessions_url() );
+		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_sessions_url() );
 		$response = $this->do_request( $url, 'POST' );
 
 		// Check to see if the request was valid.
