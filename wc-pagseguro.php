@@ -1,6 +1,12 @@
 <?php
+/**
+ * Fix main file for old installations.
+ *
+ * @package WooCommerce_PagSeguro
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit;
 }
 
 // Update the main file.

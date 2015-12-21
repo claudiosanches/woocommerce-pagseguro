@@ -1,6 +1,8 @@
 <?php
 /**
  * Admin View: Notice - WooCommerce Extra Checkout Fields for Brazil missing.
+ *
+ * @package WooCommerce_PagSeguro/Admin/Notices
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,6 +1,17 @@
 <?php
 /**
- * WC PagSeguro API Class.
+ * WooCommerce PagSeguro API class
+ *
+ * @package WooCommerce_PagSeguro/Classes/API
+ * @version 2.11.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * WooCommerce PagSeguro API.
  */
 class WC_PagSeguro_API {
 
@@ -14,7 +25,7 @@ class WC_PagSeguro_API {
 	/**
 	 * Constructor.
 	 *
-	 * @param WC_PagSeguro_Gateway $gateway
+	 * @param WC_PagSeguro_Gateway $gateway Payment Gateway instance.
 	 */
 	public function __construct( $gateway = null ) {
 		$this->gateway = $gateway;
@@ -50,7 +61,7 @@ class WC_PagSeguro_API {
 	/**
 	 * Get the payment URL.
 	 *
-	 * @param  string $token
+	 * @param  string $token Payment code.
 	 *
 	 * @return string.
 	 */
@@ -95,6 +106,18 @@ class WC_PagSeguro_API {
 	}
 
 	/**
+	 * Check if is localhost.
+	 *
+	 * @return bool
+	 */
+	protected function is_localhost() {
+		$url  = home_url( '/' );
+		$home = untrailingslashit( str_replace( array( 'https://', 'http://' ), '', $url ) );
+
+		return in_array( $home, array( 'localhost', '127.0.0.1' ) );
+	}
+
+	/**
 	 * Money format.
 	 *
 	 * @param  int/float $value Value to fix.
@@ -108,7 +131,7 @@ class WC_PagSeguro_API {
 	/**
 	 * Sanitize the item description.
 	 *
-	 * @param  string $description
+	 * @param  string $description Description to be sanitized.
 	 *
 	 * @return string
 	 */
@@ -119,9 +142,9 @@ class WC_PagSeguro_API {
 	/**
 	 * Get payment name by type.
 	 *
-	 * @param  int    $value Payment Type number.
+	 * @param  int $value Payment Type number.
 	 *
-	 * @return string        Payment name.
+	 * @return string
 	 */
 	public function get_payment_name_by_type( $value ) {
 		$types = array(
@@ -130,100 +153,84 @@ class WC_PagSeguro_API {
 			3 => __( 'Bank Transfer', 'woocommerce-pagseguro' ),
 			4 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
 			5 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
-			7 => __( 'Account deposit', 'woocommerce-pagseguro' )
+			7 => __( 'Account deposit', 'woocommerce-pagseguro' ),
 		);
 
-		if ( isset( $types[ $value ] ) ) {
-			return $types[ $value ];
-		} else {
-			return __( 'Unknown', 'woocommerce-pagseguro' );
-		}
+		return isset( $types[ $value ] ) ? $types[ $value ] : __( 'Unknown', 'woocommerce-pagseguro' );
 	}
 
 	/**
 	 * Get payment method name.
 	 *
-	 * @param  int    $value Payment method number.
+	 * @param  int $value Payment method number.
 	 *
-	 * @return string        Payment method name.
+	 * @return string
 	 */
 	public function get_payment_method_name( $value ) {
-		$credit = __( 'Credit Card', 'woocommerce-pagseguro' );
-		$ticket = __( 'Billet', 'woocommerce-pagseguro' );
-		$debit  = __( 'Bank Transfer', 'woocommerce-pagseguro' );
+		$credit = __( 'Credit Card %s', 'woocommerce-pagseguro' );
+		$ticket = __( 'Billet %s', 'woocommerce-pagseguro' );
+		$debit  = __( 'Bank Transfer %s', 'woocommerce-pagseguro' );
 
 		$methods = array(
-			101 => $credit . ' ' . 'Visa',
-			102 => $credit . ' ' . 'MasterCard',
-			103 => $credit . ' ' . 'American Express',
-			104 => $credit . ' ' . 'Diners',
-			105 => $credit . ' ' . 'Hipercard',
-			106 => $credit . ' ' . 'Aura',
-			107 => $credit . ' ' . 'Elo',
-			108 => $credit . ' ' . 'PLENOCard',
-			109 => $credit . ' ' . 'PersonalCard',
-			110 => $credit . ' ' . 'JCB',
-			111 => $credit . ' ' . 'Discover',
-			112 => $credit . ' ' . 'BrasilCard',
-			113 => $credit . ' ' . 'FORTBRASIL',
-			114 => $credit . ' ' . 'CARDBAN',
-			115 => $credit . ' ' . 'VALECARD',
-			116 => $credit . ' ' . 'Cabal',
-			117 => $credit . ' ' . 'Mais!',
-			118 => $credit . ' ' . 'Avista',
-			119 => $credit . ' ' . 'GRANDCARD',
-			201 => $ticket . ' ' . 'Bradesco',
-			202 => $ticket . ' ' . 'Santander',
-			301 => $debit . ' ' . 'Bradesco',
-			302 => $debit . ' ' . 'Itaú',
-			303 => $debit . ' ' . 'Unibanco',
-			304 => $debit . ' ' . 'Banco do Brasil',
-			305 => $debit . ' ' . 'Real',
-			306 => $debit . ' ' . 'Banrisul',
-			307 => $debit . ' ' . 'HSBC',
+			101 => sprintf( $credit, 'Visa' ),
+			102 => sprintf( $credit, 'MasterCard' ),
+			103 => sprintf( $credit, 'American Express' ),
+			104 => sprintf( $credit, 'Diners' ),
+			105 => sprintf( $credit, 'Hipercard' ),
+			106 => sprintf( $credit, 'Aura' ),
+			107 => sprintf( $credit, 'Elo' ),
+			108 => sprintf( $credit, 'PLENOCard' ),
+			109 => sprintf( $credit, 'PersonalCard' ),
+			110 => sprintf( $credit, 'JCB' ),
+			111 => sprintf( $credit, 'Discover' ),
+			112 => sprintf( $credit, 'BrasilCard' ),
+			113 => sprintf( $credit, 'FORTBRASIL' ),
+			114 => sprintf( $credit, 'CARDBAN' ),
+			115 => sprintf( $credit, 'VALECARD' ),
+			116 => sprintf( $credit, 'Cabal' ),
+			117 => sprintf( $credit, 'Mais!' ),
+			118 => sprintf( $credit, 'Avista' ),
+			119 => sprintf( $credit, 'GRANDCARD' ),
+			201 => sprintf( $ticket, 'Bradesco' ),
+			202 => sprintf( $ticket, 'Santander' ),
+			301 => sprintf( $debit, 'Bradesco' ),
+			302 => sprintf( $debit, 'Itaú' ),
+			303 => sprintf( $debit, 'Unibanco' ),
+			304 => sprintf( $debit, 'Banco do Brasil' ),
+			305 => sprintf( $debit, 'Real' ),
+			306 => sprintf( $debit, 'Banrisul' ),
+			307 => sprintf( $debit, 'HSBC' ),
 			401 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
 			501 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
-			701 => __( 'Account deposit', 'woocommerce-pagseguro' )
+			701 => __( 'Account deposit', 'woocommerce-pagseguro' ),
 		);
 
-		if ( isset( $methods[ $value ] ) ) {
-			return $methods[ $value ];
-		} else {
-			return __( 'Unknown', 'woocommerce-pagseguro' );
-		}
+		return isset( $methods[ $value ] ) ? $methods[ $value ] : __( 'Unknown', 'woocommerce-pagseguro' );
 	}
 
 	/**
 	 * Get the paymet method.
 	 *
-	 * @param  string $method
+	 * @param  string $method Payment method.
 	 *
 	 * @return string
 	 */
 	public function get_payment_method( $method ) {
-		switch ( $method ) {
-			case 'credit-card' :
-				return 'creditCard';
-				break;
-			case 'banking-ticket' :
-				return 'boleto';
-				break;
-			case 'bank-transfer' :
-				return 'eft';
-				break;
+		$methods = array(
+			'credit-card'    => 'creditCard',
+			'banking-ticket' => 'boleto',
+			'bank-transfer'  => 'eft',
+		);
 
-			default:
-				return '';
-				break;
-		}
+		return isset( $methods[ $method ] ) ? $methods[ $method ] : '';
 	}
 
 	/**
 	 * Get error message.
 	 *
-	 * @param  int    $code Error code.
+	 * @param  int $code Error code.
 	 *
-	 * @return string       Error message.
+	 * @return string
 	 */
 	public function get_error_message( $code ) {
 		switch ( $code ) {
@@ -318,7 +325,7 @@ class WC_PagSeguro_API {
 	protected function do_request( $url, $method = 'POST', $data = array(), $headers = array() ) {
 		$params = array(
 			'method'  => $method,
-			'timeout' => 60
+			'timeout' => 60,
 		);
 
 		if ( 'POST' == $method && ! empty( $data ) ) {
@@ -335,8 +342,8 @@ class WC_PagSeguro_API {
 	/**
 	 * Safe load XML.
 	 *
-	 * @param  string $source
-	 * @param  int    $options
+	 * @param  string $source  XML source.
+	 * @param  int    $options DOMDpocment options.
 	 *
 	 * @return SimpleXMLElement|bool
 	 */
@@ -390,12 +397,12 @@ class WC_PagSeguro_API {
 			$items[] = array(
 				'description' => $this->sanitize_description( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) ),
 				'amount'      => $this->money_format( $order->get_total() ),
-				'quantity'    => 1
+				'quantity'    => 1,
 			);
 		} else {
 
 			// Products.
-			if ( 0 < sizeof( $order->get_items() ) ) {
+			if ( 0 < count( $order->get_items() ) ) {
 				foreach ( $order->get_items() as $order_item ) {
 					if ( $order_item['qty'] ) {
 						$item_name = $order_item['name'];
@@ -413,30 +420,30 @@ class WC_PagSeguro_API {
 						$items[] = array(
 							'description' => $this->sanitize_description( $item_name ),
 							'amount'      => $this->money_format( $order->get_item_total( $order_item, false ) ),
-							'quantity'    => $order_item['qty']
+							'quantity'    => $order_item['qty'],
 						);
 					}
 				}
 			}
 
 			// Fees.
-			if ( 0 < sizeof( $order->get_fees() ) ) {
+			if ( 0 < count( $order->get_fees() ) ) {
 				foreach ( $order->get_fees() as $fee ) {
 					$items[] = array(
 						'description' => $this->sanitize_description( $fee['name'] ),
 						'amount'      => $this->money_format( $fee['line_total'] ),
-						'quantity'    => 1
+						'quantity'    => 1,
 					);
 				}
 			}
 
 			// Taxes.
-			if ( 0 < sizeof( $order->get_taxes() ) ) {
+			if ( 0 < count( $order->get_taxes() ) ) {
 				foreach ( $order->get_taxes() as $tax ) {
 					$items[] = array(
 						'description' => $this->sanitize_description( $tax['label'] ),
 						'amount'      => $this->money_format( $tax['tax_amount'] + $tax['shipping_tax_amount'] ),
-						'quantity'    => 1
+						'quantity'    => 1,
 					);
 				}
 			}
@@ -457,16 +464,17 @@ class WC_PagSeguro_API {
 		return array(
 			'items'         => $items,
 			'extra_amount'  => $extra_amount,
-			'shipping_cost' => $shipping_cost
+			'shipping_cost' => $shipping_cost,
 		);
 	}
 
 	/**
 	 * Get the checkout xml.
 	 *
-	 * @param object  $order Order data.
+	 * @param WC_Order $order Order data.
+	 * @param array    $posted Posted data.
 	 *
-	 * @return string        Payment xml.
+	 * @return string
 	 */
 	protected function get_checkout_xml( $order, $posted ) {
 		$data    = $this->get_order_items( $order );
@@ -482,7 +490,7 @@ class WC_PagSeguro_API {
 		$xml->add_extra_amount( $data['extra_amount'] );
 
 		// Checks if is localhost... PagSeguro not accept localhost urls!
-		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
+		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
 			$xml->add_redirect_url( $this->gateway->get_return_url( $order ) );
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
@@ -499,9 +507,10 @@ class WC_PagSeguro_API {
 	/**
 	 * Get the direct payment xml.
 	 *
-	 * @param object  $order Order data.
+	 * @param WC_Order $order Order data.
+	 * @param array    $posted Posted data.
 	 *
-	 * @return string        Payment xml.
+	 * @return string
 	 */
 	protected function get_payment_xml( $order, $posted ) {
 		$data    = $this->get_order_items( $order );
@@ -515,7 +524,7 @@ class WC_PagSeguro_API {
 		$xml->add_method( $method );
 		$xml->add_sender_data( $order, $hash );
 		$xml->add_currency( get_woocommerce_currency() );
-		if ( ! in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ) ) ) {
+		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
 		$xml->add_items( $data['items'] );
@@ -528,7 +537,7 @@ class WC_PagSeguro_API {
 			$credit_card_token = isset( $posted['pagseguro_credit_card_hash'] ) ? sanitize_text_field( $posted['pagseguro_credit_card_hash'] ) : '';
 			$installment       = array(
 				'quantity' => isset( $posted['pagseguro_card_installments'] ) ? absint( $posted['pagseguro_card_installments'] ) : '',
-				'value'    => isset( $posted['pagseguro_installment_value'] ) ? $this->money_format( $posted['pagseguro_installment_value'] ) : ''
+				'value'    => isset( $posted['pagseguro_installment_value'] ) ? $this->money_format( $posted['pagseguro_installment_value'] ) : '',
 			);
 			$holder_data       = array(
 				'name'       => isset( $posted['pagseguro_card_holder_name'] ) ? sanitize_text_field( $posted['pagseguro_card_holder_name'] ) : '',
@@ -580,7 +589,7 @@ class WC_PagSeguro_API {
 			return array(
 				'url'   => '',
 				'data'  => '',
-				'error' => array( __( 'Too bad! The email or token from the PagSeguro are invalids my little friend!', 'woocommerce-pagseguro' ) )
+				'error' => array( __( 'Too bad! The email or token from the PagSeguro are invalids my little friend!', 'woocommerce-pagseguro' ) ),
 			);
 		} else {
 			try {
@@ -604,7 +613,7 @@ class WC_PagSeguro_API {
 				return array(
 					'url'   => $this->get_payment_url( $token ),
 					'token' => $token,
-					'error' => ''
+					'error' => '',
 				);
 			}
 
@@ -622,7 +631,7 @@ class WC_PagSeguro_API {
 				return array(
 					'url'   => '',
 					'token' => '',
-					'error' => $errors
+					'error' => $errors,
 				);
 			}
 		}
@@ -635,7 +644,7 @@ class WC_PagSeguro_API {
 		return array(
 			'url'   => '',
 			'token' => '',
-			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) )
+			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) ),
 		);
 	}
 
@@ -657,7 +666,7 @@ class WC_PagSeguro_API {
 			return array(
 				'url'   => '',
 				'data'  => '',
-				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' .  __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) )
+				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' .  __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) ),
 			);
 		}
 
@@ -683,7 +692,7 @@ class WC_PagSeguro_API {
 			return array(
 				'url'   => '',
 				'data'  => '',
-				'error' => array( __( 'You are not allowed to use the PagSeguro Transparent Checkout. Looks like you neglected to installation guide of this plugin. This is not pretty, do you know?', 'woocommerce-pagseguro' ) )
+				'error' => array( __( 'You are not allowed to use the PagSeguro Transparent Checkout. Looks like you neglected to installation guide of this plugin. This is not pretty, do you know?', 'woocommerce-pagseguro' ) ),
 			);
 		} else {
 			try {
@@ -704,7 +713,7 @@ class WC_PagSeguro_API {
 				return array(
 					'url'   => $this->gateway->get_return_url( $order ),
 					'data'  => $data,
-					'error' => ''
+					'error' => '',
 				);
 			}
 
@@ -722,7 +731,7 @@ class WC_PagSeguro_API {
 				return array(
 					'url'   => '',
 					'data'  => '',
-					'error' => $errors
+					'error' => $errors,
 				);
 			}
 		}
@@ -735,12 +744,14 @@ class WC_PagSeguro_API {
 		return array(
 			'url'   => '',
 			'data'  => '',
-			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) )
+			'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'An error has occurred while processing your payment, please try again. Or contact us for assistance.', 'woocommerce-pagseguro' ) ),
 		);
 	}
 
 	/**
 	 * Process the IPN.
+	 *
+	 * @param  array $data IPN data.
 	 *
 	 * @return bool|SimpleXMLElement
 	 */
@@ -849,5 +860,4 @@ class WC_PagSeguro_API {
 
 		return false;
 	}
-
 }

@@ -1,6 +1,8 @@
 <?php
 /**
  * Admin View: Notice - Token missing
+ *
+ * @package WooCommerce_PagSeguro/Admin/Notices
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

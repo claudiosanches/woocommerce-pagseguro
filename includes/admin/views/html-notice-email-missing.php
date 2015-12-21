@@ -1,6 +1,8 @@
 <?php
 /**
  * Admin View: Notice - Email missing
+ *
+ * @package WooCommerce_PagSeguro/Admin/Notices
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

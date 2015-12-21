@@ -1,5 +1,16 @@
 <?php
 /**
+ * WooCommerce PagSeguro SimpleXMLElement class
+ *
+ * @package WooCommerce_PagSeguro/Classes/XML
+ * @version 2.11.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
  * Extends the SimpleXMLElement class to add CDATA element.
  */
 class WC_PagSeguro_XML extends SimpleXMLElement {
@@ -7,7 +18,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Extract numbers from a string.
 	 *
-	 * @param  string $string
+	 * @param  string $string String where will be extracted numbers.
 	 *
 	 * @return string
 	 */
@@ -74,6 +85,30 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	}
 
 	/**
+	 * Add CPF.
+	 *
+	 * @param string $number Document number.
+	 */
+	protected function add_cpf( $number, $xml ) {
+		$documents = $xml->addChild( 'documents' );
+		$document  = $documents->addChild( 'document' );
+		$document->addChild( 'type', 'CPF' );
+		$document->addChild( 'value', $this->get_numbers( $number ) );
+	}
+
+	/**
+	 * Add CNPJ.
+	 *
+	 * @param string $number Document number.
+	 */
+	protected function add_cnpj( $number ) {
+		$documents = $sender->addChild( 'documents' );
+		$document  = $documents->addChild( 'document' );
+		$document->addChild( 'type', 'CNPJ' );
+		$document->addChild( 'value', $this->get_numbers( $number ) );
+	}
+
+	/**
 	 * Add sender data.
 	 *
 	 * @param WC_Order $order Order data.
@@ -84,18 +119,19 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		$sender->addChild( 'name' )->add_cdata( $order->billing_first_name . ' ' . $order->billing_last_name );
 		$sender->addChild( 'email' )->add_cdata( $order->billing_email );
 
-		if ( 0 != $order->billing_persontype ) {
-			$documents = $sender->addChild( 'documents' );
-			$document  = $documents->addChild( 'document' );
-			
-			if ( 1 == $order->billing_persontype && isset( $order->billing_cpf ) && ! empty( $order->billing_cpf ) ) {
-				$document->addChild( 'type', 'CPF' );
-				$document->addChild( 'value', $this->get_numbers( $order->billing_cpf ) );
-			} elseif ( 2 == $order->billing_persontype && isset( $order->billing_cnpj ) && ! empty( $order->billing_cnpj ) ) {
-				$document->addChild( 'type', 'CNPJ' );
-				$document->addChild( 'value', $this->get_numbers( $order->billing_cnpj ) );
-			}
+		$wcbcf_settings = get_option( 'wcbcf_settings' );
+		$wcbcf_settings = isset( $wcbcf_settings['person_type'] ) ? intval( $wcbcf_settings['person_type'] ) : 0;
 
+		if ( ( 0 === $wcbcf_settings || 2 === $wcbcf_settings ) && ! empty( $order->billing_cpf ) ) {
+			$this->add_cpf( $order->billing_cpf, $sender );
+		} else if ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && ! empty( $order->billing_cnpj ) ) {
+			$this->add_cnpj( $order->billing_cnpj, $sender );
+		} else if ( ! empty( $order->billing_persontype ) ) {
+			if ( 1 == $order->billing_persontype && ! empty( $order->billing_cpf ) ) {
+				$this->add_cpf( $order->billing_cpf, $sender );
+			} else if ( 2 == $order->billing_persontype && ! empty( $order->billing_cnpj ) ) {
+				$this->add_cnpj( $order->billing_cnpj, $sender );
+			}
 		}
 
 		if ( isset( $order->billing_phone ) && ! empty( $order->billing_phone ) ) {
@@ -113,9 +149,9 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add shipping data.
 	 *
-	 * @param WC_Order  $order         Order data.
-	 * @param bool      $ship_to       Ship to (true = shipping address, false = billing address).
-	 * @param float     $shipping_cost Shipping cost.
+	 * @param WC_Order $order         Order data.
+	 * @param bool     $ship_to       Ship to (true = shipping address, false = billing address).
+	 * @param float    $shipping_cost Shipping cost.
 	 */
 	public function add_shipping_data( $order, $ship_to = false, $shipping_cost = 0 ) {
 		$type = ( $ship_to ) ? 'shipping' : 'billing';
@@ -151,7 +187,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add order items.
 	 *
-	 * @param array $items Order items.
+	 * @param array $_items Order items.
 	 */
 	public function add_items( $_items ) {
 		$items = $this->addChild( 'items' );
@@ -181,9 +217,9 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * Add credit card data.
 	 *
 	 * @param WC_Order $order           Order data.
-	 * @param string $credit_card_token Credit card token.
-	 * @param array  $installment_data  Installment data (quantity and value).
-	 * @param array  $holder_data       Holder data (name, cpf, birth_date and phone).
+	 * @param string   $credit_card_token Credit card token.
+	 * @param array    $installment_data  Installment data (quantity and value).
+	 * @param array    $holder_data       Holder data (name, cpf, birth_date and phone).
 	 */
 	public function add_credit_card_data( $order, $credit_card_token, $installment_data, $holder_data ) {
 		$credit_card = $this->addChild( 'creditCard' );
@@ -254,7 +290,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add max uses.
 	 *
-	 * @param int $max
+	 * @param int $max Max uses.
 	 */
 	public function add_max_uses( $max = 1 ) {
 		$this->addChild( 'maxUses', $max );
@@ -263,7 +299,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add max age.
 	 *
-	 * @param int $max
+	 * @param int $max Max age.
 	 */
 	public function add_max_age( $max = 120 ) {
 		$this->addChild( 'maxAge', $max );

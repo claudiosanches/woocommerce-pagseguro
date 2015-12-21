@@ -1,6 +1,8 @@
 <?php
 /**
  * Admin View: Notice - Currency not supported.
+ *
+ * @package WooCommerce_PagSeguro/Admin/Notices
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
