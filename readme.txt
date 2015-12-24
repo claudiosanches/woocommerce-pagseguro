@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 2.11.0
+Stable tag: 2.11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -255,6 +255,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.11.1 - 2015/12/24 =
+
+* Corrigido campo bloqueado de telefone no checkout transparente.
+
 = 2.11.0 - 2015/12/21 =
 
 * Adicionado suporte a compras com CNPJ.
@@ -292,8 +296,9 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Upgrade Notice ==
 
-= 2.11.0 =
+= 2.11.1 =
 
 * Adicionado suporte a compras com CNPJ.
 * Melhorado o checkout transparente quando usado o tema Storefront.
 * Adicionada opções para token e e-mail de sandbox.
+* Corrigido campo bloqueado de telefone no checkout transparente.
