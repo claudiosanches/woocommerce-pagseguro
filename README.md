@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
 **Tested up to:** 4.4  
-**Stable tag:** 2.11.1  
+**Stable tag:** 2.11.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -267,6 +267,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
+### 2.11.2 - 2015/12/30 ###
+
+* Correção de erro fatal ao tentar finalizar pedido usando CNPJ.
+
 ### 2.11.1 - 2015/12/24 ###
 
 * Corrigido campo bloqueado de telefone no checkout transparente.
@@ -308,9 +312,6 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.11.1 ###
+### 2.11.2 ###
 
-* Adicionado suporte a compras com CNPJ.
-* Melhorado o checkout transparente quando usado o tema Storefront.
-* Adicionada opções para token e e-mail de sandbox.
-* Corrigido campo bloqueado de telefone no checkout transparente.
+* Correção de erro fatal ao tentar finalizar pedido usando CNPJ.
