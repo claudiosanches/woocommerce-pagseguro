@@ -88,6 +88,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * Add CPF.
 	 *
 	 * @param string $number Document number.
+	 * @param SimpleXMLElement $xml Data.
 	 */
 	protected function add_cpf( $number, $xml ) {
 		$documents = $xml->addChild( 'documents' );
@@ -100,9 +101,10 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * Add CNPJ.
 	 *
 	 * @param string $number Document number.
+	 * @param SimpleXMLElement $xml Data.
 	 */
-	protected function add_cnpj( $number ) {
-		$documents = $sender->addChild( 'documents' );
+	protected function add_cnpj( $number, $xml ) {
+		$documents = $xml->addChild( 'documents' );
 		$document  = $documents->addChild( 'document' );
 		$document->addChild( 'type', 'CNPJ' );
 		$document->addChild( 'value', $this->get_numbers( $number ) );
