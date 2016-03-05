@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="error">
+<div class="error inline">
 	<p><strong><?php _e( 'PagSeguro Disabled', 'woocommerce-pagseguro' ); ?></strong>: <?php printf( __( 'Currency <code>%s</code> is not supported. Works only with Brazilian Real.', 'woocommerce-pagseguro' ), get_woocommerce_currency() ); ?>
 	</p>
 </div>
