@@ -1,15 +1,15 @@
-# Copyright (C) 2015 Claudio Sanches
+# Copyright (C) 2016 Claudio Sanches
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro 2.11.2\n"
+"Project-Id-Version: WooCommerce PagSeguro 2.11.3\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-pagseguro\n"
-"POT-Creation-Date: 2015-12-30 23:48:16+00:00\n"
+"POT-Creation-Date: 2016-03-17 04:12:02+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.3\n"
@@ -43,12 +43,7 @@ msgid "Currency <code>%s</code> is not supported. Works only with Brazilian Real
 msgstr ""
 
 #: includes/admin/views/html-notice-email-missing.php:15
-msgid "You should inform your email address. %s"
-msgstr ""
-
-#: includes/admin/views/html-notice-email-missing.php:15
-#: includes/admin/views/html-notice-token-missing.php:15
-msgid "Click here to configure!"
+msgid "You should inform your email address."
 msgstr ""
 
 #: includes/admin/views/html-notice-missing-ecfb.php:22
@@ -76,7 +71,7 @@ msgid "Install WooCommerce"
 msgstr ""
 
 #: includes/admin/views/html-notice-token-missing.php:15
-msgid "You should inform your token. %s"
+msgid "You should inform your token."
 msgstr ""
 
 #: includes/class-wc-pagseguro-api.php:151
@@ -198,34 +193,34 @@ msgstr ""
 msgid "Order %s"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:572
+#: includes/class-wc-pagseguro-api.php:577
 msgid ""
 "Too bad! The email or token from the PagSeguro are invalids my little "
 "friend!"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:609
-#: includes/class-wc-pagseguro-api.php:629
-#: includes/class-wc-pagseguro-api.php:651
-#: includes/class-wc-pagseguro-api.php:711
-#: includes/class-wc-pagseguro-api.php:731
+#: includes/class-wc-pagseguro-api.php:614
+#: includes/class-wc-pagseguro-api.php:634
+#: includes/class-wc-pagseguro-api.php:656
+#: includes/class-wc-pagseguro-api.php:716
+#: includes/class-wc-pagseguro-api.php:736
 #: includes/class-wc-pagseguro-gateway.php:24
 #: includes/class-wc-pagseguro-gateway.php:186
 msgid "PagSeguro"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:629
-#: includes/class-wc-pagseguro-api.php:731
+#: includes/class-wc-pagseguro-api.php:634
+#: includes/class-wc-pagseguro-api.php:736
 msgid ""
 "An error has occurred while processing your payment, please try again. Or "
 "contact us for assistance."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:651
+#: includes/class-wc-pagseguro-api.php:656
 msgid "Please, select a payment method."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:677
+#: includes/class-wc-pagseguro-api.php:682
 msgid ""
 "You are not allowed to use the PagSeguro Transparent Checkout. Looks like "
 "you neglected to installation guide of this plugin. This is not pretty, do "

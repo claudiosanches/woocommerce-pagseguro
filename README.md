@@ -3,8 +3,8 @@
 **Donate link:** http://claudiosmweb.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
-**Tested up to:** 4.4  
-**Stable tag:** 2.11.2  
+**Tested up to:** 4.5  
+**Stable tag:** 2.11.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -65,7 +65,7 @@ Você pode esclarecer suas dúvidas usando:
 * Utilizando o nosso [fórum no Github](https://github.com/claudiosmweb/woocommerce-pagseguro).
 * Criando um tópico no [fórum de ajuda do WordPress](http://wordpress.org/support/plugin/woocommerce-pagseguro).
 
-### Coloborar ###
+### Colaborar ###
 
 Você pode contribuir com código-fonte em nossa página no [GitHub](https://github.com/claudiosmweb/woocommerce-pagseguro).
 
@@ -109,7 +109,7 @@ Você pode conseguir um token no PagSeguro em "Integrações" > "[Token de Segur
 É possível escolher entre três opções de pagamento que são:
 
 - **Checkout no PagSeguro (padrão):** O cliente e redirecionado para o site do PagSeguro
-- **Checkout em Lighbox:** O cliente permance no seu site é aberto um Lightbox do PagSeguro onde o cliente fará o pagamento
+- **Checkout em Lighbox:** O cliente permanece no seu site é aberto um Lightbox do PagSeguro onde o cliente fará o pagamento
 - **Checkout Transparente:** O cliente faz o pagamento direto em seu site na página de finalizar pedido utilizando a API do PagSeguro.
 
 Você ainda pode definir o comportamento da integração utilizando as opções:
@@ -121,7 +121,7 @@ Você ainda pode definir o comportamento da integração utilizando as opções:
 
 Para utilizar o checkout transparente é necessário utilizar o plugin [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/).
 
-Com o **WooCommerce Extra Checkout Fields for Brazil** instalado e ativado você deve ir até "WooCommerce > Campos do Checkout" e configurar a opção "Exibir Tipo de Pessoa" como "Pessoa Fisíca apenas".
+Com o **WooCommerce Extra Checkout Fields for Brazil** instalado e ativado você deve ir até "WooCommerce > Campos do Checkout" e configurar a opção "Exibir Tipo de Pessoa" como "Pessoa Física apenas".
 
 Isto é necessário porque é obrigatório o envio de CPF para o PagSeguro, além de que o PagSeguro aceita apenas CPF.
 
@@ -267,6 +267,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
+### 2.11.3 - 2016/03/17 ###
+
+* Corrigida finalização com produtos gratuitos.
+
 ### 2.11.2 - 2015/12/30 ###
 
 * Correção de erro fatal ao tentar finalizar pedido usando CNPJ.
@@ -312,6 +316,6 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.11.2 ###
+### 2.11.3 - 2016/03/17 ###
 
-* Correção de erro fatal ao tentar finalizar pedido usando CNPJ.
+* Corrigida finalização com produtos gratuitos.
