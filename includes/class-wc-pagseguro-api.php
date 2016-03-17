@@ -385,6 +385,11 @@ class WC_PagSeguro_API {
 			if ( 0 < count( $order->get_items() ) ) {
 				foreach ( $order->get_items() as $order_item ) {
 					if ( $order_item['qty'] ) {
+						$item_total = $order->get_item_total( $order_item, false );
+						if ( 0 >= $item_total ) {
+							continue;
+						}
+
 						$item_name = $order_item['name'];
 
 						if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.4.0', '<' ) ) {
@@ -399,7 +404,7 @@ class WC_PagSeguro_API {
 
 						$items[] = array(
 							'description' => $this->sanitize_description( $item_name ),
-							'amount'      => $this->money_format( $order->get_item_total( $order_item, false ) ),
+							'amount'      => $this->money_format( $item_total ),
 							'quantity'    => $order_item['qty'],
 						);
 					}
