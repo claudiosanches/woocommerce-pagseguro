@@ -468,7 +468,8 @@ class WC_PagSeguro_API {
 		// Creates the checkout xml.
 		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout></checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
-		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
+		// Uses same display ID to pagseguro order reference
+		$xml->add_reference( $this->gateway->invoice_prefix . $order->get_order_number() );
 		$xml->add_sender_data( $order );
 		$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
 		$xml->add_items( $data['items'] );
@@ -514,7 +515,8 @@ class WC_PagSeguro_API {
 		}
 		$xml->add_items( $data['items'] );
 		$xml->add_extra_amount( $data['extra_amount'] );
-		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
+		// Uses same display ID to pagseguro order reference
+		$xml->add_reference( $this->gateway->invoice_prefix . $order->get_order_number() );
 		$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
 
 		// Items related to the payment method.
