@@ -16,22 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php
 	if ( 'yes' == $this->get_option( 'enabled' ) ) {
 		if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
-			include 'html-notice-currency-not-supported.php';
+			include dirname( __FILE__ ) . '/html-notice-currency-not-supported.php';
 		}
 
 		if ( '' === $this->get_email() ) {
-			include_once 'html-notice-email-missing.php';
+			include dirname( __FILE__ ) . '/html-notice-email-missing.php';
 		}
 
 		if ( '' === $this->get_token() ) {
-			include_once 'html-notice-token-missing.php';
+			include dirname( __FILE__ ) . '/html-notice-token-missing.php';
 		}
 	}
 ?>
 
 <?php echo wpautop( $this->method_description ); ?>
 
-<?php include 'html-admin-help-message.php'; ?>
+<?php include dirname( __FILE__ ) . '/html-admin-help-message.php'; ?>
 
 <table class="form-table">
 	<?php $this->generate_settings_html(); ?>

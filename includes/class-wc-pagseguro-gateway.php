@@ -312,7 +312,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		wp_enqueue_script( 'pagseguro-admin', plugins_url( 'assets/js/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_PagSeguro::VERSION, true );
 
-		include 'admin/views/html-admin-page.php';
+		include dirname( __FILE__ ) . '/admin/views/html-admin-page.php';
 	}
 
 	/**
@@ -440,7 +440,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'lightbox_script_url' => $this->api->get_lightbox_url(),
 			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 		} else {
-			include 'views/html-receipt-page-error.php';
+			include dirname( __FILE__ ) . '/views/html-receipt-page-error.php';
 		}
 	}
 

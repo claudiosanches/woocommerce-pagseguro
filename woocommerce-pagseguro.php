@@ -115,9 +115,9 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 * Includes.
 		 */
 		private function includes() {
-			include_once 'includes/class-wc-pagseguro-xml.php';
-			include_once 'includes/class-wc-pagseguro-api.php';
-			include_once 'includes/class-wc-pagseguro-gateway.php';
+			include_once dirname( __FILE__ ) . '/includes/class-wc-pagseguro-xml.php';
+			include_once dirname( __FILE__ ) . '/includes/class-wc-pagseguro-api.php';
+			include_once dirname( __FILE__ ) . '/includes/class-wc-pagseguro-gateway.php';
 		}
 
 		/**
@@ -173,7 +173,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 			$settings = get_option( 'woocommerce_pagseguro_settings', array( 'method' => '' ) );
 
 			if ( 'transparent' === $settings['method'] && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
-				include 'includes/admin/views/html-notice-missing-ecfb.php';
+				include dirname( __FILE__ ) . '/includes/admin/views/html-notice-missing-ecfb.php';
 			}
 		}
 
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 * WooCommerce missing notice.
 		 */
 		public function woocommerce_missing_notice() {
-			include 'includes/admin/views/html-notice-missing-woocommerce.php';
+			include dirname( __FILE__ ) . '/includes/admin/views/html-notice-missing-woocommerce.php';
 		}
 	}
 
