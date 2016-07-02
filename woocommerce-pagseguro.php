@@ -102,7 +102,11 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		public function plugin_action_links( $links ) {
 			$plugin_links = array();
 
-			$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
+				$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=pagseguro' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
+			} else {
+				$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
+			}
 
 			return array_merge( $plugin_links, $links );
 		}
