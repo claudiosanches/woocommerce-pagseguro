@@ -233,13 +233,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			'sandbox_email' => array(
 				'title'       => __( 'PagSeguro Sandbox Email', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
-				'description' => sprintf( __( 'Please enter your PagSeguro sandbox email address. You can get your sandbox email %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
+				'description' => sprintf( __( 'Please enter your PagSeguro sandbox email address. You can get your sandbox email %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/vendedor/configuracoes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default'     => '',
 			),
 			'sandbox_token' => array(
 				'title'       => __( 'PagSeguro Sandbox Token', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
-				'description' => sprintf( __( 'Please enter your PagSeguro sandbox token. You can get your sandbox token %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/comprador-de-testes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
+				'description' => sprintf( __( 'Please enter your PagSeguro sandbox token. You can get your sandbox token %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/vendedor/configuracoes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default'     => '',
 			),
 			'transparent_checkout' => array(
