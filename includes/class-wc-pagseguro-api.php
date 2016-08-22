@@ -414,11 +414,15 @@ class WC_PagSeguro_API {
 			// Fees.
 			if ( 0 < count( $order->get_fees() ) ) {
 				foreach ( $order->get_fees() as $fee ) {
-					$items[] = array(
-						'description' => $this->sanitize_description( $fee['name'] ),
-						'amount'      => $this->money_format( $fee['line_total'] ),
-						'quantity'    => 1,
-					);
+					if( 0 > $fee['line_total'] ) {
+						$extra_amount = $extra_amount - (-1 * (FLOAT) $fee['line_total']);
+					} else {
+						$items[] = array(
+							'description' => $this->sanitize_description( $fee['name'] ),
+							'amount'      => $this->money_format( $fee['line_total'] ),
+							'quantity'    => 1,
+						);
+					}
 				}
 			}
 
@@ -441,14 +445,14 @@ class WC_PagSeguro_API {
 			// Discount.
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.3', '<' ) ) {
 				if ( 0 < $order->get_order_discount() ) {
-					$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
+					$extra_amount = $extra_amount - (-1 * (FLOAT) $order->get_order_discount() );
 				}
 			}
 		}
 
 		return array(
 			'items'         => $items,
-			'extra_amount'  => $extra_amount,
+			'extra_amount'  => $this->money_format( $extra_amount ),
 			'shipping_cost' => $shipping_cost,
 		);
 	}
