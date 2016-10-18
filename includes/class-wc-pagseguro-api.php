@@ -260,6 +260,7 @@ class WC_PagSeguro_API {
 			'53029' => __( '<strong>Neighborhood</strong> is a required field.', 'woocommerce-pagseguro' ),
 			'53046' => __( 'Credit card holder CPF invalid.', 'woocommerce-pagseguro' ),
 			'53122' => __( 'Invalid email domain. You must use an email @sandbox.pagseguro.com.br while you are using the PagSeguro Sandbox.', 'woocommerce-pagseguro' ),
+			'53081' => __( 'The customer email can not be the same as the PagSeguro account owner.', 'woocommerce-pagseguro' ),
 		);
 
 		if ( isset( $messages[ $code ] ) ) {
