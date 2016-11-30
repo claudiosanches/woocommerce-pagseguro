@@ -3,7 +3,7 @@
 **Donate link:** http://claudiosmweb.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
-**Tested up to:** 4.5  
+**Tested up to:** 4.7  
 **Stable tag:** 2.11.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -42,7 +42,7 @@ Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pa
 
 ### Compatibilidade ###
 
-Compatível com as versões 2.2.x, 2.3.x, 2.4.x e 2.5.x do WooCommerce.
+Compatível desde a versão 2.2.x até 2.6.x do WooCommerce.
 
 Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
@@ -267,6 +267,13 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
+### 2.11.4 - 2016/11/30 ###
+
+* Adicionada nova mensagem de erro quando utilizado o mesmo e-mail para realizar pagamentos com o mesmo e-mail da conta do recebedor.
+* Removida opção obsoleta de déposito bancário pelo Bradesco.
+* Corrigido links do Sandbox na página de administração.
+* Adicionada modificação para enviar nome da empresa quando utilizado CNPJ.
+
 ### 2.11.3 - 2016/03/17 ###
 
 * Corrigida finalização com produtos gratuitos.
@@ -316,6 +323,9 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.11.3 - 2016/03/17 ###
+### 2.11.4 ###
 
-* Corrigida finalização com produtos gratuitos.
+* Adicionada nova mensagem de erro quando utilizado o mesmo e-mail para realizar pagamentos com o mesmo e-mail da conta do recebedor.
+* Removida opção obsoleta de déposito bancário pelo Bradesco.
+* Corrigido links do Sandbox na página de administração.
+* Adicionada modificação para enviar nome da empresa quando utilizado CNPJ.
