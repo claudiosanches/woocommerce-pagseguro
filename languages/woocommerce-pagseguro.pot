@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: WooCommerce PagSeguro 2.11.3\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-pagseguro\n"
-"POT-Creation-Date: 2016-03-17 04:12:02+00:00\n"
+"POT-Creation-Date: 2016-10-18 17:15:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.5.3\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
 
 #: includes/admin/views/html-admin-help-message.php:14
 msgid ""
@@ -183,44 +183,48 @@ msgid ""
 "you are using the PagSeguro Sandbox."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:269
+#: includes/class-wc-pagseguro-api.php:263
+msgid "The customer email can not be the same as the PagSeguro account owner."
+msgstr ""
+
+#: includes/class-wc-pagseguro-api.php:270
 msgid ""
 "An error has occurred while processing your payment, please review your "
 "data and try again. Or contact us for assistance."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:378
+#: includes/class-wc-pagseguro-api.php:379
 msgid "Order %s"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:577
+#: includes/class-wc-pagseguro-api.php:578
 msgid ""
 "Too bad! The email or token from the PagSeguro are invalids my little "
 "friend!"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:614
-#: includes/class-wc-pagseguro-api.php:634
-#: includes/class-wc-pagseguro-api.php:656
-#: includes/class-wc-pagseguro-api.php:716
-#: includes/class-wc-pagseguro-api.php:736
+#: includes/class-wc-pagseguro-api.php:615
+#: includes/class-wc-pagseguro-api.php:635
+#: includes/class-wc-pagseguro-api.php:657
+#: includes/class-wc-pagseguro-api.php:717
+#: includes/class-wc-pagseguro-api.php:737
 #: includes/class-wc-pagseguro-gateway.php:24
 #: includes/class-wc-pagseguro-gateway.php:186
 msgid "PagSeguro"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:634
-#: includes/class-wc-pagseguro-api.php:736
+#: includes/class-wc-pagseguro-api.php:635
+#: includes/class-wc-pagseguro-api.php:737
 msgid ""
 "An error has occurred while processing your payment, please try again. Or "
 "contact us for assistance."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:656
+#: includes/class-wc-pagseguro-api.php:657
 msgid "Please, select a payment method."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:682
+#: includes/class-wc-pagseguro-api.php:683
 msgid ""
 "You are not allowed to use the PagSeguro Transparent Checkout. Looks like "
 "you neglected to installation guide of this plugin. This is not pretty, do "
@@ -732,7 +736,7 @@ msgid ""
 "retailer."
 msgstr ""
 
-#: woocommerce-pagseguro.php:105
+#: woocommerce-pagseguro.php:106 woocommerce-pagseguro.php:108
 msgid "Settings"
 msgstr ""
 
