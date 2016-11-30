@@ -77,7 +77,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div id="pagseguro-bank-transfer-form" class="pagseguro-method-form">
 			<p><?php _e( 'Select your bank:', 'woocommerce-pagseguro' ); ?></p>
 			<ul>
-				<li><label><input type="radio" name="pagseguro_bank_transfer" value="bradesco" /><i id="pagseguro-icon-bradesco"></i><span><?php _e( 'Banco Bradesco', 'woocommerce-pagseguro' ); ?></span></label></li>
 				<li><label><input type="radio" name="pagseguro_bank_transfer" value="itau" /><i id="pagseguro-icon-itau"></i><span><?php _e( 'Banco Ita&uacute;', 'woocommerce-pagseguro' ); ?></span></label></li>
 				<li><label><input type="radio" name="pagseguro_bank_transfer" value="bancodobrasil" /><i id="pagseguro-icon-bancodobrasil"></i><span><?php _e( 'Banco do Brasil', 'woocommerce-pagseguro' ); ?></span></label></li>
 				<li><label><input type="radio" name="pagseguro_bank_transfer" value="banrisul" /><i id="pagseguro-icon-banrisul"></i><span><?php _e( 'Banco Banrisul', 'woocommerce-pagseguro' ); ?></span></label></li>
