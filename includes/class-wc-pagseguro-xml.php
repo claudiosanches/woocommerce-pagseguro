@@ -117,8 +117,8 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * @param string   $hash  Sender hash.
 	 */
 	public function add_sender_data( $order, $hash = '' ) {
+		$name   = $order->billing_first_name . ' ' . $order->billing_last_name;
 		$sender = $this->addChild( 'sender' );
-		$sender->addChild( 'name' )->add_cdata( $order->billing_first_name . ' ' . $order->billing_last_name );
 		$sender->addChild( 'email' )->add_cdata( $order->billing_email );
 
 		$wcbcf_settings = get_option( 'wcbcf_settings' );
@@ -127,14 +127,18 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		if ( ( 0 === $wcbcf_settings || 2 === $wcbcf_settings ) && ! empty( $order->billing_cpf ) ) {
 			$this->add_cpf( $order->billing_cpf, $sender );
 		} else if ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && ! empty( $order->billing_cnpj ) ) {
+			$name = $order->billing_company;
 			$this->add_cnpj( $order->billing_cnpj, $sender );
 		} else if ( ! empty( $order->billing_persontype ) ) {
 			if ( 1 == $order->billing_persontype && ! empty( $order->billing_cpf ) ) {
 				$this->add_cpf( $order->billing_cpf, $sender );
 			} else if ( 2 == $order->billing_persontype && ! empty( $order->billing_cnpj ) ) {
+				$name = $order->billing_company;
 				$this->add_cnpj( $order->billing_cnpj, $sender );
 			}
 		}
+
+		$sender->addChild( 'name' )->add_cdata( $name );
 
 		if ( isset( $order->billing_phone ) && ! empty( $order->billing_phone ) ) {
 			$phone_number = $this->get_numbers( $order->billing_phone );
