@@ -4,7 +4,7 @@ Donate link: http://claudiosmweb.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 2.11.4
+Stable tag: 2.11.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -255,6 +255,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.11.5 - 2017/01/17 =
+
+* Adicionada nota dizendo que o pedido esta sendo feito no Brasil durante o Checkout Transparente.
+
 = 2.11.4 - 2016/11/30 =
 
 * Adicionada nova mensagem de erro quando utilizado o mesmo e-mail para realizar pagamentos com o mesmo e-mail da conta do recebedor.
@@ -280,40 +284,8 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 * Melhorado o checkout transparente quando usado o tema Storefront.
 * Adicionada opções para token e e-mail de sandbox.
 
-= 2.10.2 - 2015/08/08 =
-
-* Corrigido erro na tradução pt_BR do plugin.
-
-= 2.10.1 - 2015/08/08 =
-
-* Corrigido os links dos alertas sobre opções obrigatórios não configuradas do plugin.
-
-= 2.10.0 - 2015/08/08 =
-
-* Adicionado suporte para WooCommerce 2.4.x.
-* Removido suporte para WooCommerce 2.0.x.
-
-= 2.9.0 - 2015/06/23 =
-
-* Adicionado método para ignorar a opção "Manter Estoque (minutos)" do WooCommerce.
-
-= 2.8.1 - 2015/02/07 =
-
-* Melhorado o suporte do Checkout Transparente no WooCommerce 2.3.
-
-= 2.8.0 - 2015/02/03 =
-
-* Adicionado suporte para o WooCommerce 2.3.
-* Adicionado suporte para WooCommerce Multilingual. 
-* Adicionado recurso para utilizar o endereço de entrega no Lightbox (antes funcionava apenas com checkout normal ou transparente).
-* Adicionada alerta de erro para CPF invalido com checkout transparente.
-* Correções na tradução do plugin.
-
 == Upgrade Notice ==
 
-= 2.11.4 =
+= 2.11.5 =
 
-* Adicionada nova mensagem de erro quando utilizado o mesmo e-mail para realizar pagamentos com o mesmo e-mail da conta do recebedor.
-* Removida opção obsoleta de déposito bancário pelo Bradesco.
-* Corrigido links do Sandbox na página de administração.
-* Adicionada modificação para enviar nome da empresa quando utilizado CNPJ.
+* Adicionada nota dizendo que o pedido esta sendo feito no Brasil durante o Checkout transparente.

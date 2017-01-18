@@ -1,15 +1,15 @@
-# Copyright (C) 2016 Claudio Sanches
+# Copyright (C) 2017 Claudio Sanches
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro 2.11.4\n"
+"Project-Id-Version: WooCommerce PagSeguro 2.11.5\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-pagseguro\n"
-"POT-Creation-Date: 2016-11-30 23:17:36+00:00\n"
+"POT-Creation-Date: 2017-01-18 00:15:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.3\n"
@@ -456,92 +456,92 @@ msgstr ""
 msgid "Log PagSeguro events, such as API requests, inside %s"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:460
+#: includes/class-wc-pagseguro-gateway.php:461
 msgid "PagSeguro Request Unauthorized"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:494
+#: includes/class-wc-pagseguro-gateway.php:495
 msgid "PagSeguro Transaction ID"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:501
+#: includes/class-wc-pagseguro-gateway.php:502
 msgid "Payer email"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:508
+#: includes/class-wc-pagseguro-gateway.php:509
 msgid "Payer name"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:516
+#: includes/class-wc-pagseguro-gateway.php:517
 msgid "Payment type"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:524
+#: includes/class-wc-pagseguro-gateway.php:525
 msgid "Payment method"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:532
+#: includes/class-wc-pagseguro-gateway.php:533
 #: templates/transparent-checkout-form.php:54
 msgid "Installments"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:540
+#: includes/class-wc-pagseguro-gateway.php:541
 msgid "Payment url"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:552
+#: includes/class-wc-pagseguro-gateway.php:553
 msgid ""
 "PagSeguro: The buyer initiated the transaction, but so far the PagSeguro "
 "not received any payment information."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:556
+#: includes/class-wc-pagseguro-gateway.php:557
 msgid "PagSeguro: Payment under review."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:560
+#: includes/class-wc-pagseguro-gateway.php:561
 msgid "PagSeguro: Payment approved."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:570
+#: includes/class-wc-pagseguro-gateway.php:571
 msgid "PagSeguro: Payment completed and credited to your account."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:574
+#: includes/class-wc-pagseguro-gateway.php:575
 msgid "PagSeguro: Payment came into dispute."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:576
+#: includes/class-wc-pagseguro-gateway.php:577
 msgid "Payment for order %s came into dispute"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:577
+#: includes/class-wc-pagseguro-gateway.php:578
 msgid "Payment in dispute"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:578
+#: includes/class-wc-pagseguro-gateway.php:579
 msgid ""
 "Order %s has been marked as on-hold, because the payment came into dispute "
 "in PagSeguro."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:583
+#: includes/class-wc-pagseguro-gateway.php:584
 msgid "PagSeguro: Payment refunded."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:585
+#: includes/class-wc-pagseguro-gateway.php:586
 msgid "Payment for order %s refunded"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:586
+#: includes/class-wc-pagseguro-gateway.php:587
 msgid "Payment refunded"
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:587
+#: includes/class-wc-pagseguro-gateway.php:588
 msgid "Order %s has been marked as refunded by PagSeguro."
 msgstr ""
 
-#: includes/class-wc-pagseguro-gateway.php:592
+#: includes/class-wc-pagseguro-gateway.php:593
 msgid "PagSeguro: Payment canceled."
 msgstr ""
 
@@ -730,6 +730,14 @@ msgid ""
 "* After clicking \"Proceed to payment\" you will have access to banking "
 "ticket which you can print and pay in your internet banking or in a lottery "
 "retailer."
+msgstr ""
+
+#: templates/transparent-checkout-form.php:105
+msgid "This purchase is being made in Brazil"
+msgstr ""
+
+#: templates/transparent-checkout-form.php:105
+msgid "Brazilian flag"
 msgstr ""
 
 #: woocommerce-pagseguro.php:106 woocommerce-pagseguro.php:108
