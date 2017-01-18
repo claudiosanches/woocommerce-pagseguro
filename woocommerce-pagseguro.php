@@ -50,13 +50,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 				$this->includes();
 
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
-				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
-				add_filter( 'woocommerce_cancel_unpaid_order', array( $this, 'stop_cancel_unpaid_orders' ), 10, 2 );
 				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
-
-				if ( is_admin() ) {
-					add_action( 'admin_notices', array( $this, 'ecfb_missing_notice' ) );
-				}
 			} else {
 				add_action( 'admin_notices', array( $this, 'woocommerce_missing_notice' ) );
 			}
@@ -77,12 +71,30 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		}
 
 		/**
+		 * Get main file.
+		 *
+		 * @return string
+		 */
+		public static function get_main_file() {
+			return __FILE__;
+		}
+
+		/**
+		 * Get plugin path.
+		 *
+		 * @return string
+		 */
+		public static function get_plugin_path() {
+			return plugin_dir_path( __FILE__ );
+		}
+
+		/**
 		 * Get templates path.
 		 *
 		 * @return string
 		 */
 		public static function get_templates_path() {
-			return plugin_dir_path( __FILE__ ) . 'templates/';
+			return self::get_plugin_path() . 'templates/';
 		}
 
 		/**
@@ -90,6 +102,44 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 */
 		public function load_plugin_textdomain() {
 			load_plugin_textdomain( 'woocommerce-pagseguro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		}
+
+		/**
+		 * Includes.
+		 */
+		private function includes() {
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7', '>=' ) ) {
+
+			} else {
+				include_once dirname( __FILE__ ) . '/includes/legacy/class-wc-pagseguro-legacy-actions.php';
+				include_once dirname( __FILE__ ) . '/includes/legacy/class-wc-pagseguro-xml.php';
+				include_once dirname( __FILE__ ) . '/includes/legacy/class-wc-pagseguro-api.php';
+				include_once dirname( __FILE__ ) . '/includes/legacy/class-wc-pagseguro-gateway.php';
+			}
+		}
+
+		/**
+		 * Add the gateway to WooCommerce.
+		 *
+		 * @param  array $methods WooCommerce payment methods.
+		 *
+		 * @return array          Payment methods with PagSeguro.
+		 */
+		public function add_gateway( $methods ) {
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7', '>=' ) ) {
+
+			} else {
+				$methods[] = 'WC_PagSeguro_Gateway';
+			}
+
+			return $methods;
+		}
+
+		/**
+		 * WooCommerce missing notice.
+		 */
+		public function woocommerce_missing_notice() {
+			include dirname( __FILE__ ) . '/includes/admin/views/html-notice-missing-woocommerce.php';
 		}
 
 		/**
@@ -109,79 +159,6 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 			}
 
 			return array_merge( $plugin_links, $links );
-		}
-
-		/**
-		 * Includes.
-		 */
-		private function includes() {
-			include_once dirname( __FILE__ ) . '/includes/class-wc-pagseguro-xml.php';
-			include_once dirname( __FILE__ ) . '/includes/class-wc-pagseguro-api.php';
-			include_once dirname( __FILE__ ) . '/includes/class-wc-pagseguro-gateway.php';
-		}
-
-		/**
-		 * Add the gateway to WooCommerce.
-		 *
-		 * @param  array $methods WooCommerce payment methods.
-		 *
-		 * @return array          Payment methods with PagSeguro.
-		 */
-		public function add_gateway( $methods ) {
-			$methods[] = 'WC_PagSeguro_Gateway';
-
-			return $methods;
-		}
-
-		/**
-		 * Hides the PagSeguro with payment method with the customer lives outside Brazil.
-		 *
-		 * @param   array $available_gateways Default Available Gateways.
-		 *
-		 * @return  array                     New Available Gateways.
-		 */
-		public function hides_when_is_outside_brazil( $available_gateways ) {
-
-			// Remove PagSeguro gateway.
-			if ( isset( $_REQUEST['country'] ) && 'BR' != $_REQUEST['country'] ) {
-				unset( $available_gateways['pagseguro'] );
-			}
-
-			return $available_gateways;
-		}
-
-		/**
-		 * Stop cancel unpaid PagSeguro orders.
-		 *
-		 * @param  bool     $cancel Check if need cancel the order.
-		 * @param  WC_Order $order  Order object.
-		 *
-		 * @return bool
-		 */
-		public function stop_cancel_unpaid_orders( $cancel, $order ) {
-			if ( 'pagseguro' === $order->payment_method ) {
-				return false;
-			}
-
-			return $cancel;
-		}
-
-		/**
-		 * WooCommerce Extra Checkout Fields for Brazil notice.
-		 */
-		public function ecfb_missing_notice() {
-			$settings = get_option( 'woocommerce_pagseguro_settings', array( 'method' => '' ) );
-
-			if ( 'transparent' === $settings['method'] && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
-				include dirname( __FILE__ ) . '/includes/admin/views/html-notice-missing-ecfb.php';
-			}
-		}
-
-		/**
-		 * WooCommerce missing notice.
-		 */
-		public function woocommerce_missing_notice() {
-			include dirname( __FILE__ ) . '/includes/admin/views/html-notice-missing-woocommerce.php';
 		}
 	}
 

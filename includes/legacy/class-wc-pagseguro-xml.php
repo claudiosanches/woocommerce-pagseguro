@@ -2,8 +2,8 @@
 /**
  * WooCommerce PagSeguro SimpleXMLElement class
  *
- * @package WooCommerce_PagSeguro/Classes/XML
- * @version 2.11.0
+ * @deprecated 3.0.0
+ * @package    WooCommerce_PagSeguro/Classes/XML
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

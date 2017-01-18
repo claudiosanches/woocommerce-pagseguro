@@ -2,8 +2,8 @@
 /**
  * WooCommerce PagSeguro Gateway class
  *
- * @package WooCommerce_PagSeguro/Classes/Gateway
- * @version 2.11.0
+ * @deprecated 3.0.0
+ * @package    WooCommerce_PagSeguro/Classes/Gateway
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +20,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id                 = 'pagseguro';
-		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'assets/images/pagseguro.png', plugin_dir_path( __FILE__ ) ) );
+		$this->icon               = apply_filters( 'woocommerce_pagseguro_icon', plugins_url( 'assets/images/pagseguro.png', WC_PagSeguro::get_main_file() ) );
 		$this->method_title       = __( 'PagSeguro', 'woocommerce-pagseguro' );
 		$this->method_description = __( 'Accept payments by credit card, bank debit or banking ticket using the PagSeguro.', 'woocommerce-pagseguro' );
 		$this->order_button_text  = __( 'Proceed to payment', 'woocommerce-pagseguro' );
@@ -133,9 +133,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$session_id = $this->api->get_session_id();
 				$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-				wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PagSeguro::VERSION );
+				wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/transparent-checkout' . $suffix . '.css', WC_PagSeguro::get_main_file() ), array(), WC_PagSeguro::VERSION );
 				wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
-				wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PagSeguro::VERSION, true );
+				wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/transparent-checkout' . $suffix . '.js', WC_PagSeguro::get_main_file() ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PagSeguro::VERSION, true );
 
 				wp_localize_script(
 					'pagseguro-checkout',
@@ -310,9 +310,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function admin_options() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'pagseguro-admin', plugins_url( 'assets/js/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_PagSeguro::VERSION, true );
+		wp_enqueue_script( 'pagseguro-admin', plugins_url( 'assets/js/admin' . $suffix . '.js', WC_PagSeguro::get_main_file() ), array( 'jquery' ), WC_PagSeguro::VERSION, true );
 
-		include dirname( __FILE__ ) . '/admin/views/html-admin-page.php';
+		include WC_PagSeguro::get_plugin_path() . 'admin/views/html-admin-page.php';
 	}
 
 	/**
@@ -347,7 +347,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'tc_transfer'       => $this->tc_transfer,
 				'tc_ticket'         => $this->tc_ticket,
 				'tc_ticket_message' => $this->tc_ticket_message,
-				'flag'              => plugins_url( 'assets/images/brazilian-flag.png', plugin_dir_path( __FILE__ ) ),
+				'flag'              => plugins_url( 'assets/images/brazilian-flag.png', WC_PagSeguro::get_main_file() ),
 			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 		}
 	}
@@ -441,7 +441,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'lightbox_script_url' => $this->api->get_lightbox_url(),
 			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 		} else {
-			include dirname( __FILE__ ) . '/views/html-receipt-page-error.php';
+			include WC_PagSeguro::get_plugin_path() . 'views/html-receipt-page-error.php';
 		}
 	}
 

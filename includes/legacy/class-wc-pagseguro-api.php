@@ -2,8 +2,8 @@
 /**
  * WooCommerce PagSeguro API class
  *
+ * @deprecated 3.0.0
  * @package WooCommerce_PagSeguro/Classes/API
- * @version 2.11.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
