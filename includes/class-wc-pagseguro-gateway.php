@@ -347,6 +347,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'tc_transfer'       => $this->tc_transfer,
 				'tc_ticket'         => $this->tc_ticket,
 				'tc_ticket_message' => $this->tc_ticket_message,
+				'flag'              => plugins_url( 'assets/images/brazilian-flag.png', plugin_dir_path( __FILE__ ) ),
 			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
 		}
 	}
