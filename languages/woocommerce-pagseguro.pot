@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro 2.11.5\n"
+"Project-Id-Version: WooCommerce PagSeguro 2.11.6\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-pagseguro\n"
 "POT-Creation-Date: 2017-01-18 00:15:30+00:00\n"
