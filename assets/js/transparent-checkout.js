@@ -86,10 +86,10 @@
 			pagSeguroShowHideMethodForm( $( '#pagseguro-payment-methods input[type=radio]:checked' ).val() );
 
 			// CPF.
-			$( '#pagseguro-card-holder-cpf' ).mask( '000.000.000-00', { placeholder: ' ' } );
+			$( '#pagseguro-card-holder-cpf' ).mask( '000.000.000-00' );
 
 			// Birth Date.
-			$( '#pagseguro-card-holder-birth-date' ).mask( '00/00/0000', { placeholder: ' ' } );
+			$( '#pagseguro-card-holder-birth-date' ).mask( '00/00/0000' );
 
 			// Phone.
 			$( '#pagseguro-card-holder-phone' ).focusout( function() {
