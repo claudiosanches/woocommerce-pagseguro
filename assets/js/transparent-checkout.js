@@ -89,7 +89,7 @@
 			$( '#pagseguro-card-holder-cpf' ).mask( '000.000.000-00', { placeholder: ' ' } );
 
 			// Birth Date.
-			$( '#pagseguro-card-holder-birth-date' ).mask( '99 / 99 / 9999', { placeholder: ' ' } );
+			$( '#pagseguro-card-holder-birth-date' ).mask( '00/00/0000', { placeholder: ' ' } );
 
 			// Phone.
 			$( '#pagseguro-card-holder-phone' ).focusout( function() {
