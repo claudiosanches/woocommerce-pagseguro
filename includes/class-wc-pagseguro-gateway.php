@@ -493,11 +493,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 		if ( isset( $posted->installmentCount ) ) {
 			$payment_data['installments'] = sanitize_text_field( (string) $posted->installmentCount );
-			$meta_data[ __( 'Payment method', 'woocommerce-pagseguro' ) ] = $payment_data['installments'];
+			$meta_data[ __( 'Installments', 'woocommerce-pagseguro' ) ] = $payment_data['installments'];
 		}
 		if ( isset( $posted->paymentLink ) ) {
 			$payment_data['link'] = sanitize_text_field( (string) $posted->paymentLink );
-			$meta_data[ __( 'Payment method', 'woocommerce-pagseguro' ) ] = $payment_data['link'];
+			$meta_data[ __( 'Payment URL', 'woocommerce-pagseguro' ) ] = $payment_data['link'];
 		}
 
 		$meta_data['_wc_pagseguro_payment_data'] = $payment_data;
