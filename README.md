@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
 **Tested up to:** 4.7  
-**Stable tag:** 2.12.0  
+**Stable tag:** 2.12.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -267,7 +267,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
-### 2.12.0 - 2017/04/04 ###
+### 2.12.1 - 2017/04/04 ###
+
+* Correção dos títulos dos campos personalizados salvos ao fazer um pedido.
+
+### 2.12.0 - 2017/04/03 ###
 
 * Adicionado suporte ao WooCommerce 3.0.
 * Alterado o tipo dos campos para `tel` no Checkout Transparente. (Possível com a ajuda de [Thiago Guimarães](https://github.com/thiagogsr)).
@@ -304,6 +308,6 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.12.0 ###
+### 2.12.1 ###
 
 * Suporte ao WooCommerce 3.0, correção dos tipos de campo do Checkout Transparente e correção das máscaras.
