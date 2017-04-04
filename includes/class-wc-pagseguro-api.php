@@ -3,7 +3,7 @@
  * WooCommerce PagSeguro API class
  *
  * @package WooCommerce_PagSeguro/Classes/API
- * @version 2.11.0
+ * @version 2.12.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -387,7 +387,7 @@ class WC_PagSeguro_API {
 				foreach ( $order->get_items() as $order_item ) {
 					if ( $order_item['qty'] ) {
 						$item_total = $order->get_item_total( $order_item, false );
-						if ( 0 >= $item_total ) {
+						if ( 0 >= (float) $item_total ) {
 							continue;
 						}
 
@@ -415,6 +415,10 @@ class WC_PagSeguro_API {
 			// Fees.
 			if ( 0 < count( $order->get_fees() ) ) {
 				foreach ( $order->get_fees() as $fee ) {
+					if ( 0 >= (float) $fee['line_total'] ) {
+						continue;
+					}
+
 					$items[] = array(
 						'description' => $this->sanitize_description( $fee['name'] ),
 						'amount'      => $this->money_format( $fee['line_total'] ),
@@ -426,9 +430,14 @@ class WC_PagSeguro_API {
 			// Taxes.
 			if ( 0 < count( $order->get_taxes() ) ) {
 				foreach ( $order->get_taxes() as $tax ) {
+					$tax_total = $tax['tax_amount'] + $tax['shipping_tax_amount'];
+					if ( 0 >= (float) $tax_total ) {
+						continue;
+					}
+
 					$items[] = array(
 						'description' => $this->sanitize_description( $tax['label'] ),
-						'amount'      => $this->money_format( $tax['tax_amount'] + $tax['shipping_tax_amount'] ),
+						'amount'      => $this->money_format( $tax_total ),
 						'quantity'    => 1,
 					);
 				}
@@ -469,9 +478,18 @@ class WC_PagSeguro_API {
 		// Creates the checkout xml.
 		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout></checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
-		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
-		$xml->add_sender_data( $order );
-		$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'get_id' ) ) {
+			$xml->add_reference( $this->gateway->invoice_prefix . $order->get_id() );
+			$xml->add_sender_data( $order );
+			$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+		} else {
+			$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
+			$xml->add_legacy_sender_data( $order );
+			$xml->add_legacy_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+		}
+
 		$xml->add_items( $data['items'] );
 		$xml->add_extra_amount( $data['extra_amount'] );
 
@@ -508,15 +526,23 @@ class WC_PagSeguro_API {
 		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><payment></payment>' );
 		$xml->add_mode( 'default' );
 		$xml->add_method( $method );
-		$xml->add_sender_data( $order, $hash );
 		$xml->add_currency( get_woocommerce_currency() );
 		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
 		$xml->add_items( $data['items'] );
 		$xml->add_extra_amount( $data['extra_amount'] );
-		$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
-		$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+		// WooCommerce 3.0 or later.
+		if ( method_exists( $order, 'get_id' ) ) {
+			$xml->add_reference( $this->gateway->invoice_prefix . $order->get_id() );
+			$xml->add_sender_data( $order, $hash );
+			$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+		} else {
+			$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
+			$xml->add_legacy_sender_data( $order, $hash );
+			$xml->add_legacy_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+		}
 
 		// Items related to the payment method.
 		if ( 'creditCard' == $method ) {
@@ -532,7 +558,12 @@ class WC_PagSeguro_API {
 				'phone'      => isset( $posted['pagseguro_card_holder_phone'] ) ? sanitize_text_field( $posted['pagseguro_card_holder_phone'] ) : '',
 			);
 
-			$xml->add_credit_card_data( $order, $credit_card_token, $installment, $holder_data );
+			// WooCommerce 3.0 or later.
+			if ( method_exists( $order, 'get_id' ) ) {
+				$xml->add_credit_card_data( $order, $credit_card_token, $installment, $holder_data );
+			} else {
+				$xml->add_legacy_credit_card_data( $order, $credit_card_token, $installment, $holder_data );
+			}
 		} elseif ( 'eft' == $method ) {
 			$bank_name = isset( $posted['pagseguro_bank_transfer'] ) ? sanitize_text_field( $posted['pagseguro_bank_transfer'] ) : '';
 			$xml->add_bank_data( $bank_name );

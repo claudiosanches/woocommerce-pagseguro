@@ -4,7 +4,7 @@
  *
  * @author  Claudio_Sanches
  * @package WooCommerce_PagSeguro/Templates
- * @version 2.11.1
+ * @version 2.12.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

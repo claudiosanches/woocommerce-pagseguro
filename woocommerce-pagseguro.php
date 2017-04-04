@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento PagSeguro para WooCommerce.
  * Author: Claudio Sanches
  * Author URI: http://claudiosmweb.com/
- * Version: 2.11.6
+ * Version: 2.12.0
  * License: GPLv2 or later
  * Text Domain: woocommerce-pagseguro
  * Domain Path: languages/
@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 *
 		 * @var string
 		 */
-		const VERSION = '2.11.6';
+		const VERSION = '2.12.0';
 
 		/**
 		 * Instance of this class.
@@ -69,7 +69,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 */
 		public static function get_instance() {
 			// If the single instance hasn't been set, set it now.
-			if ( null == self::$instance ) {
+			if ( null === self::$instance ) {
 				self::$instance = new self;
 			}
 
@@ -100,13 +100,8 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 * @return array
 		 */
 		public function plugin_action_links( $links ) {
-			$plugin_links = array();
-
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.1', '>=' ) ) {
-				$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=pagseguro' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
-			} else {
-				$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_pagseguro_gateway' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
-			}
+			$plugin_links   = array();
+			$plugin_links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=pagseguro' ) ) . '">' . __( 'Settings', 'woocommerce-pagseguro' ) . '</a>';
 
 			return array_merge( $plugin_links, $links );
 		}
@@ -141,9 +136,8 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 * @return  array                     New Available Gateways.
 		 */
 		public function hides_when_is_outside_brazil( $available_gateways ) {
-
 			// Remove PagSeguro gateway.
-			if ( isset( $_REQUEST['country'] ) && 'BR' != $_REQUEST['country'] ) {
+			if ( isset( $_REQUEST['country'] ) && 'BR' !== $_REQUEST['country'] ) {
 				unset( $available_gateways['pagseguro'] );
 			}
 
@@ -159,7 +153,9 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 * @return bool
 		 */
 		public function stop_cancel_unpaid_orders( $cancel, $order ) {
-			if ( 'pagseguro' === $order->payment_method ) {
+			$payment_method = method_exists( $order, 'get_payment_method' ) ? $order->get_payment_method() : $order->payment_method;
+
+			if ( 'pagseguro' === $payment_method ) {
 				return false;
 			}
 

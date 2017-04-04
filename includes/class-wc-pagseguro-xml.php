@@ -3,7 +3,7 @@
  * WooCommerce PagSeguro SimpleXMLElement class
  *
  * @package WooCommerce_PagSeguro/Classes/XML
- * @version 2.11.0
+ * @version 2.12.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -111,12 +111,12 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	}
 
 	/**
-	 * Add sender data.
+	 * Legacy - Add sender data.
 	 *
 	 * @param WC_Order $order Order data.
 	 * @param string   $hash  Sender hash.
 	 */
-	public function add_sender_data( $order, $hash = '' ) {
+	public function add_legacy_sender_data( $order, $hash = '' ) {
 		$name   = $order->billing_first_name . ' ' . $order->billing_last_name;
 		$sender = $this->addChild( 'sender' );
 		$sender->addChild( 'email' )->add_cdata( $order->billing_email );
@@ -153,13 +153,55 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	}
 
 	/**
-	 * Add shipping data.
+	 * Add sender data.
+	 *
+	 * @param WC_Order $order Order data.
+	 * @param string   $hash  Sender hash.
+	 */
+	public function add_sender_data( $order, $hash = '' ) {
+		$name   = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+		$sender = $this->addChild( 'sender' );
+		$sender->addChild( 'email' )->add_cdata( $order->get_billing_email() );
+
+		$wcbcf_settings = get_option( 'wcbcf_settings' );
+		$wcbcf_settings = isset( $wcbcf_settings['person_type'] ) ? intval( $wcbcf_settings['person_type'] ) : 0;
+
+		if ( ( 0 === $wcbcf_settings || 2 === $wcbcf_settings ) && '' !== $order->get_meta( '_billing_cpf' ) ) {
+			$this->add_cpf( $order->get_meta( '_billing_cpf' ), $sender );
+		} else if ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && '' !== $order->get_meta( '_billing_cnpj' ) ) {
+			$name = $order->get_billing_company();
+			$this->add_cnpj( $order->get_meta( '_billing_cnpj' ), $sender );
+		} else if ( '' !== $order->get_meta( '_billing_persontype' ) ) {
+			if ( 1 === intval( $order->get_meta( '_billing_persontype' ) ) && '' !== $order->get_meta( '_billing_cpf' ) ) {
+				$this->add_cpf( $order->get_meta( '_billing_cpf' ), $sender );
+			} else if ( 2 === intval( $order->get_meta( '_billing_persontype' ) ) && '' !== $order->get_meta( '_billing_cnpj' ) ) {
+				$name = $order->get_billing_company();
+				$this->add_cnpj( $order->get_meta( '_billing_cnpj' ), $sender );
+			}
+		}
+
+		$sender->addChild( 'name' )->add_cdata( $name );
+
+		if ( '' !== $order->get_billing_phone() ) {
+			$phone_number = $this->get_numbers( $order->get_billing_phone() );
+			$phone        = $sender->addChild( 'phone' );
+			$phone->addChild( 'areaCode', substr( $phone_number, 0, 2 ) );
+			$phone->addChild( 'number', substr( $phone_number, 2 ) );
+		}
+
+		if ( '' != $hash ) {
+			$sender->addChild( 'hash', $hash );
+		}
+	}
+
+	/**
+	 * Legacy - Add shipping data.
 	 *
 	 * @param WC_Order $order         Order data.
 	 * @param bool     $ship_to       Ship to (true = shipping address, false = billing address).
 	 * @param float    $shipping_cost Shipping cost.
 	 */
-	public function add_shipping_data( $order, $ship_to = false, $shipping_cost = 0 ) {
+	public function add_legacy_shipping_data( $order, $ship_to = false, $shipping_cost = 0 ) {
 		$type = ( $ship_to ) ? 'shipping' : 'billing';
 
 		$shipping = $this->addChild( 'shipping' );
@@ -184,6 +226,44 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$address->addChild( 'postalCode', $this->get_numbers( $order->{ $type . '_postcode' } ) );
 			$address->addChild( 'city' )->add_cdata( $order->{ $type . '_city' } );
 			$address->addChild( 'state', $order->{ $type . '_state' } );
+			$address->addChild( 'country', 'BRA' );
+		}
+
+		$shipping->addChild( 'cost', $shipping_cost );
+	}
+
+	/**
+	 * Add shipping data.
+	 *
+	 * @param WC_Order $order         Order data.
+	 * @param bool     $ship_to       Ship to (true = shipping address, false = billing address).
+	 * @param float    $shipping_cost Shipping cost.
+	 */
+	public function add_shipping_data( $order, $ship_to = false, $shipping_cost = 0 ) {
+		$type = ( $ship_to ) ? 'shipping' : 'billing';
+
+		$shipping = $this->addChild( 'shipping' );
+		$shipping->addChild( 'type', 3 );
+
+		if ( '' !== $order->{ 'get_' . $type . '_postcode' }() ) {
+			$address = $shipping->addChild( 'address' );
+			$address->addChild( 'street' )->add_cdata( $order->{ 'get_' . $type . '_address_1' }() );
+
+			if ( '' !== $order->get_meta( '_' . $type . '_number' ) ) {
+				$address->addChild( 'number', $order->get_meta( '_' . $type . '_number' ) );
+			}
+
+			if ( '' !== $order->{ 'get_' . $type . '_address_2' }() ) {
+				$address->addChild( 'complement' )->add_cdata( $order->{ 'get_' . $type . '_address_2' }() );
+			}
+
+			if ( '' !== $order->get_meta( '_' . $type . '_neighborhood' ) ) {
+				$address->addChild( 'district' )->add_cdata( $order->get_meta( '_' . $type . '_neighborhood' ) );
+			}
+
+			$address->addChild( 'postalCode', $this->get_numbers( $order->{ 'get_' . $type . '_postcode' }() ) );
+			$address->addChild( 'city' )->add_cdata( $order->{ 'get_' . $type . '_city' }() );
+			$address->addChild( 'state', $order->{ 'get_' . $type . '_state' }() );
 			$address->addChild( 'country', 'BRA' );
 		}
 
@@ -220,14 +300,14 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	}
 
 	/**
-	 * Add credit card data.
+	 * Legacy - Add credit card data.
 	 *
 	 * @param WC_Order $order           Order data.
 	 * @param string   $credit_card_token Credit card token.
 	 * @param array    $installment_data  Installment data (quantity and value).
 	 * @param array    $holder_data       Holder data (name, cpf, birth_date and phone).
 	 */
-	public function add_credit_card_data( $order, $credit_card_token, $installment_data, $holder_data ) {
+	public function add_legacy_credit_card_data( $order, $credit_card_token, $installment_data, $holder_data ) {
 		$credit_card = $this->addChild( 'creditCard' );
 
 		$credit_card->addChild( 'token', $credit_card_token );
@@ -263,6 +343,52 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		$billing_address->addChild( 'state', $order->billing_state );
 		$billing_address->addChild( 'country', 'BRA' );
 		$billing_address->addChild( 'postalCode', $this->get_numbers( $order->billing_postcode ) );
+	}
+
+	/**
+	 * Add credit card data.
+	 *
+	 * @param WC_Order $order           Order data.
+	 * @param string   $credit_card_token Credit card token.
+	 * @param array    $installment_data  Installment data (quantity and value).
+	 * @param array    $holder_data       Holder data (name, cpf, birth_date and phone).
+	 */
+	public function add_credit_card_data( $order, $credit_card_token, $installment_data, $holder_data ) {
+		$credit_card = $this->addChild( 'creditCard' );
+
+		$credit_card->addChild( 'token', $credit_card_token );
+
+		$installment = $credit_card->addChild( 'installment' );
+		$installment->addChild( 'quantity', $installment_data['quantity'] );
+		$installment->addChild( 'value', $installment_data['value'] );
+
+		$holder = $credit_card->addChild( 'holder' );
+		$holder->addChild( 'name' )->add_cdata( $holder_data['name'] );
+		$documents = $holder->addChild( 'documents' );
+		$document = $documents->addChild( 'document' );
+		$document->addChild( 'type', 'CPF' );
+		$document->addChild( 'value', $this->get_numbers( $holder_data['cpf'] ) );
+		$holder->addChild( 'birthDate', str_replace( ' ', '', $holder_data['birth_date'] ) );
+		$phone_number = $this->get_numbers( $holder_data['phone'] );
+		$phone = $holder->addChild( 'phone' );
+		$phone->addChild( 'areaCode', substr( $phone_number, 0, 2 ) );
+		$phone->addChild( 'number', substr( $phone_number, 2 ) );
+
+		$billing_address = $credit_card->addChild( 'billingAddress' );
+		$billing_address->addChild( 'street' )->add_cdata( $order->get_billing_address_1() );
+		if ( '' !== $order->get_meta( '_billing_number' ) ) {
+			$billing_address->addChild( 'number', $order->get_meta( '_billing_number' ) );
+		}
+		if ( '' !== $order->get_billing_address_2() ) {
+			$billing_address->addChild( 'complement' )->add_cdata( $order->get_billing_address_2() );
+		}
+		if ( '' !== $order->get_meta( '_billing_neighborhood' ) ) {
+			$billing_address->addChild( 'district' )->add_cdata( $order->get_meta( '_billing_neighborhood' ) );
+		}
+		$billing_address->addChild( 'city' )->add_cdata( $order->get_billing_city() );
+		$billing_address->addChild( 'state', $order->get_billing_state() );
+		$billing_address->addChild( 'country', 'BRA' );
+		$billing_address->addChild( 'postalCode', $this->get_numbers( $order->get_billing_postcode() ) );
 	}
 
 	/**
