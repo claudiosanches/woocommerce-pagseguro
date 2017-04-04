@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
 **Tested up to:** 4.7  
-**Stable tag:** 2.11.5  
+**Stable tag:** 2.11.6  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -266,6 +266,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 
 ## Changelog ##
+
+### 2.11.6 - 2017/03/09 ###
+
+* Alterado o tipo dos campos para `tel` no Checkout Transparente.
+* Correção nas máscaras do campos devido a mudança do plugin no [woocommerce-extra-checkout-fields-for-brazil](https://github.com/claudiosanches/woocommerce-extra-checkout-fields-for-brazil/pull/49).
 
 ### 2.11.5 - 2017/01/17 ###
 

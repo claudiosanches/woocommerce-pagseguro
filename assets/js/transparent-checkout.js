@@ -86,24 +86,22 @@
 			pagSeguroShowHideMethodForm( $( '#pagseguro-payment-methods input[type=radio]:checked' ).val() );
 
 			// CPF.
-			$( '#pagseguro-card-holder-cpf' ).mask( '999.999.999-99', { placeholder: ' ' } );
+			$( '#pagseguro-card-holder-cpf' ).mask( '000.000.000-00' );
 
 			// Birth Date.
-			$( '#pagseguro-card-holder-birth-date' ).mask( '99 / 99 / 9999', { placeholder: ' ' } );
+			$( '#pagseguro-card-holder-birth-date' ).mask( '00/00/0000' );
 
 			// Phone.
-			$( '#pagseguro-card-holder-phone' ).focusout( function() {
-				var phone, element;
-				element = $( this );
-				element.unmask();
-				phone = element.val().replace( /\D/g, '' );
+			var MaskBehavior = function(val) {
+						return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+					},
+					maskOptions = {
+						onKeyPress: function(val, e, field, options) {
+							field.mask(MaskBehavior.apply({}, arguments), options);
+						}
+					};
 
-				if ( phone.length > 10 ) {
-					element.mask( '(99) 99999-999?9', { placeholder: ' ' } );
-				} else {
-					element.mask( '(99) 9999-9999?9', { placeholder: ' ' } );
-				}
-			}).trigger( 'focusout' );
+			$( '#pagseguro-card-holder-phone' ).mask(MaskBehavior, maskOptions);
 
 			$( '#pagseguro-bank-transfer-form input[type=radio]:checked' ).parent( 'label' ).parent( 'li' ).addClass( 'active' );
 		}
