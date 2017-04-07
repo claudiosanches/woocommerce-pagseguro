@@ -50,7 +50,11 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		// Active logs.
 		if ( 'yes' == $this->debug ) {
-			$this->log = new WC_Logger();
+			if ( function_exists( 'wc_get_logger' ) ) {
+				$this->log = wc_get_logger();
+			} else {
+				$this->log = new WC_Logger();
+			}
 		}
 
 		// Set the API.
