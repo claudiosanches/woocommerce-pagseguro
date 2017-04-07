@@ -4,7 +4,7 @@ Donate link: https://claudiosanches.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 2.12.1
+Stable tag: 2.12.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -255,6 +255,11 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.12.2 - 2017/04/07 =
+
+* Adicionado suporte ao novo sistema de logs do WooCommerce 3.0, assim permitindo que seja utilizado sistema de logs personalizados.
+* Adicionado validação e higienização no código de transação do PagSeguro antes de salvar.
+
 = 2.12.1 - 2017/04/04 =
 
 * Correção dos títulos dos campos personalizados salvos ao fazer um pedido.
@@ -296,6 +301,7 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Upgrade Notice ==
 
-= 2.12.1 =
+= 2.12.2 =
 
-* Suporte ao WooCommerce 3.0, correção dos tipos de campo do Checkout Transparente e correção das máscaras.
+* Adicionado suporte ao novo sistema de logs do WooCommerce 3.0, assim permitindo que seja utilizado sistema de logs personalizados.
+* Adicionado validação e higienização no código de transação do PagSeguro antes de salvar.

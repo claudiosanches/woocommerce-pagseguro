@@ -1,10 +1,10 @@
 # WooCommerce PagSeguro #
-**Contributors:** claudiosanches, Gabriel Reguly  
+**Contributors:** [claudiosanches](https://profiles.wordpress.org/claudiosanches), [Gabriel Reguly](https://profiles.wordpress.org/Gabriel Reguly)  
 **Donate link:** https://claudiosanches.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
 **Tested up to:** 4.7  
-**Stable tag:** 2.12.1  
+**Stable tag:** 2.12.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -247,25 +247,30 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 ## Screenshots ##
 
 ### 1. Configurações do plugin. ###
-![1. Configurações do plugin.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-1.png)
+![Configurações do plugin.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-1.png)
 
 ### 2. Método de pagamento na página de finalizar o pedido. ###
-![2. Método de pagamento na página de finalizar o pedido.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-2.png)
+![Método de pagamento na página de finalizar o pedido.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-2.png)
 
 ### 3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro. ###
-![3. Exemplo do Lightbox funcionando com o Sandbox do PagSeguro.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-3.png)
+![Exemplo do Lightbox funcionando com o Sandbox do PagSeguro.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-3.png)
 
 ### 4. Pagamento com cartão de crédito usando o Checkout Transparente. ###
-![4. Pagamento com cartão de crédito usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-4.png)
+![Pagamento com cartão de crédito usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-4.png)
 
 ### 5. Pagamento com debito online usando o Checkout Transparente. ###
-![5. Pagamento com debito online usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-5.png)
+![Pagamento com debito online usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-5.png)
 
 ### 6. Pagamento com boleto bancário usando o Checkout Transparente. ###
-![6. Pagamento com boleto bancário usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-6.png)
+![Pagamento com boleto bancário usando o Checkout Transparente.](http://ps.w.org/woocommerce-pagseguro/assets/screenshot-6.png)
 
 
 ## Changelog ##
+
+### 2.12.2 - 2017/04/07 ###
+
+* Adicionado suporte ao novo sistema de logs do WooCommerce 3.0, assim permitindo que seja utilizado sistema de logs personalizados.
+* Adicionado validação e higienização no código de transação do PagSeguro antes de salvar.
 
 ### 2.12.1 - 2017/04/04 ###
 
@@ -308,6 +313,7 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.12.1 ###
+### 2.12.2 ###
 
-* Suporte ao WooCommerce 3.0, correção dos tipos de campo do Checkout Transparente e correção das máscaras.
+* Adicionado suporte ao novo sistema de logs do WooCommerce 3.0, assim permitindo que seja utilizado sistema de logs personalizados.
+* Adicionado validação e higienização no código de transação do PagSeguro antes de salvar.
