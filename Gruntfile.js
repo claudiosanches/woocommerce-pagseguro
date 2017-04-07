@@ -60,15 +60,15 @@ module.exports = function( grunt ) {
 
 		// Minify CSS.
 		cssmin: {
-			admin: {
+			frontend: {
 				files: [{
 					expand: true,
-					cwd: '<%= dirs.css %>/admin/',
+					cwd: '<%= dirs.css %>/frontend/',
 					src: [
 						'*.css',
 						'!*.min.css'
 					],
-					dest: '<%= dirs.css %>/admin/',
+					dest: '<%= dirs.css %>/frontend/',
 					ext: '.min.css'
 				}]
 			}
