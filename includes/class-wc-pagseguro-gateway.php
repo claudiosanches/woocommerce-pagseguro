@@ -555,7 +555,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
 
 						// Changing the order for processing and reduces the stock.
-						$order->payment_complete( $posted->code );
+						$order->payment_complete( sanitize_text_field( (string) $posted->code ) );
 
 						break;
 					case 4 :
