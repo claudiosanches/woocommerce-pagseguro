@@ -393,18 +393,20 @@ class WC_PagSeguro_API {
 
 						$item_name = $order_item['name'];
 
-						if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.4.0', '<' ) ) {
-							$item_meta = new WC_Order_Item_Meta( $order_item['item_meta'] );
-						} else {
-							$item_meta = new WC_Order_Item_Meta( $order_item );
-						}
+						if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.0', '<' ) ) {
+							if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.4.0', '<' ) ) {
+								$item_meta = new WC_Order_Item_Meta( $order_item['item_meta'] );
+							} else {
+								$item_meta = new WC_Order_Item_Meta( $order_item );
+							}
 
-						if ( $meta = $item_meta->display( true, true ) ) {
-							$item_name .= ' - ' . $meta;
+							if ( $meta = $item_meta->display( true, true ) ) {
+								$item_name .= ' - ' . $meta;
+							}
 						}
 
 						$items[] = array(
-							'description' => $this->sanitize_description( $item_name ),
+							'description' => $this->sanitize_description( str_replace( '&ndash;', '-', $item_name ) ),
 							'amount'      => $this->money_format( $item_total ),
 							'quantity'    => $order_item['qty'],
 						);
