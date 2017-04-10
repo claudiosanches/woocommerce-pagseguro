@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro 2.12.2\n"
+"Project-Id-Version: WooCommerce PagSeguro 2.12.3\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-pagseguro\n"
-"POT-Creation-Date: 2017-04-07 16:27:54+00:00\n"
+"POT-Creation-Date: 2017-04-10 03:48:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -197,34 +197,34 @@ msgstr ""
 msgid "Order %s"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:609
+#: includes/class-wc-pagseguro-api.php:611
 msgid ""
 "Too bad! The email or token from the PagSeguro are invalids my little "
 "friend!"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:646
-#: includes/class-wc-pagseguro-api.php:666
-#: includes/class-wc-pagseguro-api.php:688
-#: includes/class-wc-pagseguro-api.php:748
-#: includes/class-wc-pagseguro-api.php:768
+#: includes/class-wc-pagseguro-api.php:648
+#: includes/class-wc-pagseguro-api.php:668
+#: includes/class-wc-pagseguro-api.php:690
+#: includes/class-wc-pagseguro-api.php:750
+#: includes/class-wc-pagseguro-api.php:770
 #: includes/class-wc-pagseguro-gateway.php:24
 #: includes/class-wc-pagseguro-gateway.php:190
 msgid "PagSeguro"
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:666
-#: includes/class-wc-pagseguro-api.php:768
+#: includes/class-wc-pagseguro-api.php:668
+#: includes/class-wc-pagseguro-api.php:770
 msgid ""
 "An error has occurred while processing your payment, please try again. Or "
 "contact us for assistance."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:688
+#: includes/class-wc-pagseguro-api.php:690
 msgid "Please, select a payment method."
 msgstr ""
 
-#: includes/class-wc-pagseguro-api.php:714
+#: includes/class-wc-pagseguro-api.php:716
 msgid ""
 "You are not allowed to use the PagSeguro Transparent Checkout. Looks like "
 "you neglected to installation guide of this plugin. This is not pretty, do "
@@ -736,16 +736,16 @@ msgstr ""
 msgid "Brazilian flag"
 msgstr ""
 
-#: woocommerce-pagseguro.php:104
+#: woocommerce-pagseguro.php:118
 msgid "Settings"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://github.com/claudiosanches/woocommerce-pagseguro"
+msgid "https://github.com/claudiosanches/woocommerce-pagseguro"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Gateway de pagamento PagSeguro para WooCommerce."
+msgid "Includes PagSeguro as a payment gateway to WooCommerce."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -753,5 +753,5 @@ msgid "Claudio Sanches"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://claudiosanches.com/"
+msgid "https://claudiosanches.com"
 msgstr ""
