@@ -95,7 +95,7 @@
 .woocommerce #payment ul.payment_methods li #pagseguro-bank-transfer-form i,
 .woocommerce-page #payment ul.payment_methods li #pagseguro-bank-transfer-form i {
 	background-color: transparent;
-	background-image: url("../images/transparent-checkout-icons.png");
+	background-image: url("../../images/transparent-checkout-icons.png");
 	background-repeat: no-repeat;
 	display: block;
 	height: 51px;
@@ -150,7 +150,7 @@
 
 /* Banking ticket */
 #pagseguro-icon-ticket {
-	background: transparent url("../images/transparent-checkout-icons.png") no-repeat top right;
+	background: transparent url("../../images/transparent-checkout-icons.png") no-repeat top right;
 	display: block;
 	float: left;
 	height: 51px;
