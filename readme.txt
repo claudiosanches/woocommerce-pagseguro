@@ -4,7 +4,7 @@ Donate link: https://claudiosanches.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 2.12.3
+Stable tag: 2.12.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -255,6 +255,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.12.4 - 2017/04/12 =
+
+* Corrigido icones no checkout transparente.
+
 = 2.12.3 - 2017/04/10 =
 
 * Corrigido `ndash` que aparecia no nome dos itens listados no PagSeguro.
@@ -305,6 +309,6 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Upgrade Notice ==
 
-= 2.12.3 =
+= 2.12.4 =
 
-* Corrigido `ndash` que aparecia no nome dos itens listados no PagSeguro.
+* Corrigido icones no checkout transparente.
