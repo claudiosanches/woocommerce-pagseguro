@@ -317,6 +317,9 @@ class WC_PagSeguro_API {
 			$params['headers'] = $headers;
 		}
 
+		// Filter the URL
+		$url = apply_filters('woocommerce_pagseguro_request_url', $url);
+		
 		return wp_safe_remote_post( $url, $params );
 	}
 
