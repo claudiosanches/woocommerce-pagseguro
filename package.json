@@ -1,7 +1,7 @@
 {
   "name": "woocommerce-pagseguro",
   "description": "Gateway de pagamento PagSeguro para WooCommerce",
-  "version": "2.12.4",
+  "version": "2.12.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/claudiosmweb/woocommerce-pagseguro"

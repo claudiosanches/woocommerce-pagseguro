@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce PagSeguro 2.12.4\n"
+"Project-Id-Version: WooCommerce PagSeguro 2.12.5\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-pagseguro\n"
-"POT-Creation-Date: 2017-04-12 16:41:52+00:00\n"
+"POT-Creation-Date: 2017-05-11 16:33:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -76,7 +76,7 @@ msgstr ""
 
 #: includes/class-wc-pagseguro-api.php:151
 #: includes/class-wc-pagseguro-gateway.php:255
-#: templates/transparent-checkout-form.php:20
+#: templates/transparent-checkout-form.php:19
 msgid "Credit Card"
 msgstr ""
 
@@ -86,7 +86,7 @@ msgstr ""
 
 #: includes/class-wc-pagseguro-api.php:153
 #: includes/class-wc-pagseguro-gateway.php:261
-#: templates/transparent-checkout-form.php:24
+#: templates/transparent-checkout-form.php:23
 msgid "Bank Transfer"
 msgstr ""
 
@@ -397,7 +397,7 @@ msgid "Enable Bank Transfer for Transparente Checkout"
 msgstr ""
 
 #: includes/class-wc-pagseguro-gateway.php:267
-#: templates/transparent-checkout-form.php:28
+#: templates/transparent-checkout-form.php:27
 msgid "Banking Ticket"
 msgstr ""
 
@@ -477,7 +477,7 @@ msgid "Payment method"
 msgstr ""
 
 #: includes/class-wc-pagseguro-gateway.php:500
-#: templates/transparent-checkout-form.php:54
+#: templates/transparent-checkout-form.php:53
 msgid "Installments"
 msgstr ""
 
@@ -630,109 +630,109 @@ msgstr ""
 msgid "Please use the following button to make the payment in your bankline."
 msgstr ""
 
-#: templates/transparent-checkout-form.php:36
+#: templates/transparent-checkout-form.php:35
 msgid "Card Holder Name"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:36
+#: templates/transparent-checkout-form.php:35
 msgid "as recorded on the card"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:40
+#: templates/transparent-checkout-form.php:39
 msgid "Card Number"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:45
+#: templates/transparent-checkout-form.php:44
 msgid "Expiry (MM/YYYY)"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:46
+#: templates/transparent-checkout-form.php:45
 msgid "MM / YYYY"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:49
+#: templates/transparent-checkout-form.php:48
 msgid "Security Code"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:50
+#: templates/transparent-checkout-form.php:49
 msgid "CVC"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:54
+#: templates/transparent-checkout-form.php:53
 msgid "the minimum value of the installment is R$ 5,00"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:60
+#: templates/transparent-checkout-form.php:59
 msgid "Card Holder CPF"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:65
+#: templates/transparent-checkout-form.php:64
 msgid "Card Holder Birth Date"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:66
+#: templates/transparent-checkout-form.php:65
 msgid "DD / MM / YYYY"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:69
+#: templates/transparent-checkout-form.php:68
 msgid "Card Holder Phone"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:70
+#: templates/transparent-checkout-form.php:69
 msgid "(xx) xxxx-xxxx"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:78
+#: templates/transparent-checkout-form.php:77
 msgid "Select your bank:"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:80
+#: templates/transparent-checkout-form.php:79
 msgid "Banco Ita&uacute;"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:81
+#: templates/transparent-checkout-form.php:80
 msgid "Banco do Brasil"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:82
+#: templates/transparent-checkout-form.php:81
 msgid "Banco Banrisul"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:83
+#: templates/transparent-checkout-form.php:82
 msgid "Banco HSBC"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:85
+#: templates/transparent-checkout-form.php:84
 msgid ""
 "* After clicking \"Proceed to payment\" you will have access to the link "
 "that will take you to your bank's website, so you can make the payment in "
 "total security."
 msgstr ""
 
-#: templates/transparent-checkout-form.php:94
+#: templates/transparent-checkout-form.php:93
 msgid "The order will be confirmed only after the payment approval."
 msgstr ""
 
-#: templates/transparent-checkout-form.php:97
+#: templates/transparent-checkout-form.php:96
 msgid "Tax"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:97
+#: templates/transparent-checkout-form.php:96
 msgid "R$ 1,00 (rate applied to cover management risk costs of the payment method)."
 msgstr ""
 
-#: templates/transparent-checkout-form.php:100
+#: templates/transparent-checkout-form.php:99
 msgid ""
 "* After clicking \"Proceed to payment\" you will have access to banking "
 "ticket which you can print and pay in your internet banking or in a lottery "
 "retailer."
 msgstr ""
 
-#: templates/transparent-checkout-form.php:105
+#: templates/transparent-checkout-form.php:104
 msgid "This purchase is being made in Brazil"
 msgstr ""
 
-#: templates/transparent-checkout-form.php:105
+#: templates/transparent-checkout-form.php:104
 msgid "Brazilian flag"
 msgstr ""
 
