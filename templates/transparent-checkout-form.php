@@ -4,7 +4,7 @@
  *
  * @author  Claudio_Sanches
  * @package WooCommerce_PagSeguro/Templates
- * @version 2.12.0
+ * @version 2.12.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,8 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<fieldset id="pagseguro-payment-form" class="<?php echo 'storefront' === basename( get_template_directory() ) ? 'woocommerce-pagseguro-form-storefront' : ''; ?>">
-	<input type="hidden" id="pagseguro-cart-total" value="<?php echo esc_attr( number_format( $cart_total, 2, '.', '' ) ); ?>" />
+<fieldset id="pagseguro-payment-form" class="<?php echo 'storefront' === basename( get_template_directory() ) ? 'woocommerce-pagseguro-form-storefront' : ''; ?>" data-cart_total="<?php echo esc_attr( number_format( $cart_total, 2, '.', '' ) ); ?>">
 
 	<ul id="pagseguro-payment-methods">
 		<?php if ( 'yes' == $tc_credit ) : ?>
