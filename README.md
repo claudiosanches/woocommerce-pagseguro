@@ -1,5 +1,5 @@
 # WooCommerce PagSeguro #
-**Contributors:** [claudiosanches](https://profiles.wordpress.org/claudiosanches), [Gabriel Reguly](https://profiles.wordpress.org/gabriel-reguly/)  
+**Contributors:** [Claudio Sanches](https://profiles.wordpress.org/claudiosanches), [Gabriel Reguly](https://profiles.wordpress.org/gabriel-reguly/)  
 **Donate link:** https://claudiosanches.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
