@@ -42,7 +42,7 @@ Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pa
 
 ### Compatibilidade ###
 
-Compatível desde a versão 2.4.x até 3.0.x do WooCommerce.
+Compatível com versões posteriores ao WooCommerce 3.0.
 
 Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
@@ -137,7 +137,7 @@ Pronto, sua loja já pode receber pagamentos pelo PagSeguro.
 
 ### What is needed to use this plugin? ###
 
-* WooCommerce version 2.2 or latter installed and active.
+* WooCommerce version 3.0 or latter installed and active.
 * Only one account on [PagSeguro](http://pagseguro.uol.com.br/ "PagSeguro").
 
 ### FAQ em Português: ###
@@ -148,7 +148,7 @@ Este plugin esta licenciado como GPL.
 
 ### O que eu preciso para utilizar este plugin? ###
 
-* Ter instalado o plugin WooCommerce 2.2 ou superior.
+* Ter instalado o plugin WooCommerce 3.0 ou mais recente.
 * Possuir uma conta no PagSeguro.
 * Gerar um token de segurança no PagSeguro.
 * Desativar a opção "Pagamento via Formulário HTML" em integrações na página do PagSeguro.
@@ -269,7 +269,7 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ### 2.12.6 - 2018/05/09 ###
 
-* Adicionado valor total ao parcelamento no checkout transparente para tornar mais prático para o cliente a visualização do juros.
+* Adicionado valor total ao parcelamento no checkout transparente para tornar mais prático para o cliente a visualização do juros. Mais detalhes em [#75](https://github.com/claudiosanches/woocommerce-pagseguro/pull/75).
 
 ### 2.12.5 - 2017/05/11 ###
 
