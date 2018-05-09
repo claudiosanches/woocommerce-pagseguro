@@ -22,8 +22,13 @@
 		 *
 		 * @return {string}
 		 */
-		function pagSeguroGetPriceText( price ) {
-			return 'R$ ' + parseFloat( price, 10 ).toFixed( 2 ).replace( '.', ',' ).toString();
+		function pagSeguroGetPriceText( installment ) {
+			var installmentParsed = 'R$ ' + parseFloat( installment.installmentAmount, 10 ).toFixed( 2 ).replace( '.', ',' ).toString();
+			var totalParsed = 'R$ ' + parseFloat( installment.totalAmount, 10 ).toFixed( 2 ).replace( '.', ',' ).toString();
+			var interestFree = ( true === installment.interestFree ) ? ' ' + wc_pagseguro_params.interest_free : '';
+			var interestText = interestFree ? interestFree : ' (' + totalParsed + ')';
+
+			return installment.quantity + 'x ' + installmentParsed + interestText;
 		}
 
 		/**
@@ -34,9 +39,7 @@
 		 * @return {string}
 		 */
 		function pagSeguroGetInstallmentOption( installment ) {
-			var interestFree = ( true === installment.interestFree ) ? ' ' + wc_pagseguro_params.interest_free : '';
-
-			return '<option value="' + installment.quantity + '" data-installment-value="' + installment.installmentAmount + '">' + installment.quantity + 'x ' + pagSeguroGetPriceText( installment.installmentAmount ) + interestFree + '</option>';
+			return '<option value="' + installment.quantity + '" data-installment-value="' + installment.installmentAmount + '">' + pagSeguroGetPriceText( installment ) + '</option>';
 		}
 
 		/**
