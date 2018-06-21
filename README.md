@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
 **Tested up to:** 4.9  
-**Stable tag:** 2.12.6  
+**Stable tag:** 2.12.7  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -267,6 +267,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
+### 2.12.7 - 2018/06/21 ###
+
+* Removido métodos do Itaú e Banrisul em débito online no checkout transparente, ambos não são mais suportados pelo PagSeguro.
+
 ### 2.12.6 - 2018/05/09 ###
 
 * Adicionado valor total ao parcelamento no checkout transparente para tornar mais prático para o cliente a visualização do juros. Mais detalhes em [#75](https://github.com/claudiosanches/woocommerce-pagseguro/pull/75).
@@ -329,6 +333,6 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.12.6 ###
+### 2.12.7 ###
 
-* Adicionado valor total ao parcelamento no checkout transparente para tornar mais prático para o cliente a visualização do juros.
+* Removido métodos do Itaú e Banrisul em débito online no checkout transparente, ambos não são mais suportados pelo PagSeguro.
