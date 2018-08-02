@@ -3,7 +3,7 @@
  * WooCommerce PagSeguro Gateway class
  *
  * @package WooCommerce_PagSeguro/Classes/Gateway
- * @version 2.12.0
+ * @version 2.13.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -367,7 +367,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Process the payment and return the result.
 	 *
 	 * @param  int $order_id Order ID.
-	 *
 	 * @return array
 	 */
 	public function process_payment( $order_id ) {
@@ -480,8 +479,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Save payment meta data.
 	 *
-	 * @param  WC_Order $order Order instance.
-	 * @param  array    $posted Posted data.
+	 * @param WC_Order $order Order instance.
+	 * @param array    $posted Posted data.
 	 */
 	protected function save_payment_meta_data( $order, $posted ) {
 		$meta_data    = array();
@@ -663,11 +662,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Add content to the WC emails.
 	 *
-	 * @param  object $order         Order object.
-	 * @param  bool   $sent_to_admin Send to admin.
-	 * @param  bool   $plain_text    Plain text or HTML.
-	 *
-	 * @return string                Payment instructions.
+	 * @param  WC_Order $order         Order object.
+	 * @param  bool     $sent_to_admin Send to admin.
+	 * @param  bool     $plain_text    Plain text or HTML.
+	 * @return string
 	 */
 	public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
 		// WooCommerce 3.0 or later.
