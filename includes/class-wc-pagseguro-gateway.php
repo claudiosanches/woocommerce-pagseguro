@@ -498,20 +498,30 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 			$meta_data[ __( 'Payer name', 'woocommerce-pagseguro' ) ] = sanitize_text_field( (string) $posted->sender->name );
 		}
 		if ( isset( $posted->paymentMethod->type ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-			$payment_data['type']                                       = intval( $posted->paymentMethod->type ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['type'] = intval( $posted->paymentMethod->type ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+
 			$meta_data[ __( 'Payment type', 'woocommerce-pagseguro' ) ] = $this->api->get_payment_name_by_type( $payment_data['type'] );
 		}
 		if ( isset( $posted->paymentMethod->code ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-			$payment_data['method']                                       = $this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['method'] = $this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+
 			$meta_data[ __( 'Payment method', 'woocommerce-pagseguro' ) ] = $payment_data['method'];
 		}
 		if ( isset( $posted->installmentCount ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-			$payment_data['installments']                               = sanitize_text_field( (string) $posted->installmentCount ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['installments'] = sanitize_text_field( (string) $posted->installmentCount ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+
 			$meta_data[ __( 'Installments', 'woocommerce-pagseguro' ) ] = $payment_data['installments'];
 		}
 		if ( isset( $posted->paymentLink ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
-			$payment_data['link']                                      = sanitize_text_field( (string) $posted->paymentLink ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['link'] = sanitize_text_field( (string) $posted->paymentLink ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+
 			$meta_data[ __( 'Payment URL', 'woocommerce-pagseguro' ) ] = $payment_data['link'];
+		}
+		if ( isset( $posted->creditorFees->intermediationRateAmount ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$meta_data[ __( 'Intermediation Rate', 'woocommerce-pagseguro' ) ] = sanitize_text_field( (string) $posted->creditorFees->intermediationRateAmount ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+		}
+		if ( isset( $posted->creditorFees->intermediationFeeAmount ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$meta_data[ __( 'Intermediation Fee', 'woocommerce-pagseguro' ) ] = sanitize_text_field( (string) $posted->creditorFees->intermediationFeeAmount ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 		}
 
 		$meta_data['_wc_pagseguro_payment_data'] = $payment_data;
