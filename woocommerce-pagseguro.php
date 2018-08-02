@@ -67,7 +67,6 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
 				add_filter( 'woocommerce_available_payment_gateways', array( $this, 'hides_when_is_outside_brazil' ) );
-				add_filter( 'woocommerce_cancel_unpaid_order', array( $this, 'stop_cancel_unpaid_orders' ), 10, 2 );
 				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 				if ( is_admin() ) {
@@ -158,24 +157,6 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 			}
 
 			return $available_gateways;
-		}
-
-		/**
-		 * Stop cancel unpaid PagSeguro orders.
-		 *
-		 * @param  bool     $cancel Check if need cancel the order.
-		 * @param  WC_Order $order  Order object.
-		 *
-		 * @return bool
-		 */
-		public function stop_cancel_unpaid_orders( $cancel, $order ) {
-			$payment_method = method_exists( $order, 'get_payment_method' ) ? $order->get_payment_method() : $order->payment_method;
-
-			if ( 'pagseguro' === $payment_method ) {
-				return false;
-			}
-
-			return $cancel;
 		}
 
 		/**
