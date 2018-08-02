@@ -5,7 +5,7 @@
     <rule ref="PHPCompatibility"></rule>
     <rule ref="WordPress"></rule>
 
-	<rule ref="WordPress.VIP.ValidatedSanitizedInput">
+	<rule ref="WordPress.Security.ValidatedSanitizedInput">
 		<properties>
 			<property name="customSanitizingFunctions" type="array" value="wc_clean" />
 		</properties>

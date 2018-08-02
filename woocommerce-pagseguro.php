@@ -85,7 +85,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		public static function get_instance() {
 			// If the single instance hasn't been set, set it now.
 			if ( null === self::$instance ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 
 			return self::$instance;
@@ -152,7 +152,7 @@ if ( ! class_exists( 'WC_PagSeguro' ) ) :
 		 */
 		public function hides_when_is_outside_brazil( $available_gateways ) {
 			// Remove PagSeguro gateway.
-			if ( isset( $_REQUEST['country'] ) && 'BR' !== $_REQUEST['country'] ) {
+			if ( isset( $_REQUEST['country'] ) && 'BR' !== $_REQUEST['country'] ) { // WPCS: input var ok, CSRF ok.
 				unset( $available_gateways['pagseguro'] );
 			}
 
