@@ -137,9 +137,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$session_id = $this->api->get_session_id();
 				$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-				wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/frontend/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PagSeguro::VERSION );
+				wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/frontend/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PAGSEGURO_VERSION );
 				wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
-				wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/frontend/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PagSeguro::VERSION, true );
+				wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/frontend/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PAGSEGURO_VERSION, true );
 
 				wp_localize_script(
 					'pagseguro-checkout',
@@ -314,7 +314,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function admin_options() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'pagseguro-admin', plugins_url( 'assets/js/admin/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_PagSeguro::VERSION, true );
+		wp_enqueue_script( 'pagseguro-admin', plugins_url( 'assets/js/admin/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_PAGSEGURO_VERSION, true );
 
 		include dirname( __FILE__ ) . '/admin/views/html-admin-page.php';
 	}
