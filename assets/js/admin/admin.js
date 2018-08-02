@@ -12,6 +12,8 @@
 			var fields  = $( '#woocommerce_pagseguro_tc_credit' ).closest( '.form-table' ),
 				heading = fields.prev( 'h3' );
 
+			console.log( 'foi?' );
+
 			if ( 'transparent' === method ) {
 				fields.show();
 				heading.show();
@@ -59,6 +61,8 @@
 				sandboxToken.hide();
 			}
 		}
+
+		pagSeguroSwitchTCOptions( $( '#woocommerce_pagseguro_method' ).val() );
 
 		$( 'body' ).on( 'change', '#woocommerce_pagseguro_method', function () {
 			pagSeguroSwitchTCOptions( $( this ).val() );
