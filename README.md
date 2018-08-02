@@ -4,7 +4,7 @@
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
 **Tested up to:** 4.9  
-**Stable tag:** 2.12.7  
+**Stable tag:** 2.13.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -267,6 +267,14 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
+### 2.13.0 - 2018/08/02 ###
+
+* Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
+* Implementada baixa automática de estoque ao comprar por boleto (funciona apenas no WooCommerce 3 ou superior).
+* Estoque é restaurado automaticamente quando alguma notificação do PagSeguro marca o pedido como reembolsado ou cancelado (funciona apenas no WooCommerce 3 ou superior).
+* Corrigido mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
+* Adicionadas informações sobre a taxa de intermédio do PagSeguro nos meta dados do pedido.
+
 ### 2.12.7 - 2018/06/21 ###
 
 * Removido métodos do Itaú e Banrisul em débito online no checkout transparente, ambos não são mais suportados pelo PagSeguro.
@@ -302,37 +310,12 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 * Alterado o tipo dos campos para `tel` no Checkout Transparente. (Possível com a ajuda de [Thiago Guimarães](https://github.com/thiagogsr)).
 * Correção nas máscaras do campos devido a mudança do plugin no [woocommerce-extra-checkout-fields-for-brazil](https://github.com/claudiosanches/woocommerce-extra-checkout-fields-for-brazil/pull/49). (Possível com a ajuda de [Thiago Guimarães](https://github.com/thiagogsr)).
 
-### 2.11.5 - 2017/01/17 ###
-
-* Adicionada nota dizendo que o pedido esta sendo feito no Brasil durante o Checkout Transparente.
-
-### 2.11.4 - 2016/11/30 ###
-
-* Adicionada nova mensagem de erro quando utilizado o mesmo e-mail para realizar pagamentos com o mesmo e-mail da conta do recebedor.
-* Removida opção obsoleta de déposito bancário pelo Bradesco.
-* Corrigido links do Sandbox na página de administração.
-* Adicionada modificação para enviar nome da empresa quando utilizado CNPJ.
-
-### 2.11.3 - 2016/03/17 ###
-
-* Corrigida finalização com produtos gratuitos.
-
-### 2.11.2 - 2015/12/30 ###
-
-* Correção de erro fatal ao tentar finalizar pedido usando CNPJ.
-
-### 2.11.1 - 2015/12/24 ###
-
-* Corrigido campo bloqueado de telefone no checkout transparente.
-
-### 2.11.0 - 2015/12/21 ###
-
-* Adicionado suporte a compras com CNPJ.
-* Melhorado o checkout transparente quando usado o tema Storefront.
-* Adicionada opções para token e e-mail de sandbox.
-
 ## Upgrade Notice ##
 
 ### 2.12.7 ###
 
-* Removido métodos do Itaú e Banrisul em débito online no checkout transparente, ambos não são mais suportados pelo PagSeguro.
+* Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
+* Implementada baixa automática de estoque ao comprar por boleto (funciona apenas no WooCommerce 3 ou superior).
+* Estoque é restaurado automaticamente quando alguma notificação do PagSeguro marca o pedido como reembolsado ou cancelado (funciona apenas no WooCommerce 3 ou superior).
+* Corrigido mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
+* Adicionadas informações sobre a taxa de intermédio do PagSeguro nos meta dados do pedido.
