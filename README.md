@@ -272,7 +272,7 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 * Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
 * Implementada baixa automática de estoque ao comprar por boleto (funciona apenas no WooCommerce 3 ou superior).
 * Estoque é restaurado automaticamente quando alguma notificação do PagSeguro marca o pedido como reembolsado ou cancelado (funciona apenas no WooCommerce 3 ou superior).
-* Corrigido mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
+* Corrigida a mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
 * Adicionadas informações sobre a taxa de intermédio do PagSeguro nos meta dados do pedido.
 
 ### 2.12.7 - 2018/06/21 ###
@@ -312,10 +312,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.12.7 ###
+### 2.13.0 ###
 
 * Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
 * Implementada baixa automática de estoque ao comprar por boleto (funciona apenas no WooCommerce 3 ou superior).
 * Estoque é restaurado automaticamente quando alguma notificação do PagSeguro marca o pedido como reembolsado ou cancelado (funciona apenas no WooCommerce 3 ou superior).
-* Corrigido mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
+* Corrigida a mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
 * Adicionadas informações sobre a taxa de intermédio do PagSeguro nos meta dados do pedido.
