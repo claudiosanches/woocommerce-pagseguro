@@ -565,12 +565,23 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					case 2:
 						$order->update_status( 'on-hold', __( 'PagSeguro: Payment under review.', 'woocommerce-pagseguro' ) );
 
+						// Reduce stock for billets.
+						if ( function_exists( 'wc_reduce_stock_levels' ) ) {
+							wc_reduce_stock_levels( $order_id );
+						}
+
 						break;
 					case 3:
-						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
+						// Sometimes PagSeguro should change an order from cancelled to paid, so we need to handle it.
+						if ( method_exists( $order, 'get_status' ) && 'cancelled' === $order->get_status() ) {
+							$order->update_status( 'processing', __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
+							wc_reduce_stock_levels( $order_id );
+						} else {
+							$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
 
-						// Changing the order for processing and reduces the stock.
-						$order->payment_complete( sanitize_text_field( (string) $posted->code ) );
+							// Changing the order for processing and reduces the stock.
+							$order->payment_complete( sanitize_text_field( (string) $posted->code ) );
+						}
 
 						break;
 					case 4:
@@ -598,9 +609,17 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 							sprintf( __( 'Order %s has been marked as refunded by PagSeguro.', 'woocommerce-pagseguro' ), $order->get_order_number() )
 						);
 
+						if ( function_exists( 'wc_increase_stock_levels' ) ) {
+							wc_increase_stock_levels( $order_id );
+						}
+
 						break;
 					case 7:
 						$order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'woocommerce-pagseguro' ) );
+
+						if ( function_exists( 'wc_increase_stock_levels' ) ) {
+							wc_increase_stock_levels( $order_id );
+						}
 
 						break;
 
