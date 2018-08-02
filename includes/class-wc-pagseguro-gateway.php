@@ -49,7 +49,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->debug             = $this->get_option( 'debug' );
 
 		// Active logs.
-		if ( 'yes' == $this->debug ) {
+		if ( 'yes' === $this->debug ) {
 			if ( function_exists( 'wc_get_logger' ) ) {
 				$this->log = wc_get_logger();
 			} else {
@@ -67,7 +67,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
 
 		// Transparent checkout actions.
-		if ( 'transparent' == $this->method ) {
+		if ( 'transparent' === $this->method ) {
 			add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
 			add_action( 'woocommerce_email_after_order_table', array( $this, 'email_instructions' ), 10, 3 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'checkout_scripts' ) );
@@ -112,7 +112,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		// Test if is valid for use.
 		$available = 'yes' === $this->get_option( 'enabled' ) && '' !== $this->get_email() && '' !== $this->get_token() && $this->using_supported_currency();
 
-		if ( 'transparent' == $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+		if ( 'transparent' === $this->method && ! class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
 			$available = false;
 		}
 
@@ -138,7 +138,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$suffix     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 				wp_enqueue_style( 'pagseguro-checkout', plugins_url( 'assets/css/frontend/transparent-checkout' . $suffix . '.css', plugin_dir_path( __FILE__ ) ), array(), WC_PAGSEGURO_VERSION );
-				wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), null, true );
+				wp_enqueue_script( 'pagseguro-library', $this->api->get_direct_payment_url(), array(), WC_PAGSEGURO_VERSION, true );
 				wp_enqueue_script( 'pagseguro-checkout', plugins_url( 'assets/js/frontend/transparent-checkout' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'pagseguro-library', 'woocommerce-extra-checkout-fields-for-brazil-front' ), WC_PAGSEGURO_VERSION, true );
 
 				wp_localize_script(
@@ -176,31 +176,31 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled' => array(
+			'enabled'              => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable PagSeguro', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
 			),
-			'title' => array(
+			'title'                => array(
 				'title'       => __( 'Title', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-pagseguro' ),
 				'desc_tip'    => true,
 				'default'     => __( 'PagSeguro', 'woocommerce-pagseguro' ),
 			),
-			'description' => array(
+			'description'          => array(
 				'title'       => __( 'Description', 'woocommerce-pagseguro' ),
 				'type'        => 'textarea',
 				'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-pagseguro' ),
 				'default'     => __( 'Pay via PagSeguro', 'woocommerce-pagseguro' ),
 			),
-			'integration' => array(
+			'integration'          => array(
 				'title'       => __( 'Integration', 'woocommerce-pagseguro' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'method' => array(
+			'method'               => array(
 				'title'       => __( 'Integration method', 'woocommerce-pagseguro' ),
 				'type'        => 'select',
 				'description' => __( 'Choose how the customer will interact with the PagSeguro. Redirect (Client goes to PagSeguro page) or Lightbox (Inside your store)', 'woocommerce-pagseguro' ),
@@ -213,7 +213,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' ),
 				),
 			),
-			'sandbox' => array(
+			'sandbox'              => array(
 				'title'       => __( 'PagSeguro Sandbox', 'woocommerce-pagseguro' ),
 				'type'        => 'checkbox',
 				'label'       => __( 'Enable PagSeguro Sandbox', 'woocommerce-pagseguro' ),
@@ -221,28 +221,31 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'default'     => 'no',
 				'description' => __( 'PagSeguro Sandbox can be used to test the payments.', 'woocommerce-pagseguro' ),
 			),
-			'email' => array(
+			'email'                => array(
 				'title'       => __( 'PagSeguro Email', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
 				'description' => __( 'Please enter your PagSeguro email address. This is needed in order to take payment.', 'woocommerce-pagseguro' ),
 				'desc_tip'    => true,
 				'default'     => '',
 			),
-			'token' => array(
+			'token'                => array(
 				'title'       => __( 'PagSeguro Token', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
+				/* translators: %s: link to PagSeguro settings */
 				'description' => sprintf( __( 'Please enter your PagSeguro token. This is needed to process the payment and notifications. Is possible generate a new token %s.', 'woocommerce-pagseguro' ), '<a href="https://pagseguro.uol.com.br/integracao/token-de-seguranca.jhtml">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default'     => '',
 			),
-			'sandbox_email' => array(
+			'sandbox_email'        => array(
 				'title'       => __( 'PagSeguro Sandbox Email', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
+				/* translators: %s: link to PagSeguro settings */
 				'description' => sprintf( __( 'Please enter your PagSeguro sandbox email address. You can get your sandbox email %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/vendedor/configuracoes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default'     => '',
 			),
-			'sandbox_token' => array(
+			'sandbox_token'        => array(
 				'title'       => __( 'PagSeguro Sandbox Token', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
+				/* translators: %s: link to PagSeguro settings */
 				'description' => sprintf( __( 'Please enter your PagSeguro sandbox token. You can get your sandbox token %s.', 'woocommerce-pagseguro' ), '<a href="https://sandbox.pagseguro.uol.com.br/vendedor/configuracoes.html">' . __( 'here', 'woocommerce-pagseguro' ) . '</a>' ),
 				'default'     => '',
 			),
@@ -251,58 +254,59 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'type'        => 'title',
 				'description' => '',
 			),
-			'tc_credit' => array(
+			'tc_credit'            => array(
 				'title'   => __( 'Credit Card', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Credit Card for Transparente Checkout', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
 			),
-			'tc_transfer' => array(
+			'tc_transfer'          => array(
 				'title'   => __( 'Bank Transfer', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Bank Transfer for Transparente Checkout', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
 			),
-			'tc_ticket' => array(
+			'tc_ticket'            => array(
 				'title'   => __( 'Banking Ticket', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Banking Ticket for Transparente Checkout', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
 			),
-			'tc_ticket_message' => array(
+			'tc_ticket_message'    => array(
 				'title'   => __( 'Banking Ticket Tax Message', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Display a message alerting the customer that will be charged R$ 1,00 for payment by Banking Ticket', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
 			),
-			'behavior' => array(
+			'behavior'             => array(
 				'title'       => __( 'Integration Behavior', 'woocommerce-pagseguro' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'send_only_total' => array(
+			'send_only_total'      => array(
 				'title'   => __( 'Send only the order total', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'If this option is enabled will only send the order total, not the list of items.', 'woocommerce-pagseguro' ),
 				'default' => 'no',
 			),
-			'invoice_prefix' => array(
+			'invoice_prefix'       => array(
 				'title'       => __( 'Invoice Prefix', 'woocommerce-pagseguro' ),
 				'type'        => 'text',
 				'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PagSeguro account for multiple stores ensure this prefix is unqiue as PagSeguro will not allow orders with the same invoice number.', 'woocommerce-pagseguro' ),
 				'desc_tip'    => true,
 				'default'     => 'WC-',
 			),
-			'testing' => array(
+			'testing'              => array(
 				'title'       => __( 'Gateway Testing', 'woocommerce-pagseguro' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'debug' => array(
+			'debug'                => array(
 				'title'       => __( 'Debug Log', 'woocommerce-pagseguro' ),
 				'type'        => 'checkbox',
 				'label'       => __( 'Enable logging', 'woocommerce-pagseguro' ),
 				'default'     => 'no',
+				/* translators: %s: log page link */
 				'description' => sprintf( __( 'Log PagSeguro events, such as API requests, inside %s', 'woocommerce-pagseguro' ), $this->get_log_view() ),
 			),
 		);
@@ -338,21 +342,24 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function payment_fields() {
 		wp_enqueue_script( 'wc-credit-card-form' );
 
-		if ( $description = $this->get_description() ) {
-			echo wpautop( wptexturize( $description ) );
+		$description = $this->get_description();
+		if ( $description ) {
+			echo wpautop( wptexturize( $description ) ); // WPCS: XSS ok.
 		}
 
 		$cart_total = $this->get_order_total();
 
-		if ( 'transparent' == $this->method ) {
-			wc_get_template( 'transparent-checkout-form.php', array(
-				'cart_total'        => $cart_total,
-				'tc_credit'         => $this->tc_credit,
-				'tc_transfer'       => $this->tc_transfer,
-				'tc_ticket'         => $this->tc_ticket,
-				'tc_ticket_message' => $this->tc_ticket_message,
-				'flag'              => plugins_url( 'assets/images/brazilian-flag.png', plugin_dir_path( __FILE__ ) ),
-			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+		if ( 'transparent' === $this->method ) {
+			wc_get_template(
+				'transparent-checkout-form.php', array(
+					'cart_total'        => $cart_total,
+					'tc_credit'         => $this->tc_credit,
+					'tc_transfer'       => $this->tc_transfer,
+					'tc_ticket'         => $this->tc_ticket,
+					'tc_ticket_message' => $this->tc_ticket_message,
+					'flag'              => plugins_url( 'assets/images/brazilian-flag.png', plugin_dir_path( __FILE__ ) ),
+				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path()
+			);
 		}
 	}
 
@@ -366,15 +373,15 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		if ( 'lightbox' != $this->method ) {
-			if ( isset( $_POST['pagseguro_sender_hash'] ) && 'transparent' == $this->method ) {
-				$response = $this->api->do_payment_request( $order, $_POST );
+		if ( 'lightbox' !== $this->method ) {
+			if ( isset( $_POST['pagseguro_sender_hash'] ) && 'transparent' === $this->method ) { // WPCS: input var ok, CSRF ok.
+				$response = $this->api->do_payment_request( $order, $_POST ); // WPCS: input var ok, CSRF ok.
 
 				if ( $response['data'] ) {
 					$this->update_order_status( $response['data'] );
 				}
 			} else {
-				$response = $this->api->do_checkout_request( $order, $_POST );
+				$response = $this->api->do_checkout_request( $order, $_POST ); // WPCS: input var ok, CSRF ok.
 			}
 
 			if ( $response['url'] ) {
@@ -396,7 +403,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				);
 			}
 		} else {
-			$use_shipping = isset( $_POST['ship_to_different_address'] ) ? true : false;
+			$use_shipping = isset( $_POST['ship_to_different_address'] ) ? true : false; // WPCS: input var ok, CSRF ok.
 
 			return array(
 				'result'   => 'success',
@@ -412,8 +419,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 */
 	public function receipt_page( $order_id ) {
 		$order        = wc_get_order( $order_id );
-		$request_data = $_POST;
-		if ( isset( $_GET['use_shipping'] ) && true == $_GET['use_shipping'] ) {
+		$request_data = $_POST;  // WPCS: input var ok, CSRF ok.
+		if ( isset( $_GET['use_shipping'] ) && true === (bool) $_GET['use_shipping'] ) {  // WPCS: input var ok, CSRF ok.
 			$request_data['ship_to_different_address'] = true;
 		}
 
@@ -421,7 +428,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		if ( $response['url'] ) {
 			// Lightbox script.
-			wc_enqueue_js( '
+			wc_enqueue_js(
+				'
 				$( "#browser-has-javascript" ).show();
 				$( "#browser-no-has-javascript, #cancel-payment, #submit-payment" ).hide();
 				var isOpenLightbox = PagSeguroLightbox({
@@ -437,13 +445,16 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				if ( ! isOpenLightbox ) {
 					window.location.href = "' . esc_js( $response['url'] ) . '";
 				}
-			' );
+			'
+			);
 
-			wc_get_template( 'lightbox-checkout.php', array(
-				'cancel_order_url'    => $order->get_cancel_order_url(),
-				'payment_url'         => $response['url'],
-				'lightbox_script_url' => $this->api->get_lightbox_url(),
-			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+			wc_get_template(
+				'lightbox-checkout.php', array(
+					'cancel_order_url'    => $order->get_cancel_order_url(),
+					'payment_url'         => $response['url'],
+					'lightbox_script_url' => $this->api->get_lightbox_url(),
+				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path()
+			);
 		} else {
 			include dirname( __FILE__ ) . '/views/html-receipt-page-error.php';
 		}
@@ -453,9 +464,9 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * IPN handler.
 	 */
 	public function ipn_handler() {
-		@ob_clean();
+		@ob_clean(); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
-		$ipn = $this->api->process_ipn_request( $_POST );
+		$ipn = $this->api->process_ipn_request( $_POST ); // WPCS: input var ok, CSRF ok.
 
 		if ( $ipn ) {
 			header( 'HTTP/1.1 200 OK' );
@@ -470,7 +481,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	 * Save payment meta data.
 	 *
 	 * @param  WC_Order $order Order instance.
-	 * @param  array   $posted Posted data.
+	 * @param  array    $posted Posted data.
 	 */
 	protected function save_payment_meta_data( $order, $posted ) {
 		$meta_data    = array();
@@ -487,20 +498,20 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		if ( isset( $posted->sender->name ) ) {
 			$meta_data[ __( 'Payer name', 'woocommerce-pagseguro' ) ] = sanitize_text_field( (string) $posted->sender->name );
 		}
-		if ( isset( $posted->paymentMethod->type ) ) {
-			$payment_data['type'] = intval( $posted->paymentMethod->type );
+		if ( isset( $posted->paymentMethod->type ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['type']                                       = intval( $posted->paymentMethod->type ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 			$meta_data[ __( 'Payment type', 'woocommerce-pagseguro' ) ] = $this->api->get_payment_name_by_type( $payment_data['type'] );
 		}
-		if ( isset( $posted->paymentMethod->code ) ) {
-			$payment_data['method'] = $this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) );
+		if ( isset( $posted->paymentMethod->code ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['method']                                       = $this->api->get_payment_method_name( intval( $posted->paymentMethod->code ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 			$meta_data[ __( 'Payment method', 'woocommerce-pagseguro' ) ] = $payment_data['method'];
 		}
-		if ( isset( $posted->installmentCount ) ) {
-			$payment_data['installments'] = sanitize_text_field( (string) $posted->installmentCount );
+		if ( isset( $posted->installmentCount ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['installments']                               = sanitize_text_field( (string) $posted->installmentCount ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 			$meta_data[ __( 'Installments', 'woocommerce-pagseguro' ) ] = $payment_data['installments'];
 		}
-		if ( isset( $posted->paymentLink ) ) {
-			$payment_data['link'] = sanitize_text_field( (string) $posted->paymentLink );
+		if ( isset( $posted->paymentLink ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+			$payment_data['link']                                      = sanitize_text_field( (string) $posted->paymentLink ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 			$meta_data[ __( 'Payment URL', 'woocommerce-pagseguro' ) ] = $payment_data['link'];
 		}
 
@@ -547,49 +558,53 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				$this->save_payment_meta_data( $order, $posted );
 
 				switch ( intval( $posted->status ) ) {
-					case 1 :
+					case 1:
 						$order->update_status( 'on-hold', __( 'PagSeguro: The buyer initiated the transaction, but so far the PagSeguro not received any payment information.', 'woocommerce-pagseguro' ) );
 
 						break;
-					case 2 :
+					case 2:
 						$order->update_status( 'on-hold', __( 'PagSeguro: Payment under review.', 'woocommerce-pagseguro' ) );
 
 						break;
-					case 3 :
+					case 3:
 						$order->add_order_note( __( 'PagSeguro: Payment approved.', 'woocommerce-pagseguro' ) );
 
 						// Changing the order for processing and reduces the stock.
 						$order->payment_complete( sanitize_text_field( (string) $posted->code ) );
 
 						break;
-					case 4 :
+					case 4:
 						$order->add_order_note( __( 'PagSeguro: Payment completed and credited to your account.', 'woocommerce-pagseguro' ) );
 
 						break;
-					case 5 :
+					case 5:
 						$order->update_status( 'on-hold', __( 'PagSeguro: Payment came into dispute.', 'woocommerce-pagseguro' ) );
 						$this->send_email(
+							/* translators: %s: order number */
 							sprintf( __( 'Payment for order %s came into dispute', 'woocommerce-pagseguro' ), $order->get_order_number() ),
 							__( 'Payment in dispute', 'woocommerce-pagseguro' ),
+							/* translators: %s: order number */
 							sprintf( __( 'Order %s has been marked as on-hold, because the payment came into dispute in PagSeguro.', 'woocommerce-pagseguro' ), $order->get_order_number() )
 						);
 
 						break;
-					case 6 :
+					case 6:
 						$order->update_status( 'refunded', __( 'PagSeguro: Payment refunded.', 'woocommerce-pagseguro' ) );
 						$this->send_email(
+							/* translators: %s: order number */
 							sprintf( __( 'Payment for order %s refunded', 'woocommerce-pagseguro' ), $order->get_order_number() ),
 							__( 'Payment refunded', 'woocommerce-pagseguro' ),
+							/* translators: %s: order number */
 							sprintf( __( 'Order %s has been marked as refunded by PagSeguro.', 'woocommerce-pagseguro' ), $order->get_order_number() )
 						);
 
 						break;
-					case 7 :
+					case 7:
 						$order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'woocommerce-pagseguro' ) );
 
 						break;
 
-					default :
+					default:
 						break;
 				}
 			} else {
@@ -615,12 +630,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( isset( $data['type'] ) ) {
-			wc_get_template( 'payment-instructions.php', array(
-				'type'         => $data['type'],
-				'link'         => $data['link'],
-				'method'       => $data['method'],
-				'installments' => $data['installments'],
-			), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+			wc_get_template(
+				'payment-instructions.php', array(
+					'type'         => $data['type'],
+					'link'         => $data['link'],
+					'method'       => $data['method'],
+					'installments' => $data['installments'],
+				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path()
+			);
 		}
 	}
 
@@ -651,19 +668,23 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 		if ( isset( $data['type'] ) ) {
 			if ( $plain_text ) {
-				wc_get_template( 'emails/plain-instructions.php', array(
-					'type'         => $data['type'],
-					'link'         => $data['link'],
-					'method'       => $data['method'],
-					'installments' => $data['installments'],
-				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+				wc_get_template(
+					'emails/plain-instructions.php', array(
+						'type'         => $data['type'],
+						'link'         => $data['link'],
+						'method'       => $data['method'],
+						'installments' => $data['installments'],
+					), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path()
+				);
 			} else {
-				wc_get_template( 'emails/html-instructions.php', array(
-					'type'         => $data['type'],
-					'link'         => $data['link'],
-					'method'       => $data['method'],
-					'installments' => $data['installments'],
-				), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path() );
+				wc_get_template(
+					'emails/html-instructions.php', array(
+						'type'         => $data['type'],
+						'link'         => $data['link'],
+						'method'       => $data['method'],
+						'installments' => $data['installments'],
+					), 'woocommerce/pagseguro/', WC_PagSeguro::get_templates_path()
+				);
 			}
 		}
 	}
