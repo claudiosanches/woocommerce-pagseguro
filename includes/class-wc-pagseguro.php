@@ -23,6 +23,8 @@ class WC_PagSeguro {
 
 			add_filter( 'woocommerce_payment_gateways', array( __CLASS__, 'add_gateway' ) );
 			add_filter( 'woocommerce_available_payment_gateways', array( __CLASS__, 'hides_when_is_outside_brazil' ) );
+			add_filter( 'woocommerce_billing_fields', array( __CLASS__, 'transparent_checkout_billing_fields' ), 9999 );
+			add_filter( 'woocommerce_shipping_fields', array( __CLASS__, 'transparent_checkout_shipping_fields' ), 9999 );
 			add_filter( 'plugin_action_links_' . plugin_basename( WC_PAGSEGURO_PLUGIN_FILE ), array( __CLASS__, 'plugin_action_links' ) );
 
 			if ( is_admin() ) {
@@ -99,6 +101,43 @@ class WC_PagSeguro {
 		}
 
 		return $available_gateways;
+	}
+
+	/**
+	 * Transparent checkout billing fields.
+	 *
+	 * @param array $fields Checkout fields.
+	 * @return array
+	 */
+	public static function transparent_checkout_billing_fields( $fields ) {
+		$settings = get_option( 'woocommerce_pagseguro_settings', array( 'method' => '' ) );
+
+		if ( 'transparent' === $settings['method'] && class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+			if ( isset( $fields['billing_neighborhood'] ) ) {
+				$fields['billing_neighborhood']['required'] = true;
+			}
+			if ( isset( $fields['billing_number'] ) ) {
+				$fields['billing_number']['required'] = true;
+			}
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Transparent checkout billing fields.
+	 *
+	 * @param array $fields Checkout fields.
+	 * @return array
+	 */
+	public static function transparent_checkout_shipping_fields( $fields ) {
+		if ( 'transparent' === $settings['method'] && class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
+			if ( isset( $fields['shipping_neighborhood'] ) ) {
+				$fields['shipping_neighborhood']['required'] = true;
+			}
+		}
+
+		return $fields;
 	}
 
 	/**
