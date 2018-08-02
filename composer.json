@@ -1,0 +1,36 @@
+{
+	"name": "claudiosanches/woocommerce-pagseguro",
+	"description": "Includes PagSeguro as a payment gateway to WooCommerce.",
+	"homepage": "https://github.com/claudiosanches/woocommerce-pagseguro",
+	"type": "wordpress-plugin",
+	"license": "GPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "Claudio Sanches",
+			"homepage": "https://claudiosanches.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"forum": "https://wordpress.org/support/plugin/woocommerce-pagseguro",
+		"issues": "https://github.com/claudiosanches/woocommerce-pagseguro/issues/",
+		"source": "https://github.com/claudiosanches/woocommerce-pagseguro"
+	},
+	"require": {
+		"claudiosanches/wp-git-hooks": "*"
+	},
+	"scripts": {
+		"pre-update-cmd": [
+			"ClaudioSanches\\WpGitHooks\\Hooks::preHooks"
+		],
+		"pre-install-cmd": [
+			"@pre-update-cmd"
+		],
+		"post-install-cmd": [
+			"ClaudioSanches\\WpGitHooks\\Hooks::postHooks"
+		],
+		"post-update-cmd": [
+			"@post-install-cmd"
+		]
+	}
+}

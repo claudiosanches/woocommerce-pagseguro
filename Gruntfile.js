@@ -141,6 +141,22 @@ module.exports = function( grunt ) {
 					'README.md': 'readme.txt'
 				}
 			}
+		},
+
+		// PHP Code Sniffer.
+		phpcs: {
+			options: {
+				bin: 'vendor/bin/phpcs',
+				showSniffCodes: true,
+				standard: './phpcs.xml'
+			},
+			dist: {
+				src:  [
+					'**/*.php',         // Include all files
+					'!node_modules/**', // Exclude node_modules/
+					'!vendor/**'        // Exclude vendor/
+				]
+			}
 		}
 	});
 
@@ -152,12 +168,24 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-checktextdomain' );
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+	grunt.loadNpmTasks( 'grunt-phpcs' );
 
-	// Register tasks.
+	// Default task.
 	grunt.registerTask( 'default', [
 		'jshint',
 		'uglify',
 		'cssmin'
 	]);
+
+	// Shortcut for wp_readme_to_markdown.
 	grunt.registerTask( 'readme', 'wp_readme_to_markdown' );
+
+	// Dev task.
+	grunt.registerTask( 'dev', [
+		'default',
+		'readme',
+		'phpcs',
+		'checktextdomain',
+		'makepot'
+	]);
 };
