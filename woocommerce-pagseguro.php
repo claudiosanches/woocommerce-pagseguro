@@ -5,7 +5,7 @@
  * Description:          Includes PagSeguro as a payment gateway to WooCommerce.
  * Author:               Claudio Sanches
  * Author URI:           https://claudiosanches.com
- * Version:              2.13.0
+ * Version:              2.13.1
  * License:              GPLv3 or later
  * Text Domain:          woocommerce-pagseguro
  * Domain Path:          /languages
@@ -32,7 +32,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Plugin constants.
-define( 'WC_PAGSEGURO_VERSION', '2.13.0' );
+define( 'WC_PAGSEGURO_VERSION', '2.13.1' );
 define( 'WC_PAGSEGURO_PLUGIN_FILE', __FILE__ );
 
 if ( ! class_exists( 'WC_PagSeguro' ) ) {

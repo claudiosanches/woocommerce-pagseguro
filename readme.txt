@@ -4,7 +4,7 @@ Donate link: https://claudiosanches.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.13.0
+Stable tag: 2.13.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -255,6 +255,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.13.1 - 2018/08/03 =
+
+* Corrigido alerta do PHP sobre variável inexistente.
+
 = 2.13.0 - 2018/08/02 =
 
 * Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
@@ -300,7 +304,7 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Upgrade Notice ==
 
-= 2.13.0 =
+= 2.13.1 =
 
 * Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
 * Implementada baixa automática de estoque ao comprar por boleto (funciona apenas no WooCommerce 3 ou superior).
