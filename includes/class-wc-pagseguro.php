@@ -131,6 +131,8 @@ class WC_PagSeguro {
 	 * @return array
 	 */
 	public static function transparent_checkout_shipping_fields( $fields ) {
+		$settings = get_option( 'woocommerce_pagseguro_settings', array( 'method' => '' ) );
+
 		if ( 'transparent' === $settings['method'] && class_exists( 'Extra_Checkout_Fields_For_Brazil' ) ) {
 			if ( isset( $fields['shipping_neighborhood'] ) ) {
 				$fields['shipping_neighborhood']['required'] = true;
