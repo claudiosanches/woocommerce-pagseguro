@@ -49,10 +49,15 @@
 		 */
 		function pagSeguroAddErrorMessage( error ) {
 			var wrapper = $( '#pagseguro-credit-card-form' );
-
+			var animatedTo = $('.payment_method_pagseguro');
 			$( '.woocommerce-error', wrapper ).remove();
 			wrapper.prepend( '<div class="woocommerce-error" style="margin-bottom: 0.5em !important;">' + error + '</div>' );
 
+			if ( animatedTo.length ) {
+				$( 'html, body' ).animate({
+					scrollTop: ( animatedTo.offset().top - 70 )
+				}, 500 );
+			}
 			$( document.body ).trigger('checkout_error');
 			$( document.body ).trigger('pagSeguroError', error);
 		}
