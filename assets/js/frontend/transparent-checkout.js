@@ -52,6 +52,9 @@
 
 			$( '.woocommerce-error', wrapper ).remove();
 			wrapper.prepend( '<div class="woocommerce-error" style="margin-bottom: 0.5em !important;">' + error + '</div>' );
+
+			$( document.body ).trigger('checkout_error');
+			$( document.body ).trigger('pagSeguroError', error);
 		}
 
 		/**
