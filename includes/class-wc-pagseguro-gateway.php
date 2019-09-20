@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce PagSeguro Gateway class
+ * Gateway class
  *
  * @package WooCommerce_PagSeguro/Classes/Gateway
  * @version 2.13.0
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WooCommerce PagSeguro gateway.
+ * Gateway.
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 

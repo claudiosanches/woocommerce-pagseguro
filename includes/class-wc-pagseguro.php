@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce PagSeguro main class
+ * Plugin's main class
  *
  * @package WooCommerce_PagSeguro
  */

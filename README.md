@@ -1,10 +1,10 @@
-# WooCommerce PagSeguro #
+# Claudio Sanches - PagSeguro for WooCommerce #
 **Contributors:** [claudiosanches](https://profiles.wordpress.org/claudiosanches), [Gabriel Reguly](https://profiles.wordpress.org/Gabriel Reguly)  
 **Donate link:** https://claudiosanches.com/doacoes/  
 **Tags:** woocommerce, pagseguro, payment  
 **Requires at least:** 4.0  
-**Tested up to:** 4.9  
-**Stable tag:** 2.13.0  
+**Tested up to:** 5.2  
+**Stable tag:** 2.14.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -28,7 +28,7 @@ Adicione o PagSeguro como método de pagamento em sua loja WooCommerce.
 
 [PagSeguro](https://pagseguro.uol.com.br/) é um método de pagamento brasileiro desenvolvido pela UOL.
 
-O plugin WooCommerce PagSeguro foi desenvolvido sem nenhum incentivo do PagSeguro ou da UOL. Nenhum dos desenvolvedores deste plugin possuem vínculos com estas duas empresas.
+Este plugin foi desenvolvido sem nenhum incentivo do PagSeguro ou da UOL. Nenhum dos desenvolvedores deste plugin possuem vínculos com estas duas empresas.
 
 Este plugin foi desenvolvido a partir da [documentação oficial do PagSeguro](https://pagseguro.uol.com.br/v2/guia-de-integracao/visao-geral.html) e utiliza a última versão da API de pagamentos.
 
@@ -42,7 +42,7 @@ Além que é possível utilizar o novo [sandbox do PagSeguro](https://sandbox.pa
 
 ### Compatibilidade ###
 
-Compatível com versões posteriores ao WooCommerce 3.0.
+Compatível com versões atuais do WooCommerce.
 
 Este plugin também é compatível com o [WooCommerce Extra Checkout Fields for Brazil](http://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/), desta forma é possível enviar os campos de "CPF", "número do endereço" e "bairro" (para o Checkout Transparente é obrigatório o uso deste plugin).
 
@@ -148,7 +148,7 @@ Este plugin esta licenciado como GPL.
 
 ### O que eu preciso para utilizar este plugin? ###
 
-* Ter instalado o plugin WooCommerce 3.0 ou mais recente.
+* Ter instalado uma versão atual do plugin WooCommerce.
 * Possuir uma conta no PagSeguro.
 * Gerar um token de segurança no PagSeguro.
 * Desativar a opção "Pagamento via Formulário HTML" em integrações na página do PagSeguro.
@@ -267,6 +267,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Changelog ##
 
+### 2.14.0 - 2019/09/20 ###
+
+* Atualizado o nome do plugin de "WooCommerce PagSeguro" para "Claudio Sanches - PagSeguro for WooCommerce".
+
 ### 2.13.1 - 2018/08/03 ###
 
 * Corrigido alerta do PHP sobre variável inexistente.
@@ -316,10 +320,6 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 ## Upgrade Notice ##
 
-### 2.13.1 ###
+### 2.14.0 ###
 
-* Força o campo "Bairro" como obrigatório quando checkout transparente está ativado.
-* Implementada baixa automática de estoque ao comprar por boleto (funciona apenas no WooCommerce 3 ou superior).
-* Estoque é restaurado automaticamente quando alguma notificação do PagSeguro marca o pedido como reembolsado ou cancelado (funciona apenas no WooCommerce 3 ou superior).
-* Corrigida a mudança de status do pedido de Cancelado para Processando (funciona apenas no WooCommerce 3 ou superior).
-* Adicionadas informações sobre a taxa de intermédio do PagSeguro nos meta dados do pedido.
+* Atualizado o nome do plugin de "WooCommerce PagSeguro" para "Claudio Sanches - PagSeguro for WooCommerce".

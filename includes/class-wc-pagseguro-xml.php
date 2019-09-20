@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce PagSeguro SimpleXMLElement class
+ * SimpleXMLElement class
  *
  * @package WooCommerce_PagSeguro/Classes/XML
  * @version 2.12.0

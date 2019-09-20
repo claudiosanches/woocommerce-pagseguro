@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce PagSeguro API class
+ * API class
  *
  * @package WooCommerce_PagSeguro/Classes/API
  * @version 2.12.0
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WooCommerce PagSeguro API.
+ * API.
  */
 class WC_PagSeguro_API {
 
