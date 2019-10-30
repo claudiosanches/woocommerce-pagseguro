@@ -452,9 +452,15 @@ class WC_PagSeguro_API {
 
 			// Discount.
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.3', '<' ) ) {
-				if ( 0 < $order->get_order_discount() ) {
-					$extra_amount = '-' . $this->money_format( $order->get_order_discount() );
-				}
+				$discount = $order->get_order_discount();
+				// WooCommerce 3.0 or later.
+			} else if ( method_exists( $order, 'get_discount_total' ) ) {
+				$discount = $order->get_discount_total();
+			}
+
+			// Extra amount.
+			if ( isset( $discount ) && 0 < $discount ) {
+				$extra_amount = '-' . $this->money_format( $discount );
 			}
 		}
 
