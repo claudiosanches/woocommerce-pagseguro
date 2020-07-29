@@ -477,8 +477,18 @@ class WC_PagSeguro_API {
 		$data    = $this->get_order_items( $order );
 		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
 
+		if ( 'yes' == $this->gateway->require_shipping ) {
+
+			$required = '';
+
+		} else {
+
+			$required = '<shippingAddressRequired>false</shippingAddressRequired>';
+
+		}
+
 		// Creates the checkout xml.
-		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout></checkout>' );
+		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout>' . $required . '</checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
 
 		// WooCommerce 3.0 or later.
