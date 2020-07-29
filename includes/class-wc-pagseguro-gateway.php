@@ -3,7 +3,7 @@
  * Gateway class
  *
  * @package WooCommerce_PagSeguro/Classes/Gateway
- * @version 2.13.0
+ * @version 2.15.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,6 +39,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 		$this->sandbox_email     = $this->get_option( 'sandbox_email' );
 		$this->sandbox_token     = $this->get_option( 'sandbox_token' );
 		$this->method            = $this->get_option( 'method', 'direct' );
+		$this->require_shipping  = $this->get_option( 'require_shipping', 'yes' );
 		$this->tc_credit         = $this->get_option( 'tc_credit', 'yes' );
 		$this->tc_transfer       = $this->get_option( 'tc_transfer', 'yes' );
 		$this->tc_ticket         = $this->get_option( 'tc_ticket', 'yes' );
@@ -212,6 +213,14 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'lightbox'    => __( 'Lightbox', 'woocommerce-pagseguro' ),
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' ),
 				),
+			),
+			'require_shipping'  => array(
+				'title'       => esc_html__( 'When using Redirect method, PagSeguro will require the shipping address', 'woocommerce-pagseguro' ),
+				'label'       => __( 'Enable PagSeguro ', 'woocommerce-pagseguro' ),
+				'type'        => 'checkbox',
+				'description' => __( ' Uncheck if you sell services or virtual products which don\'t need a shipping address.', 'woocommerce-pagseguro' ),
+				'desc_tip'    => true,
+				'default'     => 'no',
 			),
 			'sandbox'              => array(
 				'title'       => __( 'PagSeguro Sandbox', 'woocommerce-pagseguro' ),
