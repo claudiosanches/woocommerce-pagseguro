@@ -215,8 +215,8 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				),
 			),
 			'require_shipping'  => array(
-				'title'       => esc_html__( 'When using Redirect method, PagSeguro will require the shipping address', 'woocommerce-pagseguro' ),
-				'label'       => __( 'Enable PagSeguro ', 'woocommerce-pagseguro' ),
+				'title'       => esc_html__( 'When using Redirect method, PagSeguro will require the shipping address.', 'woocommerce-pagseguro' ),
+				'label'       => __( 'Enable PagSeguro requires shipping address', 'woocommerce-pagseguro' ),
 				'type'        => 'checkbox',
 				'description' => __( ' Uncheck if you sell services or virtual products which don\'t need a shipping address.', 'woocommerce-pagseguro' ),
 				'desc_tip'    => true,
