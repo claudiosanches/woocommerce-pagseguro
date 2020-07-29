@@ -474,6 +474,7 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	protected function get_checkout_xml( $order, $posted ) {
+		
 		$data    = $this->get_order_items( $order );
 		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
 
@@ -486,20 +487,32 @@ class WC_PagSeguro_API {
 			$required = '<shippingAddressRequired>false</shippingAddressRequired>';
 
 		}
-
 		// Creates the checkout xml.
 		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout>' . $required . '</checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_id' ) ) {
+			
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->get_id() );
 			$xml->add_sender_data( $order );
-			$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+			if ( 'yes' == $this->gateway->require_shipping ) {
+
+				$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+			}
+
 		} else {
+
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
 			$xml->add_legacy_sender_data( $order );
-			$xml->add_legacy_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+			if ( 'yes' == $this->gateway->require_shipping ) {
+
+				$xml->add_legacy_shipping_data( $order, $ship_to, $data['shipping_cost'] );
+
+			}
 		}
 
 		$xml->add_items( $data['items'] );
