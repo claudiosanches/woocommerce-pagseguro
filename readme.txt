@@ -1,10 +1,10 @@
 === Claudio Sanches - PagSeguro for WooCommerce ===
-Contributors: claudiosanches, Gabriel Reguly
+Contributors: claudiosanches, gabriel-reguly
 Donate link: https://claudiosanches.com/doacoes/
 Tags: woocommerce, pagseguro, payment
 Requires at least: 4.0
 Tested up to: 5.2
-Stable tag: 2.14.0
+Stable tag: 2.15.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -255,6 +255,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 
 == Changelog ==
 
+= 2.15.0 - 2020/07/30 =
+
+* Nova configuração para desabilitar o endereço de entrega na modalidade **Padrão**, onde o cliente é redirecionado ao PagSeguro para concluir a compra. Útil para quem vende produtos virtuais ou serviços.
+
 = 2.14.0 - 2019/09/20 =
 
 * Atualizado o nome do plugin de "WooCommerce PagSeguro" para "Claudio Sanches - PagSeguro for WooCommerce".
@@ -307,6 +311,10 @@ Por favor, caso você tenha algum problema com o funcionamento do plugin, [abra 
 * Correção nas máscaras do campos devido a mudança do plugin no [woocommerce-extra-checkout-fields-for-brazil](https://github.com/claudiosanches/woocommerce-extra-checkout-fields-for-brazil/pull/49). (Possível com a ajuda de [Thiago Guimarães](https://github.com/thiagogsr)).
 
 == Upgrade Notice ==
+
+= 2.15.0 =
+
+* Nova configuração para quem vende produtos virtuais e/ou serviços.
 
 = 2.14.0 =
 
