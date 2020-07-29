@@ -5,12 +5,12 @@
  * Description:          Includes PagSeguro as a payment gateway to WooCommerce.
  * Author:               Claudio Sanches
  * Author URI:           https://claudiosanches.com
- * Version:              2.14.0
+ * Version:              2.15.0
  * License:              GPLv3 or later
  * Text Domain:          woocommerce-pagseguro
  * Domain Path:          /languages
  * WC requires at least: 3.0.0
- * WC tested up to:      3.4.0
+ * WC tested up to:      4.3.1
  *
  * Claudio Sanches - PagSeguro for WooCommerce is free software: you can
  * redistribute it and/or modify it under the terms of the
@@ -32,7 +32,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Plugin constants.
-define( 'WC_PAGSEGURO_VERSION', '2.14.0' );
+define( 'WC_PAGSEGURO_VERSION', '2.15.0' );
 define( 'WC_PAGSEGURO_PLUGIN_FILE', __FILE__ );
 
 if ( ! class_exists( 'WC_PagSeguro' ) ) {
