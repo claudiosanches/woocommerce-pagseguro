@@ -102,7 +102,7 @@ class WC_PagSeguro_API {
 	 * @return string.
 	 */
 	protected function get_notification_url() {
-		return 'https://ws.' . $this->get_environment() . 'pagseguro.uol.com.br/v2/transactions/notifications/';
+		return 'https://ws.' . $this->get_environment() . 'pagseguro.uol.com.br/v3/transactions/notifications/';
 	}
 
 	/**
