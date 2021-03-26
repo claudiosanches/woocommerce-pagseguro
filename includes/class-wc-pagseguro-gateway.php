@@ -633,6 +633,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 
 						break;
 					case 7:
+					case 8:
 						$order->update_status( 'cancelled', __( 'PagSeguro: Payment canceled.', 'woocommerce-pagseguro' ) );
 
 						if ( function_exists( 'wc_increase_stock_levels' ) ) {
@@ -640,7 +641,10 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 						}
 
 						break;
+					case 9:
+						$order->add_order_note( __( 'PagSeguro: The customer filed a chargeback request with the credit card company.', 'woocommerce-pagseguro' ) );
 
+						break;
 					default:
 						break;
 				}
