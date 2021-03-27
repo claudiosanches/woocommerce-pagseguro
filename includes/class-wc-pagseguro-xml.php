@@ -130,9 +130,9 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$name = $order->billing_company;
 			$this->add_cnpj( $order->billing_cnpj, $sender );
 		} elseif ( ! empty( $order->billing_persontype ) ) {
-			if ( 1 == $order->billing_persontype && ! empty( $order->billing_cpf ) ) {
+			if ( 1 === $order->billing_persontype && ! empty( $order->billing_cpf ) ) {
 				$this->add_cpf( $order->billing_cpf, $sender );
-			} elseif ( 2 == $order->billing_persontype && ! empty( $order->billing_cnpj ) ) {
+			} elseif ( 2 === $order->billing_persontype && ! empty( $order->billing_cnpj ) ) {
 				$name = $order->billing_company;
 				$this->add_cnpj( $order->billing_cnpj, $sender );
 			}
@@ -147,7 +147,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$phone->addChild( 'number', substr( $phone_number, 2 ) );
 		}
 
-		if ( '' != $hash ) {
+		if ( '' !== $hash ) {
 			$sender->addChild( 'hash', $hash );
 		}
 	}
@@ -189,7 +189,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$phone->addChild( 'number', substr( $phone_number, 2 ) );
 		}
 
-		if ( '' != $hash ) {
+		if ( '' !== $hash ) {
 			$sender->addChild( 'hash', $hash );
 		}
 	}
@@ -294,7 +294,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * @param float $extra_amount Extra amount.
 	 */
 	public function add_extra_amount( $extra_amount = 0 ) {
-		if ( 0 != $extra_amount ) {
+		if ( 0 !== $extra_amount ) {
 			$this->addChild( 'extraAmount', $extra_amount );
 		}
 	}

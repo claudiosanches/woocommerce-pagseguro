@@ -15,7 +15,7 @@ _e( 'Payment', 'woocommerce-pagseguro' );
 
 echo "\n\n";
 
-if ( 2 == $type ) {
+if ( 2 === $type ) {
 
 	_e( 'Please use the link below to view your Banking Ticket, you can print and pay in your internet banking or in a lottery retailer:', 'woocommerce-pagseguro' );
 
@@ -27,7 +27,7 @@ if ( 2 == $type ) {
 
 	_e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' );
 
-} elseif ( 3 == $type ) {
+} elseif ( 3 === $type ) {
 
 	_e( 'Please use the link below to make the payment in your bankline:', 'woocommerce-pagseguro' );
 

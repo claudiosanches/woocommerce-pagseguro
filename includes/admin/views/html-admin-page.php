@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <h3><?php echo esc_html( $this->method_title ); ?></h3>
 
 <?php
-if ( 'yes' == $this->get_option( 'enabled' ) ) {
+if ( 'yes' === $this->get_option( 'enabled' ) ) {
 	if ( ! $this->using_supported_currency() && ! class_exists( 'woocommerce_wpml' ) ) {
 		include dirname( __FILE__ ) . '/html-notice-currency-not-supported.php';
 	}

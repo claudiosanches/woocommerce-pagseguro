@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <h2><?php _e( 'Payment', 'woocommerce-pagseguro' ); ?></h2>
 
-<?php if ( 2 == $type ) : ?>
+<?php if ( 2 === $type ) : ?>
 
 	<p class="order_details"><?php _e( 'Please use the link below to view your Banking Ticket, you can print and pay in your internet banking or in a lottery retailer:', 'woocommerce-pagseguro' ); ?><br /><a class="button" href="<?php echo esc_url( $link ); ?>" target="_blank"><?php _e( 'Pay the Banking Ticket', 'woocommerce-pagseguro' ); ?></a><br /><?php _e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' ); ?></p>
 
-<?php elseif ( 3 == $type ) : ?>
+<?php elseif ( 3 === $type ) : ?>
 
 	<p class="order_details"><?php _e( 'Please use the link below to make the payment in your bankline:', 'woocommerce-pagseguro' ); ?><br /><a class="button" href="<?php echo esc_url( $link ); ?>" target="_blank"><?php _e( 'Pay at your bank', 'woocommerce-pagseguro' ); ?>.<br /><?php _e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' ); ?></a></p>
 
