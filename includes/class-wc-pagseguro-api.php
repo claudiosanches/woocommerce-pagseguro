@@ -404,9 +404,7 @@ class WC_PagSeguro_API {
 								$item_meta = new WC_Order_Item_Meta( $order_item );
 							}
 
-							if ( $meta = $item_meta->display( true, true ) ) {
-								$item_name .= ' - ' . $meta;
-							}
+							$item_name .= ' - ' . $item_meta->display( true, true );
 						}
 
 						$items[] = array(
@@ -681,9 +679,7 @@ class WC_PagSeguro_API {
 				}
 
 				foreach ( $body->error as $error_key => $error ) {
-					if ( $message = $this->get_error_message( $error->code ) ) {
-						$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $message;
-					}
+					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
 				}
 
 				return array(
@@ -788,9 +784,7 @@ class WC_PagSeguro_API {
 				}
 
 				foreach ( $data->error as $error_key => $error ) {
-					if ( $message = $this->get_error_message( $error->code ) ) {
-						$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $message;
-					}
+					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
 				}
 
 				return array(
