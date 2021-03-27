@@ -454,7 +454,7 @@ class WC_PagSeguro_API {
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.3', '<' ) ) {
 				$discount = $order->get_order_discount();
 				// WooCommerce 3.0 or later.
-			} else if ( method_exists( $order, 'get_discount_total' ) ) {
+			} elseif ( method_exists( $order, 'get_discount_total' ) ) {
 				$discount = $order->get_discount_total();
 			}
 
@@ -480,7 +480,7 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	protected function get_checkout_xml( $order, $posted ) {
-		
+
 		$data    = $this->get_order_items( $order );
 		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
 
@@ -499,7 +499,7 @@ class WC_PagSeguro_API {
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_id' ) ) {
-			
+
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->get_id() );
 			$xml->add_sender_data( $order );
 
@@ -508,7 +508,6 @@ class WC_PagSeguro_API {
 				$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
 
 			}
-
 		} else {
 
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
@@ -622,14 +621,19 @@ class WC_PagSeguro_API {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting token for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_checkout_url() );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_checkout_url()
+		);
 		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
 			if ( 'yes' == $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in generate payment token: ' . $response->get_error_message() );
 			}
-		} else if ( 401 === $response['response']['code'] ) {
+		} elseif ( 401 === $response['response']['code'] ) {
 			if ( 'yes' == $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'Invalid token and/or email settings!' );
 			}
@@ -716,7 +720,7 @@ class WC_PagSeguro_API {
 			return array(
 				'url'   => '',
 				'data'  => '',
-				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' .  __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) ),
+				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) ),
 			);
 		}
 
@@ -727,14 +731,19 @@ class WC_PagSeguro_API {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting direct payment for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_transactions_url() );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_transactions_url()
+		);
 		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
 			if ( 'yes' == $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in requesting the direct payment: ' . $response->get_error_message() );
 			}
-		} else if ( 401 === $response['response']['code'] ) {
+		} elseif ( 401 === $response['response']['code'] ) {
 			if ( 'yes' == $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'The user does not have permissions to use the PagSeguro Transparent Checkout!' );
 			}
@@ -832,7 +841,12 @@ class WC_PagSeguro_API {
 		}
 
 		// Gets the PagSeguro response.
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_notification_url() . esc_attr( $data['notificationCode'] ) );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_notification_url() . esc_attr( $data['notificationCode'] )
+		);
 		$response = $this->do_request( $url, 'GET' );
 
 		// Check to see if the request was valid.
@@ -878,7 +892,12 @@ class WC_PagSeguro_API {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting session ID...' );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_sessions_url() );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_sessions_url()
+		);
 		$response = $this->do_request( $url, 'POST' );
 
 		// Check to see if the request was valid.

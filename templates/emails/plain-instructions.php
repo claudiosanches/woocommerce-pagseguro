@@ -41,7 +41,7 @@ if ( 2 == $type ) {
 
 } else {
 
-	echo sprintf( __( 'You just made the payment in %s using the %s.', 'woocommerce-pagseguro' ), $installments . 'x', $method );
+	echo sprintf( __( 'You just made the payment in %1$s using the %2$s.', 'woocommerce-pagseguro' ), $installments . 'x', $method );
 
 	echo "\n";
 

@@ -214,7 +214,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' ),
 				),
 			),
-			'require_shipping'  => array(
+			'require_shipping'     => array(
 				'title'       => esc_html__( 'When using Redirect method, PagSeguro will require the shipping address.', 'woocommerce-pagseguro' ),
 				'label'       => __( 'Enable PagSeguro requires shipping address', 'woocommerce-pagseguro' ),
 				'type'        => 'checkbox',
