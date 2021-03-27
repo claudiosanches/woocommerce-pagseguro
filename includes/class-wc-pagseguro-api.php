@@ -167,8 +167,11 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	public function get_payment_method_name( $value ) {
+		// translators: %s for payment method brand name.
 		$credit = __( 'Credit Card %s', 'woocommerce-pagseguro' );
+		// translators: %s for payment method brand name.
 		$ticket = __( 'Billet %s', 'woocommerce-pagseguro' );
+		// translators: %s for payment method brand name.
 		$debit  = __( 'Bank Transfer %s', 'woocommerce-pagseguro' );
 
 		$methods = array(
@@ -376,6 +379,7 @@ class WC_PagSeguro_API {
 		// Force only one item.
 		if ( 'yes' === $this->gateway->send_only_total ) {
 			$items[] = array(
+				// translators: %s for order ID number.
 				'description' => $this->sanitize_description( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) ),
 				'amount'      => $this->money_format( $order->get_total() ),
 				'quantity'    => 1,

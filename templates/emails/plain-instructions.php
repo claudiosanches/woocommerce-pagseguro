@@ -41,6 +41,7 @@ if ( 2 === $type ) {
 
 } else {
 
+	// translators: %1$s for number of installments, %2$s for payment method.
 	echo sprintf( esc_html__( 'You just made the payment in %1$s using the %2$s.', 'woocommerce-pagseguro' ), esc_html( $installments ) . 'x', esc_html( $method ) );
 
 	echo "\n";

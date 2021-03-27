@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php else : ?>
 
+	<?php // translators: %1$s for number of installments, %2$s for payment method. ?>
 	<p class="order_details"><?php echo sprintf( esc_html__( 'You just made the payment in %1$s using the %2$s.', 'woocommerce-pagseguro' ), '<strong>' . esc_html( $installments ) . 'x</strong>', '<strong>' . esc_html( $method ) . '</strong>' ); ?><br /><?php esc_html_e( 'As soon as the credit card operator confirm the payment, your order will be processed.', 'woocommerce-pagseguro' ); ?></p>
 
 	<?php
