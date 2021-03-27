@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <ul class="woocommerce-error">
 	<?php foreach ( $response['error'] as $message ) : ?>
-		<li><?php echo $message; ?></li>
+		<li><?php echo esc_html( $message ); ?></li>
 	<?php endforeach; ?>
 </ul>
 

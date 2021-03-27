@@ -11,13 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-_e( 'Payment', 'woocommerce-pagseguro' );
+esc_html_e( 'Payment', 'woocommerce-pagseguro' );
 
 echo "\n\n";
 
 if ( 2 === $type ) {
 
-	_e( 'Please use the link below to view your Banking Ticket, you can print and pay in your internet banking or in a lottery retailer:', 'woocommerce-pagseguro' );
+	esc_html_e( 'Please use the link below to view your Banking Ticket, you can print and pay in your internet banking or in a lottery retailer:', 'woocommerce-pagseguro' );
 
 	echo "\n";
 
@@ -25,11 +25,11 @@ if ( 2 === $type ) {
 
 	echo "\n";
 
-	_e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' );
+	esc_html_e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' );
 
 } elseif ( 3 === $type ) {
 
-	_e( 'Please use the link below to make the payment in your bankline:', 'woocommerce-pagseguro' );
+	esc_html_e( 'Please use the link below to make the payment in your bankline:', 'woocommerce-pagseguro' );
 
 	echo "\n";
 
@@ -37,15 +37,15 @@ if ( 2 === $type ) {
 
 	echo "\n";
 
-	_e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' );
+	esc_html_e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' );
 
 } else {
 
-	echo sprintf( __( 'You just made the payment in %1$s using the %2$s.', 'woocommerce-pagseguro' ), $installments . 'x', $method );
+	echo sprintf( esc_html__( 'You just made the payment in %1$s using the %2$s.', 'woocommerce-pagseguro' ), esc_html( $installments ) . 'x', esc_html( $method ) );
 
 	echo "\n";
 
-	_e( 'As soon as the credit card operator confirm the payment, your order will be processed.', 'woocommerce-pagseguro' );
+	esc_html_e( 'As soon as the credit card operator confirm the payment, your order will be processed.', 'woocommerce-pagseguro' );
 
 }
 
