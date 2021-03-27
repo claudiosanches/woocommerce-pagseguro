@@ -4,6 +4,7 @@
  *
  * @package WooCommerce_PagSeguro/Templates
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

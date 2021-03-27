@@ -172,7 +172,7 @@ class WC_PagSeguro_API {
 		// translators: %s for payment method brand name.
 		$ticket = __( 'Billet %s', 'woocommerce-pagseguro' );
 		// translators: %s for payment method brand name.
-		$debit  = __( 'Bank Transfer %s', 'woocommerce-pagseguro' );
+		$debit = __( 'Bank Transfer %s', 'woocommerce-pagseguro' );
 
 		$methods = array(
 			101 => sprintf( $credit, 'Visa' ),
