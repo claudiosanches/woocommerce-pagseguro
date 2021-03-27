@@ -10,4 +10,15 @@
 			<property name="customSanitizingFunctions" type="array" value="wc_clean" />
 		</properties>
 	</rule>
+
+	<!-- Whitelist default PHP objects attribute names -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<properties>
+			<!-- From SimpleXMLElement -->
+			<property name="customPropertiesWhitelist" type="array">
+				<element value="ownerDocument" />
+				<element value="formatOutput" />
+			</property>
+		</properties>
+	</rule>
 </ruleset>
