@@ -526,7 +526,7 @@ class WC_PagSeguro_API {
 		$xml->add_extra_amount( $data['extra_amount'] );
 
 		// Checks if is localhost... PagSeguro not accept localhost urls!
-		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
+		if ( ! $this->is_localhost() ) {
 			$xml->add_redirect_url( $this->gateway->get_return_url( $order ) );
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
@@ -559,7 +559,7 @@ class WC_PagSeguro_API {
 		$xml->add_mode( 'default' );
 		$xml->add_method( $method );
 		$xml->add_currency( get_woocommerce_currency() );
-		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
+		if ( ! $this->is_localhost() ) {
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
 		$xml->add_items( $data['items'] );
