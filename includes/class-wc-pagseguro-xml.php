@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Extends the SimpleXMLElement class to add CDATA element.
  */
 class WC_PagSeguro_XML extends SimpleXMLElement {
-
 	/**
 	 * Extract numbers from a string.
 	 *

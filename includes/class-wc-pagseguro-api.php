@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * API.
  */
 class WC_PagSeguro_API {
-
 	/**
 	 * Gateway class.
 	 *
@@ -385,7 +384,6 @@ class WC_PagSeguro_API {
 				'quantity'    => 1,
 			);
 		} else {
-
 			// Products.
 			if ( 0 < count( $order->get_items() ) ) {
 				foreach ( $order->get_items() as $order_item ) {
@@ -482,43 +480,33 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	protected function get_checkout_xml( $order, $posted ) {
-
 		$data    = $this->get_order_items( $order );
 		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
 
 		if ( 'yes' === $this->gateway->require_shipping ) {
-
 			$required = '';
-
 		} else {
-
 			$required = '<shippingAddressRequired>false</shippingAddressRequired>';
-
 		}
+
 		// Creates the checkout xml.
 		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout>' . $required . '</checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_id' ) ) {
-
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->get_id() );
 			$xml->add_sender_data( $order );
 
 			if ( 'yes' === $this->gateway->require_shipping ) {
-
 				$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
-
 			}
 		} else {
-
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
 			$xml->add_legacy_sender_data( $order );
 
 			if ( 'yes' === $this->gateway->require_shipping ) {
-
 				$xml->add_legacy_shipping_data( $order, $ship_to, $data['shipping_cost'] );
-
 			}
 		}
 
@@ -815,7 +803,6 @@ class WC_PagSeguro_API {
 	 * @return bool|SimpleXMLElement
 	 */
 	public function process_ipn_request( $data ) {
-
 		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Checking IPN request...' );
 		}
@@ -885,7 +872,6 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	public function get_session_id() {
-
 		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting session ID...' );
 		}

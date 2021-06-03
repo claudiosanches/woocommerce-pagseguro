@@ -9,7 +9,6 @@
  * WooCommerce bootstrap class.
  */
 class WC_PagSeguro {
-
 	/**
 	 * Initialize the plugin public actions.
 	 */

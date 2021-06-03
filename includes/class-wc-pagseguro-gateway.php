@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gateway.
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
-
 	/**
 	 * Constructor for the gateway.
 	 */
