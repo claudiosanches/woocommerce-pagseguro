@@ -16,8 +16,10 @@
 	<arg name="extensions" value="php"/>
 	<arg name="parallel" value="8"/><!-- Enables parallel processing when available for faster results. -->
 
-    <rule ref="PHPCompatibility"></rule>
-    <rule ref="WordPress"></rule>
+	<rule ref="PHPCompatibility"></rule>
+	<rule ref="WordPress">
+		<exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
+	</rule>
 
 	<rule ref="WordPress.Security.ValidatedSanitizedInput">
 		<properties>
