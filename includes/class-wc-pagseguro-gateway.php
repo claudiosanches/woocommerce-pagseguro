@@ -286,11 +286,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'label'   => __( 'Display a message alerting the customer that will be charged R$ 1,00 for payment by Banking Ticket', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
 			),
-			'behavior'             => array(
-				'title'       => __( 'Integration Behavior', 'woocommerce-pagseguro' ),
-				'type'        => 'title',
-				'description' => '',
-			),
 			'send_only_total'      => array(
 				'title'   => __( 'Send only the order total', 'woocommerce-pagseguro' ),
 				'type'    => 'checkbox',
