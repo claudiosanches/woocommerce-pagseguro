@@ -124,7 +124,7 @@ class WC_PagSeguro {
 	}
 
 	/**
-	 * Transparent checkout billing fields.
+	 * Transparent checkout shipping fields.
 	 *
 	 * @param array $fields Checkout fields.
 	 * @return array
