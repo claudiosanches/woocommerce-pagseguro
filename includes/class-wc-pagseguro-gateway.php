@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gateway.
  */
 class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
-
 	/**
 	 * Constructor for the gateway.
 	 */
@@ -214,7 +213,7 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 					'transparent' => __( 'Transparent Checkout', 'woocommerce-pagseguro' ),
 				),
 			),
-			'require_shipping'  => array(
+			'require_shipping'     => array(
 				'title'       => esc_html__( 'When using Redirect method, PagSeguro will require the shipping address.', 'woocommerce-pagseguro' ),
 				'label'       => __( 'Enable PagSeguro requires shipping address', 'woocommerce-pagseguro' ),
 				'type'        => 'checkbox',
@@ -286,11 +285,6 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 				'type'    => 'checkbox',
 				'label'   => __( 'Display a message alerting the customer that will be charged R$ 1,00 for payment by Banking Ticket', 'woocommerce-pagseguro' ),
 				'default' => 'yes',
-			),
-			'behavior'             => array(
-				'title'       => __( 'Integration Behavior', 'woocommerce-pagseguro' ),
-				'type'        => 'title',
-				'description' => '',
 			),
 			'send_only_total'      => array(
 				'title'   => __( 'Send only the order total', 'woocommerce-pagseguro' ),

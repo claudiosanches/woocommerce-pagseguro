@@ -14,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * API.
  */
 class WC_PagSeguro_API {
-
 	/**
 	 * Gateway class.
 	 *
@@ -37,7 +36,7 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	protected function get_environment() {
-		return ( 'yes' == $this->gateway->sandbox ) ? 'sandbox.' : '';
+		return ( 'yes' === $this->gateway->sandbox ) ? 'sandbox.' : '';
 	}
 
 	/**
@@ -114,7 +113,7 @@ class WC_PagSeguro_API {
 		$url  = home_url( '/' );
 		$home = untrailingslashit( str_replace( array( 'https://', 'http://' ), '', $url ) );
 
-		return in_array( $home, array( 'localhost', '127.0.0.1' ) );
+		return in_array( $home, array( 'localhost', '127.0.0.1' ), true );
 	}
 
 	/**
@@ -167,9 +166,12 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	public function get_payment_method_name( $value ) {
+		// translators: %s for payment method brand name.
 		$credit = __( 'Credit Card %s', 'woocommerce-pagseguro' );
+		// translators: %s for payment method brand name.
 		$ticket = __( 'Billet %s', 'woocommerce-pagseguro' );
-		$debit  = __( 'Bank Transfer %s', 'woocommerce-pagseguro' );
+		// translators: %s for payment method brand name.
+		$debit = __( 'Bank Transfer %s', 'woocommerce-pagseguro' );
 
 		$methods = array(
 			101 => sprintf( $credit, 'Visa' ),
@@ -278,15 +280,15 @@ class WC_PagSeguro_API {
 	protected function get_available_payment_methods() {
 		$methods = array();
 
-		if ( 'yes' == $this->gateway->tc_credit ) {
+		if ( 'yes' === $this->gateway->tc_credit ) {
 			$methods[] = 'credit-card';
 		}
 
-		if ( 'yes' == $this->gateway->tc_transfer ) {
+		if ( 'yes' === $this->gateway->tc_transfer ) {
 			$methods[] = 'bank-transfer';
 		}
 
-		if ( 'yes' == $this->gateway->tc_ticket ) {
+		if ( 'yes' === $this->gateway->tc_ticket ) {
 			$methods[] = 'banking-ticket';
 		}
 
@@ -309,7 +311,7 @@ class WC_PagSeguro_API {
 			'timeout' => 60,
 		);
 
-		if ( 'POST' == $method && ! empty( $data ) ) {
+		if ( 'POST' === $method && ! empty( $data ) ) {
 			$params['body'] = $data;
 		}
 
@@ -351,7 +353,7 @@ class WC_PagSeguro_API {
 		}
 
 		if ( isset( $dom->doctype ) ) {
-			if ( 'yes' == $this->gateway->debug ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'Unsafe DOCTYPE Detected while XML parsing' );
 			}
 
@@ -374,14 +376,14 @@ class WC_PagSeguro_API {
 		$shipping_cost = 0;
 
 		// Force only one item.
-		if ( 'yes' == $this->gateway->send_only_total ) {
+		if ( 'yes' === $this->gateway->send_only_total ) {
 			$items[] = array(
+				// translators: %s for order ID number.
 				'description' => $this->sanitize_description( sprintf( __( 'Order %s', 'woocommerce-pagseguro' ), $order->get_order_number() ) ),
 				'amount'      => $this->money_format( $order->get_total() ),
 				'quantity'    => 1,
 			);
 		} else {
-
 			// Products.
 			if ( 0 < count( $order->get_items() ) ) {
 				foreach ( $order->get_items() as $order_item ) {
@@ -400,9 +402,7 @@ class WC_PagSeguro_API {
 								$item_meta = new WC_Order_Item_Meta( $order_item );
 							}
 
-							if ( $meta = $item_meta->display( true, true ) ) {
-								$item_name .= ' - ' . $meta;
-							}
+							$item_name .= ' - ' . $item_meta->display( true, true );
 						}
 
 						$items[] = array(
@@ -454,7 +454,7 @@ class WC_PagSeguro_API {
 			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.3', '<' ) ) {
 				$discount = $order->get_order_discount();
 				// WooCommerce 3.0 or later.
-			} else if ( method_exists( $order, 'get_discount_total' ) ) {
+			} elseif ( method_exists( $order, 'get_discount_total' ) ) {
 				$discount = $order->get_discount_total();
 			}
 
@@ -480,44 +480,33 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	protected function get_checkout_xml( $order, $posted ) {
-		
 		$data    = $this->get_order_items( $order );
 		$ship_to = isset( $posted['ship_to_different_address'] ) ? true : false;
 
-		if ( 'yes' == $this->gateway->require_shipping ) {
-
+		if ( 'yes' === $this->gateway->require_shipping ) {
 			$required = '';
-
 		} else {
-
 			$required = '<shippingAddressRequired>false</shippingAddressRequired>';
-
 		}
+
 		// Creates the checkout xml.
 		$xml = new WC_PagSeguro_XML( '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><checkout>' . $required . '</checkout>' );
 		$xml->add_currency( get_woocommerce_currency() );
 
 		// WooCommerce 3.0 or later.
 		if ( method_exists( $order, 'get_id' ) ) {
-			
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->get_id() );
 			$xml->add_sender_data( $order );
 
-			if ( 'yes' == $this->gateway->require_shipping ) {
-
+			if ( 'yes' === $this->gateway->require_shipping ) {
 				$xml->add_shipping_data( $order, $ship_to, $data['shipping_cost'] );
-
 			}
-
 		} else {
-
 			$xml->add_reference( $this->gateway->invoice_prefix . $order->id );
 			$xml->add_legacy_sender_data( $order );
 
-			if ( 'yes' == $this->gateway->require_shipping ) {
-
+			if ( 'yes' === $this->gateway->require_shipping ) {
 				$xml->add_legacy_shipping_data( $order, $ship_to, $data['shipping_cost'] );
-
 			}
 		}
 
@@ -525,7 +514,7 @@ class WC_PagSeguro_API {
 		$xml->add_extra_amount( $data['extra_amount'] );
 
 		// Checks if is localhost... PagSeguro not accept localhost urls!
-		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
+		if ( ! $this->is_localhost() ) {
 			$xml->add_redirect_url( $this->gateway->get_return_url( $order ) );
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
@@ -558,7 +547,7 @@ class WC_PagSeguro_API {
 		$xml->add_mode( 'default' );
 		$xml->add_method( $method );
 		$xml->add_currency( get_woocommerce_currency() );
-		if ( ! in_array( $this->is_localhost(), array( 'localhost', '127.0.0.1' ) ) ) {
+		if ( ! $this->is_localhost() ) {
 			$xml->add_notification_url( WC()->api_request_url( 'WC_PagSeguro_Gateway' ) );
 		}
 		$xml->add_items( $data['items'] );
@@ -576,7 +565,7 @@ class WC_PagSeguro_API {
 		}
 
 		// Items related to the payment method.
-		if ( 'creditCard' == $method ) {
+		if ( 'creditCard' === $method ) {
 			$credit_card_token = isset( $posted['pagseguro_credit_card_hash'] ) ? sanitize_text_field( $posted['pagseguro_credit_card_hash'] ) : '';
 			$installment       = array(
 				'quantity' => isset( $posted['pagseguro_card_installments'] ) ? absint( $posted['pagseguro_card_installments'] ) : '',
@@ -595,7 +584,7 @@ class WC_PagSeguro_API {
 			} else {
 				$xml->add_legacy_credit_card_data( $order, $credit_card_token, $installment, $holder_data );
 			}
-		} elseif ( 'eft' == $method ) {
+		} elseif ( 'eft' === $method ) {
 			$bank_name = isset( $posted['pagseguro_bank_transfer'] ) ? sanitize_text_field( $posted['pagseguro_bank_transfer'] ) : '';
 			$xml->add_bank_data( $bank_name );
 		}
@@ -618,19 +607,24 @@ class WC_PagSeguro_API {
 		// Sets the xml.
 		$xml = $this->get_checkout_xml( $order, $posted );
 
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting token for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_checkout_url() );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_checkout_url()
+		);
 		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
-			if ( 'yes' == $this->gateway->debug ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in generate payment token: ' . $response->get_error_message() );
 			}
-		} else if ( 401 === $response['response']['code'] ) {
-			if ( 'yes' == $this->gateway->debug ) {
+		} elseif ( 401 === $response['response']['code'] ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'Invalid token and/or email settings!' );
 			}
 
@@ -646,7 +640,7 @@ class WC_PagSeguro_API {
 			} catch ( Exception $e ) {
 				$body = '';
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro response: ' . print_r( $e->getMessage(), true ) );
 				}
 			}
@@ -654,7 +648,7 @@ class WC_PagSeguro_API {
 			if ( isset( $body->code ) ) {
 				$token = (string) $body->code;
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'PagSeguro Payment Token created with success! The Token is: ' . $token );
 				}
 
@@ -668,14 +662,12 @@ class WC_PagSeguro_API {
 			if ( isset( $body->error ) ) {
 				$errors = array();
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'Failed to generate the PagSeguro Payment Token: ' . print_r( $response, true ) );
 				}
 
 				foreach ( $body->error as $error_key => $error ) {
-					if ( $message = $this->get_error_message( $error->code ) ) {
-						$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $message;
-					}
+					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
 				}
 
 				return array(
@@ -686,7 +678,7 @@ class WC_PagSeguro_API {
 			}
 		}
 
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Error generating the PagSeguro payment token: ' . print_r( $response, true ) );
 		}
 
@@ -712,30 +704,35 @@ class WC_PagSeguro_API {
 		/**
 		 * Validate if has selected a payment method.
 		 */
-		if ( ! in_array( $payment_method, $this->get_available_payment_methods() ) ) {
+		if ( ! in_array( $payment_method, $this->get_available_payment_methods(), true ) ) {
 			return array(
 				'url'   => '',
 				'data'  => '',
-				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' .  __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) ),
+				'error' => array( '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . __( 'Please, select a payment method.', 'woocommerce-pagseguro' ) ),
 			);
 		}
 
 		// Sets the xml.
 		$xml = $this->get_payment_xml( $order, $posted );
 
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting direct payment for order ' . $order->get_order_number() . ' with the following data: ' . $xml );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_transactions_url() );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_transactions_url()
+		);
 		$response = $this->do_request( $url, 'POST', $xml, array( 'Content-Type' => 'application/xml;charset=UTF-8' ) );
 
 		if ( is_wp_error( $response ) ) {
-			if ( 'yes' == $this->gateway->debug ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in requesting the direct payment: ' . $response->get_error_message() );
 			}
-		} else if ( 401 === $response['response']['code'] ) {
-			if ( 'yes' == $this->gateway->debug ) {
+		} elseif ( 401 === $response['response']['code'] ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'The user does not have permissions to use the PagSeguro Transparent Checkout!' );
 			}
 
@@ -750,13 +747,13 @@ class WC_PagSeguro_API {
 			} catch ( Exception $e ) {
 				$data = '';
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro response: ' . print_r( $e->getMessage(), true ) );
 				}
 			}
 
 			if ( isset( $data->code ) ) {
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'PagSeguro direct payment created successfully!' );
 				}
 
@@ -770,14 +767,12 @@ class WC_PagSeguro_API {
 			if ( isset( $data->error ) ) {
 				$errors = array();
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'An error occurred while generating the PagSeguro direct payment: ' . print_r( $response, true ) );
 				}
 
 				foreach ( $data->error as $error_key => $error ) {
-					if ( $message = $this->get_error_message( $error->code ) ) {
-						$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $message;
-					}
+					$errors[] = '<strong>' . __( 'PagSeguro', 'woocommerce-pagseguro' ) . '</strong>: ' . $this->get_error_message( $error->code );
 				}
 
 				return array(
@@ -788,7 +783,7 @@ class WC_PagSeguro_API {
 			}
 		}
 
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'An error occurred while generating the PagSeguro direct payment: ' . print_r( $response, true ) );
 		}
 
@@ -808,14 +803,13 @@ class WC_PagSeguro_API {
 	 * @return bool|SimpleXMLElement
 	 */
 	public function process_ipn_request( $data ) {
-
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Checking IPN request...' );
 		}
 
 		// Valid the post data.
 		if ( ! isset( $data['notificationCode'] ) && ! isset( $data['notificationType'] ) ) {
-			if ( 'yes' == $this->gateway->debug ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'Invalid IPN request: ' . print_r( $data, true ) );
 			}
 
@@ -823,8 +817,8 @@ class WC_PagSeguro_API {
 		}
 
 		// Checks the notificationType.
-		if ( 'transaction' != $data['notificationType'] ) {
-			if ( 'yes' == $this->gateway->debug ) {
+		if ( 'transaction' !== $data['notificationType'] ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'Invalid IPN request, invalid "notificationType": ' . print_r( $data, true ) );
 			}
 
@@ -832,12 +826,17 @@ class WC_PagSeguro_API {
 		}
 
 		// Gets the PagSeguro response.
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_notification_url() . esc_attr( $data['notificationCode'] ) );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_notification_url() . esc_attr( $data['notificationCode'] )
+		);
 		$response = $this->do_request( $url, 'GET' );
 
 		// Check to see if the request was valid.
 		if ( is_wp_error( $response ) ) {
-			if ( 'yes' == $this->gateway->debug ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error in IPN: ' . $response->get_error_message() );
 			}
 		} else {
@@ -846,13 +845,13 @@ class WC_PagSeguro_API {
 			} catch ( Exception $e ) {
 				$body = '';
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro IPN response: ' . print_r( $e->getMessage(), true ) );
 				}
 			}
 
 			if ( isset( $body->code ) ) {
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'PagSeguro IPN is valid! The return is: ' . print_r( $body, true ) );
 				}
 
@@ -860,7 +859,7 @@ class WC_PagSeguro_API {
 			}
 		}
 
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'IPN Response: ' . print_r( $response, true ) );
 		}
 
@@ -873,17 +872,21 @@ class WC_PagSeguro_API {
 	 * @return string
 	 */
 	public function get_session_id() {
-
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Requesting session ID...' );
 		}
 
-		$url      = add_query_arg( array( 'email' => $this->gateway->get_email(), 'token' => $this->gateway->get_token() ), $this->get_sessions_url() );
+		$url      = add_query_arg(
+			array(
+				'email' => $this->gateway->get_email(),
+				'token' => $this->gateway->get_token(),
+			), $this->get_sessions_url()
+		);
 		$response = $this->do_request( $url, 'POST' );
 
 		// Check to see if the request was valid.
 		if ( is_wp_error( $response ) ) {
-			if ( 'yes' == $this->gateway->debug ) {
+			if ( 'yes' === $this->gateway->debug ) {
 				$this->gateway->log->add( $this->gateway->id, 'WP_Error requesting session ID: ' . $response->get_error_message() );
 			}
 		} else {
@@ -892,13 +895,13 @@ class WC_PagSeguro_API {
 			} catch ( Exception $e ) {
 				$session = '';
 
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'Error while parsing the PagSeguro session response: ' . print_r( $e->getMessage(), true ) );
 				}
 			}
 
 			if ( isset( $session->id ) ) {
-				if ( 'yes' == $this->gateway->debug ) {
+				if ( 'yes' === $this->gateway->debug ) {
 					$this->gateway->log->add( $this->gateway->id, 'PagSeguro session is valid! The return is: ' . print_r( $session, true ) );
 				}
 
@@ -906,7 +909,7 @@ class WC_PagSeguro_API {
 			}
 		}
 
-		if ( 'yes' == $this->gateway->debug ) {
+		if ( 'yes' === $this->gateway->debug ) {
 			$this->gateway->log->add( $this->gateway->id, 'Session Response: ' . print_r( $response, true ) );
 		}
 
