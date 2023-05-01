@@ -29,7 +29,7 @@ if ( 'yes' === $this->get_option( 'enabled' ) ) {
 }
 ?>
 
-<?php echo esc_html( wpautop( $this->method_description ) ); ?>
+<?php echo wp_kses_post( wpautop( $this->method_description ) ); ?>
 
 <?php require dirname( __FILE__ ) . '/html-admin-help-message.php'; ?>
 
