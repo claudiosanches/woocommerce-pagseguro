@@ -96,7 +96,7 @@ class WC_PagSeguro {
 	 */
 	public static function hides_when_is_outside_brazil( $available_gateways ) {
 		// Remove PagSeguro gateway.
-		if ( isset( $_REQUEST['country'] ) && 'BR' !== $_REQUEST['country'] ) { // WPCS: input var ok, CSRF ok.
+		if ( isset( $_REQUEST['country'] ) && 'BR' !== $_REQUEST['country'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			unset( $available_gateways['pagseguro'] );
 		}
 

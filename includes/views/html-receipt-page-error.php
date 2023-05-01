@@ -4,6 +4,7 @@
  *
  * @package WooCommerce_PagSeguro/Templates
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -12,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <ul class="woocommerce-error">
 	<?php foreach ( $response['error'] as $message ) : ?>
-		<li><?php echo $message; ?></li>
+		<li><?php echo wp_kses_post( $message ); ?></li>
 	<?php endforeach; ?>
 </ul>
 

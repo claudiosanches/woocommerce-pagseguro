@@ -12,23 +12,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<?php if ( 2 == $type ) : ?>
+<?php if ( 2 === $type ) : ?>
 
 	<div class="woocommerce-message">
-		<span><a class="button" href="<?php echo esc_url( $link ); ?>" target="_blank"><?php _e( 'Pay the Banking Ticket', 'woocommerce-pagseguro' ); ?></a><?php _e( 'Please click in the following button to view your Banking Ticket.', 'woocommerce-pagseguro' ); ?><br /><?php _e( 'You can print and pay in your internet banking or in a lottery retailer.', 'woocommerce-pagseguro' ); ?><br /><?php _e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
+		<span><a class="button" href="<?php echo esc_url( $link ); ?>" target="_blank"><?php esc_html_e( 'Pay the Banking Ticket', 'woocommerce-pagseguro' ); ?></a><?php esc_html_e( 'Please click in the following button to view your Banking Ticket.', 'woocommerce-pagseguro' ); ?><br /><?php esc_html_e( 'You can print and pay in your internet banking or in a lottery retailer.', 'woocommerce-pagseguro' ); ?><br /><?php esc_html_e( 'After we receive the ticket payment confirmation, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
 	</div>
 
-<?php elseif ( 3 == $type ) : ?>
+<?php elseif ( 3 === $type ) : ?>
 
 	<div class="woocommerce-message">
-		<span><a class="button" href="<?php echo esc_url( $link ); ?>" target="_blank"><?php _e( 'Pay at your bank', 'woocommerce-pagseguro' ); ?></a><?php _e( 'Please use the following button to make the payment in your bankline.', 'woocommerce-pagseguro' ); ?><br /><?php _e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
+		<span><a class="button" href="<?php echo esc_url( $link ); ?>" target="_blank"><?php esc_html_e( 'Pay at your bank', 'woocommerce-pagseguro' ); ?></a><?php esc_html_e( 'Please use the following button to make the payment in your bankline.', 'woocommerce-pagseguro' ); ?><br /><?php esc_html_e( 'After we receive the confirmation from the bank, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
 	</div>
 
 <?php else : ?>
 
 	<div class="woocommerce-message">
-		<span><?php echo sprintf( __( 'You just made the payment in %s using the %s.', 'woocommerce-pagseguro' ), '<strong>' . $installments . 'x</strong>', '<strong>' . $method . '</strong>' ); ?><br /><?php _e( 'As soon as the credit card operator confirm the payment, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
+		<span>
+			<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: 1: installments, 2: method name */
+						__( 'You just made the payment in %1$s using the %2$s.', 'woocommerce-pagseguro' ),
+						'<strong>' . $installments . 'x</strong>',
+						'<strong>' . $method . '</strong>'
+					),
+					array(
+						'strong' => array(),
+					)
+				);
+			?>
+		<br /><?php esc_html_e( 'As soon as the credit card operator confirm the payment, your order will be processed.', 'woocommerce-pagseguro' ); ?></span>
 	</div>
 
-<?php
+	<?php
 endif;

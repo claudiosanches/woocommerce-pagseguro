@@ -33,7 +33,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 */
 	public function add_cdata( $string ) {
 		$node = dom_import_simplexml( $this );
-		$no   = $node->ownerDocument;
+		$no   = $node->ownerDocument; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		$node->appendChild( $no->createCDATASection( trim( $string ) ) );
 	}
@@ -87,7 +87,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add CPF.
 	 *
-	 * @param string $number Document number.
+	 * @param string           $number Document number.
 	 * @param SimpleXMLElement $xml Data.
 	 */
 	protected function add_cpf( $number, $xml ) {
@@ -100,7 +100,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	/**
 	 * Add CNPJ.
 	 *
-	 * @param string $number Document number.
+	 * @param string           $number Document number.
 	 * @param SimpleXMLElement $xml Data.
 	 */
 	protected function add_cnpj( $number, $xml ) {
@@ -126,13 +126,13 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 
 		if ( ( 0 === $wcbcf_settings || 2 === $wcbcf_settings ) && ! empty( $order->billing_cpf ) ) {
 			$this->add_cpf( $order->billing_cpf, $sender );
-		} else if ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && ! empty( $order->billing_cnpj ) ) {
+		} elseif ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && ! empty( $order->billing_cnpj ) ) {
 			$name = $order->billing_company;
 			$this->add_cnpj( $order->billing_cnpj, $sender );
-		} else if ( ! empty( $order->billing_persontype ) ) {
-			if ( 1 == $order->billing_persontype && ! empty( $order->billing_cpf ) ) {
+		} elseif ( ! empty( $order->billing_persontype ) ) {
+			if ( 1 === intval( $order->billing_persontype ) && ! empty( $order->billing_cpf ) ) {
 				$this->add_cpf( $order->billing_cpf, $sender );
-			} else if ( 2 == $order->billing_persontype && ! empty( $order->billing_cnpj ) ) {
+			} elseif ( 2 === intval( $order->billing_persontype ) && ! empty( $order->billing_cnpj ) ) {
 				$name = $order->billing_company;
 				$this->add_cnpj( $order->billing_cnpj, $sender );
 			}
@@ -147,7 +147,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$phone->addChild( 'number', substr( $phone_number, 2 ) );
 		}
 
-		if ( '' != $hash ) {
+		if ( '' !== $hash ) {
 			$sender->addChild( 'hash', $hash );
 		}
 	}
@@ -168,13 +168,13 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 
 		if ( ( 0 === $wcbcf_settings || 2 === $wcbcf_settings ) && '' !== $order->get_meta( '_billing_cpf' ) ) {
 			$this->add_cpf( $order->get_meta( '_billing_cpf' ), $sender );
-		} else if ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && '' !== $order->get_meta( '_billing_cnpj' ) ) {
+		} elseif ( ( 0 === $wcbcf_settings || 3 === $wcbcf_settings ) && '' !== $order->get_meta( '_billing_cnpj' ) ) {
 			$name = $order->get_billing_company();
 			$this->add_cnpj( $order->get_meta( '_billing_cnpj' ), $sender );
-		} else if ( '' !== $order->get_meta( '_billing_persontype' ) ) {
+		} elseif ( '' !== $order->get_meta( '_billing_persontype' ) ) {
 			if ( 1 === intval( $order->get_meta( '_billing_persontype' ) ) && '' !== $order->get_meta( '_billing_cpf' ) ) {
 				$this->add_cpf( $order->get_meta( '_billing_cpf' ), $sender );
-			} else if ( 2 === intval( $order->get_meta( '_billing_persontype' ) ) && '' !== $order->get_meta( '_billing_cnpj' ) ) {
+			} elseif ( 2 === intval( $order->get_meta( '_billing_persontype' ) ) && '' !== $order->get_meta( '_billing_cnpj' ) ) {
 				$name = $order->get_billing_company();
 				$this->add_cnpj( $order->get_meta( '_billing_cnpj' ), $sender );
 			}
@@ -189,7 +189,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 			$phone->addChild( 'number', substr( $phone_number, 2 ) );
 		}
 
-		if ( '' != $hash ) {
+		if ( '' !== $hash ) {
 			$sender->addChild( 'hash', $hash );
 		}
 	}
@@ -294,7 +294,7 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * @param float $extra_amount Extra amount.
 	 */
 	public function add_extra_amount( $extra_amount = 0 ) {
-		if ( 0 != $extra_amount ) {
+		if ( 0 !== $extra_amount ) {
 			$this->addChild( 'extraAmount', $extra_amount );
 		}
 	}
@@ -319,12 +319,12 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		$holder = $credit_card->addChild( 'holder' );
 		$holder->addChild( 'name' )->add_cdata( $holder_data['name'] );
 		$documents = $holder->addChild( 'documents' );
-		$document = $documents->addChild( 'document' );
+		$document  = $documents->addChild( 'document' );
 		$document->addChild( 'type', 'CPF' );
 		$document->addChild( 'value', $this->get_numbers( $holder_data['cpf'] ) );
 		$holder->addChild( 'birthDate', str_replace( ' ', '', $holder_data['birth_date'] ) );
 		$phone_number = $this->get_numbers( $holder_data['phone'] );
-		$phone = $holder->addChild( 'phone' );
+		$phone        = $holder->addChild( 'phone' );
 		$phone->addChild( 'areaCode', substr( $phone_number, 0, 2 ) );
 		$phone->addChild( 'number', substr( $phone_number, 2 ) );
 
@@ -365,12 +365,12 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 		$holder = $credit_card->addChild( 'holder' );
 		$holder->addChild( 'name' )->add_cdata( $holder_data['name'] );
 		$documents = $holder->addChild( 'documents' );
-		$document = $documents->addChild( 'document' );
+		$document  = $documents->addChild( 'document' );
 		$document->addChild( 'type', 'CPF' );
 		$document->addChild( 'value', $this->get_numbers( $holder_data['cpf'] ) );
 		$holder->addChild( 'birthDate', str_replace( ' ', '', $holder_data['birth_date'] ) );
 		$phone_number = $this->get_numbers( $holder_data['phone'] );
-		$phone = $holder->addChild( 'phone' );
+		$phone        = $holder->addChild( 'phone' );
 		$phone->addChild( 'areaCode', substr( $phone_number, 0, 2 ) );
 		$phone->addChild( 'number', substr( $phone_number, 2 ) );
 
@@ -443,9 +443,9 @@ class WC_PagSeguro_XML extends SimpleXMLElement {
 	 * @return string
 	 */
 	public function render() {
-		$node = dom_import_simplexml( $this );
-		$dom  = $node->ownerDocument;
-		$dom->formatOutput = true;
+		$node              = dom_import_simplexml( $this );
+		$dom               = $node->ownerDocument; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		$dom->formatOutput = true; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		return $dom->saveXML();
 	}
