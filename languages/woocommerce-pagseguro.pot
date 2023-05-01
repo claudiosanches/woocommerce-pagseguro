@@ -558,6 +558,12 @@ msgstr ""
 msgid "PagSeguro: Payment canceled."
 msgstr ""
 
+#: includes/class-wc-pagseguro-gateway.php:645
+msgid ""
+"PagSeguro: The customer filed a chargeback request with the credit card "
+"company."
+msgstr ""
+
 #: includes/class-wc-pagseguro.php:63
 msgid "Settings"
 msgstr ""
