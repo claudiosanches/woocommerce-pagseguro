@@ -1,16 +1,18 @@
 <?php
 /**
- * Plugin Name:          Claudio Sanches - PagSeguro for WooCommerce
- * Plugin URI:           https://github.com/claudiosanches/woocommerce-pagseguro
- * Description:          Includes PagSeguro as a payment gateway to WooCommerce.
- * Author:               Claudio Sanches
- * Author URI:           https://claudiosanches.com
- * Version:              2.15.0
- * License:              GPLv3 or later
- * Text Domain:          woocommerce-pagseguro
- * Domain Path:          /languages
- * WC requires at least: 3.0.0
- * WC tested up to:      4.3.1
+ * Plugin Name: Claudio Sanches - PagSeguro for WooCommerce
+ * Plugin URI: https://github.com/claudiosanches/woocommerce-pagseguro
+ * Description: Includes PagSeguro as a payment gateway to WooCommerce.
+ * Author: Claudio Sanches
+ * Author URI: https://claudiosanches.com
+ * Version: 2.15.0
+ * Requires at least: 4.0
+ * Requires PHP: 5.6
+ * License: GPLv3 or later
+ * Text Domain: woocommerce-pagseguro
+ * Domain Path: /languages
+ * WC requires at least: 5.0
+ * WC tested up to: 7.6
  *
  * Claudio Sanches - PagSeguro for WooCommerce is free software: you can
  * redistribute it and/or modify it under the terms of the
