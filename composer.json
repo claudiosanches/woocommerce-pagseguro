@@ -1,48 +1,39 @@
 {
-	"name": "claudiosanches/woocommerce-pagseguro",
-	"description": "Includes PagSeguro as a payment gateway to WooCommerce.",
-	"homepage": "https://github.com/claudiosanches/woocommerce-pagseguro",
-	"type": "wordpress-plugin",
-	"license": "GPL-3.0-or-later",
-	"authors": [
-		{
-			"name": "Claudio Sanches",
-			"homepage": "https://claudiosanches.com",
-			"role": "Developer"
-		}
-	],
-	"support": {
-		"forum": "https://wordpress.org/support/plugin/woocommerce-pagseguro",
-		"issues": "https://github.com/claudiosanches/woocommerce-pagseguro/issues/",
-		"source": "https://github.com/claudiosanches/woocommerce-pagseguro"
-	},
-	"require": {
-		"claudiosanches/wp-git-hooks": "*"
-	},
-	"scripts": {
-		"pre-update-cmd": [
-			"ClaudioSanches\\WpGitHooks\\Hooks::preHooks"
-		],
-		"pre-install-cmd": [
-			"@pre-update-cmd"
-		],
-		"post-install-cmd": [
-			"ClaudioSanches\\WpGitHooks\\Hooks::postHooks"
-		],
-		"post-update-cmd": [
-			"@post-install-cmd"
-		],
-		"phpcs": [
-			"phpcs -s -p"
-		],
-		"phpcbf": [
-			"phpcbf -p"
-		]
-	},
-	"extra": {
-		"scripts-description": {
-			"phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
-			"phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
-		}
-	}
+    "name": "claudiosanches/woocommerce-pagseguro",
+    "description": "Includes PagSeguro as a payment gateway to WooCommerce.",
+    "homepage": "https://github.com/claudiosanches/woocommerce-pagseguro",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Claudio Sanches",
+            "homepage": "https://claudiosanches.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "forum": "https://wordpress.org/support/plugin/woocommerce-pagseguro",
+        "issues": "https://github.com/claudiosanches/woocommerce-pagseguro/issues/",
+        "source": "https://github.com/claudiosanches/woocommerce-pagseguro"
+    },
+    "require": {
+        "php": ">=7.3"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^2.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+    },
+    "scripts": {
+        "phpcs": [
+            "phpcs --standard=phpcs.ruleset.xml"
+        ],
+        "makepot": [
+            "wp i18n make-pot . languages/woocommerce-extra-checkout-fields-for-brazil.pot --exclude=vendor/node_modules"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }
