@@ -99,6 +99,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	<?php endif; ?>
 
-	<p><?php esc_htmlesc_html_e( 'This purchase is being made in Brazil', 'woocommerce-pagseguro' ); ?> <img src="<?php echo esc_url( $flag ); ?>" alt="<?php esc_attresc_html_e( 'Brazilian flag', 'woocommerce-pagseguro' ); ?>" style="display: inline; float: none; vertical-align: middle; border: none;" /></p>
+	<p><?php esc_html_e( 'This purchase is being made in Brazil', 'woocommerce-pagseguro' ); ?> <img src="<?php echo esc_url( $flag ); ?>" alt="<?php esc_attr_e( 'Brazilian flag', 'woocommerce-pagseguro' ); ?>" style="display: inline; float: none; vertical-align: middle; border: none;" /></p>
 
 </fieldset>

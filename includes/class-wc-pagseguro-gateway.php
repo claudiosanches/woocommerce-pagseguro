@@ -121,6 +121,13 @@ class WC_PagSeguro_Gateway extends WC_Payment_Gateway {
 	public $api = null;
 
 	/**
+	 * Logger.
+	 *
+	 * @var string $log
+	 */
+	public $log = null;
+
+	/**
 	 * Constructor for the gateway.
 	 */
 	public function __construct() {
