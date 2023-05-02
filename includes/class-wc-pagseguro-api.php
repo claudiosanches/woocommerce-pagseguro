@@ -341,14 +341,14 @@ class WC_PagSeguro_API {
 		}
 
 		if ( function_exists( 'libxml_disable_entity_loader' ) ) {
-			$old = libxml_disable_entity_loader( true ); // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
+			$old = @libxml_disable_entity_loader( true ); // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
 		}
 
 		$dom    = new DOMDocument();
 		$return = $dom->loadXML( $source, $options );
 
 		if ( ! is_null( $old ) ) {
-			libxml_disable_entity_loader( $old ); // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
+			@libxml_disable_entity_loader( $old ); // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
 		}
 
 		if ( ! $return ) {
