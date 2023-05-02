@@ -150,12 +150,14 @@ class WC_PagSeguro_API {
 	 */
 	public function get_payment_name_by_type( $value ) {
 		$types = array(
-			1 => __( 'Credit Card', 'woocommerce-pagseguro' ),
-			2 => __( 'Billet', 'woocommerce-pagseguro' ),
-			3 => __( 'Bank Transfer', 'woocommerce-pagseguro' ),
-			4 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
-			5 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
-			7 => __( 'Account deposit', 'woocommerce-pagseguro' ),
+			1  => __( 'Credit Card', 'woocommerce-pagseguro' ),
+			2  => __( 'Billet', 'woocommerce-pagseguro' ),
+			3  => __( 'Bank Transfer', 'woocommerce-pagseguro' ),
+			4  => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
+			5  => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
+			7  => __( 'Account deposit', 'woocommerce-pagseguro' ),
+			8  => __( 'Caixa Emergency Card (Debit)', 'woocommerce-pagseguro' ),
+			11 => __( 'PIX', 'woocommerce-pagseguro' ),
 		);
 
 		return isset( $types[ $value ] ) ? $types[ $value ] : __( 'Unknown', 'woocommerce-pagseguro' );
@@ -205,7 +207,8 @@ class WC_PagSeguro_API {
 			305 => sprintf( $debit, 'Real' ),
 			306 => sprintf( $debit, 'Banrisul' ),
 			307 => sprintf( $debit, 'HSBC' ),
-			401 => __( 'PagSeguro credit', 'woocommerce-pagseguro' ),
+			401 => __( 'PagSeguro balance', 'woocommerce-pagseguro' ),
+			402 => __( 'PIX', 'woocommerce-pagseguro' ),
 			501 => __( 'Oi Paggo', 'woocommerce-pagseguro' ),
 			701 => __( 'Account deposit', 'woocommerce-pagseguro' ),
 		);
